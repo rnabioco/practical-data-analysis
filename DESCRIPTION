@@ -16,3 +16,4 @@ Suggests:
 Remotes: stephlocke/datasauRus,
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.0.1
