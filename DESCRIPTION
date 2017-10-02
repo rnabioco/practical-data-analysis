@@ -15,3 +15,4 @@ Suggests:
   rmarkdown,
 Remotes: stephlocke/datasauRus,
 VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)
