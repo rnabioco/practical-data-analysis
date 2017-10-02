@@ -1,0 +1,17 @@
+Package: eda
+Title: Exploratory Data Analysis in R/RStudio
+Version: 0.0.0.9000
+Authors@R: person("Jay", "Hesselberth", email = "jay.hesselberth@gmail.com", role = c("aut", "cre"))
+Description: Course content for IDPT 7620
+Depends:
+  R (>= 3.4.1),
+  valr,
+  tidyverse,
+License: CC0
+Encoding: UTF-8
+LazyData: true
+Suggests:
+  knitr,
+  rmarkdown,
+Remotes: stephlocke/datasauRus,
+VignetteBuilder: knitr

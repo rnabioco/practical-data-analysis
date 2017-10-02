@@ -1,0 +1,31 @@
+---
+title: "Class 1: Overview and data wrangling"
+author: "Jay Hesselberth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Class-1}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Overview
+
+Content to start with. Update workstations if needed (devtools?).
+
+## Formatting data for efficient analysis
+
+Reformatting your data into a "tidy" format is a useful practice and allows you efficiently manipulate and analyze data sets. We will start with some toy examples (using the `anscombe` data set) and then will reformat a commonly used data type from a quantitative PCR experiment.
+
+- columns are variables
+- rows are observations
+- related data should be stored in separate tables
+
+## The `tidyr` package
+
+- gather, spread
+- separate, extract
+
+## Exercises
+
+# Quiz
