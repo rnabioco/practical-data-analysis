@@ -8,7 +8,7 @@
 #'   \item{well}{plate well}
 #'   \item{fluor}{Fluorophore}
 #'   \item{target}{mRNA target}
-#'   \item{content}{Not sure}
+#'   \item{content}{well containing reference standard}
 #'   \item{sample}{sample name}
 #'   \item{cq}{Quantification cycle}
 #' }
