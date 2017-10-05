@@ -23,4 +23,8 @@ qpcr
 A dataset containing Bio-Rad qPCR data for IFNbeta and Actin upon
 transfection with RNA ligands.
 }
+\examples{
+qpcr
+
+}
 \keyword{datasets}

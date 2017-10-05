@@ -13,5 +13,8 @@
 #'   \item{cq}{Quantification cycle}
 #' }
 #'
+#' @examples
+#' qpcr
+#'
 #' @source Rachel Ancar
 "qpcr"

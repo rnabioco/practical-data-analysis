@@ -2,7 +2,7 @@
 Exploratory Data Analysis with R/RStudio
 ========================================
 
-[![Travis-CI Build Status](https://travis-ci.org/jayhesselberth/eda.svg?branch=master)](https://travis-ci.org/jayhesselberth/eda)
+[![Travis-CI Build Status](https://travis-ci.org/rnabioco/eda.svg?branch=master)](https://travis-ci.org/rnabioco/eda)
 
 Syllabus
 --------
@@ -49,5 +49,5 @@ You can install `eda` from github with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("jayhesselberth/eda")
+devtools::install_github("rnabioco/eda")
 ```
