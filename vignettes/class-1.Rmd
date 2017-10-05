@@ -15,7 +15,7 @@ Content to start with. Update workstations if needed (devtools?).
 
 ## Formatting data for efficient analysis
 
-Reformatting your data into a "tidy" format is a useful practice and allows you efficiently manipulate and analyze data sets. We will start with some toy examples (using the `anscombe` data set) and then will reformat a commonly used data type from a quantitative PCR experiment.
+Reformatting your data into a "tidy" format is a useful practice that allows you efficiently manipulate and analyze data. We will start with some toy examples (using the `anscombe` data set) and then will reformat a commonly used data type from a quantitative PCR experiment.
 
 - columns are variables
 - rows are observations
@@ -26,6 +26,30 @@ Reformatting your data into a "tidy" format is a useful practice and allows you 
 - gather, spread
 - separate, extract
 
+## Real world example: qPCR data
+
+We'll use tidy data principles to analyze some qPCR data. 
+
+## Naming things
+
+This [slide deck](https://speakerdeck.com/jennybc/how-to-name-files) from Jenny Bryan has useful tips for naming files that are also applicable to variable names.
+
+All variables should be systematically listed in your sample names, i.e. `name_rep_time_RT`. 
+
+```{r}
+library(eda)
+
+qpcr
+```
+
+> From Rachel: Basically, I calculate the average Ct between all the sample replicates for the gene of interest primer set and the internal control. Then you subtract the gene of interest average from the internal control average and use that change in CT to calculate the fold change relative to actin using the deal-delta CT method. 
+
+```{r}
+qpcr_tidy <- qpcr %>%
+  separate(sample, into = c('ligand', 'RT'), sep = '_', fill = 'right') %>%
+  select(-fluor, -content, -well) %>%
+  mutate(RT = is.na(RT))
+```
 ## Exercises
 
 # Quiz
