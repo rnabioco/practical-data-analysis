@@ -1,0 +1,19 @@
+---
+title: "Class 3: Common Analysis Challenges"
+author: "Jay Hesselberth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Class-1}
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteEncoding{UTF-8}
+---
+
+# Concepts
+
+- Too many variables (identifying important ones, and summarizing others. using colors and facets in plots)
+- Too much data (in-memory vs. database approaches, subsetting and sampling, simplify with a reprex).
+- Reducing dimensionality (PCA and t-SNE)
+- Assessing significance (light statistics overview, null distributions, hypothesis testing).
+- Dealing with untidy R results (broom::tidy())
+  

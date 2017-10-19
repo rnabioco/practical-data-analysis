@@ -1,0 +1,29 @@
+---
+title: "Class 2: Writing reproducible reports"
+author: "Jay Hesselberth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Class-1}
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteEncoding{UTF-8}
+---
+
+# Concepts
+
+- Current me thanks former me
+- Writing (Rmarkdown, useful RStudio tricks and shortcuts)
+- Version control (Github, beyond the scope of this class but super useful)
+- Sharing (rpubs.com, RStudio Connect, sending HTML)
+- Approaches for data exploration (Shiny *is not reproducible*)
+- Date formats (2017-12-25, not Dec 25 2017, "Christmas Day", etc. NYD is 2018-01-01)
+
+# Goals
+
+- Form strong and lasting analysis habits
+- Keep cheatsheets handy early on
+- Learn new features and concepts as they arise (read the RStudio blog)
+
+# Reading
+
+- Bill Noble Guide to Computational BIology. Organization is paramount.

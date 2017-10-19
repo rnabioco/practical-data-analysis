@@ -2,6 +2,10 @@ template:
   params:
     bootswatch: sandstone
 
+author:
+  Jay Hesselberth:
+    href: https://hesselberthlab.org
+
 reference:
 - title: Example data sets
   contents:

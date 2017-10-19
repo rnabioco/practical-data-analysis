@@ -9,6 +9,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "img/class-1-",
+  fig.align = "center"
+)
+```
+
 # Overview
 
 Content to start with. Update workstations if needed (devtools?).
@@ -26,15 +35,38 @@ Reformatting your data into a "tidy" format is a useful practice that allows you
 - gather, spread
 - separate, extract
 
-## Real world example: qPCR data
+## Real world examples: Data collected in the 96-well plate format.
 
 We'll use tidy data principles to analyze some qPCR data. 
 
-## Naming things
+## Naming samples.
 
-This [slide deck](https://speakerdeck.com/jennybc/how-to-name-files) from Jenny Bryan has useful tips for naming files that are also applicable to variable names.
+This [slide deck](https://speakerdeck.com/jennybc/how-to-name-files) from Jenny Bryan has useful tips for naming files that are also applicable to sample names.
 
-All variables should be systematically listed in your sample names, i.e. `name_rep_time_RT`. 
+All variables should be systematically listed in your sample names, i.e. `name_rep_time_RT`. Systematic naming makes it easy to programmtically extract relevant information.
+
+```{r sample.names}
+library(tidyverse)
+library(stringr)
+
+# for reproducible `sample`
+set.seed(47681)
+
+samples <-
+  tidyr::crossing(
+    name = c('WT', 'MT'),
+    hours = c(0, 4, 8, 24),
+    reps = 1:3) %>%
+  mutate(
+    value = sample(1:100, n(), replace = TRUE),
+    .id = row_number())
+
+```
+
+## Organizing samples.
+
+How should you organize samples on your plate? Should -RT and +RT samples alternate? Where should I put my "no template" controls?
+
 
 ```{r}
 library(eda)
@@ -42,7 +74,7 @@ library(eda)
 qpcr
 ```
 
-> From Rachel: Basically, I calculate the average Ct between all the sample replicates for the gene of interest primer set and the internal control. Then you subtract the gene of interest average from the internal control average and use that change in CT to calculate the fold change relative to actin using the deal-delta CT method. 
+<!-- From Rachel: Basically, I calculate the average Ct between all the sample replicates for the gene of interest primer set and the internal control. Then you subtract the gene of interest average from the internal control average and use that change in CT to calculate the fold change relative to actin using the deal-delta CT method. -->
 
 ```{r}
 qpcr_tidy <- qpcr %>%
