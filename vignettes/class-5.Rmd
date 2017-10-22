@@ -1,0 +1,20 @@
+---
+title: "Class 5: Chromatin Vignette"
+author: "Jay Hesselberth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Class-5}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Concepts
+
+Concepts
+
+- ENCODE chromatin data
+- Intervals and signals
+- Gene models, histone ChIP
+- BEDtools and valr
+  

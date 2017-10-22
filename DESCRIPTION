@@ -1,11 +1,18 @@
 Package: eda
 Title: Exploratory Data Analysis in R/RStudio
 Version: 0.0.0.9000
-Authors@R:
-  person("Jay", "Hesselberth",
+Authors@R: c(
+  person("Jay", "Hesselberth", ,
     email = "jay.hesselberth@gmail.com",
     role = c("aut", "cre"),
-    comment = c(ORCID = "0000-0002-6299-179X"))
+    comment = c(ORCID = "0000-0002-6299-179X")),
+  person("Austin", "Gillen", ,
+    email = "austin.gillen@gmail.com",
+    role = c("aut")),
+  person("Kent", "Riemondy", ,
+    email = "kent.riemondy@gmail.com",
+    role = c("aut"))
+    )
 Description: Course content for IDPT 7620
 Depends:
   R (>= 3.4.1),

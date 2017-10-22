@@ -1,0 +1,15 @@
+---
+title: "Class 4: Gene Expression Vignette"
+author: "Jay Hesselberth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Class-4}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Concepts
+
+- Analyze a counts matrix.
+- Learn how to retrieve data from `recount2` and the GTEx databases.
