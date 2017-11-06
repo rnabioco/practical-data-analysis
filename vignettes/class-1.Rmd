@@ -18,9 +18,47 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Overview
+# Goals for the class
 
-Content to start with. Update workstations if needed (devtools?).
+- *Learn the basics of data import, processing, plotting, and report generation.*
+
+- *Reach for RStudio instead of MS Excel / Prism etc as your go-to analysis software.* Why? Reproducibility. Workflows in standard spreadsheet programs require human interaction (i.e., selecting cells, entering formulae) and are prone to mistakes. An RMarkdown document is fully reproducible.
+
+# RStudio Overview
+
+We'll cover the basic steps of data import and analysis within RStudio and will highlight some features of the software as we go.
+
+## Import
+
+There are two main ways to import data within RStudio. One is interactive, using the "Import Dataset" button in the Environment panel.
+
+The other is to use functions in `readr` or `readxl` to load data on the console or within an RMarkdown report.
+
+## Processing
+
+The `tidyverse` is a collection of libraries that enable efficient data processing and visualization. You will probably start many analyses by loading the library:
+
+```{r load}
+library(tidyverse)
+```
+
+## Plotting
+
+The `tidyverse` contains `ggplot2`, which you covered in your pre-requisites. Let's make a simple plot in RStudio. Note that the plot appears in the "Plots" panel. From there, you can Zoom, Export to a file, or Publish on RPubs.
+
+```{r plot}
+library(tidyverse)
+
+ggplot(mtcars, aes(x = hp, y = mpg, color = factor(cyl))) + geom_point()
+```
+
+## Reports
+
+Finally we'll create an RMarkdown document. Select File > New File > RMarkdown... and fill the Title and Author fields. Then click OK to create an RMarkdown document.
+
+# Real world example: Data collected in the 96-well plate format.
+
+We'll use tidy data principles to analyze some qPCR data. 
 
 ## Formatting data for efficient analysis
 
@@ -32,12 +70,24 @@ Reformatting your data into a "tidy" format is a useful practice that allows you
 
 ## The `tidyr` package
 
-- gather, spread
-- separate, extract
+The `tidyr` package has some useful functions for rearranging data for efficient analysis. See the [cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for reference.
 
-## Real world examples: Data collected in the 96-well plate format.
+### `gather` and `spread`
 
-We'll use tidy data principles to analyze some qPCR data. 
+### `separate`, `extract`, and `unite`
+
+### `crossing` and `complete`
+
+The `crossing` method is useful to generate combinations of variables.
+
+```{r crossing}
+sample <- c('wt', 'mut')
+gene <- c('IFN', 'ACTIN')
+rt <- c('+', '-')
+rep <- 1:3
+
+tidyr::crossing(sample, gene, rep, rt)
+```
 
 ## Naming samples.
 
@@ -82,6 +132,51 @@ qpcr_tidy <- qpcr %>%
   select(-fluor, -content, -well) %>%
   mutate(RT = is.na(RT))
 ```
-## Exercises
+
+# Exercises
+
+1. 
+
+2. 
+
+3. 
+
+4.
+
+# Too Easy?
+
+If you found those exercises too easy, try these:
+
+1. Tidy the `anscombe` data set. Your tidy data should look like:
+
+```{r anscombe, echo=FALSE}
+anscombe_tidy <- anscombe %>%
+  mutate(.id = row_number()) %>%
+  gather(key, value, -.id) %>%
+  separate(key, into = c('var', 'set'), sep = 1) %>%
+  spread(var, value) %>%
+  select(-.id) %>%
+  arrange(set, x) %>%
+  as_tibble()
+
+anscombe_tidy
+```
+
+
+2. Calculate summary statistics in your tidy `anscombe` data. Calculate `n`, `mean` for each `x` and `y` variable in the sets. Calculate the `cor` between `x` and `y` for each set.
+
+3. Plot the tidy `anscombe` data. Plot each `x`/`y` point on separate facets for each set, and plot a smoothing line.
+
+```{r, eval = FALSE, show = FALSE}
+ggplot(anscombe_tidy, aes(x, y)) +
+  geom_point() +
+  facet_wrap(~set) +
+  geom_smooth(method = 'lm', se = FALSE)
+```
+
 
 # Quiz
+
+Create an RMarkdown document and answer the exercises questions. Submit your final document as "Quiz 1" by Thurs at 10 PM.
+
+**Your submitted document must knit to HTML**. I.e., when you click the "Knit" button, the document should build and display and HTML page.
