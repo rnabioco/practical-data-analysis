@@ -13,10 +13,39 @@ vignette: >
 
 - Current me thanks former me
 - Writing (Rmarkdown, useful RStudio tricks and shortcuts)
-- Version control (Github, beyond the scope of this class but super useful)
 - Sharing (rpubs.com, RStudio Connect, sending HTML)
 - Approaches for data exploration (Shiny *is not reproducible*)
 - Date formats (2017-12-25, not Dec 25 2017, "Christmas Day", etc. NYD is 2018-01-01)
+
+# Performing analyses in RStudio
+
+## Use 
+
+# Organizing analyses
+
+## Date formats
+
+You should use the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format for dates. Name your files using the YYYY-MM-DD-description.Rmd convention. This way, a directory listing will put them in chronological order using their lexical ordering.
+
+## Github
+
+Github is beyond the scope of this class. But if you are using Rmarkdown (or writing other types of code) then it is worth the effort to set it up. Jenny Bryan has an excellent tutorial for setting up Github and integrating it with RStudio.
+
+Beyond the st
+
+# Sharing results
+
+Once you have created an Rmarkdown document, there are several ways to share it with others.
+
+## Send the HTML file
+
+One approach is to render the Rmarkdown file to an HTML and send the rendered HTML. This works OK for small analyses, but file sizes can quickly approach the attachment limit.
+
+## Post the analysis on the web
+
+### Rpubs.com
+
+### Github
 
 # Goals
 
