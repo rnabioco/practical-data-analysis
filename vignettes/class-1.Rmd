@@ -161,7 +161,16 @@ qpcr_tidy <- qpcr %>%
 
 # Exercises
 
-1. 
+1. Reformat the `datasaurus` dataset so that the following plotting code works:
+
+``` r
+datasaurus_tidy %>%
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  facet_wrap(~ dataset)
+```
+
+What does this plot tell you?
 
 2. 
 

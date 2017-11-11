@@ -97,40 +97,43 @@
       <h1>Class 2: Writing reproducible reports</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-10-22</h4>
+            <h4 class="date">2017-11-11</h4>
           </div>
 
     
     
 <div class="contents">
-<div id="concepts" class="section level1">
-<h1 class="hasAnchor">
-<a href="#concepts" class="anchor"></a>Concepts</h1>
+<section id="concepts" class="level1"><h1>Concepts</h1>
 <ul>
 <li>Current me thanks former me</li>
 <li>Writing (Rmarkdown, useful RStudio tricks and shortcuts)</li>
-<li>Version control (Github, beyond the scope of this class but super useful)</li>
 <li>Sharing (rpubs.com, RStudio Connect, sending HTML)</li>
 <li>Approaches for data exploration (Shiny <em>is not reproducible</em>)</li>
-<li>Date formats (2017-12-25, not Dec 25 2017, “Christmas Day”, etc. NYD is 2018-01-01)</li>
-</ul>
-</div>
-<div id="goals" class="section level1">
-<h1 class="hasAnchor">
-<a href="#goals" class="anchor"></a>Goals</h1>
+<li>Date formats (2017-12-25, not Dec 25 2017, “Christmas Day”, etc. NYD is 2018-01-01)</li>
+</ul></section><section id="performing-analyses-in-rstudio" class="level1"><h1>Performing analyses in RStudio</h1>
+<section id="use" class="level2"><h2>Use</h2>
+</section></section><section id="organizing-analyses" class="level1"><h1>Organizing analyses</h1>
+<section id="date-formats" class="level2"><h2>Date formats</h2>
+<p>You should use the <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format for dates. Name your files using the YYYY-MM-DD-description.Rmd convention. This way, a directory listing will put them in chronological order using their lexical ordering.</p>
+</section><section id="github" class="level2"><h2>Github</h2>
+<p>Github is beyond the scope of this class. But if you are using Rmarkdown (or writing other types of code) then it is worth the effort to set it up. Jenny Bryan has an excellent tutorial for setting up Github and integrating it with RStudio.</p>
+<p>Beyond the st</p>
+</section></section><section id="sharing-results" class="level1"><h1>Sharing results</h1>
+<p>Once you have created an Rmarkdown document, there are several ways to share it with others.</p>
+<section id="send-the-html-file" class="level2"><h2>Send the HTML file</h2>
+<p>One approach is to render the Rmarkdown file to an HTML and send the rendered HTML. This works OK for small analyses, but file sizes can quickly approach the attachment limit.</p>
+</section><section id="post-the-analysis-on-the-web" class="level2"><h2>Post the analysis on the web</h2>
+<section id="rpubs.com" class="level3"><h3>Rpubs.com</h3>
+</section><section id="github-1" class="level3"><h3>Github</h3>
+</section></section></section><section id="goals" class="level1"><h1>Goals</h1>
 <ul>
 <li>Form strong and lasting analysis habits</li>
 <li>Keep cheatsheets handy early on</li>
 <li>Learn new features and concepts as they arise (read the RStudio blog)</li>
-</ul>
-</div>
-<div id="reading" class="section level1">
-<h1 class="hasAnchor">
-<a href="#reading" class="anchor"></a>Reading</h1>
+</ul></section><section id="reading" class="level1"><h1>Reading</h1>
 <ul>
 <li>Bill Noble Guide to Computational BIology. Organization is paramount.</li>
-</ul>
-</div>
+</ul></section>
 </div>
   </div>
 
@@ -140,6 +143,23 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#concepts">Concepts</a></li>
+      <li>
+<a href="#performing-analyses-in-rstudio">Performing analyses in RStudio</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#use">Use</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#organizing-analyses">Organizing analyses</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#date-formats">Date formats</a></li>
+      <li><a href="#github">Github</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#sharing-results">Sharing results</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#send-the-html-file">Send the HTML file</a></li>
+      <li><a href="#post-the-analysis-on-the-web">Post the analysis on the web</a></li>
+      </ul>
+</li>
       <li><a href="#goals">Goals</a></li>
       <li><a href="#reading">Reading</a></li>
       </ul>
