@@ -20,9 +20,9 @@ knitr::opts_chunk$set(
 
 # Goals for the class
 
-- *Learn the basics of data import, processing, plotting, and report generation.*
+- **Learn the basics of data import, processing, plotting, and report generation in RStudio.**
 
-- *Reach for RStudio instead of MS Excel / Prism etc as your go-to analysis software.* Why? Reproducibility. Workflows in standard spreadsheet programs require human interaction (i.e., selecting cells, entering formulae) and are prone to mistakes. An RMarkdown document is fully reproducible.
+- **Reach for RStudio instead of MS Excel / Prism etc as your go-to analysis software.** Workflows in Rmarkdown are reproducible by yourself and others. Standard spreadsheet programs require human interaction (i.e., selecting cells, entering formulae) and are prone to mistakes.
 
 # RStudio Overview
 
@@ -32,7 +32,13 @@ We'll cover the basic steps of data import and analysis within RStudio and will 
 
 There are two main ways to import data within RStudio. One is interactive, using the "Import Dataset" button in the Environment panel.
 
+![data import](img/class-1-data-import.png)
 The other is to use functions in `readr` or `readxl` to load data on the console or within an RMarkdown report.
+
+```{r readr, eval = FALSE}
+readr::read_tsv('XXX')
+readxl::read_excel('XXX')
+```
 
 ## Processing
 
@@ -48,7 +54,6 @@ The `tidyverse` contains `ggplot2`, which you covered in your pre-requisites. Le
 
 ```{r plot}
 library(tidyverse)
-
 ggplot(mtcars, aes(x = hp, y = mpg, color = factor(cyl))) + geom_point()
 ```
 
@@ -62,7 +67,9 @@ We'll use tidy data principles to analyze some qPCR data.
 
 ## Formatting data for efficient analysis
 
-Reformatting your data into a "tidy" format is a useful practice that allows you efficiently manipulate and analyze data. We will start with some toy examples (using the `anscombe` data set) and then will reformat a commonly used data type from a quantitative PCR experiment.
+Reformatting your data into a "tidy" format is a useful practice that allows you efficiently manipulate and analyze data. We will start with some toy examples and then will reformat a commonly used data type from a quantitative PCR experiment.
+
+Tidy data adopts three simple conventions:
 
 - columns are variables
 - rows are observations
@@ -70,11 +77,42 @@ Reformatting your data into a "tidy" format is a useful practice that allows you
 
 ## The `tidyr` package
 
-The `tidyr` package has some useful functions for rearranging data for efficient analysis. See the [cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for reference.
+The `tidyr` package has useful functions to format data for efficient analysis. See the [cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for reference.
 
 ### `gather` and `spread`
 
+These are the workhorse functions in `tidyr`. Use `gather` when variables are in columns and you want to combine them.
+
+```{r gather}
+mtcars_tbl <- mtcars %>%
+  mutate(name = rownames(.)) %>%
+  select(name, everything()) %>%
+  as_tibble()
+
+mtcars_tbl %>% gather(key, value, -name) %>% spread(key, value)
+```
+
+```{r spread}
+
+```
+
 ### `separate`, `extract`, and `unite`
+
+`separate` takes a column on input and returns multiple columns, each with a new variable. For example, a column with year/month/day information can be separated into invidual columns.
+
+```{r sep_dates, echo = FALSE}
+ys <- 1999:2002
+ms <- c('Jan', 'Feb', 'Mar')
+ds <- 1:10
+
+dates <- tidyr::crossing(ys, ms, ds) %>% unite(date, ys:ds, sep = '-')
+```
+
+```{r sep_dates2}
+dates
+
+dates %>% separate(date, into = c('year', 'month', 'day'), sep = '-')
+```
 
 ### `crossing` and `complete`
 
@@ -116,7 +154,7 @@ samples <-
 samples
 ```
 
-Becauase the samples are named systematically, it is easy to separate this information into individual columns
+Because the samples are named systematically, it is easy to separate this information into individual columns
 
 ```{r extract_info}
 sample_info <- samples %>%

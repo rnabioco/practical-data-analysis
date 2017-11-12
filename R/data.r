@@ -18,3 +18,10 @@
 #'
 #' @source Rachel Ancar
 "qpcr"
+
+#' mtcars in tibble format
+#'
+#' @examples
+#' mtcars_tbl
+#'
+"mtcars_tbl"
