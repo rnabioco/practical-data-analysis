@@ -5,8 +5,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Class 2: Writing reproducible reports • eda</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<title>Class 2: Writing Reproducible Reports • eda</title>
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -94,46 +94,117 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Class 2: Writing reproducible reports</h1>
+      <h1>Class 2: Writing Reproducible Reports</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-11-11</h4>
+            <h4 class="date">2017-11-13</h4>
           </div>
 
     
     
 <div class="contents">
-<section id="concepts" class="level1"><h1>Concepts</h1>
+<div id="concepts" class="section level1">
+<h1 class="hasAnchor">
+<a href="#concepts" class="anchor"></a>Concepts</h1>
 <ul>
-<li>Current me thanks former me</li>
 <li>Writing (Rmarkdown, useful RStudio tricks and shortcuts)</li>
 <li>Sharing (rpubs.com, RStudio Connect, sending HTML)</li>
 <li>Approaches for data exploration (Shiny <em>is not reproducible</em>)</li>
-<li>Date formats (2017-12-25, not Dec 25 2017, “Christmas Day”, etc. NYD is 2018-01-01)</li>
-</ul></section><section id="performing-analyses-in-rstudio" class="level1"><h1>Performing analyses in RStudio</h1>
-<section id="use" class="level2"><h2>Use</h2>
-</section></section><section id="organizing-analyses" class="level1"><h1>Organizing analyses</h1>
-<section id="date-formats" class="level2"><h2>Date formats</h2>
-<p>You should use the <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format for dates. Name your files using the YYYY-MM-DD-description.Rmd convention. This way, a directory listing will put them in chronological order using their lexical ordering.</p>
-</section><section id="github" class="level2"><h2>Github</h2>
+</ul>
+</div>
+<div id="performing-analyses-in-rstudio" class="section level1">
+<h1 class="hasAnchor">
+<a href="#performing-analyses-in-rstudio" class="anchor"></a>Performing analyses in RStudio</h1>
+<div id="comment-on-your-analyses" class="section level2">
+<h2 class="hasAnchor">
+<a href="#comment-on-your-analyses" class="anchor"></a>Comment on your analyses</h2>
+<p><strong>Current me thanks former me</strong></p>
+</div>
+<div id="color" class="section level2">
+<h2 class="hasAnchor">
+<a href="#color" class="anchor"></a>Color</h2>
+<div id="palettes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#palettes" class="anchor"></a>Palettes</h3>
+<ul>
+<li><p><strong>colorbrewer</strong> The <a href="colorbrewer2.org">colorbrewer</a> palettes are packaged with ggplot2. They include palettes for both discrete and continuous data.</p></li>
+<li><p><strong>viridis</strong></p></li>
+</ul>
+</div>
+<div id="discrete-and-continuous-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#discrete-and-continuous-data" class="anchor"></a>Discrete and continuous data</h3>
+</div>
+</div>
+<div id="plot-themes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#plot-themes" class="anchor"></a>Plot themes</h2>
+<p>The <a href="https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html"><code>cowplot</code></a> package provides a variety of sane defaults for your plots. These are especially useful when making publication-quality figures.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages('cowplot')</span>
+<span class="kw">library</span>(cowplot)
+<span class="co">#&gt; Loading required package: ggplot2</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'cowplot'</span>
+<span class="co">#&gt; The following object is masked from 'package:ggplot2':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     ggsave</span>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> mpg, <span class="dt">y =</span> hp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">facet_grid</span>(<span class="op">~</span>cyl)</code></pre></div>
+<p><img src="img/class-2-cowplot-1.png" width="672" style="display: block; margin: auto;"></p>
+</div>
+</div>
+<div id="organizing-analyses" class="section level1">
+<h1 class="hasAnchor">
+<a href="#organizing-analyses" class="anchor"></a>Organizing analyses</h1>
+<div id="date-formats" class="section level2">
+<h2 class="hasAnchor">
+<a href="#date-formats" class="anchor"></a>Date formats</h2>
+<p>You should use the <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format for dates. Name your files using the <code>YYYY-MM-DD-description.Rmd</code> convention. This way, a directory listing will put them in chronological order using their lexical ordering.</p>
+</div>
+<div id="github" class="section level2">
+<h2 class="hasAnchor">
+<a href="#github" class="anchor"></a>Github</h2>
 <p>Github is beyond the scope of this class. But if you are using Rmarkdown (or writing other types of code) then it is worth the effort to set it up. Jenny Bryan has an excellent tutorial for setting up Github and integrating it with RStudio.</p>
 <p>Beyond the st</p>
-</section></section><section id="sharing-results" class="level1"><h1>Sharing results</h1>
+</div>
+</div>
+<div id="sharing-results" class="section level1">
+<h1 class="hasAnchor">
+<a href="#sharing-results" class="anchor"></a>Sharing results</h1>
 <p>Once you have created an Rmarkdown document, there are several ways to share it with others.</p>
-<section id="send-the-html-file" class="level2"><h2>Send the HTML file</h2>
+<div id="send-the-html-file" class="section level2">
+<h2 class="hasAnchor">
+<a href="#send-the-html-file" class="anchor"></a>Send the HTML file</h2>
 <p>One approach is to render the Rmarkdown file to an HTML and send the rendered HTML. This works OK for small analyses, but file sizes can quickly approach the attachment limit.</p>
-</section><section id="post-the-analysis-on-the-web" class="level2"><h2>Post the analysis on the web</h2>
-<section id="rpubs.com" class="level3"><h3>Rpubs.com</h3>
-</section><section id="github-1" class="level3"><h3>Github</h3>
-</section></section></section><section id="goals" class="level1"><h1>Goals</h1>
+</div>
+<div id="post-the-analysis-on-the-web" class="section level2">
+<h2 class="hasAnchor">
+<a href="#post-the-analysis-on-the-web" class="anchor"></a>Post the analysis on the web</h2>
+<div id="rpubs-com" class="section level3">
+<h3 class="hasAnchor">
+<a href="#rpubs-com" class="anchor"></a>Rpubs.com</h3>
+</div>
+<div id="github-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#github-1" class="anchor"></a>Github</h3>
+</div>
+</div>
+</div>
+<div id="goals" class="section level1">
+<h1 class="hasAnchor">
+<a href="#goals" class="anchor"></a>Goals</h1>
 <ul>
 <li>Form strong and lasting analysis habits</li>
 <li>Keep cheatsheets handy early on</li>
 <li>Learn new features and concepts as they arise (read the RStudio blog)</li>
-</ul></section><section id="reading" class="level1"><h1>Reading</h1>
+</ul>
+</div>
+<div id="reading" class="section level1">
+<h1 class="hasAnchor">
+<a href="#reading" class="anchor"></a>Reading</h1>
 <ul>
 <li>Bill Noble Guide to Computational BIology. Organization is paramount.</li>
-</ul></section>
+</ul>
+</div>
 </div>
   </div>
 
@@ -145,7 +216,9 @@
 <li><a href="#concepts">Concepts</a></li>
       <li>
 <a href="#performing-analyses-in-rstudio">Performing analyses in RStudio</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#use">Use</a></li>
+<li><a href="#comment-on-your-analyses">Comment on your analyses</a></li>
+      <li><a href="#color">Color</a></li>
+      <li><a href="#plot-themes">Plot themes</a></li>
       </ul>
 </li>
       <li>

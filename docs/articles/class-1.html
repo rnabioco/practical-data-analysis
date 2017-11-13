@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Class 1: Overview and data wrangling • eda</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -97,87 +97,230 @@
       <h1>Class 1: Overview and data wrangling</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-11-11</h4>
+            <h4 class="date">2017-11-13</h4>
           </div>
 
     
     
 <div class="contents">
-<section id="goals-for-the-class" class="level1"><h1>Goals for the class</h1>
+<div id="goals-for-the-class" class="section level1">
+<h1 class="hasAnchor">
+<a href="#goals-for-the-class" class="anchor"></a>Goals for the class</h1>
 <ul>
 <li><p><strong>Learn the basics of data import, processing, plotting, and report generation in RStudio.</strong></p></li>
 <li><p><strong>Reach for RStudio instead of MS Excel / Prism etc as your go-to analysis software.</strong> Workflows in Rmarkdown are reproducible by yourself and others. Standard spreadsheet programs require human interaction (i.e., selecting cells, entering formulae) and are prone to mistakes.</p></li>
-</ul></section><section id="rstudio-overview" class="level1"><h1>RStudio Overview</h1>
+</ul>
+</div>
+<div id="rstudio-overview" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rstudio-overview" class="anchor"></a>RStudio Overview</h1>
 <p>We’ll cover the basic steps of data import and analysis within RStudio and will highlight some features of the software as we go.</p>
-<section id="import" class="level2"><h2>Import</h2>
+<p><strong>The class has its own R package, so you should begin by loading it into your session.</strong> You may need to reinstall the package if we make updates.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># devtools::install_github('rnabioco/eda')</span>
+<span class="kw">library</span>(eda)
+<span class="co">#&gt; Welcome to the Exploratory Data Analysis</span></code></pre></div>
+<div id="import" class="section level2">
+<h2 class="hasAnchor">
+<a href="#import" class="anchor"></a>Import</h2>
 <p>There are two main ways to import data within RStudio. One is interactive, using the “Import Dataset” button in the Environment panel.</p>
 <p><img src="img/class-1-data-import.png" alt="data import"> The other is to use functions in <code>readr</code> or <code>readxl</code> to load data on the console or within an RMarkdown report.</p>
-<pre class="sourceCode r" id="cb1"><code class="sourceCode r"><div class="sourceLine" id="cb1-1" data-line-number="1">readr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">read_tsv</a></span>(<span class="st">'XXX'</span>)</div>
-<div class="sourceLine" id="cb1-2" data-line-number="2">readxl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readxl/topics/read_excel">read_excel</a></span>(<span class="st">'XXX'</span>)</div></code></pre>
-</section><section id="processing" class="level2"><h2>Processing</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">readr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">read_tsv</a></span>(<span class="st">'XXX'</span>)
+readxl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readxl/topics/read_excel">read_excel</a></span>(<span class="st">'XXX'</span>)</code></pre></div>
+</div>
+<div id="processing" class="section level2">
+<h2 class="hasAnchor">
+<a href="#processing" class="anchor"></a>Processing</h2>
 <p>The <code>tidyverse</code> is a collection of libraries that enable efficient data processing and visualization. You will probably start many analyses by loading the library:</p>
-<pre class="sourceCode r" id="cb2"><code class="sourceCode r"><div class="sourceLine" id="cb2-1" data-line-number="1">
-<span class="kw">library</span>(tidyverse)</div>
-<div class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.0 ──</span></div>
-<div class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; ✔ ggplot2 2.2.1     ✔ purrr   0.2.4</span></div>
-<div class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; ✔ tibble  1.3.4     ✔ dplyr   0.7.4</span></div>
-<div class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; ✔ tidyr   0.7.2     ✔ stringr 1.2.0</span></div>
-<div class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.2.0</span></div>
-<div class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span></div>
-<div class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></div>
-<div class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></div></code></pre>
-</section><section id="plotting" class="level2"><h2>Plotting</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="co">#&gt; ── Attaching packages ──────────────────────────────────────────────────────────── tidyverse 1.2.0 ──</span>
+<span class="co">#&gt; ✔ ggplot2 2.2.1     ✔ purrr   0.2.4</span>
+<span class="co">#&gt; ✔ tibble  1.3.4     ✔ dplyr   0.7.4</span>
+<span class="co">#&gt; ✔ tidyr   0.7.2     ✔ stringr 1.2.0</span>
+<span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.2.0</span>
+<span class="co">#&gt; ── Conflicts ─────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span>
+<span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span>
+<span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></code></pre></div>
+</div>
+<div id="plotting" class="section level2">
+<h2 class="hasAnchor">
+<a href="#plotting" class="anchor"></a>Plotting</h2>
 <p>The <code>tidyverse</code> contains <code>ggplot2</code>, which you covered in your pre-requisites. Let’s make a simple plot in RStudio. Note that the plot appears in the “Plots” panel. From there, you can Zoom, Export to a file, or Publish on RPubs.</p>
-<pre class="sourceCode r" id="cb3"><code class="sourceCode r"><div class="sourceLine" id="cb3-1" data-line-number="1">
-<span class="kw">library</span>(tidyverse)</div>
-<div class="sourceLine" id="cb3-2" data-line-number="2"></div>
-<div class="sourceLine" id="cb3-3" data-line-number="3">
-<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg, <span class="dt">color =</span> <span class="kw">factor</span>(cyl))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</div></code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg, <span class="dt">color =</span> <span class="kw">factor</span>(cyl))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
 <p><img src="img/class-1-plot-1.png" width="672" style="display: block; margin: auto;"></p>
-</section><section id="reports" class="level2"><h2>Reports</h2>
+</div>
+<div id="reports" class="section level2">
+<h2 class="hasAnchor">
+<a href="#reports" class="anchor"></a>Reports</h2>
 <p>Finally we’ll create an RMarkdown document. Select File &gt; New File &gt; RMarkdown… and fill the Title and Author fields. Then click OK to create an RMarkdown document.</p>
-</section></section><section id="real-world-example-data-collected-in-the-96-well-plate-format." class="level1"><h1>Real world example: Data collected in the 96-well plate format.</h1>
+</div>
+</div>
+<div id="real-world-example-data-collected-in-the-96-well-plate-format-" class="section level1">
+<h1 class="hasAnchor">
+<a href="#real-world-example-data-collected-in-the-96-well-plate-format-" class="anchor"></a>Real world example: Data collected in the 96-well plate format.</h1>
 <p>We’ll use tidy data principles to analyze some qPCR data.</p>
-<section id="formatting-data-for-efficient-analysis" class="level2"><h2>Formatting data for efficient analysis</h2>
-<p>Reformatting your data into a “tidy” format is a useful practice that allows you efficiently manipulate and analyze data. We will start with some toy examples (using the <code>anscombe</code> data set) and then will reformat a commonly used data type from a quantitative PCR experiment.</p>
+<div id="formatting-data-for-efficient-analysis" class="section level2">
+<h2 class="hasAnchor">
+<a href="#formatting-data-for-efficient-analysis" class="anchor"></a>Formatting data for efficient analysis</h2>
+<p>Reformatting your data into a “tidy” format is a useful practice that allows you efficiently manipulate and analyze data. We will start with some toy examples and then will reformat a commonly used data type from a quantitative PCR experiment.</p>
+<p>Tidy data adopts three simple conventions:</p>
 <ul>
 <li>columns are variables</li>
 <li>rows are observations</li>
 <li>related data should be stored in separate tables</li>
-</ul></section><section id="the-tidyr-package" class="level2"><h2>The <code>tidyr</code> package</h2>
-<p>The <code>tidyr</code> package has some useful functions for rearranging data for efficient analysis. See the <a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">cheat sheet</a> for reference.</p>
-<section id="gather-and-spread" class="level3"><h3>
-<code>gather</code> and <code>spread</code>
-</h3>
-</section><section id="separate-extract-and-unite" class="level3"><h3>
-<code>separate</code>, <code>extract</code>, and <code>unite</code>
-</h3>
-</section><section id="crossing-and-complete" class="level3"><h3>
-<code>crossing</code> and <code>complete</code>
-</h3>
-<p>The <code>crossing</code> method is useful to generate combinations of variables.</p>
-<pre class="sourceCode r" id="cb4"><code class="sourceCode r"><div class="sourceLine" id="cb4-1" data-line-number="1">sample &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'wt'</span>, <span class="st">'mut'</span>)</div>
-<div class="sourceLine" id="cb4-2" data-line-number="2">gene &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'IFN'</span>, <span class="st">'ACTIN'</span>)</div>
-<div class="sourceLine" id="cb4-3" data-line-number="3">rt &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'+'</span>, <span class="st">'-'</span>)</div>
-<div class="sourceLine" id="cb4-4" data-line-number="4">rep &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>
+</ul>
 </div>
-<div class="sourceLine" id="cb4-5" data-line-number="5"></div>
-<div class="sourceLine" id="cb4-6" data-line-number="6">tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/expand">crossing</a></span>(sample, gene, rep, rt)</div>
-<div class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; # A tibble: 24 x 4</span></div>
-<div class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt;    sample  gene   rep    rt</span></div>
-<div class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt;     &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;chr&gt;</span></div>
-<div class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;  1    mut ACTIN     1     -</span></div>
-<div class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;  2    mut ACTIN     1     +</span></div>
-<div class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  3    mut ACTIN     2     -</span></div>
-<div class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;  4    mut ACTIN     2     +</span></div>
-<div class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt;  5    mut ACTIN     3     -</span></div>
-<div class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt;  6    mut ACTIN     3     +</span></div>
-<div class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt;  7    mut   IFN     1     -</span></div>
-<div class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt;  8    mut   IFN     1     +</span></div>
-<div class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt;  9    mut   IFN     2     -</span></div>
-<div class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; 10    mut   IFN     2     +</span></div>
-<div class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; # ... with 14 more rows</span></div></code></pre>
-</section></section><section id="naming-samples." class="level2"><h2>Naming samples.</h2>
+<div id="the-tidyr-package" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-tidyr-package" class="anchor"></a>The <code>tidyr</code> package</h2>
+<p>The <code>tidyr</code> package has useful functions to format data for efficient analysis. See the <a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">cheat sheet</a> for reference.</p>
+<div id="gather-and-spread" class="section level3">
+<h3 class="hasAnchor">
+<a href="#gather-and-spread" class="anchor"></a><code>gather</code> and <code>spread</code>
+</h3>
+<p>These are the workhorse functions in <code>tidyr</code>. Use <code>gather</code> when variables are in columns and you want to combine them.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># "wide" format has a variables as columns</span>
+mtcars_tbl
+<span class="co">#&gt; # A tibble: 32 x 12</span>
+<span class="co">#&gt;                 name   mpg   cyl  disp    hp  drat    wt  qsec    vs    am</span>
+<span class="co">#&gt;                &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt;  1         Mazda RX4  21.0     6 160.0   110  3.90 2.620 16.46     0     1</span>
+<span class="co">#&gt;  2     Mazda RX4 Wag  21.0     6 160.0   110  3.90 2.875 17.02     0     1</span>
+<span class="co">#&gt;  3        Datsun 710  22.8     4 108.0    93  3.85 2.320 18.61     1     1</span>
+<span class="co">#&gt;  4    Hornet 4 Drive  21.4     6 258.0   110  3.08 3.215 19.44     1     0</span>
+<span class="co">#&gt;  5 Hornet Sportabout  18.7     8 360.0   175  3.15 3.440 17.02     0     0</span>
+<span class="co">#&gt;  6           Valiant  18.1     6 225.0   105  2.76 3.460 20.22     1     0</span>
+<span class="co">#&gt;  7        Duster 360  14.3     8 360.0   245  3.21 3.570 15.84     0     0</span>
+<span class="co">#&gt;  8         Merc 240D  24.4     4 146.7    62  3.69 3.190 20.00     1     0</span>
+<span class="co">#&gt;  9          Merc 230  22.8     4 140.8    95  3.92 3.150 22.90     1     0</span>
+<span class="co">#&gt; 10          Merc 280  19.2     6 167.6   123  3.92 3.440 18.30     1     0</span>
+<span class="co">#&gt; # ... with 22 more rows, and 2 more variables: gear &lt;dbl&gt;, carb &lt;dbl&gt;</span>
+
+<span class="co"># gather variables and observations into `key` and `value` columns - so-called "long" format</span>
+xx &lt;-<span class="st"> </span>mtcars_tbl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(key, value, <span class="op">-</span>name)
+xx
+<span class="co">#&gt; # A tibble: 352 x 3</span>
+<span class="co">#&gt;                 name   key value</span>
+<span class="co">#&gt;                &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt;  1         Mazda RX4   mpg  21.0</span>
+<span class="co">#&gt;  2     Mazda RX4 Wag   mpg  21.0</span>
+<span class="co">#&gt;  3        Datsun 710   mpg  22.8</span>
+<span class="co">#&gt;  4    Hornet 4 Drive   mpg  21.4</span>
+<span class="co">#&gt;  5 Hornet Sportabout   mpg  18.7</span>
+<span class="co">#&gt;  6           Valiant   mpg  18.1</span>
+<span class="co">#&gt;  7        Duster 360   mpg  14.3</span>
+<span class="co">#&gt;  8         Merc 240D   mpg  24.4</span>
+<span class="co">#&gt;  9          Merc 230   mpg  22.8</span>
+<span class="co">#&gt; 10          Merc 280   mpg  19.2</span>
+<span class="co">#&gt; # ... with 342 more rows</span>
+
+<span class="co"># and convert back to "wide" format</span>
+xx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(key, value)
+<span class="co">#&gt; # A tibble: 32 x 12</span>
+<span class="co">#&gt;                  name    am  carb   cyl  disp  drat  gear    hp   mpg</span>
+<span class="co">#&gt;  *              &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt;  1        AMC Javelin     0     2     8 304.0  3.15     3   150  15.2</span>
+<span class="co">#&gt;  2 Cadillac Fleetwood     0     4     8 472.0  2.93     3   205  10.4</span>
+<span class="co">#&gt;  3         Camaro Z28     0     4     8 350.0  3.73     3   245  13.3</span>
+<span class="co">#&gt;  4  Chrysler Imperial     0     4     8 440.0  3.23     3   230  14.7</span>
+<span class="co">#&gt;  5         Datsun 710     1     1     4 108.0  3.85     4    93  22.8</span>
+<span class="co">#&gt;  6   Dodge Challenger     0     2     8 318.0  2.76     3   150  15.5</span>
+<span class="co">#&gt;  7         Duster 360     0     4     8 360.0  3.21     3   245  14.3</span>
+<span class="co">#&gt;  8       Ferrari Dino     1     6     6 145.0  3.62     5   175  19.7</span>
+<span class="co">#&gt;  9           Fiat 128     1     1     4  78.7  4.08     4    66  32.4</span>
+<span class="co">#&gt; 10          Fiat X1-9     1     1     4  79.0  4.08     4    66  27.3</span>
+<span class="co">#&gt; # ... with 22 more rows, and 3 more variables: qsec &lt;dbl&gt;, vs &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   wt &lt;dbl&gt;</span></code></pre></div>
+<p>Each form has its advantages. For example, long format makes it easy to calculate summaries:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(key) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">median</span>(value))
+<span class="co">#&gt; # A tibble: 11 x 2</span>
+<span class="co">#&gt;      key `median(value)`</span>
+<span class="co">#&gt;    &lt;chr&gt;           &lt;dbl&gt;</span>
+<span class="co">#&gt;  1    am           0.000</span>
+<span class="co">#&gt;  2  carb           2.000</span>
+<span class="co">#&gt;  3   cyl           6.000</span>
+<span class="co">#&gt;  4  disp         196.300</span>
+<span class="co">#&gt;  5  drat           3.695</span>
+<span class="co">#&gt;  6  gear           4.000</span>
+<span class="co">#&gt;  7    hp         123.000</span>
+<span class="co">#&gt;  8   mpg          19.200</span>
+<span class="co">#&gt;  9  qsec          17.710</span>
+<span class="co">#&gt; 10    vs           0.000</span>
+<span class="co">#&gt; 11    wt           3.325</span></code></pre></div>
+<p>Wide format is useful for plotting.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggrepel)
+<span class="kw">ggplot</span>(mtcars_tbl) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(hp, mpg, <span class="dt">size =</span> <span class="dv">5</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggrepel/topics/geom_text_repel">geom_label_repel</a></span>(<span class="kw">aes</span>(hp, mpg, <span class="dt">fill =</span> <span class="kw">factor</span>(cyl), <span class="dt">label =</span> name))</code></pre></div>
+<p><img src="img/class-1-plot_label-1.png" width="672" style="display: block; margin: auto;"></p>
+</div>
+<div id="separate-extract-and-unite" class="section level3">
+<h3 class="hasAnchor">
+<a href="#separate-extract-and-unite" class="anchor"></a><code>separate</code>, <code>extract</code>, and <code>unite</code>
+</h3>
+<p><code>separate</code> takes a column on input and returns multiple columns, each with a new variable. For example, a column with year/month/day information can be separated into invidual columns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dates
+<span class="co">#&gt; # A tibble: 120 x 1</span>
+<span class="co">#&gt;           date</span>
+<span class="co">#&gt;  *       &lt;chr&gt;</span>
+<span class="co">#&gt;  1  1999-Feb-1</span>
+<span class="co">#&gt;  2  1999-Feb-2</span>
+<span class="co">#&gt;  3  1999-Feb-3</span>
+<span class="co">#&gt;  4  1999-Feb-4</span>
+<span class="co">#&gt;  5  1999-Feb-5</span>
+<span class="co">#&gt;  6  1999-Feb-6</span>
+<span class="co">#&gt;  7  1999-Feb-7</span>
+<span class="co">#&gt;  8  1999-Feb-8</span>
+<span class="co">#&gt;  9  1999-Feb-9</span>
+<span class="co">#&gt; 10 1999-Feb-10</span>
+<span class="co">#&gt; # ... with 110 more rows</span>
+
+dates <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(date, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">'year'</span>, <span class="st">'month'</span>, <span class="st">'day'</span>), <span class="dt">sep =</span> <span class="st">'-'</span>)
+<span class="co">#&gt; # A tibble: 120 x 3</span>
+<span class="co">#&gt;     year month   day</span>
+<span class="co">#&gt;  * &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span>
+<span class="co">#&gt;  1  1999   Feb     1</span>
+<span class="co">#&gt;  2  1999   Feb     2</span>
+<span class="co">#&gt;  3  1999   Feb     3</span>
+<span class="co">#&gt;  4  1999   Feb     4</span>
+<span class="co">#&gt;  5  1999   Feb     5</span>
+<span class="co">#&gt;  6  1999   Feb     6</span>
+<span class="co">#&gt;  7  1999   Feb     7</span>
+<span class="co">#&gt;  8  1999   Feb     8</span>
+<span class="co">#&gt;  9  1999   Feb     9</span>
+<span class="co">#&gt; 10  1999   Feb    10</span>
+<span class="co">#&gt; # ... with 110 more rows</span></code></pre></div>
+</div>
+<div id="crossing-and-complete" class="section level3">
+<h3 class="hasAnchor">
+<a href="#crossing-and-complete" class="anchor"></a><code>crossing</code> and <code>complete</code>
+</h3>
+<p><code>crossing</code> is useful to generate combinations of variables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'wt'</span>, <span class="st">'mut'</span>)
+gene &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'IFN'</span>, <span class="st">'ACTIN'</span>)
+rt &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'+'</span>, <span class="st">'-'</span>)
+rep &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>
+
+tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/expand">crossing</a></span>(sample, gene, rep, rt)
+<span class="co">#&gt; # A tibble: 24 x 4</span>
+<span class="co">#&gt;    sample  gene   rep    rt</span>
+<span class="co">#&gt;     &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;chr&gt;</span>
+<span class="co">#&gt;  1    mut ACTIN     1     -</span>
+<span class="co">#&gt;  2    mut ACTIN     1     +</span>
+<span class="co">#&gt;  3    mut ACTIN     2     -</span>
+<span class="co">#&gt;  4    mut ACTIN     2     +</span>
+<span class="co">#&gt;  5    mut ACTIN     3     -</span>
+<span class="co">#&gt;  6    mut ACTIN     3     +</span>
+<span class="co">#&gt;  7    mut   IFN     1     -</span>
+<span class="co">#&gt;  8    mut   IFN     1     +</span>
+<span class="co">#&gt;  9    mut   IFN     2     -</span>
+<span class="co">#&gt; 10    mut   IFN     2     +</span>
+<span class="co">#&gt; # ... with 14 more rows</span></code></pre></div>
+</div>
+</div>
+<div id="naming-samples-" class="section level2">
+<h2 class="hasAnchor">
+<a href="#naming-samples-" class="anchor"></a>Naming samples.</h2>
 <p>All variables should be systematically listed in your sample names, i.e. <code>name_rep_time_RT</code>. Systematic naming makes it easy to programmtically extract relevant information.</p>
 <p>Take an example like this, where the sample names are a combination of a genotype (<code>WT</code> and <code>MT</code>), a time point (0,4,8,24 hour), and a replicate (1,2,3), separated by a hyphen.</p>
 <pre><code>#&gt; # A tibble: 24 x 2
@@ -194,97 +337,89 @@
 #&gt;  9     MT-t4-3    49
 #&gt; 10     MT-t8-1    94
 #&gt; # ... with 14 more rows</code></pre>
-<p>Becauase the samples are named systematically, it is easy to separate this information into individual columns</p>
-<pre class="sourceCode r" id="cb6"><code class="sourceCode r"><div class="sourceLine" id="cb6-1" data-line-number="1">sample_info &lt;-<span class="st"> </span>samples <span class="op">%&gt;%</span>
-</div>
-<div class="sourceLine" id="cb6-2" data-line-number="2">
-<span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/separate">separate</a></span>(</div>
-<div class="sourceLine" id="cb6-3" data-line-number="3">    sample.name,</div>
-<div class="sourceLine" id="cb6-4" data-line-number="4">    <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">'sample'</span>, <span class="st">'hour'</span>, <span class="st">'rep'</span>),</div>
-<div class="sourceLine" id="cb6-5" data-line-number="5">    <span class="dt">sep =</span> <span class="st">"-"</span>
-</div>
-<div class="sourceLine" id="cb6-6" data-line-number="6">  )</div></code></pre>
+<p>Because the samples are named systematically, it is easy to separate this information into individual columns</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_info &lt;-<span class="st"> </span>samples <span class="op">%&gt;%</span>
+<span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/separate">separate</a></span>(
+    sample.name,
+    <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">'sample'</span>, <span class="st">'hour'</span>, <span class="st">'rep'</span>),
+    <span class="dt">sep =</span> <span class="st">"-"</span>
+  )</code></pre></div>
 <p>Now we can use <code>dplyr</code> and <code>tidyr</code> functions to manipulate the data.</p>
-<pre class="sourceCode r" id="cb7"><code class="sourceCode r"><div class="sourceLine" id="cb7-1" data-line-number="1">sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample, hour) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">mean</span>(value))</div>
-<div class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; # A tibble: 8 x 3</span></div>
-<div class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt; # Groups:   sample [?]</span></div>
-<div class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;   sample  hour `mean(value)`</span></div>
-<div class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;         &lt;dbl&gt;</span></div>
-<div class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt; 1     MT    t0      68.33333</span></div>
-<div class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt; 2     MT   t24      39.33333</span></div>
-<div class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt; 3     MT    t4      43.33333</span></div>
-<div class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt; 4     MT    t8      51.33333</span></div>
-<div class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt; 5     WT    t0      52.66667</span></div>
-<div class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt; 6     WT   t24      76.33333</span></div>
-<div class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt; 7     WT    t4      55.00000</span></div>
-<div class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt; 8     WT    t8      42.33333</span></div>
-<div class="sourceLine" id="cb7-14" data-line-number="14"></div>
-<div class="sourceLine" id="cb7-15" data-line-number="15">sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(hour, value) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">t24_norm =</span> t24 <span class="op">-</span><span class="st"> </span>t0)</div>
-<div class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt; # A tibble: 6 x 7</span></div>
-<div class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt;   sample   rep    t0   t24    t4    t8 t24_norm</span></div>
-<div class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;</span></div>
-<div class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt; 1     MT     1    81    32    67    94      -49</span></div>
-<div class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt; 2     MT     2    35    24    14    27      -11</span></div>
-<div class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt; 3     MT     3    89    62    49    33      -27</span></div>
-<div class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt; 4     WT     1    97    79     3    72      -18</span></div>
-<div class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">#&gt; 5     WT     2    45    80    97    12       35</span></div>
-<div class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">#&gt; 6     WT     3    16    70    65    43       54</span></div></code></pre>
-<section id="resources" class="level3"><h3>Resources</h3>
-<p>This <a href="https://speakerdeck.com/jennybc/how-to-name-files">slide deck</a> from Jenny Bryan has useful tips for naming files that are also applicable to sample names.</p>
-</section></section><section id="organizing-samples." class="level2"><h2>Organizing samples.</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample, hour) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">mean</span>(value))
+<span class="co">#&gt; # A tibble: 8 x 3</span>
+<span class="co">#&gt; # Groups:   sample [?]</span>
+<span class="co">#&gt;   sample  hour `mean(value)`</span>
+<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;         &lt;dbl&gt;</span>
+<span class="co">#&gt; 1     MT    t0      68.33333</span>
+<span class="co">#&gt; 2     MT   t24      39.33333</span>
+<span class="co">#&gt; 3     MT    t4      43.33333</span>
+<span class="co">#&gt; 4     MT    t8      51.33333</span>
+<span class="co">#&gt; 5     WT    t0      52.66667</span>
+<span class="co">#&gt; 6     WT   t24      76.33333</span>
+<span class="co">#&gt; 7     WT    t4      55.00000</span>
+<span class="co">#&gt; 8     WT    t8      42.33333</span>
+
+sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(hour, value) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">t24_norm =</span> t24 <span class="op">-</span><span class="st"> </span>t0)
+<span class="co">#&gt; # A tibble: 6 x 7</span>
+<span class="co">#&gt;   sample   rep    t0   t24    t4    t8 t24_norm</span>
+<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;</span>
+<span class="co">#&gt; 1     MT     1    81    32    67    94      -49</span>
+<span class="co">#&gt; 2     MT     2    35    24    14    27      -11</span>
+<span class="co">#&gt; 3     MT     3    89    62    49    33      -27</span>
+<span class="co">#&gt; 4     WT     1    97    79     3    72      -18</span>
+<span class="co">#&gt; 5     WT     2    45    80    97    12       35</span>
+<span class="co">#&gt; 6     WT     3    16    70    65    43       54</span></code></pre></div>
+</div>
+<div id="organizing-samples-" class="section level2">
+<h2 class="hasAnchor">
+<a href="#organizing-samples-" class="anchor"></a>Organizing samples.</h2>
 <p>How should you organize samples on your plate? Should -RT and +RT samples alternate? Where should I put my “no template” controls?</p>
-<pre class="sourceCode r" id="cb8"><code class="sourceCode r"><div class="sourceLine" id="cb8-1" data-line-number="1">
-<span class="kw">library</span>(eda)</div>
-<div class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; Loading required package: valr</span></div>
-<div class="sourceLine" id="cb8-3" data-line-number="3"></div>
-<div class="sourceLine" id="cb8-4" data-line-number="4">qpcr</div>
-<div class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; # A tibble: 145 x 6</span></div>
-<div class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt;     well fluor  target content       sample       cq</span></div>
-<div class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt;</span></div>
-<div class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;  1   A01  SYBR IFNbeta Unkn-01      Control 31.82551</span></div>
-<div class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;  2   A02  SYBR IFNbeta Unkn-02 Control_noRT 36.14470</span></div>
-<div class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;  3   A03  SYBR IFNbeta Unkn-03         5ppp 18.45676</span></div>
-<div class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt;  4   A04  SYBR IFNbeta Unkn-04    5ppp_noRT      NaN</span></div>
-<div class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt;  5   A05  SYBR IFNbeta Unkn-05          3p1 19.01628</span></div>
-<div class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt;  6   A06  SYBR IFNbeta Unkn-06     3p1_noRT      NaN</span></div>
-<div class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt;  7   A07  SYBR IFNbeta Unkn-07          3p2 19.10928</span></div>
-<div class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt;  8   A08  SYBR IFNbeta Unkn-08     3p2_noRT      NaN</span></div>
-<div class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt;  9   A09  SYBR IFNbeta Unkn-09           2p 22.79299</span></div>
-<div class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; 10   A10  SYBR IFNbeta Unkn-10      2p_noRT      NaN</span></div>
-<div class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; # ... with 135 more rows</span></div></code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(eda)
+
+qpcr
+<span class="co">#&gt; # A tibble: 145 x 6</span>
+<span class="co">#&gt;     well fluor  target content       sample       cq</span>
+<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt;  1   A01  SYBR IFNbeta Unkn-01      Control 31.82551</span>
+<span class="co">#&gt;  2   A02  SYBR IFNbeta Unkn-02 Control_noRT 36.14470</span>
+<span class="co">#&gt;  3   A03  SYBR IFNbeta Unkn-03         5ppp 18.45676</span>
+<span class="co">#&gt;  4   A04  SYBR IFNbeta Unkn-04    5ppp_noRT      NaN</span>
+<span class="co">#&gt;  5   A05  SYBR IFNbeta Unkn-05          3p1 19.01628</span>
+<span class="co">#&gt;  6   A06  SYBR IFNbeta Unkn-06     3p1_noRT      NaN</span>
+<span class="co">#&gt;  7   A07  SYBR IFNbeta Unkn-07          3p2 19.10928</span>
+<span class="co">#&gt;  8   A08  SYBR IFNbeta Unkn-08     3p2_noRT      NaN</span>
+<span class="co">#&gt;  9   A09  SYBR IFNbeta Unkn-09           2p 22.79299</span>
+<span class="co">#&gt; 10   A10  SYBR IFNbeta Unkn-10      2p_noRT      NaN</span>
+<span class="co">#&gt; # ... with 135 more rows</span></code></pre></div>
 <!-- From Rachel: Basically, I calculate the average Ct between all the sample replicates for the gene of interest primer set and the internal control. Then you subtract the gene of interest average from the internal control average and use that change in CT to calculate the fold change relative to actin using the deal-delta CT method. -->
-<pre class="sourceCode r" id="cb9"><code class="sourceCode r"><div class="sourceLine" id="cb9-1" data-line-number="1">qpcr_tidy &lt;-<span class="st"> </span>qpcr <span class="op">%&gt;%</span>
-</div>
-<div class="sourceLine" id="cb9-2" data-line-number="2">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qpcr_tidy &lt;-<span class="st"> </span>qpcr <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">separate</span>(sample, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">'ligand'</span>, <span class="st">'RT'</span>), <span class="dt">sep =</span> <span class="st">'_'</span>, <span class="dt">fill =</span> <span class="st">'right'</span>) <span class="op">%&gt;%</span>
-</div>
-<div class="sourceLine" id="cb9-3" data-line-number="3">
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>fluor, <span class="op">-</span>content, <span class="op">-</span>well) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">RT =</span> <span class="kw">is.na</span>(RT))</code></pre></div>
 </div>
-<div class="sourceLine" id="cb9-4" data-line-number="4">
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">RT =</span> <span class="kw">is.na</span>(RT))</div></code></pre>
-</section></section><section id="exercises" class="level1"><h1>Exercises</h1>
-<ol type="1">
+</div>
+<div id="exercises" class="section level1">
+<h1 class="hasAnchor">
+<a href="#exercises" class="anchor"></a>Exercises</h1>
+<ol style="list-style-type: decimal">
 <li>Reformat the <code>datasaurus</code> dataset so that the following plotting code works:</li>
 </ol>
-<pre class="sourceCode r" id="cb10"><code class="sourceCode r"><div class="sourceLine" id="cb10-1" data-line-number="1">datasaurus_tidy <span class="op">%&gt;%</span>
-</div>
-<div class="sourceLine" id="cb10-2" data-line-number="2">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">datasaurus_tidy <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
-</div>
-<div class="sourceLine" id="cb10-3" data-line-number="3">
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-</div>
-<div class="sourceLine" id="cb10-4" data-line-number="4">
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>dataset)</div></code></pre>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>dataset)</code></pre></div>
 <p>What does this plot tell you?</p>
-<ol start="2" type="1">
+<ol start="2" style="list-style-type: decimal">
 <li>
 <li>
 <li>
-</ol></section><section id="too-easy" class="level1"><h1>Too Easy?</h1>
+</ol>
+</div>
+<div id="too-easy" class="section level1">
+<h1 class="hasAnchor">
+<a href="#too-easy" class="anchor"></a>Too Easy?</h1>
 <p>If you found those exercises too easy, try these:</p>
-<ol type="1">
+<ol style="list-style-type: decimal">
 <li>Tidy the <code>anscombe</code> data set. Your tidy data should look like:</li>
 </ol>
 <pre><code>#&gt; # A tibble: 44 x 3
@@ -301,25 +436,28 @@
 #&gt;  9     1    12 10.84
 #&gt; 10     1    13  7.58
 #&gt; # ... with 34 more rows</code></pre>
-<ol start="2" type="1">
+<ol start="2" style="list-style-type: decimal">
 <li><p>Calculate summary statistics in your tidy <code>anscombe</code> data. Calculate <code>n</code>, <code>mean</code> for each <code>x</code> and <code>y</code> variable in the sets. Calculate the <code>cor</code> between <code>x</code> and <code>y</code> for each set. What do you infer from these summary statistics?</p></li>
 <li><p>Plot the tidy <code>anscombe</code> data. Plot each <code>x</code>/<code>y</code> point on separate facets for each set, and plot a smoothing line. Examine the plots. How do they compare to the summary statistics?</p></li>
 </ol>
-<pre class="sourceCode r" id="cb12"><code class="sourceCode r"><div class="sourceLine" id="cb12-1" data-line-number="1">
-<span class="kw">ggplot</span>(anscombe_tidy, <span class="kw">aes</span>(x, y)) <span class="op">+</span>
-</div>
-<div class="sourceLine" id="cb12-2" data-line-number="2">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(anscombe_tidy, <span class="kw">aes</span>(x, y)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-</div>
-<div class="sourceLine" id="cb12-3" data-line-number="3">
 <span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>set) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">'lm'</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
 </div>
-<div class="sourceLine" id="cb12-4" data-line-number="4">
-<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">'lm'</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</div></code></pre>
-</section><section id="quiz" class="level1"><h1>Quiz</h1>
+<div id="quiz" class="section level1">
+<h1 class="hasAnchor">
+<a href="#quiz" class="anchor"></a>Quiz</h1>
 <p>Create an RMarkdown document and answer the questions from the Exercises section. Submit your final document as “Quiz 1” by Thurs at 10 PM.</p>
 <p><strong>Your submitted document must knit to HTML without errors</strong>. I.e., when you click the “Knit” button, the document should build and display and HTML page.</p>
-</section>
+</div>
+<div id="resources" class="section level1">
+<h1 class="hasAnchor">
+<a href="#resources" class="anchor"></a>Resources</h1>
+<ul>
+<li>This <a href="https://speakerdeck.com/jennybc/how-to-name-files">slide deck</a> from Jenny Bryan has useful tips for naming files that are also applicable to sample names.</li>
+</ul>
+</div>
 </div>
   </div>
 
@@ -348,6 +486,7 @@
       <li><a href="#exercises">Exercises</a></li>
       <li><a href="#too-easy">Too Easy?</a></li>
       <li><a href="#quiz">Quiz</a></li>
+      <li><a href="#resources">Resources</a></li>
       </ul>
 </div>
       </div>

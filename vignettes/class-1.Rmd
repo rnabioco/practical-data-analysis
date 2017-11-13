@@ -28,6 +28,13 @@ knitr::opts_chunk$set(
 
 We'll cover the basic steps of data import and analysis within RStudio and will highlight some features of the software as we go.
 
+**The class has its own R package, so you should begin by loading it into your session.** You may need to reinstall the package if we make updates.
+
+```{r load_eda}
+# devtools::install_github('rnabioco/eda')
+library(eda)
+```
+
 ## Import
 
 There are two main ways to import data within RStudio. One is interactive, using the "Import Dataset" button in the Environment panel.
@@ -63,7 +70,7 @@ Finally we'll create an RMarkdown document. Select File > New File > RMarkdown..
 
 # Real world example: Data collected in the 96-well plate format.
 
-We'll use tidy data principles to analyze some qPCR data. 
+We'll use tidy data principles to analyze some qPCR data.
 
 ## Formatting data for efficient analysis
 
@@ -84,16 +91,30 @@ The `tidyr` package has useful functions to format data for efficient analysis. 
 These are the workhorse functions in `tidyr`. Use `gather` when variables are in columns and you want to combine them.
 
 ```{r gather}
-mtcars_tbl <- mtcars %>%
-  mutate(name = rownames(.)) %>%
-  select(name, everything()) %>%
-  as_tibble()
+# "wide" format has a variables as columns
+mtcars_tbl
 
-mtcars_tbl %>% gather(key, value, -name) %>% spread(key, value)
+# gather variables and observations into `key` and `value` columns - so-called "long" format
+xx <- mtcars_tbl %>% gather(key, value, -name)
+xx
+
+# and convert back to "wide" format
+xx %>% spread(key, value)
 ```
 
-```{r spread}
+Each form has its advantages. For example, long format makes it easy to calculate summaries:
 
+```{r summ}
+xx %>% group_by(key) %>% summarize(median(value))
+```
+
+Wide format is useful for plotting.
+
+```{r plot_label}
+library(ggrepel)
+ggplot(mtcars_tbl) +
+  geom_point(aes(hp, mpg, size = 5)) +
+  geom_label_repel(aes(hp, mpg, fill = factor(cyl), label = name))
 ```
 
 ### `separate`, `extract`, and `unite`
@@ -116,7 +137,7 @@ dates %>% separate(date, into = c('year', 'month', 'day'), sep = '-')
 
 ### `crossing` and `complete`
 
-The `crossing` method is useful to generate combinations of variables.
+`crossing` is useful to generate combinations of variables.
 
 ```{r crossing}
 sample <- c('wt', 'mut')
@@ -173,9 +194,6 @@ sample_info %>% group_by(sample, hour) %>% summarize(mean(value))
 sample_info %>% spread(hour, value) %>% mutate(t24_norm = t24 - t0)
 ```
 
-### Resources
-
-This [slide deck](https://speakerdeck.com/jennybc/how-to-name-files) from Jenny Bryan has useful tips for naming files that are also applicable to sample names.
 
 ## Organizing samples.
 
@@ -253,3 +271,7 @@ ggplot(anscombe_tidy, aes(x, y)) +
 Create an RMarkdown document and answer the questions from the Exercises section. Submit your final document as "Quiz 1" by Thurs at 10 PM.
 
 **Your submitted document must knit to HTML without errors**. I.e., when you click the "Knit" button, the document should build and display and HTML page.
+
+# Resources
+
+- This [slide deck](https://speakerdeck.com/jennybc/how-to-name-files) from Jenny Bryan has useful tips for naming files that are also applicable to sample names.

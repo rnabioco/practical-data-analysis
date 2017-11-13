@@ -15,9 +15,12 @@ Authors@R: c(
     )
 Description: Course content for IDPT 7620
 Depends:
-  R (>= 3.4.1),
+  R (>= 3.4.1)
+Imports:
   valr,
   tidyverse,
+  ggrepel,
+  gapminder
 License: CC0
 Encoding: UTF-8
 LazyData: true

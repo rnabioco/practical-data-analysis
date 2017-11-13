@@ -1,6 +1,6 @@
 template:
   params:
-    bootswatch: sandstone
+    bootswatch: cosmo
     ganalytics: UA-54095998-4
 
 authors:
