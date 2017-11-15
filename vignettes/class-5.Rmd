@@ -9,12 +9,227 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# Concepts
+## Key concepts
 
-Concepts
+- Introduce genome-wide data with the UCSC genome browser and ENCODE chromatin data
+- Summarizing genomic datatsets as intervals and signals
+- Intersecting gene models, SNP databases, and Chip-Seq data
 
-- ENCODE chromatin data
-- Intervals and signals
-- Gene models, histone ChIP
-- BEDtools and valr
-  
+## Visualizing genomics data with the UCSC genome browser
+ 
+The [UCSC genome browser](http://genome.ucsc.edu/index.html) is a web interface for viewing genomics data. Numerous datasets are available to view, including:
+
+1) Gene annotations ([GENCODE](http://www.gencodegenes.org/releases/current.html))
+2) Gene expression data ([GTEx](https://gtexportal.org/home/)) 
+3) SNP databases ([1000 genomes](http://www.internationalgenome.org/home))
+4) Functional genomics data ([ENCODE](https://www.encodeproject.org/))
+5) User-uploaded datasets
+
+## Genomics data can be summarized as intervals
+
+The genome can be described as a coordinate system:
+```
+chr1 ATGCTAGCTGATCGTAGCTG...
+     0123456789...
+```
+
+```
+chr1 ATGCTAGCTGATCGTAGCTG...
+chr1 0  20
+```
+
+After aligning genomics data, each alignment can be represented as an interval covering a particular genomic sequence.
+
+```
+read 1:           ------            
+read 2:     -----  
+read 3:    ----
+      chr1 ATGCTAGCTGATCGTAGCTG...
+chr1 0 4
+chr1 1 6
+chr1 7 13
+```
+
+The [`BED`](https://genome.ucsc.edu/FAQ/FAQformat#format1) file format defines genomic regions of interest:
+
+```
+#BED3
+#chrom start end
+chr1  0 4
+chr1  1  6
+chr1  7  13
+```
+
+and can define any genomic feature of interest (reads, genes, interesting DNA sequences)
+
+```
+#BED6
+#chrom start end name  score strand
+chr1  0 4 ELAVL1_binding_site 100.00  +
+chr1  1  6  microRNA  10  -
+chr1  7  13 alternative_exon  1 .
+
+interval 1:       ----->            
+interval 2:  <----  
+interval 3:<-->
+      chr1:ATGCTAGCTGATCGTAGCTG...
+
+```
+
+BED files can be downloaded from numerous sources:
+
+1) [UCSC table browser](https://genome.ucsc.edu/cgi-bin/hgTables) provides an easy interface for downloading many types of data as BED (or other) format files  
+2) The ENCODE project provides a data access portal to download experimental datasets from many datasets (BED files [here](https://www.encodeproject.org/matrix/?type=Experiment&files.file_type=bed+narrowPeak)).  
+
+### Bedgraph files define genomic signals
+
+The [`bedgraph`](https://genome.ucsc.edu/goldenPath/help/bedgraph.html) format is commonly used to summarize read coverage from ChIP-Seq, CLIP-Seq, RNA-Seq, and other genome-wide data. 
+
+```
+interval 1:       ------            
+interval 2: -----  
+interval 3:----
+      chr1 ATGCTAGCTGATCGTAGCTG...
+Coverage   12221101111110000000
+
+chrom start end score
+chr1  0  1  1
+chr1  1  4  2
+chr1  4  6  1
+chr1  7 13  1
+```
+
+## Exploring ChIP-Seq Data
+
+The ENCODE project produced hundreds of ChIP-Seq datasets across dozens of humans cell lines. A compendium of ChIP-Seq experiments from 161 DNA-binding proteins were aggregated into a single BED file, available from the UCSC genome browser. We will use this dataset (see [description](http://genome.ucsc.edu/cgi-bin/hgTables?db=hg19&hgta_group=regulation&hgta_track=wgEncodeRegTfbsClusteredV3&hgta_table=wgEncodeRegTfbsClusteredV3&hgta_doSchema=describe+table+schema)) to explore interval analysis methods.
+
+
+### Simplified Sequencing analysis workflow
+
+Genome Browser snapshot of reads + coverage + peaks
+
+Step | File Format | Description
+----- | ------- | -----------
+Get Sequences | FASTQ | Sequencing Reads
+Align to genome | BAM | Alignment information for reads
+Summarize Coverage | BEDGRAPH | Coverage
+Define enriched regions | BED | Peaks
+
+### ChIP-Seq Peaks in Human Cells
+```{r}
+library(tidyverse)
+
+url <- "http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeRegTfbsClustered/wgEncodeRegTfbsClusteredV3.bed.gz"
+
+download.file(url, "wgEncodeRegTfbsClusteredV3.bed.gz")
+
+# or alternatively save to data-raw
+tf_bed <- read_tsv("wgEncodeRegTfbsClusteredV3.bed.gz",
+                   col_names = F)
+
+# or alternatively load directly
+# tf_bed <- read_tsv(url, col_names = F)
+
+colnames(tf_bed) <- c(
+  "chrom",
+  "start",
+  "end",
+  "TF",
+  "score",
+  "exptCount",
+  "expNum",
+  "expScore"
+)
+
+```
+
+
+1) Which TF has the most binding-sites (AKA peaks)?
+
+2) Which TF covers the most nucleotides in the genome?
+
+```{r ex_1}
+group_by(tf_bed, TF) %>%  # group by TF
+  summarize(total = n()) %>%  # calculate number of peaks per TF
+  arrange(desc(total)) # sort 
+
+```
+
+```{r ex_2}
+mutate(tf_bed, 
+       peak_length = end - start) %>% # calculate length of each interval
+  group_by(TF) %>%  # group by TF
+  summarize(total_bps = sum(peak_length)) %>% # sum peak_length per TF
+  arrange(desc(total_bps)) # rank by total peak_lengths
+
+```
+
+## How to analyze intervals and signals?
+
+- [BEDTools](http://bedtools.readthedocs.io/en/latest/) (also [BedOPS](https://bedops.readthedocs.io/en/latest/))
+- [valr](https://rnabioco.github.io/valr/) (also  [bedr](https://scfbm.biomedcentral.com/articles/10.1186/s13029-016-0059-5), [GRanges](https://bioconductor.org/packages/release/bioc/html/GenomicRanges.html))
+
+### Install valr
+
+```{r valr_install}
+#install.packages("valr")
+```
+
+### How many SNPs in TF binding sites?
+
+```{r}
+library(valr)
+snps <- read_bed(valr_example("hg19.snps147.chr22.bed.gz"), 
+                 n_fields = 6)
+snps
+```
+
+```{r}
+genes <- read_bed(valr_example("hg19.refGene.chr22.bed.gz"), 
+                 n_fields = 12)
+genes
+```
+
+```{r}
+snps_in_tfs <- bed_intersect(tf_bed, snps) 
+```
+
+### How close are these SNPs to transcription start sites?
+
+```{r}
+genes <- read_bed(valr_example("hg19.refGene.chr22.bed.gz"), 
+                 n_fields = 12)
+genes
+```
+
+Next we'll generate transcription start sites:
+
+```{r}
+tss <- filter(genes,
+       strand == "+") %>% 
+  mutate(end = start + 1) %>% 
+  dplyr::select(chrom:strand)
+
+tss
+```
+
+```{r}
+bed_closest(snps, tss, suffix = c("", ".tss")) %>% 
+  dplyr::filter(abs(.dist) < 50) %>% 
+  bed_intersect(., tf_bed, 
+              suffix = c("", ".tf"))   
+
+```
+
+### Distribution of ChIP-Seq Signals around a genomic feature
+
+Show example metagene plot from a publication
+
+### Steps in generating a metagene
+
+### Use PolII P-Ser5 or H3K4 ChIP seq to show a TSS metagene
+
+## Assignment
+
+
+
