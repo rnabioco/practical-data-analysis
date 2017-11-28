@@ -97,6 +97,8 @@ Tidy data adopts three simple conventions:
 A `tibble` is similar to a `data.frame` with some important differences. A `tibble` provides a quick overview of your data including its structure (rows and columns) and column types. Use `as_tibble()` to convert a `data.frame`:
 
 ```{r tibble}
+head(iris)
+
 library(tidyverse)
 as_tibble(iris)
 ```
@@ -190,7 +192,7 @@ Many biological assays make use of the 96 (or 384) well plate. Note the similari
 
 All variables should be systematically listed in your sample names, i.e. `name_rep_time_RT`. Systematic naming makes it easy to extract relevant information.
 
-Take an example like this, where the sample names are a combination of a genotype (`WT` and `MT`), a time point (0,4,8,24 hour), and a replicate (1,2,3), separated by a hyphen.
+Take this example, where the sample names are a combination of a genotype (`WT` and `MT`), a time point (0,4,8,24 hour), and a replicate (1,2,3), separated by a hyphen.
 
 ```{r sample.names, echo=FALSE}
 library(tidyverse)
@@ -222,6 +224,8 @@ sample_info <- samples %>%
     into = c('sample', 'hour', 'rep'),
     sep = "-"
   )
+
+sample_info
 ```
 
 Now we can use `dplyr` and `tidyr` functions to manipulate the data.
@@ -232,15 +236,40 @@ sample_info %>% group_by(sample, hour) %>% summarize(mean(value))
 sample_info %>% spread(hour, value) %>% mutate(t24_norm = t24 - t0)
 ```
 
+## qPCR data
+
+The class library provides two `tibbles` of simulated qPCR data, `qpcr_names` and `qpcr_data`.
+
+```{r qpcr}
+library(eda)
+qpcr_names
+
+qpcr_data
+```
+
+We will use tidying concepts to prepare this data for efficient analysis and visualization.
+
+### Tidying
+
+### Statistical summary
+
+### Plots
+
 # Exercises
 
-1. 
+1. Tidy the `mtcars` data set. Note that car names are row names in the built-in data.frame, so they need to be moved to their own column prior to tibble conversion.
 
-2.  
+The tidied data should look something like:
 
-3. 
+```{r mtcars_tidy, echo=FALSE}
+mtcars %>% mutate(name = rownames(.)) %>% as_tibble() %>% gather(var, value, -name)
+```
 
-4.
+2. For each car in the tidy `mtcars` data set, calculate the mean (`mean()`) and variance (`var()`) for each variable. -
+
+3. Plot `mpg` vs `cyl` for the `mtcars` data set. Which format should you use? The original data set, or the tidied one? Why? 
+
+4. Using the provided `qpcr` data, plot the changes in gene expression over time. Use colors to represent genotypes and facets for the different genes. Assume that `ct` is expression level.
 
 # Too Easy?
 
@@ -260,7 +289,7 @@ anscombe_tidy <- anscombe %>%
 
 anscombe_tidy
 ```
-
+dd
 
 2. Calculate summary statistics in your tidy `anscombe` data. Calculate `n`, `mean`, and `var` for each `x` and `y` variable in the sets.  Try using `summarize_each` for this calculation.
 

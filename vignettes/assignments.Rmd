@@ -30,8 +30,8 @@ Your grade is based on a combination of:
 
 There are two types of assignments in the course:
 
-- Nightly quizzes, worth 25 points.
-- Weekend analyses, worth 50 points.
+- Nightly quizzes, where questions are worth 5 points each.
+- Weekend analyses, where questions are worth 10 points each.
 
 Assignments must be turned in as Rmarkdown text files via Canvas. **They must render completely when the Knit button is clicked**. This menas you will need to load all libraries within the document. This is a good chunk to put in your Rmarkdown code:
 

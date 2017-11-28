@@ -17,7 +17,7 @@ IDPT 7810 006
 
 The course (2 credit hours) consists of seven 2 hour classes held Mon, Wed and Fri from Nov 29 through Dec 15 in the Health Sciences Library Teaching Lab 2 from 1:00-3:00 pm.
 
-We have dedicated office hours on Thurs from 1-2:30pm in RC1 South 9th floor in the main office (behind the glass walls). Come with questions, problems, etc.
+We have dedicated office hours on Thurs from 2:30-4pm in RC1 South 9th floor in the main office (behind the glass walls). Come with questions, problems, etc. Please send an email to `rbi.fellows@ucdenver.edu` to let us know you're coming.
 
 ### Instructor
 

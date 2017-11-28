@@ -104,7 +104,7 @@
 <p><strong>The class has its own R package, so you should begin by loading it into your session.</strong> You will need to reinstall the package when we make updates.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># devtools::install_github('rnabioco/eda')</span>
 <span class="kw">library</span>(eda)
-<span class="co">#&gt; Welcome to the Exploratory Data Analysis</span></code></pre></div>
+<span class="co">#&gt; Welcome to the Exploratory Data Analysis Course</span></code></pre></div>
 <div id="panels" class="section level2">
 <h2 class="hasAnchor">
 <a href="#panels" class="anchor"></a>Panels</h2>
@@ -167,7 +167,16 @@ readxl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentat
 <a href="#the-tibble" class="anchor"></a>The <code>tibble</code>
 </h2>
 <p>A <code>tibble</code> is similar to a <code>data.frame</code> with some important differences. A <code>tibble</code> provides a quick overview of your data including its structure (rows and columns) and column types. Use <code>as_tibble()</code> to convert a <code>data.frame</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(iris)
+<span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
+<span class="co">#&gt; 1          5.1         3.5          1.4         0.2  setosa</span>
+<span class="co">#&gt; 2          4.9         3.0          1.4         0.2  setosa</span>
+<span class="co">#&gt; 3          4.7         3.2          1.3         0.2  setosa</span>
+<span class="co">#&gt; 4          4.6         3.1          1.5         0.2  setosa</span>
+<span class="co">#&gt; 5          5.0         3.6          1.4         0.2  setosa</span>
+<span class="co">#&gt; 6          5.4         3.9          1.7         0.4  setosa</span>
+
+<span class="kw">library</span>(tidyverse)
 <span class="kw">as_tibble</span>(iris)
 <span class="co">#&gt; # A tibble: 150 x 5</span>
 <span class="co">#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
@@ -354,7 +363,7 @@ tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <h2 class="hasAnchor">
 <a href="#sample-names" class="anchor"></a>Sample names</h2>
 <p>All variables should be systematically listed in your sample names, i.e. <code>name_rep_time_RT</code>. Systematic naming makes it easy to extract relevant information.</p>
-<p>Take an example like this, where the sample names are a combination of a genotype (<code>WT</code> and <code>MT</code>), a time point (0,4,8,24 hour), and a replicate (1,2,3), separated by a hyphen.</p>
+<p>Take this example, where the sample names are a combination of a genotype (<code>WT</code> and <code>MT</code>), a time point (0,4,8,24 hour), and a replicate (1,2,3), separated by a hyphen.</p>
 <pre><code>#&gt; # A tibble: 24 x 2
 #&gt;    sample.name value
 #&gt;  *       &lt;chr&gt; &lt;int&gt;
@@ -375,7 +384,23 @@ tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
     sample.name,
     <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">'sample'</span>, <span class="st">'hour'</span>, <span class="st">'rep'</span>),
     <span class="dt">sep =</span> <span class="st">"-"</span>
-  )</code></pre></div>
+  )
+
+sample_info
+<span class="co">#&gt; # A tibble: 24 x 4</span>
+<span class="co">#&gt;    sample  hour   rep value</span>
+<span class="co">#&gt;  *  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;</span>
+<span class="co">#&gt;  1     MT    t0     1    81</span>
+<span class="co">#&gt;  2     MT    t0     2    35</span>
+<span class="co">#&gt;  3     MT    t0     3    89</span>
+<span class="co">#&gt;  4     MT   t24     1    32</span>
+<span class="co">#&gt;  5     MT   t24     2    24</span>
+<span class="co">#&gt;  6     MT   t24     3    62</span>
+<span class="co">#&gt;  7     MT    t4     1    67</span>
+<span class="co">#&gt;  8     MT    t4     2    14</span>
+<span class="co">#&gt;  9     MT    t4     3    49</span>
+<span class="co">#&gt; 10     MT    t8     1    94</span>
+<span class="co">#&gt; # ... with 14 more rows</span></code></pre></div>
 <p>Now we can use <code>dplyr</code> and <code>tidyr</code> functions to manipulate the data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample, hour) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">mean</span>(value))
 <span class="co">#&gt; # A tibble: 8 x 3</span>
@@ -402,15 +427,79 @@ sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="
 <span class="co">#&gt; 5     WT     2    45    80    97    12       35</span>
 <span class="co">#&gt; 6     WT     3    16    70    65    43       54</span></code></pre></div>
 </div>
+<div id="qpcr-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#qpcr-data" class="anchor"></a>qPCR data</h2>
+<p>The class library provides two <code>tibbles</code> of simulated qPCR data, <code>qpcr_names</code> and <code>qpcr_data</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(eda)
+qpcr_names
+<span class="co">#&gt; # A tibble: 8 x 13</span>
+<span class="co">#&gt;     row             `1`              `2`              `3`              `4`</span>
+<span class="co">#&gt;   &lt;chr&gt;           &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;</span>
+<span class="co">#&gt; 1     A mut_0_ACTIN_+_1    mut_0_IFN_+_2 mut_12_ACTIN_+_3 mut_24_ACTIN_+_1</span>
+<span class="co">#&gt; 2     B mut_0_ACTIN_-_1    mut_0_IFN_-_2 mut_12_ACTIN_-_3 mut_24_ACTIN_-_1</span>
+<span class="co">#&gt; 3     C mut_0_ACTIN_+_2    mut_0_IFN_+_3   mut_12_IFN_+_1 mut_24_ACTIN_+_2</span>
+<span class="co">#&gt; 4     D mut_0_ACTIN_-_2    mut_0_IFN_-_3   mut_12_IFN_-_1 mut_24_ACTIN_-_2</span>
+<span class="co">#&gt; 5     E mut_0_ACTIN_+_3 mut_12_ACTIN_+_1   mut_12_IFN_+_2 mut_24_ACTIN_+_3</span>
+<span class="co">#&gt; 6     F mut_0_ACTIN_-_3 mut_12_ACTIN_-_1   mut_12_IFN_-_2 mut_24_ACTIN_-_3</span>
+<span class="co">#&gt; 7     G   mut_0_IFN_+_1 mut_12_ACTIN_+_2   mut_12_IFN_+_3   mut_24_IFN_+_1</span>
+<span class="co">#&gt; 8     H   mut_0_IFN_-_1 mut_12_ACTIN_-_2   mut_12_IFN_-_3   mut_24_IFN_-_1</span>
+<span class="co">#&gt; # ... with 8 more variables: `5` &lt;chr&gt;, `6` &lt;chr&gt;, `7` &lt;chr&gt;, `8` &lt;chr&gt;,</span>
+<span class="co">#&gt; #   `9` &lt;chr&gt;, `10` &lt;chr&gt;, `11` &lt;chr&gt;, `12` &lt;chr&gt;</span>
+
+qpcr_data
+<span class="co">#&gt; # A tibble: 8 x 13</span>
+<span class="co">#&gt;     row   `1`   `2`   `3`   `4`   `5`   `6`   `7`   `8`   `9`  `10`  `11`</span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1     A    23    26    25    26    24    25    17    15    16    15    20</span>
+<span class="co">#&gt; 2     B    30    30    30    30    30    30    30    30    30    30    30</span>
+<span class="co">#&gt; 3     C    23    23    26    23    23    26    16    17    20    15    19</span>
+<span class="co">#&gt; 4     D    30    30    30    30    30    30    30    30    30    30    30</span>
+<span class="co">#&gt; 5     E    25    24    25    24    26    24    20    16    20    16    15</span>
+<span class="co">#&gt; 6     F    30    30    30    30    30    30    30    30    30    30    30</span>
+<span class="co">#&gt; 7     G    22    25    24    23    24    26    15    20    16    17    18</span>
+<span class="co">#&gt; 8     H    30    30    30    30    30    30    30    30    30    30    30</span>
+<span class="co">#&gt; # ... with 1 more variables: `12` &lt;dbl&gt;</span></code></pre></div>
+<p>We will use tidying concepts to prepare this data for efficient analysis and visualization.</p>
+<div id="tidying" class="section level3">
+<h3 class="hasAnchor">
+<a href="#tidying" class="anchor"></a>Tidying</h3>
+</div>
+<div id="statistical-summary" class="section level3">
+<h3 class="hasAnchor">
+<a href="#statistical-summary" class="anchor"></a>Statistical summary</h3>
+</div>
+<div id="plots" class="section level3">
+<h3 class="hasAnchor">
+<a href="#plots" class="anchor"></a>Plots</h3>
+</div>
+</div>
 </div>
 <div id="exercises" class="section level1">
 <h1 class="hasAnchor">
 <a href="#exercises" class="anchor"></a>Exercises</h1>
 <ol style="list-style-type: decimal">
-<li>
-<li>
-<li>
-<li>
+<li>Tidy the <code>mtcars</code> data set. Note that car names are row names in the built-in data.frame, so they need to be moved to their own column prior to tibble conversion.</li>
+</ol>
+<p>The tidied data should look something like:</p>
+<pre><code>#&gt; # A tibble: 352 x 3
+#&gt;                 name   var value
+#&gt;                &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+#&gt;  1         Mazda RX4   mpg  21.0
+#&gt;  2     Mazda RX4 Wag   mpg  21.0
+#&gt;  3        Datsun 710   mpg  22.8
+#&gt;  4    Hornet 4 Drive   mpg  21.4
+#&gt;  5 Hornet Sportabout   mpg  18.7
+#&gt;  6           Valiant   mpg  18.1
+#&gt;  7        Duster 360   mpg  14.3
+#&gt;  8         Merc 240D   mpg  24.4
+#&gt;  9          Merc 230   mpg  22.8
+#&gt; 10          Merc 280   mpg  19.2
+#&gt; # ... with 342 more rows</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>For each car in the tidy <code>mtcars</code> data set, calculate the mean (<code>mean()</code>) and variance (<code>var()</code>) for each variable. -</p></li>
+<li><p>Plot <code>mpg</code> vs <code>cyl</code> for the <code>mtcars</code> data set. Which format should you use? The original data set, or the tidied one? Why?</p></li>
+<li><p>Using the provided <code>qpcr</code> data, plot the changes in gene expression over time. Use colors to represent genotypes and facets for the different genes. Assume that <code>ct</code> is expression level.</p></li>
 </ol>
 </div>
 <div id="too-easy" class="section level1">
@@ -434,6 +523,7 @@ sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="
 #&gt;  9     1    12 10.84
 #&gt; 10     1    13  7.58
 #&gt; # ... with 34 more rows</code></pre>
+<p>dd</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Calculate summary statistics in your tidy <code>anscombe</code> data. Calculate <code>n</code>, <code>mean</code>, and <code>var</code> for each <code>x</code> and <code>y</code> variable in the sets. Try using <code>summarize_each</code> for this calculation.</li>
 </ol>
@@ -482,6 +572,7 @@ sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="
       <li>
 <a href="#real-world-example-data-in-the-96-well-plate-format-">Real world example: Data in the 96-well plate format.</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#sample-names">Sample names</a></li>
+      <li><a href="#qpcr-data">qPCR data</a></li>
       </ul>
 </li>
       <li><a href="#exercises">Exercises</a></li>
