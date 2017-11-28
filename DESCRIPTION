@@ -13,14 +13,16 @@ Authors@R: c(
     email = "kent.riemondy@gmail.com",
     role = c("aut"))
     )
-Description: Course content for IDPT 7620
+Description: Course materials for IDPT 7620
 Depends:
   R (>= 3.4.1)
 Imports:
   valr,
   tidyverse,
   ggrepel,
-  gapminder
+  gapminder,
+  viridis,
+  DT
 License: CC0
 Encoding: UTF-8
 LazyData: true

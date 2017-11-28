@@ -51,22 +51,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/class-1.html">Class 1: Overview and Data Wrangling</a>
-    </li>
-    <li>
-      <a href="../articles/class-2.html">Class 2: Writing Reproducible Reports</a>
-    </li>
-    <li>
-      <a href="../articles/class-3.html">Class 3: Common Analysis Challenges</a>
-    </li>
-    <li>
-      <a href="../articles/class-4.html">Class 4: Gene Expression Vignette</a>
-    </li>
-    <li>
-      <a href="../articles/class-5.html">Class 5: Chromatin Vignette</a>
-    </li>
-    <li>
-      <a href="../articles/class-6.html">Class 6: Single-Cell Analysis</a>
+      <a href="../articles/class-1.html">Class 1: Overview and Data Tidying</a>
     </li>
     <li class="divider">
     <li>
@@ -97,7 +82,7 @@
       <h1>Class 1: Overview and data wrangling</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-11-13</h4>
+            <h4 class="date">2017-11-28</h4>
           </div>
 
     
@@ -108,7 +93,8 @@
 <a href="#goals-for-the-class" class="anchor"></a>Goals for the class</h1>
 <ul>
 <li><p><strong>Learn the basics of data import, processing, plotting, and report generation in RStudio.</strong></p></li>
-<li><p><strong>Reach for RStudio instead of MS Excel / Prism etc as your go-to analysis software.</strong> Workflows in Rmarkdown are reproducible by yourself and others. Standard spreadsheet programs require human interaction (i.e., selecting cells, entering formulae) and are prone to mistakes.</p></li>
+<li><p><strong>Reach for RStudio instead of MS Excel, Prism, etc as your go-to analysis software.</strong> Workflows in Rmarkdown can be reproduced by you and others. Spreadsheet programs require human interaction (i.e., selecting cells, entering formulae) and are prone to mistakes.</p></li>
+<li><p><strong>Learn productive analysis habits.</strong> Organize your data for efficient analysis and learn to explore basic properties of a data set.</p></li>
 </ul>
 </div>
 <div id="rstudio-overview" class="section level1">
@@ -123,23 +109,24 @@
 <h2 class="hasAnchor">
 <a href="#import" class="anchor"></a>Import</h2>
 <p>There are two main ways to import data within RStudio. One is interactive, using the “Import Dataset” button in the Environment panel.</p>
-<p><img src="img/class-1-data-import.png" alt="data import"> The other is to use functions in <code>readr</code> or <code>readxl</code> to load data on the console or within an RMarkdown report.</p>
+<p><img src="img/class-1-data-import.png" alt="data import"> Alternatively you can use functions in the <code>readr</code> and <code>readxl</code> libraries to load data on the console or within an RMarkdown report. All of the functions have consistent <code>read_*</code> names.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">readr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">read_tsv</a></span>(<span class="st">'XXX'</span>)
 readxl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readxl/topics/read_excel">read_excel</a></span>(<span class="st">'XXX'</span>)</code></pre></div>
 </div>
 <div id="processing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#processing" class="anchor"></a>Processing</h2>
-<p>The <code>tidyverse</code> is a collection of libraries that enable efficient data processing and visualization. You will probably start many analyses by loading the library:</p>
+<p>The <code>tidyverse</code> is a collection of libraries that enable efficient data processing and visualization. You will probably start many analyses by loading the <code>tidyverse</code> library. This library loads a number of other libraries that are useful for data processing and plotting.:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-<span class="co">#&gt; ── Attaching packages ──────────────────────────────────────────────────────────── tidyverse 1.2.0 ──</span>
+<span class="co">#&gt; ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</span>
 <span class="co">#&gt; ✔ ggplot2 2.2.1     ✔ purrr   0.2.4</span>
 <span class="co">#&gt; ✔ tibble  1.3.4     ✔ dplyr   0.7.4</span>
 <span class="co">#&gt; ✔ tidyr   0.7.2     ✔ stringr 1.2.0</span>
 <span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.2.0</span>
-<span class="co">#&gt; ── Conflicts ─────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span>
+<span class="co">#&gt; ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span>
 <span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span>
 <span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></code></pre></div>
+<p>This one invocation loads several libraries including <code>dplyr</code> and <code>ggplot2</code>.</p>
 </div>
 <div id="plotting" class="section level2">
 <h2 class="hasAnchor">
@@ -153,11 +140,12 @@ readxl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentat
 <h2 class="hasAnchor">
 <a href="#reports" class="anchor"></a>Reports</h2>
 <p>Finally we’ll create an RMarkdown document. Select File &gt; New File &gt; RMarkdown… and fill the Title and Author fields. Then click OK to create an RMarkdown document.</p>
+<p>Rmarkdown is customizable with tables of contents, tabbed views and more. See the <a href="http://rmarkdown.rstudio.com/articles.html">Rmarkdown documentation</a> for examples.</p>
 </div>
 </div>
-<div id="real-world-example-data-collected-in-the-96-well-plate-format-" class="section level1">
+<div id="real-world-example-data-col-in-the-96-well-plate-format-" class="section level1">
 <h1 class="hasAnchor">
-<a href="#real-world-example-data-collected-in-the-96-well-plate-format-" class="anchor"></a>Real world example: Data collected in the 96-well plate format.</h1>
+<a href="#real-world-example-data-col-in-the-96-well-plate-format-" class="anchor"></a>Real world example: Data col in the 96-well plate format.</h1>
 <p>We’ll use tidy data principles to analyze some qPCR data.</p>
 <div id="formatting-data-for-efficient-analysis" class="section level2">
 <h2 class="hasAnchor">
@@ -165,9 +153,10 @@ readxl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentat
 <p>Reformatting your data into a “tidy” format is a useful practice that allows you efficiently manipulate and analyze data. We will start with some toy examples and then will reformat a commonly used data type from a quantitative PCR experiment.</p>
 <p>Tidy data adopts three simple conventions:</p>
 <ul>
-<li>columns are variables</li>
-<li>rows are observations</li>
-<li>related data should be stored in separate tables</li>
+<li>
+<strong>columns are variables</strong> (e.g., <code>cyl</code> and <code>mpg</code> in <code>mtcars</code>)</li>
+<li><p><strong>rows are observations</strong> (e.g., Maza RX4 has 6 cyl and gets 21 mpg)</p></li>
+<li><p>related data should be stored in separate tables</p></li>
 </ul>
 </div>
 <div id="the-tidyr-package" class="section level2">
@@ -179,7 +168,8 @@ readxl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentat
 <a href="#gather-and-spread" class="anchor"></a><code>gather</code> and <code>spread</code>
 </h3>
 <p>These are the workhorse functions in <code>tidyr</code>. Use <code>gather</code> when variables are in columns and you want to combine them.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># "wide" format has a variables as columns</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(eda)
+<span class="co"># column names in "wide" format are variables</span>
 mtcars_tbl
 <span class="co">#&gt; # A tibble: 32 x 12</span>
 <span class="co">#&gt;                 name   mpg   cyl  disp    hp  drat    wt  qsec    vs    am</span>
@@ -247,7 +237,7 @@ xx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sprea
 <span class="co">#&gt;  9  qsec          17.710</span>
 <span class="co">#&gt; 10    vs           0.000</span>
 <span class="co">#&gt; 11    wt           3.325</span></code></pre></div>
-<p>Wide format is useful for plotting.</p>
+<p>And wide format is useful for plotting.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggrepel)
 <span class="kw">ggplot</span>(mtcars_tbl) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(hp, mpg, <span class="dt">size =</span> <span class="dv">5</span>)) <span class="op">+</span>
@@ -258,7 +248,7 @@ xx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sprea
 <h3 class="hasAnchor">
 <a href="#separate-extract-and-unite" class="anchor"></a><code>separate</code>, <code>extract</code>, and <code>unite</code>
 </h3>
-<p><code>separate</code> takes a column on input and returns multiple columns, each with a new variable. For example, a column with year/month/day information can be separated into invidual columns.</p>
+<p><code>separate</code> takes a column containing multiple variables on input and returns multiple columns, each with a new variable. For example, a column with year/month/day information can be separated into invidual columns.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dates
 <span class="co">#&gt; # A tibble: 120 x 1</span>
 <span class="co">#&gt;           date</span>
@@ -290,32 +280,39 @@ dates <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">se
 <span class="co">#&gt;  9  1999   Feb     9</span>
 <span class="co">#&gt; 10  1999   Feb    10</span>
 <span class="co">#&gt; # ... with 110 more rows</span></code></pre></div>
+<p>The <code>sep</code> argument can take:</p>
+<ul>
+<li><p>a character (split <code>rep_value</code> using <code>sep = '_'</code>)</p></li>
+<li><p>a position (split <code>a1</code> using <code>sep = 1</code> into <code>a</code> and <code>1</code>)</p></li>
+</ul>
+<p>Finally the <code>extra</code> and <code>fill</code> arguments control what happens when there are too many and not enough variables.</p>
 </div>
 <div id="crossing-and-complete" class="section level3">
 <h3 class="hasAnchor">
 <a href="#crossing-and-complete" class="anchor"></a><code>crossing</code> and <code>complete</code>
 </h3>
-<p><code>crossing</code> is useful to generate combinations of variables.</p>
+<p><code>crossing</code> is useful to generate combinations of variables. For example, use <code>crossing</code> to generate combinations of experimental varaibles including sample names, gene names, reaction conditions, and replicates.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'wt'</span>, <span class="st">'mut'</span>)
 gene &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'IFN'</span>, <span class="st">'ACTIN'</span>)
-rt &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'+'</span>, <span class="st">'-'</span>)
+time &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="dv">24</span>, <span class="dv">48</span>)
+rt &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'+'</span>, <span class="st">'-'</span>) <span class="co"># reverse transcriptase added?</span>
 rep &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>
 
-tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/expand">crossing</a></span>(sample, gene, rep, rt)
-<span class="co">#&gt; # A tibble: 24 x 4</span>
-<span class="co">#&gt;    sample  gene   rep    rt</span>
-<span class="co">#&gt;     &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;chr&gt;</span>
-<span class="co">#&gt;  1    mut ACTIN     1     -</span>
-<span class="co">#&gt;  2    mut ACTIN     1     +</span>
-<span class="co">#&gt;  3    mut ACTIN     2     -</span>
-<span class="co">#&gt;  4    mut ACTIN     2     +</span>
-<span class="co">#&gt;  5    mut ACTIN     3     -</span>
-<span class="co">#&gt;  6    mut ACTIN     3     +</span>
-<span class="co">#&gt;  7    mut   IFN     1     -</span>
-<span class="co">#&gt;  8    mut   IFN     1     +</span>
-<span class="co">#&gt;  9    mut   IFN     2     -</span>
-<span class="co">#&gt; 10    mut   IFN     2     +</span>
-<span class="co">#&gt; # ... with 14 more rows</span></code></pre></div>
+tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/expand">crossing</a></span>(sample, gene, time, rep, rt)
+<span class="co">#&gt; # A tibble: 96 x 5</span>
+<span class="co">#&gt;    sample  gene  time   rep    rt</span>
+<span class="co">#&gt;     &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;</span>
+<span class="co">#&gt;  1    mut ACTIN     0     1     -</span>
+<span class="co">#&gt;  2    mut ACTIN     0     1     +</span>
+<span class="co">#&gt;  3    mut ACTIN     0     2     -</span>
+<span class="co">#&gt;  4    mut ACTIN     0     2     +</span>
+<span class="co">#&gt;  5    mut ACTIN     0     3     -</span>
+<span class="co">#&gt;  6    mut ACTIN     0     3     +</span>
+<span class="co">#&gt;  7    mut ACTIN    12     1     -</span>
+<span class="co">#&gt;  8    mut ACTIN    12     1     +</span>
+<span class="co">#&gt;  9    mut ACTIN    12     2     -</span>
+<span class="co">#&gt; 10    mut ACTIN    12     2     +</span>
+<span class="co">#&gt; # ... with 86 more rows</span></code></pre></div>
 </div>
 </div>
 <div id="naming-samples-" class="section level2">
@@ -402,14 +399,7 @@ qpcr
 <h1 class="hasAnchor">
 <a href="#exercises" class="anchor"></a>Exercises</h1>
 <ol style="list-style-type: decimal">
-<li>Reformat the <code>datasaurus</code> dataset so that the following plotting code works:</li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">datasaurus_tidy <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>dataset)</code></pre></div>
-<p>What does this plot tell you?</p>
-<ol start="2" style="list-style-type: decimal">
+<li>
 <li>
 <li>
 <li>
@@ -437,8 +427,11 @@ qpcr
 #&gt; 10     1    13  7.58
 #&gt; # ... with 34 more rows</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li><p>Calculate summary statistics in your tidy <code>anscombe</code> data. Calculate <code>n</code>, <code>mean</code> for each <code>x</code> and <code>y</code> variable in the sets. Calculate the <code>cor</code> between <code>x</code> and <code>y</code> for each set. What do you infer from these summary statistics?</p></li>
-<li><p>Plot the tidy <code>anscombe</code> data. Plot each <code>x</code>/<code>y</code> point on separate facets for each set, and plot a smoothing line. Examine the plots. How do they compare to the summary statistics?</p></li>
+<li>Calculate summary statistics in your tidy <code>anscombe</code> data. Calculate <code>n</code>, <code>mean</code>, and <code>var</code> for each <code>x</code> and <code>y</code> variable in the sets. Try using <code>summarize_each</code> for this calculation.</li>
+</ol>
+<p>Calculate the <code>cor</code> between <code>x</code> and <code>y</code> for each set. What do you infer from these summary statistics?</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Plot the tidy <code>anscombe</code> data. Plot each <code>x</code>/<code>y</code> point on separate facets for each set, and plot a smoothing line. Examine the plots. How do they compare to the summary statistics?</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(anscombe_tidy, <span class="kw">aes</span>(x, y)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
@@ -476,7 +469,7 @@ qpcr
       </ul>
 </li>
       <li>
-<a href="#real-world-example-data-collected-in-the-96-well-plate-format-">Real world example: Data collected in the 96-well plate format.</a><ul class="nav nav-pills nav-stacked">
+<a href="#real-world-example-data-col-in-the-96-well-plate-format-">Real world example: Data col in the 96-well plate format.</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#formatting-data-for-efficient-analysis">Formatting data for efficient analysis</a></li>
       <li><a href="#the-tidyr-package">The <code>tidyr</code> package</a></li>
       <li><a href="#naming-samples-">Naming samples.</a></li>

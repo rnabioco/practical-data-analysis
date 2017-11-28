@@ -9,8 +9,6 @@ Syllabus
 
 This short course teaches you to analyze and visualize large, complex data sets use the R statistical programming language, RStudio, and new tools available in the "tidyverse". We use common biological experiments to illustrate analysis strategies including studies of mRNA expression, histone post-translational modification in the context of chromatin, and cell-type characterization using single cell approaches.
 
-Completion of this course is a pre-requisite for taking the [Genome Analysis Workshop](http://molb7621.github.io/workshop/), a popular course taught in the Spring semester.
-
 ### Course number
 
 IDPT 7810 006
