@@ -40,6 +40,8 @@ library(tidyverse)
 library(eda)
 ```
 
+You are welcome and encouraged to work in groups to complete the assignments. One stipulation: if you work together, tell us who your collaborators were in the assignment.
+
 # Grading Rubric
 
 Each assignment problem will be evaluated using the following rubric:
