@@ -1,5 +1,5 @@
 ---
-title: "Class 5: Chromatin Vignette"
+title: "Class 4: Genomic Inveral Analysis Vignette"
 author: "Jay Hesselberth"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
