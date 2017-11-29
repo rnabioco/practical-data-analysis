@@ -84,14 +84,19 @@ Finally we'll create an RMarkdown document in the Editor panel. Select File > Ne
 
 Rmarkdown is customizable with tables of contents, tabbed views and more. See the [Rmarkdown documentation](http://rmarkdown.rstudio.com/articles.html) for examples.
 
+
+### Projects
+
+RStudio provides a "Project" concept to keep related analyses together. I suggest starting each class by making your own project (File > New Project).
+
 # Formatting data for efficient analysis
 
 Reformatting your data into a "tidy" format is a useful practice that allows you efficiently manipulate and analyze data. We will start with some toy examples and then will reformat a commonly used data type from a quantitative PCR experiment.
 
 Tidy data adopts three simple conventions:
 
-1. **columns are variables** (e.g., `cyl` and `mpg` in `mtcars`)
-2. **rows are observations** (e.g., Maza RX4 has 6 cyl and gets 21 mpg)
+1. **columns are variables** 
+2. **rows are observations** 
 3. store related data in separate tables
 
 ## The `tibble`
@@ -303,11 +308,11 @@ The tidied data should look something like:
 mtcars %>% mutate(name = rownames(.)) %>% as_tibble() %>% gather(var, value, -name)
 ```
 
-2. For each car in the tidy `mtcars` data set, calculate the mean (`mean()`) and variance (`var()`) for each variable.
+2. For each car in the tidy `mtcars` data set, calculate the mean (`mean()`) and variance (`var()`) for each variable. Try using both `summarize()` and `summarize_each()`.
 
 3. Plot `mpg` vs `cyl` for the `mtcars` data set. Which format should you use? The original data set, or the tidied one? Why? 
 
-4. Using the provided `qpcr` data, plot the changes in gene expression over time. Use colors to represent genotypes and facets for the different genes. If that's too easy, add error bars (`geom_errorbar`) and connect each point with a line (`geom_line`).
+4. Using the provided `qpcr` data, plot the changes in gene expression over time. Use colors to represent genotypes and facets for the different genes. If that's too easy, add error bars (`geom_errorbar()`) and connect each point with a line (`geom_line()`).
 
 # Too Easy?
 

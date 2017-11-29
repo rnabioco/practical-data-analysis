@@ -139,6 +139,11 @@ readxl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentat
 <p>Finally we’ll create an RMarkdown document in the Editor panel. Select File &gt; New File &gt; RMarkdown… and fill the Title and Author fields. Then click OK to create an RMarkdown document. When you have completed editing the document, click the “Knit” button to render the output (e.g., as an HTML page).</p>
 <p>Rmarkdown is customizable with tables of contents, tabbed views and more. See the <a href="http://rmarkdown.rstudio.com/articles.html">Rmarkdown documentation</a> for examples.</p>
 </div>
+<div id="projects" class="section level3">
+<h3 class="hasAnchor">
+<a href="#projects" class="anchor"></a>Projects</h3>
+<p>RStudio provides a “Project” concept to keep related analyses together. I suggest starting each class by making your own project (File &gt; New Project).</p>
+</div>
 </div>
 </div>
 <div id="formatting-data-for-efficient-analysis" class="section level1">
@@ -147,10 +152,8 @@ readxl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentat
 <p>Reformatting your data into a “tidy” format is a useful practice that allows you efficiently manipulate and analyze data. We will start with some toy examples and then will reformat a commonly used data type from a quantitative PCR experiment.</p>
 <p>Tidy data adopts three simple conventions:</p>
 <ol style="list-style-type: decimal">
-<li>
-<strong>columns are variables</strong> (e.g., <code>cyl</code> and <code>mpg</code> in <code>mtcars</code>)</li>
-<li>
-<strong>rows are observations</strong> (e.g., Maza RX4 has 6 cyl and gets 21 mpg)</li>
+<li><strong>columns are variables</strong></li>
+<li><strong>rows are observations</strong></li>
 <li>store related data in separate tables</li>
 </ol>
 <div id="the-tibble" class="section level2">
@@ -548,9 +551,9 @@ qpcr_data
 #&gt; 10          Merc 280   mpg  19.2
 #&gt; # ... with 342 more rows</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li><p>For each car in the tidy <code>mtcars</code> data set, calculate the mean (<code>mean()</code>) and variance (<code>var()</code>) for each variable.</p></li>
+<li><p>For each car in the tidy <code>mtcars</code> data set, calculate the mean (<code>mean()</code>) and variance (<code>var()</code>) for each variable. Try using both <code>summarize()</code> and <code>summarize_each()</code>.</p></li>
 <li><p>Plot <code>mpg</code> vs <code>cyl</code> for the <code>mtcars</code> data set. Which format should you use? The original data set, or the tidied one? Why?</p></li>
-<li><p>Using the provided <code>qpcr</code> data, plot the changes in gene expression over time. Use colors to represent genotypes and facets for the different genes. If that’s too easy, add error bars (<code>geom_errorbar</code>) and connect each point with a line (<code>geom_line</code>).</p></li>
+<li><p>Using the provided <code>qpcr</code> data, plot the changes in gene expression over time. Use colors to represent genotypes and facets for the different genes. If that’s too easy, add error bars (<code>geom_errorbar()</code>) and connect each point with a line (<code>geom_line()</code>).</p></li>
 </ol>
 </div>
 <div id="too-easy" class="section level1">
