@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
   fig.path = "img/class-1-",
   fig.align = "center"
 )
+library(dplyr)
+library(ggplot2)
 ```
 
 # Goals for the course
@@ -238,7 +240,7 @@ sample_info %>% spread(hour, value) %>% mutate(t24_norm = t24 - t0)
 
 ## qPCR data
 
-The class library provides two `tibbles` of simulated qPCR data, `qpcr_names` and `qpcr_data`.
+The class library provides two related tibbles that describe a simulated qPCR experiment called `qpcr_names` and `qpcr_data`.
 
 ```{r qpcr}
 library(eda)
@@ -251,13 +253,49 @@ We will use tidying concepts to prepare this data for efficient analysis and vis
 
 ### Tidying
 
++ Tidy `qpcr_data` and `qpcr_names` into a structure like:
+
+```{r tidy_qpcr, echo=FALSE}
+qpcr_names_tidy <- qpcr_names %>% gather(col, value, -row)
+# `exp` is the relative expression level
+qpcr_data_tidy <- qpcr_data %>% gather(col, exp, -row)
+
+qpcr_data_tidy
+```
++ Separate variables into new columns in `qpcr_names_tidy`.
+
+```{r tidy_ex, echo = FALSE}
+qpcr_names_tidy <- separate(qpcr_names_tidy,
+                           value,
+                           into = c('sample', 'time', 'gene', 'rt', 'rep'),
+                           sep = '_')
+qpcr_names_tidy
+```
+
++ Join the tidied data together.
+
+```{r qpcr_join, echo = FALSE}
+qpcr_tidy <- left_join(qpcr_names_tidy, qpcr_data_tidy)
+
+qpcr_tidy
+```
 ### Statistical summary
+
++ Calculate summary statistics for each gene, cell and time point across replicates.
 
 ### Plots
 
++ Plot the expression for each gene over time.
+ 
+  - Calculate a fold-change for IFN over ACTIN and re-plot.
+  
+```{r qpcr_plot, echo = FALSE}
+ggplot(qpcr_tidy, aes(x = time, y = exp, color = rt)) + geom_point(size=3) + facet_wrap(~gene)
+```
+  
 # Exercises
 
-1. Tidy the `mtcars` data set. Note that car names are row names in the built-in data.frame, so they need to be moved to their own column prior to tibble conversion.
+1. Tidy the `mtcars` data set. Note that car names are rownames in the built-in data, so they need to be moved to their own column prior to tibble conversion.
 
 The tidied data should look something like:
 
@@ -265,11 +303,11 @@ The tidied data should look something like:
 mtcars %>% mutate(name = rownames(.)) %>% as_tibble() %>% gather(var, value, -name)
 ```
 
-2. For each car in the tidy `mtcars` data set, calculate the mean (`mean()`) and variance (`var()`) for each variable. -
+2. For each car in the tidy `mtcars` data set, calculate the mean (`mean()`) and variance (`var()`) for each variable.
 
 3. Plot `mpg` vs `cyl` for the `mtcars` data set. Which format should you use? The original data set, or the tidied one? Why? 
 
-4. Using the provided `qpcr` data, plot the changes in gene expression over time. Use colors to represent genotypes and facets for the different genes. Assume that `ct` is expression level.
+4. Using the provided `qpcr` data, plot the changes in gene expression over time. Use colors to represent genotypes and facets for the different genes. If that's too easy, add error bars (`geom_errorbar`) and connect each point with a line (`geom_line`).
 
 # Too Easy?
 
@@ -309,7 +347,3 @@ ggplot(anscombe_tidy, aes(x, y)) +
 Create an RMarkdown document and answer the questions from the Exercises section. Submit your final document as "Quiz 1" by Thurs at 10 PM.
 
 **Your submitted document must knit to HTML without errors**. I.e., when you click the "Knit" button, the document should build and display and HTML page.
-
-# Resources
-
-- This [slide deck](https://speakerdeck.com/jennybc/how-to-name-files) from Jenny Bryan has useful tips for naming files that are also applicable to sample names.
