@@ -3,13 +3,13 @@
 \docType{data}
 \name{qpcr_data}
 \alias{qpcr_data}
-\title{Example qPCR data}
+\title{Names of example qPCR data}
 \format{qPCR sample data in 96 well format.}
 \usage{
 qpcr_data
 }
 \description{
-Example qPCR data
+Relative expression levels for each sample.
 }
 \examples{
 qpcr_data
