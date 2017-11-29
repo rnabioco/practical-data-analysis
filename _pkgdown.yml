@@ -11,6 +11,7 @@ reference:
   - title: Example data sets
     contents:
     - starts_with("qpcr")
+    - mtcars_tbl
 
 navbar:
   left:

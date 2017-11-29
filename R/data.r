@@ -17,7 +17,9 @@
 #'
 "qpcr_names"
 
-#' Example qPCR data
+#' Names of example qPCR data
+#'
+#' Relative expression levels for each sample.
 #'
 #' @format qPCR sample data in 96 well format.
 #'
