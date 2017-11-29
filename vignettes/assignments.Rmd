@@ -1,0 +1,51 @@
+---
+title: "Assignments and Grading"
+author: "Jay Hesselberth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Grading and Assignments}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "img/class-1-",
+  fig.align = "center"
+)
+```
+
+# Grades
+
+Your grade is based on a combination of:
+
+- Pre-requisite completion (5%)
+- Attendance and Participation (15%)
+- Assignments (80%)
+
+# Assignments
+
+There are two types of assignments in the course:
+
+- Nightly quizzes, where questions are worth 5 points each.
+- Weekend analyses, where questions are worth 10 points each.
+
+Assignments must be turned in as Rmarkdown text files via Canvas. **They must render completely when the Knit button is clicked**. This menas you will need to load all libraries within the document. This is a good chunk to put in your Rmarkdown code:
+
+```{r eval=FALSE}
+library(tidyverse)
+library(eda)
+```
+
+You are welcome and encouraged to work in groups to complete the assignments. One stipulation: if you work together, tell us who your collaborators were in the assignment.
+
+# Grading Rubric
+
+Each assignment problem will be evaluated using the following rubric:
+
+- Text annotations are provided laying out the problem, the strategy, and the conclusions.
+- Code is succinct and commented.
+- Graph types and layouts are chosen carefully to illustrate a single point.

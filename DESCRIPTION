@@ -1,5 +1,5 @@
 Package: eda
-Title: Exploratory Data Analysis in R/RStudio
+Title: Practical Biological Data Analysis in R/RStudio
 Version: 0.0.0.9000
 Authors@R: c(
   person("Jay", "Hesselberth", ,
@@ -13,11 +13,21 @@ Authors@R: c(
     email = "kent.riemondy@gmail.com",
     role = c("aut"))
     )
-Description: Course content for IDPT 7620
+Description: Provides course materials for IDPT 7620, Practical Biological Data Analysis in R.
 Depends:
-  R (>= 3.4.1),
+  R (>= 3.4.1)
+Imports:
   valr,
   tidyverse,
+  ggrepel,
+  gapminder,
+  viridis,
+  DT,
+  tidyr,
+  cowplot,
+  dplyr,
+  ggplot2,
+  stringr
 License: CC0
 Encoding: UTF-8
 LazyData: true

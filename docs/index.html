@@ -5,8 +5,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exploratory Data Analysis in R/RStudio • eda</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<title>Practical Biological Data Analysis in R/RStudio • eda</title>
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -51,22 +51,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/class-1.html">Class 1: Overview and Data Wrangling</a>
-    </li>
-    <li>
-      <a href="articles/class-2.html">Class 2: Writing Reproducible Reports</a>
-    </li>
-    <li>
-      <a href="articles/class-3.html">Class 3: Common Analysis Challenges</a>
-    </li>
-    <li>
-      <a href="articles/class-4.html">Class 4: Gene Expression Vignette</a>
-    </li>
-    <li>
-      <a href="articles/class-5.html">Class 5: Chromatin Vignette</a>
-    </li>
-    <li>
-      <a href="articles/class-6.html">Class 6: Single-Cell Analysis</a>
+      <a href="articles/class-1.html">Class 1: Overview and Data Tidying</a>
     </li>
     <li class="divider">
     </li>
@@ -76,14 +61,7 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/rnabioco/eda">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -99,15 +77,14 @@
     
     
 <div class="contents">
-<div id="exploratory-data-analysis-with-rrstudio" class="section level1">
+<div id="practical-biological-data-analysis-with-rrstudio" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#exploratory-data-analysis-with-rrstudio" class="anchor"></a>Exploratory Data Analysis with R/RStudio</h1></div>
+<a href="#practical-biological-data-analysis-with-rrstudio" class="anchor"></a>Practical Biological Data Analysis with R/RStudio</h1></div>
 
 <div id="syllabus" class="section level2">
 <h2 class="hasAnchor">
 <a href="#syllabus" class="anchor"></a>Syllabus</h2>
-<p>This short course teaches you to analyze and visualize large, complex data sets use the R statistical programming language, RStudio, and new tools available in the “tidyverse”. We use common biological experiments to illustrate analysis strategies including studies of mRNA expression, histone post-translational modification in the context of chromatin, and cell-type characterization using single cell approaches.</p>
-<p>Completion of this course is a pre-requisite for taking the <a href="http://molb7621.github.io/workshop/">Genome Analysis Workshop</a>, a popular course taught in the Spring semester.</p>
+<p>This short course teaches you to analyze and visualize large, complex biological data sets use the R statistical programming language, RStudio, and new tools available in the “tidyverse”. We use common biological experiments to illustrate analysis strategies including studies of mRNA expression, histone post-translational modification in the context of chromatin, and cell-type characterization using single cell approaches.</p>
 <div id="course-number" class="section level3">
 <h3 class="hasAnchor">
 <a href="#course-number" class="anchor"></a>Course number</h3>
@@ -117,6 +94,7 @@
 <h3 class="hasAnchor">
 <a href="#dates-and-times" class="anchor"></a>Dates and Times</h3>
 <p>The course (2 credit hours) consists of seven 2 hour classes held Mon, Wed and Fri from Nov 29 through Dec 15 in the Health Sciences Library Teaching Lab 2 from 1:00-3:00 pm.</p>
+<p>We have dedicated office hours on Thurs from 2:30-4pm in RC1 South 9th floor in the main office (behind the glass walls). Come with questions, problems, etc. Please send an email to <code>rbi.fellows@ucdenver.edu</code> to let us know you’re coming.</p>
 </div>
 <div id="instructor" class="section level3">
 <h3 class="hasAnchor">
@@ -133,14 +111,7 @@
 <div id="course-marks" class="section level2">
 <h2 class="hasAnchor">
 <a href="#course-marks" class="anchor"></a>Course marks</h2>
-<p>Your grade will be based on several factors:</p>
-<ul>
-<li>Quizzes (50%)</li>
-<li>Exercises (25%)</li>
-<li>Attendance (25%)</li>
-</ul>
-<p>Quizzes (25 points) are assigned at the end of each class. We will try to leave 15 minutes at the end so that you can preview the quiz and ask questions.</p>
-<p>Exercises (50 points) are assigned on Fridays. In these exercises you pose a specific hypothesis and then write up your analysis that supports or refutes the hypothesis. We included an example to give you a framework.</p>
+<p>See <a href="https://rnabioco.github.io/eda/articles/assignments.html">Grading and Assignments</a>.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">

@@ -1,20 +1,36 @@
-#' Example Quantitative PCR data
+#' Example qPCR data
 #'
-#' A dataset containing Bio-Rad qPCR data for IFNbeta and Actin upon
-#' transfection with RNA ligands.
+#' Experimental variables include:
 #'
-#' @format A tibble containing 145 observations of 6 variables.
-#' \describe{
-#'   \item{well}{plate well}
-#'   \item{fluor}{Fluorophore}
-#'   \item{target}{mRNA target}
-#'   \item{content}{well containing reference standard}
-#'   \item{sample}{sample name}
-#'   \item{cq}{Quantification cycle}
-#' }
+#' - cell line (wt, mut)
+#' - gene (IFN, ACTIN)
+#' - time (0, 12, 24, 48)
+#' - reverse transcriptase (+, -)
+#' - replicate (1, 2, 3)
+#'
+#' Varaibles are encoded in samples names: `cell_time_gene_rt_rep`.
+#'
+#' @format qPCR sample names in 96 well format.
 #'
 #' @examples
-#' qpcr
+#' qpcr_names
 #'
-#' @source Rachel Ancar
-"qpcr"
+"qpcr_names"
+
+#' Names of example qPCR data
+#'
+#' Relative expression levels for each sample.
+#'
+#' @format qPCR sample data in 96 well format.
+#'
+#' @examples
+#' qpcr_data
+#'
+"qpcr_data"
+
+#' mtcars in tibble format
+#'
+#' @examples
+#' mtcars_tbl
+#'
+"mtcars_tbl"

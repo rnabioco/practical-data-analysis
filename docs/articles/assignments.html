@@ -5,8 +5,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Class 5: Chromatin Vignette • eda</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<title>Assignments and Grading • eda</title>
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -51,22 +51,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/class-1.html">Class 1: Overview and Data Wrangling</a>
-    </li>
-    <li>
-      <a href="../articles/class-2.html">Class 2: Writing Reproducible Reports</a>
-    </li>
-    <li>
-      <a href="../articles/class-3.html">Class 3: Common Analysis Challenges</a>
-    </li>
-    <li>
-      <a href="../articles/class-4.html">Class 4: Gene Expression Vignette</a>
-    </li>
-    <li>
-      <a href="../articles/class-5.html">Class 5: Chromatin Vignette</a>
-    </li>
-    <li>
-      <a href="../articles/class-6.html">Class 6: Single-Cell Analysis</a>
+      <a href="../articles/class-1.html">Class 1: Overview and Data Tidying</a>
     </li>
     <li class="divider">
     <li>
@@ -75,14 +60,7 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/rnabioco/eda">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -94,24 +72,46 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Class 5: Chromatin Vignette</h1>
+      <h1>Assignments and Grading</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-10-22</h4>
+            <h4 class="date">2017-11-29</h4>
           </div>
 
     
     
 <div class="contents">
-<div id="concepts" class="section level1">
+<div id="grades" class="section level1">
 <h1 class="hasAnchor">
-<a href="#concepts" class="anchor"></a>Concepts</h1>
-<p>Concepts</p>
+<a href="#grades" class="anchor"></a>Grades</h1>
+<p>Your grade is based on a combination of:</p>
 <ul>
-<li>ENCODE chromatin data</li>
-<li>Intervals and signals</li>
-<li>Gene models, histone ChIP</li>
-<li>BEDtools and valr</li>
+<li>Pre-requisite completion (5%)</li>
+<li>Attendance and Participation (15%)</li>
+<li>Assignments (80%)</li>
+</ul>
+</div>
+<div id="assignments" class="section level1">
+<h1 class="hasAnchor">
+<a href="#assignments" class="anchor"></a>Assignments</h1>
+<p>There are two types of assignments in the course:</p>
+<ul>
+<li>Nightly quizzes, where questions are worth 5 points each.</li>
+<li>Weekend analyses, where questions are worth 10 points each.</li>
+</ul>
+<p>Assignments must be turned in as Rmarkdown text files via Canvas. <strong>They must render completely when the Knit button is clicked</strong>. This menas you will need to load all libraries within the document. This is a good chunk to put in your Rmarkdown code:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(eda)</code></pre></div>
+<p>You are welcome and encouraged to work in groups to complete the assignments. One stipulation: if you work together, tell us who your collaborators were in the assignment.</p>
+</div>
+<div id="grading-rubric" class="section level1">
+<h1 class="hasAnchor">
+<a href="#grading-rubric" class="anchor"></a>Grading Rubric</h1>
+<p>Each assignment problem will be evaluated using the following rubric:</p>
+<ul>
+<li>Text annotations are provided laying out the problem, the strategy, and the conclusions.</li>
+<li>Code is succinct and commented.</li>
+<li>Graph types and layouts are chosen carefully to illustrate a single point.</li>
 </ul>
 </div>
 </div>
@@ -122,7 +122,9 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#concepts">Concepts</a></li>
+<li><a href="#grades">Grades</a></li>
+      <li><a href="#assignments">Assignments</a></li>
+      <li><a href="#grading-rubric">Grading Rubric</a></li>
       </ul>
 </div>
       </div>

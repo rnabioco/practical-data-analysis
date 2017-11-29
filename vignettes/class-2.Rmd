@@ -1,5 +1,5 @@
 ---
-title: "Class 2: Writing reproducible reports"
+title: "Class 2: Writing Reproducible Reports"
 author: "Jay Hesselberth"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -9,23 +9,60 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "img/class-2-",
+  fig.align = "center"
+)
+```
+
 # Concepts
 
-- Current me thanks former me
 - Writing (Rmarkdown, useful RStudio tricks and shortcuts)
 - Sharing (rpubs.com, RStudio Connect, sending HTML)
 - Approaches for data exploration (Shiny *is not reproducible*)
-- Date formats (2017-12-25, not Dec 25 2017, "Christmas Day", etc. NYD is 2018-01-01)
 
 # Performing analyses in RStudio
 
-## Use 
+## Writing notes on your analysis
+
+- Figure legends can be added using the `fig.cap=` chunk option.
+
+```{r figure, fig.cap='Analysis of petal length'}
+iris %>% ggplot()
+```
+
+**Current me thanks former me**
+
+## Color
+
+### Palettes
+
+- **colorbrewer** The [colorbrewer](colorbrewer2.org) palettes are packaged with ggplot2. They include palettes for both discrete and continuous data.
+
+- **viridis**
+
+### Discrete and continuous data
+
+## Plot themes
+
+The [`cowplot`](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html) package provides a variety of sane defaults for your plots. These are especially useful when making publication-quality figures.
+
+```{r cowplot}
+# install.packages('cowplot')
+library(cowplot)
+ggplot(mtcars, aes(x = mpg, y = hp)) + geom_point() + facet_grid(~cyl)
+```
 
 # Organizing analyses
 
+Use Markdown headings to organize your document. You can use the Document Outline in RStudio to display your organziation.
+
 ## Date formats
 
-You should use the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format for dates. Name your files using the YYYY-MM-DD-description.Rmd convention. This way, a directory listing will put them in chronological order using their lexical ordering.
+You should use the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format for dates. Name your files using the `YYYY-MM-DD-description.Rmd` convention. This way, a directory listing will put them in chronological order using their lexical ordering.
 
 ## Github
 

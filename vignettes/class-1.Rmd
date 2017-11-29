@@ -1,5 +1,5 @@
 ---
-title: "Class 1: Overview and data wrangling"
+title: "Class 1: Overview and data tidying"
 author: "Jay Hesselberth"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -16,84 +16,190 @@ knitr::opts_chunk$set(
   fig.path = "img/class-1-",
   fig.align = "center"
 )
+library(dplyr)
+library(ggplot2)
 ```
 
-# Goals for the class
+# Goals for the course
 
-- *Learn the basics of data import, processing, plotting, and report generation.*
+- **Learn the basics of data import, processing, plotting, and report generation in RStudio.**
 
-- *Reach for RStudio instead of MS Excel / Prism etc as your go-to analysis software.* Why? Reproducibility. Workflows in standard spreadsheet programs require human interaction (i.e., selecting cells, entering formulae) and are prone to mistakes. An RMarkdown document is fully reproducible.
+- **Reach for RStudio instead of MS Excel, Prism, etc as your go-to analysis software.** Workflows in Rmarkdown can be reproduced by you and others. Spreadsheet programs require human interaction---cell selection, formula entry---and are prone to mistakes.
 
+- **Learn productive analysis habits.** Organize your data for efficient analysis and learn to explore basic properties of a data set.
+ 
 # RStudio Overview
 
 We'll cover the basic steps of data import and analysis within RStudio and will highlight some features of the software as we go.
 
-## Import
+**The class has its own R package, so you should begin by loading it into your session.** You will need to reinstall the package when we make updates.
+
+```{r load_eda}
+# devtools::install_github('rnabioco/eda')
+library(eda)
+```
+
+## Panels
+
+### Environment
+
+The Environment panel enables data import and environment browsing.
 
 There are two main ways to import data within RStudio. One is interactive, using the "Import Dataset" button in the Environment panel.
 
-The other is to use functions in `readr` or `readxl` to load data on the console or within an RMarkdown report.
+![data import](img/class-1-data-import.png)
+Alternatively you can use functions in the `readr` and `readxl` libraries to load data on the console or within an RMarkdown report. All of the functions have consistent `read_*` names.
 
-## Processing
+```{r readr, eval = FALSE}
+readr::read_tsv('XXX')
+readxl::read_excel('XXX')
+```
 
-The `tidyverse` is a collection of libraries that enable efficient data processing and visualization. You will probably start many analyses by loading the library:
+You can explore the environment with the "Global Environment" button.
+
+### Console
+
+The Console panel enables interactive analysis.
+
+The `tidyverse` is a collection of libraries that enable efficient data processing and visualization. You will probably start many analyses by loading the `tidyverse` library. This library loads a number of other libraries that are useful for data processing and plotting.:
 
 ```{r load}
 library(tidyverse)
 ```
 
-## Plotting
+This one invocation loads several libraries including `dplyr` and `ggplot2`.
+
+### Viewer
 
 The `tidyverse` contains `ggplot2`, which you covered in your pre-requisites. Let's make a simple plot in RStudio. Note that the plot appears in the "Plots" panel. From there, you can Zoom, Export to a file, or Publish on RPubs.
 
 ```{r plot}
 library(tidyverse)
-
 ggplot(mtcars, aes(x = hp, y = mpg, color = factor(cyl))) + geom_point()
 ```
 
-## Reports
+### Editor
 
-Finally we'll create an RMarkdown document. Select File > New File > RMarkdown... and fill the Title and Author fields. Then click OK to create an RMarkdown document.
+Finally we'll create an RMarkdown document in the Editor panel. Select File > New File > RMarkdown... and fill the Title and Author fields. Then click OK to create an RMarkdown document. When you have completed editing the document, click the "Knit" button to render the output (e.g., as an HTML page).
 
-# Real world example: Data collected in the 96-well plate format.
+Rmarkdown is customizable with tables of contents, tabbed views and more. See the [Rmarkdown documentation](http://rmarkdown.rstudio.com/articles.html) for examples.
 
-We'll use tidy data principles to analyze some qPCR data. 
 
-## Formatting data for efficient analysis
+### Projects
 
-Reformatting your data into a "tidy" format is a useful practice that allows you efficiently manipulate and analyze data. We will start with some toy examples (using the `anscombe` data set) and then will reformat a commonly used data type from a quantitative PCR experiment.
+RStudio provides a "Project" concept to keep related analyses together. I suggest starting each class by making your own project (File > New Project).
 
-- columns are variables
-- rows are observations
-- related data should be stored in separate tables
+# Formatting data for efficient analysis
+
+Reformatting your data into a "tidy" format is a useful practice that allows you efficiently manipulate and analyze data. We will start with some toy examples and then will reformat a commonly used data type from a quantitative PCR experiment.
+
+Tidy data adopts three simple conventions:
+
+1. **columns are variables** 
+2. **rows are observations** 
+3. store related data in separate tables
+
+## The `tibble`
+
+A `tibble` is similar to a `data.frame` with some important differences. A `tibble` provides a quick overview of your data including its structure (rows and columns) and column types. Use `as_tibble()` to convert a `data.frame`:
+
+```{r tibble}
+head(iris)
+
+library(tidyverse)
+as_tibble(iris)
+```
 
 ## The `tidyr` package
 
-The `tidyr` package has some useful functions for rearranging data for efficient analysis. See the [cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for reference.
+The `tidyr` package has useful functions to format data for efficient analysis. See the [cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for reference.
 
 ### `gather` and `spread`
 
+These are the workhorse functions in `tidyr`. Use `gather` when variables are in columns and you want them in tidy format.
+
+```{r gather}
+library(eda)
+# column names in "wide" format are variables
+mtcars_tbl
+
+# gather variables and observations into `key` and `value` columns - so-called "long" format
+xx <- mtcars_tbl %>% gather(key, value, -name)
+xx
+
+# and convert back to "wide" format
+xx %>% spread(key, value)
+```
+
+Each form has its advantages. For example, long format makes it easy to calculate summaries:
+
+```{r summ}
+xx %>% group_by(key) %>% summarize(median(value))
+```
+
+And wide format is useful for plotting.
+
+```{r plot_label}
+library(ggrepel)
+ggplot(mtcars_tbl) +
+  geom_point(aes(hp, mpg, size = 5)) +
+  geom_label_repel(aes(hp, mpg, fill = factor(cyl), label = name))
+```
+
 ### `separate`, `extract`, and `unite`
+
+`separate` takes a column containing multiple variables on input and returns multiple columns, each with a new variable. For example, a column with year/month/day information can be separated into invidual columns.
+
+```{r sep_dates, echo = FALSE}
+ys <- 1999:2002
+ms <- c('Jan', 'Feb', 'Mar')
+ds <- 1:10
+
+dates <- tidyr::crossing(ys, ms, ds) %>% unite(date, ys:ds, sep = '-')
+```
+
+```{r sep_dates2}
+dates
+
+# separate is the inverse of unite
+dates %>% separate(date, into = c('year', 'month', 'day'), sep = '-')
+```
+
+The `sep` argument can take:
+
+- a character (split `rep_value` using `sep = '_'` into `rep` and `value`)
+
+- a position (split `a1` using `sep = 1` into `a` and `1`)
+
+Finally the `extra` and `fill` arguments to `separate` control what happens when there are too many and not enough variables.
 
 ### `crossing` and `complete`
 
-The `crossing` method is useful to generate combinations of variables.
+`crossing` is useful for generating combinations of variables in tibble format. For example, use `crossing` to generate combinations of experimental varaibles including sample names, gene names, reaction conditions, and replicates.
 
 ```{r crossing}
 sample <- c('wt', 'mut')
 gene <- c('IFN', 'ACTIN')
-rt <- c('+', '-')
+time <- c(0, 12, 24, 48)
+rt <- c('+', '-') # reverse transcriptase added?
 rep <- 1:3
 
-tidyr::crossing(sample, gene, rep, rt)
+tidyr::crossing(sample, gene, time, rep, rt)
 ```
 
-## Naming samples.
+# Real world example: Data in the 96-well plate format.
 
-All variables should be systematically listed in your sample names, i.e. `name_rep_time_RT`. Systematic naming makes it easy to programmtically extract relevant information.
+We'll use tidy data principles to analyze some qPCR data.
 
-Take an example like this, where the sample names are a combination of a genotype (`WT` and `MT`), a time point (0,4,8,24 hour), and a replicate (1,2,3), separated by a hyphen.
+Many biological assays make use of the 96 (or 384) well plate. Note the similarity between the plate and a `tibble`: there are rows and columns, and each cell contains a reaction that will generate one or more data points.
+
+![plate](img/plate.jpg)
+
+## Sample names
+
+All variables should be systematically listed in your sample names, i.e. `name_rep_time_RT`. Systematic naming makes it easy to extract relevant information.
+
+Take this example, where the sample names are a combination of a genotype (`WT` and `MT`), a time point (0,4,8,24 hour), and a replicate (1,2,3), separated by a hyphen.
 
 ```{r sample.names, echo=FALSE}
 library(tidyverse)
@@ -116,7 +222,7 @@ samples <-
 samples
 ```
 
-Becauase the samples are named systematically, it is easy to separate this information into individual columns
+Because the samples have systematic names, it is easy to separate this information into individual columns
 
 ```{r extract_info}
 sample_info <- samples %>%
@@ -125,6 +231,8 @@ sample_info <- samples %>%
     into = c('sample', 'hour', 'rep'),
     sep = "-"
   )
+
+sample_info
 ```
 
 Now we can use `dplyr` and `tidyr` functions to manipulate the data.
@@ -135,39 +243,76 @@ sample_info %>% group_by(sample, hour) %>% summarize(mean(value))
 sample_info %>% spread(hour, value) %>% mutate(t24_norm = t24 - t0)
 ```
 
-### Resources
+## qPCR data
 
-This [slide deck](https://speakerdeck.com/jennybc/how-to-name-files) from Jenny Bryan has useful tips for naming files that are also applicable to sample names.
+The class library provides two related tibbles that describe a simulated qPCR experiment called `qpcr_names` and `qpcr_data`.
 
-## Organizing samples.
-
-How should you organize samples on your plate? Should -RT and +RT samples alternate? Where should I put my "no template" controls?
-
-
-```{r}
+```{r qpcr}
 library(eda)
+qpcr_names
 
-qpcr
+qpcr_data
 ```
 
-<!-- From Rachel: Basically, I calculate the average Ct between all the sample replicates for the gene of interest primer set and the internal control. Then you subtract the gene of interest average from the internal control average and use that change in CT to calculate the fold change relative to actin using the deal-delta CT method. -->
+We will use tidying concepts to prepare this data for efficient analysis and visualization.
 
-```{r}
-qpcr_tidy <- qpcr %>%
-  separate(sample, into = c('ligand', 'RT'), sep = '_', fill = 'right') %>%
-  select(-fluor, -content, -well) %>%
-  mutate(RT = is.na(RT))
+### Tidying
+
++ Tidy `qpcr_data` and `qpcr_names` into a structure like:
+
+```{r tidy_qpcr, echo=FALSE}
+qpcr_names_tidy <- qpcr_names %>% gather(col, value, -row)
+# `exp` is the relative expression level
+qpcr_data_tidy <- qpcr_data %>% gather(col, exp, -row)
+
+qpcr_data_tidy
+```
++ Separate variables into new columns in `qpcr_names_tidy`.
+
+```{r tidy_ex, echo = FALSE}
+qpcr_names_tidy <- separate(qpcr_names_tidy,
+                           value,
+                           into = c('sample', 'time', 'gene', 'rt', 'rep'),
+                           sep = '_')
+qpcr_names_tidy
 ```
 
++ Join the tidied data together.
+
+```{r qpcr_join, echo = FALSE}
+qpcr_tidy <- left_join(qpcr_names_tidy, qpcr_data_tidy)
+
+qpcr_tidy
+```
+### Statistical summary
+
++ Calculate summary statistics for each gene, cell and time point across replicates.
+
+### Plots
+
++ Plot the expression for each gene over time.
+ 
+  - Calculate a fold-change for IFN over ACTIN and re-plot.
+  
+```{r qpcr_plot, echo = FALSE}
+ggplot(qpcr_tidy, aes(x = time, y = exp, color = rt)) + geom_point(size=3) + facet_wrap(~gene)
+```
+  
 # Exercises
 
-1. 
+1. Tidy the `mtcars` data set. Note that car names are rownames in the built-in data, so they need to be moved to their own column prior to tibble conversion.
 
-2. 
+The tidied data should look something like:
 
-3. 
+```{r mtcars_tidy, echo=FALSE}
+mtcars %>% mutate(name = rownames(.)) %>% as_tibble() %>% gather(var, value, -name)
+```
 
-4.
+2. For each car in the tidy `mtcars` data set, calculate the mean (`mean()`) and variance (`var()`) for each variable. Try using both `summarize()` and `summarize_each()`.
+
+3. Plot `mpg` vs `cyl` for the `mtcars` data set. Which format should you use? The original data set, or the tidied one? Why? 
+
+4. Using the provided `qpcr` data, plot the changes in gene expression over time. Use colors to represent genotypes and facets for the different genes. If that's too easy, add error bars (`geom_errorbar()`) and connect each point with a line (`geom_line()`).
 
 # Too Easy?
 
@@ -187,9 +332,11 @@ anscombe_tidy <- anscombe %>%
 
 anscombe_tidy
 ```
+dd
 
+2. Calculate summary statistics in your tidy `anscombe` data. Calculate `n`, `mean`, and `var` for each `x` and `y` variable in the sets.  Try using `summarize_each` for this calculation.
 
-2. Calculate summary statistics in your tidy `anscombe` data. Calculate `n`, `mean` for each `x` and `y` variable in the sets. Calculate the `cor` between `x` and `y` for each set. What do you infer from these summary statistics?
+Calculate the `cor` between `x` and `y` for each set. What do you infer from these summary statistics?
 
 3. Plot the tidy `anscombe` data. Plot each `x`/`y` point on separate facets for each set, and plot a smoothing line. Examine the plots. How do they compare to the summary statistics?
 
@@ -199,7 +346,6 @@ ggplot(anscombe_tidy, aes(x, y)) +
   facet_wrap(~set) +
   geom_smooth(method = 'lm', se = FALSE)
 ```
-
 
 # Quiz
 

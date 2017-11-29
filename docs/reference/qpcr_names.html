@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • eda</title>
+<title>Example qPCR data — qpcr_names • eda</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -49,7 +49,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -98,58 +98,60 @@
       </header>
 
       <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.0.0.9000</small>
-      </h1>
+    <h1>Example qPCR data</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    
+    <p>Experimental variables include:</p>
+    
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <pre class="usage"><span class='no'>qpcr_names</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-example-data-sets" class="hasAnchor"><a href="#section-example-data-sets" class="anchor"></a>Example data sets</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="qpcr_data.html">qpcr_data</a></code> </p>
-          </td>
-          <td><p>Names of example qPCR data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="qpcr_names.html">qpcr_names</a></code> </p>
-          </td>
-          <td><p>Example qPCR data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mtcars_tbl.html">mtcars_tbl</a></code> </p>
-          </td>
-          <td><p>mtcars in tibble format</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <p>qPCR sample names in 96 well format.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <ul>
+<li><p>cell line (wt, mut)</p></li>
+<li><p>gene (IFN, ACTIN)</p></li>
+<li><p>time (0, 12, 24, 48)</p></li>
+<li><p>reverse transcriptase (+, -)</p></li>
+<li><p>replicate (1, 2, 3)</p></li>
+</ul>
+    <p>Varaibles are encoded in samples names: <code>cell_time_gene_rt_rep</code>.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>qpcr_names</span></div><div class='output co'>#&gt; # A tibble: 8 x 13
+#&gt;     row             `1`              `2`              `3`              `4`
+#&gt;   &lt;chr&gt;           &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;
+#&gt; 1     A mut_0_ACTIN_+_1    mut_0_IFN_+_2 mut_12_ACTIN_+_3 mut_24_ACTIN_+_1
+#&gt; 2     B mut_0_ACTIN_-_1    mut_0_IFN_-_2 mut_12_ACTIN_-_3 mut_24_ACTIN_-_1
+#&gt; 3     C mut_0_ACTIN_+_2    mut_0_IFN_+_3   mut_12_IFN_+_1 mut_24_ACTIN_+_2
+#&gt; 4     D mut_0_ACTIN_-_2    mut_0_IFN_-_3   mut_12_IFN_-_1 mut_24_ACTIN_-_2
+#&gt; 5     E mut_0_ACTIN_+_3 mut_12_ACTIN_+_1   mut_12_IFN_+_2 mut_24_ACTIN_+_3
+#&gt; 6     F mut_0_ACTIN_-_3 mut_12_ACTIN_-_1   mut_12_IFN_-_2 mut_24_ACTIN_-_3
+#&gt; 7     G   mut_0_IFN_+_1 mut_12_ACTIN_+_2   mut_12_IFN_+_3   mut_24_IFN_+_1
+#&gt; 8     H   mut_0_IFN_-_1 mut_12_ACTIN_-_2   mut_12_IFN_-_3   mut_24_IFN_-_1
+#&gt; # ... with 8 more variables: `5` &lt;chr&gt;, `6` &lt;chr&gt;, `7` &lt;chr&gt;, `8` &lt;chr&gt;,
+#&gt; #   `9` &lt;chr&gt;, `10` &lt;chr&gt;, `11` &lt;chr&gt;, `12` &lt;chr&gt;</div><div class='input'>
+</div></pre>
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-example-data-sets">Example data sets</a></li>
+      
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 

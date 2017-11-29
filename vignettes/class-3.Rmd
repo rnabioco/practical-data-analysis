@@ -9,11 +9,20 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "img/class-3-",
+  fig.align = "center"
+)
+```
+
 # Concepts
 
 - Too many variables (identifying important ones, and summarizing others. using colors and facets in plots)
-- Too much data (in-memory vs. database approaches, subsetting and sampling, simplify with a reprex).
 - Reducing dimensionality (PCA and t-SNE)
 - Assessing significance (light statistics overview, null distributions, hypothesis testing).
 - Dealing with untidy R results (broom::tidy())
+- Too much data (in-memory vs. database approaches, subsetting and sampling, simplify with a reprex).
   
