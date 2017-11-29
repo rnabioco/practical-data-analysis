@@ -35,7 +35,7 @@ There are two types of assignments in the course:
 
 Assignments must be turned in as Rmarkdown text files via Canvas. **They must render completely when the Knit button is clicked**. This menas you will need to load all libraries within the document. This is a good chunk to put in your Rmarkdown code:
 
-```{r}
+```{r eval=FALSE}
 library(tidyverse)
 library(eda)
 ```
