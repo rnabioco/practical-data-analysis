@@ -1,6 +1,4 @@
 library(tidyverse)
-# may have to reconfig R to get this to install
-library(xlsx)
 
 cell <- c('MAGIC-WT', 'MAGIC-hypo', 'MAGIC-siRNA', 'MAGIC-null')
 gene <- c('MAGIC', 'WAND', 'POOF', 'ACTIN')
@@ -23,9 +21,16 @@ plus_rts <- bind_rows(t0, t12, t24, t48)
 # add multiplier for genes
 magics <- filter(plus_rts, gene == "MAGIC") %>% mutate(exp = exp * 1.5)
 wands <- filter(plus_rts, gene == "WAND") %>% mutate(exp = exp ^ 1.2)
-poofs <- filter(plus_rts, gene == "POOF") %>% mutate(exp = exp ^ 2)
+poofs <- filter(plus_rts, gene == "POOF") %>% mutate(exp = exp ^ 3)
 actins <- filter(plus_rts, gene == "ACTIN") %>% mutate(exp = exp * 0.2)
 plus_rts <- bind_rows(magics, wands, poofs, actins)
+
+# adjust mutants
+wts <- filter(plus_rts, cell = 'MAGIC-WT')
+hypos <- filter(plus_rts, cell = 'MAGIC-hypo') %>% rowwise() %>% mutate(exp = exp / 4)
+sirna <- filter(plus_rts, cell = 'MAGIC-siRNA') %>% rowwise() %>% mutate(exp = exp / 2)
+nulls <- filter(plus_rts, cell = 'MAGIC-null') %>% rowwise() %>% mutate(exp = exp / 10)
+plus_rts <- bind_rows(wts, hypos, sirna, nulls)
 
 minus_rts <- filter(sample_data, rt == "-") %>% mutate(exp = 0)
 
@@ -48,3 +53,5 @@ qpcr384_data <- sample_data %>%
   mutate(row = toupper(letters[1:16])) %>%
   select(row, everything())
 
+readr::write_excel_csv(qpcr384_data, 'inst/extdata/qpcr-data-384.csv')
+readr::write_excel_csv(qpcr384_names, 'inst/extdata/qpcr-names-384.csv')
