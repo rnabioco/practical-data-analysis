@@ -75,7 +75,7 @@
       <h1>Class 1: Overview and data tidying</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-11-29</h4>
+            <h4 class="date">2017-11-30</h4>
           </div>
 
     
@@ -277,6 +277,11 @@ xx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sprea
 <a href="#separate-extract-and-unite" class="anchor"></a><code>separate</code>, <code>extract</code>, and <code>unite</code>
 </h3>
 <p><code>separate</code> takes a column containing multiple variables on input and returns multiple columns, each with a new variable. For example, a column with year/month/day information can be separated into invidual columns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ys &lt;-<span class="st"> </span><span class="dv">1999</span><span class="op">:</span><span class="dv">2002</span>
+ms &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'Jan'</span>, <span class="st">'Feb'</span>, <span class="st">'Mar'</span>)
+ds &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>
+
+dates &lt;-<span class="st"> </span>tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/expand">crossing</a></span>(ys, ms, ds) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unite</span>(date, ys<span class="op">:</span>ds, <span class="dt">sep =</span> <span class="st">'-'</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dates
 <span class="co">#&gt; # A tibble: 120 x 1</span>
 <span class="co">#&gt;           date</span>
@@ -517,6 +522,27 @@ qpcr_data
 <ul>
 <li>Calculate summary statistics for each gene, cell and time point across replicates.</li>
 </ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qpcr_tidy <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(rt <span class="op">==</span><span class="st"> "+"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample, gene, time) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">mean_exp =</span> <span class="kw">mean</span>(exp), <span class="dt">var_exp =</span> <span class="kw">var</span>(exp))
+<span class="co">#&gt; # A tibble: 16 x 5</span>
+<span class="co">#&gt; # Groups:   sample, gene [?]</span>
+<span class="co">#&gt;    sample  gene  time   mean_exp      var_exp</span>
+<span class="co">#&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;        &lt;dbl&gt;</span>
+<span class="co">#&gt;  1    mut ACTIN     0   2.333333 4.133333e-01</span>
+<span class="co">#&gt;  2    mut ACTIN    12  10.000000 8.400000e-01</span>
+<span class="co">#&gt;  3    mut ACTIN    24  19.933333 1.333333e-02</span>
+<span class="co">#&gt;  4    mut ACTIN    48 101.533333 2.714533e+02</span>
+<span class="co">#&gt;  5    mut   IFN     0  13.000000 9.750000e+00</span>
+<span class="co">#&gt;  6    mut   IFN    12  79.000000 7.500000e-01</span>
+<span class="co">#&gt;  7    mut   IFN    24 145.000000 7.500000e-01</span>
+<span class="co">#&gt;  8    mut   IFN    48 705.500000 3.587250e+03</span>
+<span class="co">#&gt;  9     wt ACTIN     0   1.866667 3.733333e-01</span>
+<span class="co">#&gt; 10     wt ACTIN    12  10.133333 1.053333e+00</span>
+<span class="co">#&gt; 11     wt ACTIN    24  19.333333 1.733333e-01</span>
+<span class="co">#&gt; 12     wt ACTIN    48 100.800000 6.733200e+02</span>
+<span class="co">#&gt; 13     wt   IFN     0  15.000000 4.275000e+01</span>
+<span class="co">#&gt; 14     wt   IFN    12  73.500000 2.025000e+01</span>
+<span class="co">#&gt; 15     wt   IFN    24 145.000000 7.500000e-01</span>
+<span class="co">#&gt; 16     wt   IFN    48 779.500000 9.633000e+03</span></code></pre></div>
 </div>
 <div id="plots" class="section level3">
 <h3 class="hasAnchor">

@@ -150,7 +150,7 @@ ggplot(mtcars_tbl) +
 
 `separate` takes a column containing multiple variables on input and returns multiple columns, each with a new variable. For example, a column with year/month/day information can be separated into invidual columns.
 
-```{r sep_dates, echo = FALSE}
+```{r sep_dates}
 ys <- 1999:2002
 ms <- c('Jan', 'Feb', 'Mar')
 ds <- 1:10
@@ -287,6 +287,10 @@ qpcr_tidy
 ### Statistical summary
 
 + Calculate summary statistics for each gene, cell and time point across replicates.
+
+```{r qpcr_stats}
+qpcr_tidy %>% filter(rt == "+") %>% group_by(sample, gene, time) %>% summarize(mean_exp = mean(exp), var_exp = var(exp))
+```
 
 ### Plots
 
