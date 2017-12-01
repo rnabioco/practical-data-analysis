@@ -1,0 +1,133 @@
+---
+title: "Weekend Assignment 1"
+author: "Jay Hesselberth"
+date: "11/30/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+
+You are investigating how wht transcription factor MAGIC regulates the expression of two genes WAND and POOF. You use wild-type and mutant lines with different forms of the MAGIC gene and examine the expression of MAGIC, WAND, and POOF in a qPCR experiment.
+
+The experiment is a time-course during which you have added an activator of MAGIC. You collect 4 time points (0, 12, 24, 48 hour) amount three biological replicates and measure.
+
+The cells have three mutant forms of MAGIC:
+
++ a hypomorphic allele (`MAGIC-hypo) that is known to reduce its activity
++ an siRNA-mediated knockdown of MAGIC (`MAGIC-siRNA`)
++ a deletion of the MAGIC gene (`MAGIC-null`)
+
+You collect expression data in a qPCR experiment in a 384-well plate (a common format used in qPCR experiments). The data in CSV format are available in the class package. One CSV contains expression levels and the other contains sample names coded as `cell_time_gene_rt_rep`.
+
+This code will give you the file names of the CSVs. You will need to load these files to begin. 
+
+```{r eval=FALSE}
+# devtools::install_github('rnabioco/eda')
+qpcr384_data_csv <- system.file("extdata", "qpcr-data-384.csv", package = 'eda')
+qpcr384_names_csv <- system.file("extdata", "qpcr-names-384.csv", package = 'eda')
+```
+
+## Assignment
+
+### Exercise 1
+
+Use a function from the [`readr`](http://readr.tidyverse.org/) library--part of the tidyverse--to load the CSV data. You should have two new tibbles.
+
+```{r answer_1}
+library(tidyverse)
+library(cowplot)
+library(eda)
+
+qpcr384_data <- readr::read_csv(qpcr384_data_csv)
+qpcr384_names <- readr::read_csv(qpcr384_names_csv)
+
+```
+
+### Exercise 2
+
+Inspect these tibbles and make note of their resemblance to a 384 plate. Tidy these tibbles into a format like:
+
+```
+# A tibble: 384 x 8
+     row   col       cell  time  gene    rt   rep value
+   <chr> <chr>      <chr> <chr> <chr> <chr> <chr> <dbl>
+ 1     A     1 MAGIC-hypo     0 ACTIN     +     1   2.6
+ 2     B     1 MAGIC-hypo     0 ACTIN     -     1   0.0
+ 3     C     1 MAGIC-hypo     0 ACTIN     +     2   1.6
+ 4     D     1 MAGIC-hypo     0 ACTIN     -     2   0.0
+ 5     E     1 MAGIC-hypo     0 ACTIN     +     3   2.8
+ 6     F     1 MAGIC-hypo     0 ACTIN     -     3   0.0
+ 7     G     1 MAGIC-hypo     0 MAGIC     +     1  12.0
+ 8     H     1 MAGIC-hypo     0 MAGIC     -     1   0.0
+ 9     I     1 MAGIC-hypo     0 MAGIC     +     2  10.5
+10     J     1 MAGIC-hypo     0 MAGIC     -     2   0.0
+# ... with 374 more rows
+```
+
+List the variables in the tidied data.
+
+```{r answer_2}
+qpcr384_data_tidy <- gather(qpcr384_data, col, value, -row)
+qpcr384_names_tidy <-
+  gather(
+    qpcr384_names,
+    col, value, -row
+  ) %>%
+  separate(value, into = c('cell','time','gene','rt','rep'), sep = "_")
+
+qpcr_tidy <- left_join(qpcr384_names_tidy, qpcr384_data_tidy)
+```
+
+
+### Exercise 3
+
+You did two sets of qPCR reactions: one where reverse transcriptase was added to your RNA sample, ond ne where it was not. The `rt` variable reflects this by noting samples with `+` and `-`.
+
+Make two plots of the distribution of expression values for all sample values. In one plot, use `geom_histogram()` and facet by `rt`. In the other plot, change the x-axis scale using `scale_x_log10()`.
+
+What do these plots tell you about the values from the `rt == "-"` samples?
+
+```{r answer_3}
+ggplot(qpcr_tidy, aes(value)) + geom_histogram() + facet_grid(~rt)
+
+ggplot(qpcr_tidy, aes(value)) + geom_histogram() + facet_grid(~rt) + scale_x_log10()
+```
+
+### Exercise 4
+
+Create a plot of expression by time for each of the MAGIC cell types. At this point you can remove the `rt == "-"` controls. You will need to plot expression value on a log-scale to see differences.
+
++ In which cell lines is the expression of `WAND` affected? In what way? Can you make a statement about this (e.g., XXX is required for YYY expression)?
+
+```{r answer_4}
+ggplot(qpcr_tidy %>% filter(rt == "+"), aes(x = time, y = value, color = gene, group = gene)) +
+  geom_point() + geom_line() + facet_wrap(~cell) + scale_y_log10() +
+  scale_color_brewer(palette="Set1")
+```
+
+5. Normzlize the expression data by substracting the ACTIN value from each of the MAGIC, WAND and POOF values. Re-create the plots from question 4 from this normalized data. Did your interpretation change?
+
+```{r answer_5}
+qpcr_tidy_norm <- qpcr_tidy %>%
+  select(-row, -col) %>%
+  spread(gene, value) %>%
+  mutate(
+    MAGIC_norm = MAGIC / ACTIN,
+    WAND_norm = WAND / ACTIN,
+    POOF_norm = POOF / ACTIN
+  ) %>%
+  select(cell:rep, ends_with("norm")) %>%
+  gather(gene, value, -cell, -rep, -time, -rt)
+
+qpcr_tidy_norm
+
+ggplot(qpcr_tidy_norm %>% filter(rt == "+"), aes(x = time, y = value, color = gene, group = gene)) +
+  geom_point() + geom_line() + facet_wrap(~cell) + scale_y_log10() +
+  scale_color_brewer(palette="Set1")
+
+```
+
