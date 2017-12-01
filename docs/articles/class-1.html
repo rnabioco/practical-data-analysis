@@ -53,6 +53,13 @@
 <li>
       <a href="../articles/class-1.html">Class 1: Overview and Data Tidying</a>
     </li>
+    <li>
+      <a href="../articles/class-2.html">Class 2: Writing Reproducible Reports</a>
+    </li>
+    <li class="divider">
+    <li>
+      <a href="../articles/assignment-1.html">Weekend Assignement 1</a>
+    </li>
     <li class="divider">
     <li>
       <a href="../articles/assignments.html">Submitting Assignments</a>
@@ -75,7 +82,7 @@
       <h1>Class 1: Overview and data tidying</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-11-30</h4>
+            <h4 class="date">2017-12-01</h4>
           </div>
 
     
@@ -116,11 +123,11 @@ readxl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentat
 <p>The Console panel enables interactive analysis.</p>
 <p>The <code>tidyverse</code> is a collection of libraries that enable efficient data processing and visualization. You will probably start many analyses by loading the <code>tidyverse</code> library. This library loads a number of other libraries that are useful for data processing and plotting.:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-<span class="co">#&gt; ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</span>
+<span class="co">#&gt; ── Attaching packages ───────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</span>
 <span class="co">#&gt; ✔ tibble  1.3.4     ✔ purrr   0.2.4</span>
 <span class="co">#&gt; ✔ tidyr   0.7.2     ✔ stringr 1.2.0</span>
 <span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.2.0</span>
-<span class="co">#&gt; ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span>
+<span class="co">#&gt; ── Conflicts ──────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span>
 <span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span>
 <span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></code></pre></div>
 <p>This one invocation loads several libraries including <code>dplyr</code> and <code>ggplot2</code>.</p>
@@ -577,7 +584,7 @@ qpcr_data
 #&gt; 10          Merc 280   mpg  19.2
 #&gt; # ... with 342 more rows</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li><p>For each car in the tidy <code>mtcars</code> data set, calculate the mean (<code>mean()</code>) and variance (<code>var()</code>) for each variable. Try using both <code>summarize()</code> and <code>summarize_each()</code>.</p></li>
+<li><p>For each car in the tidy <code>mtcars</code> data set, calculate the mean (<code>mean()</code>) and variance (<code>var()</code>) for each variable. Try using both <code>summarize()</code> and <code>summarize_at()</code> and <code>summarize_all()</code>.</p></li>
 <li><p>Plot <code>mpg</code> vs <code>cyl</code> for the <code>mtcars</code> data set. Which format should you use? The original data set, or the tidied one? Why?</p></li>
 <li><p>Using the provided <code>qpcr</code> data, plot the changes in gene expression over time. Use colors to represent genotypes and facets for the different genes. If that’s too easy, add error bars (<code>geom_errorbar()</code>) and connect each point with a line (<code>geom_line()</code>).</p></li>
 </ol>
@@ -603,7 +610,6 @@ qpcr_data
 #&gt;  9     1    12 10.84
 #&gt; 10     1    13  7.58
 #&gt; # ... with 34 more rows</code></pre>
-<p>dd</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Calculate summary statistics in your tidy <code>anscombe</code> data. Calculate <code>n</code>, <code>mean</code>, and <code>var</code> for each <code>x</code> and <code>y</code> variable in the sets. Try using <code>summarize_each</code> for this calculation.</li>
 </ol>

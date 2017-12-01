@@ -312,7 +312,7 @@ The tidied data should look something like:
 mtcars %>% mutate(name = rownames(.)) %>% as_tibble() %>% gather(var, value, -name)
 ```
 
-2. For each car in the tidy `mtcars` data set, calculate the mean (`mean()`) and variance (`var()`) for each variable. Try using both `summarize()` and `summarize_each()`.
+2. For each car in the tidy `mtcars` data set, calculate the mean (`mean()`) and variance (`var()`) for each variable. Try using both `summarize()` and `summarize_at()` and `summarize_all()`.
 
 3. Plot `mpg` vs `cyl` for the `mtcars` data set. Which format should you use? The original data set, or the tidied one? Why? 
 
@@ -336,7 +336,6 @@ anscombe_tidy <- anscombe %>%
 
 anscombe_tidy
 ```
-dd
 
 2. Calculate summary statistics in your tidy `anscombe` data. Calculate `n`, `mean`, and `var` for each `x` and `y` variable in the sets.  Try using `summarize_each` for this calculation.
 
