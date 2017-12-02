@@ -1,5 +1,5 @@
 ---
-title: "Class 2: Writing Reproducible Reports"
+title: "Class 2: Developing Reproducible Reports"
 author: "Jay Hesselberth"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -18,35 +18,116 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Concepts
-
-- Writing (Rmarkdown, useful RStudio tricks and shortcuts)
-- Sharing (rpubs.com, RStudio Connect, sending HTML)
-- Approaches for data exploration (Shiny *is not reproducible*)
-
 # Performing analyses in RStudio
+
+## Keep cheatsheets handy!
+
+See `Help > Cheatsheets` for helpful references. Print them out and pin them up next to your screen. The `dplyr` and `ggplot2` cheatsheets are especially useful for beginners.
+
+## Code Chunks
+
+**Chunk options** control the behaviour of code chunks. Useful settings include:
+
+- Show but don't run code with `eval = FALSE`
+- Suppress messages with `message = FALSE` and warnings with `warnings = FALSE`
+
+**Code folding** lets you embed collapsible code chunks in your rendered HTML document. Please use this for your assignments.
+
+``` yaml
+---
+title: "Hide my code!"
+output:
+  html_document:
+    code_folding: hide
+---
+```
+
+**Organize your code blocks for easy reading.**. 80 characters per line, and break pipes into pieces.
+
+```{r wrap_lines, eval=FALSE}
+# nope
+mtcars %>% rownames_to_columns(.) %>% as_tibble() %>% ggplot(mtcars, aes(x = mpg, y = hp)) + geom_point() + geom_line() + scale_color_brewer(palette = "Set1")
+
+# yep
+mtcars %>%
+  rownames_to_columns(.) %>%
+  as_tibble() %>%
+  ggplot(mtcars, aes(x = mpg, y = hp)) +
+  geom_point() +
+  geom_line() +
+  scale_color_brewer(palette = "Set1")
+```
 
 ## Writing notes on your analysis
 
-- Figure legends can be added using the `fig.cap=` chunk option.
+- Adopt a systematic markdown framework for commenting on your data analysis, making use hierarchical markdown headings. Create sections like:
 
-```{r figure, fig.cap='Analysis of petal length'}
-iris %>% ggplot()
+``` rmd
+# Hypothesis
+
+# Approach
+
+## Statistics
+
+## Plots
+
+# Interpretations
+
+## Conclusions
 ```
 
-**Current me thanks former me**
+# Plot advice
 
+## Figure Legends
+
+- Figure legends can be added using the `fig.cap=` chunk option.
+
+```{r figure, fig.cap='Figure 1. Simple Sepal analysis. Setosa appears to have a stronger correlation than the other two species.', message=FALSE}
+library(tidyverse)
+iris %>% ggplot(aes(Sepal.Length, Sepal.Width)) + geom_point() + facet_grid(~Species)
+```
+
+## Figure titles
+
+```{r figure_title}
+ggplot(mtcars, aes(x = mpg, y = hp, color = factor(am))) +
+  geom_point() +
+  ggtitle("Motor Trend Cars (colored by transmision type)")
+```
+ 
 ## Color
 
 ### Palettes
 
 - **colorbrewer** The [colorbrewer](colorbrewer2.org) palettes are packaged with ggplot2. They include palettes for both discrete and continuous data.
 
-- **viridis**
+```{r cb}
+p <- ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) +
+  geom_point(size = 5, aes(color = factor(Species)))
 
-### Discrete and continuous data
+p + scale_color_brewer(palette = 'Set1')
+```
 
-## Plot themes
+- **viridis** The viridis library contains some visually appealing palettes that are color-blind-friendly.
+
+```{r viridis}
+library(viridis)
+p + scale_color_viridis(discrete = TRUE)
+```
+
+### Scales (Discrete and continuous)
+
+- http://colorbrewer2.org
+
+## Facets
+
+Separating your data by groups is a powerful way to visualize differences between them.
+
+```{r facets}
+mtcars %>% ggplot(aes(x = mpg, y = hp)) + facet_grid(gear ~ am) + geom_point()
+```
+
+## Themes
 
 The [`cowplot`](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html) package provides a variety of sane defaults for your plots. These are especially useful when making publication-quality figures.
 
@@ -54,42 +135,75 @@ The [`cowplot`](https://cran.r-project.org/web/packages/cowplot/vignettes/introd
 # install.packages('cowplot')
 library(cowplot)
 ggplot(mtcars, aes(x = mpg, y = hp)) + geom_point() + facet_grid(~cyl)
+
+# note the formatting of the `geom_point` section
+ggplot(mtcars, aes(x = mpg, y = hp)) +
+  facet_grid(~cyl) +
+  geom_point(
+    data = mtcars %>% select(-cyl),
+    color = "grey",
+    alpha = 0.3
+  ) +
+  geom_point(color = 'red', size = 2)
+```
+
+## Tables
+
+The `DT` library provides dynamic table with search capabilities.
+
+```{r dt}
+# Search for "Mazda"
+library(DT)
+DT::datatable(mtcars)
+```
+
+`knitr::kable()` will display a static table.
+
+```{r kable}
+knitr::kable(mtcars)
 ```
 
 # Organizing analyses
 
 Use Markdown headings to organize your document. You can use the Document Outline in RStudio to display your organziation.
 
-## Date formats
+## Develop a framework
 
-You should use the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format for dates. Name your files using the `YYYY-MM-DD-description.Rmd` convention. This way, a directory listing will put them in chronological order using their lexical ordering.
+Each project should have a systematic hierarchy to organize data and results. I recommend reading this [short article](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000424) from Bill Noble to organize your data.
+
+The article forces you to organize your data into a standard hierarchy where:
+
+- Items in `data/` are static, unchanging data files. Tables of metadata, fastq files etc.
+- Items in `results/` are analyses organized by date and can change.
+
+## RStudio Projects
+
+A Project is a self-contained set of files that can be easily accessed in RStudio.
+
+To make a Project, choose File > New Project... . Answer a few prompts and you will have your own 
 
 ## Github
 
-Github is beyond the scope of this class. But if you are using Rmarkdown (or writing other types of code) then it is worth the effort to set it up. Jenny Bryan has an excellent tutorial for setting up Github and integrating it with RStudio.
+Github is beyond the scope of this class. But if you are using Rmarkdown--or writing other types of code--then it is worth the effort to set it up. Jenny Bryan has an excellent tutorial for setting up Github and integrating it with RStudio (XXX githug).
 
-Beyond the st
+Github provides several advantages:
+
+- **Revision control.** You have a history of all changes to your documents and can go back to any point.
+- **Collaboration.** It is easy to share analyses with your colleagues and is built to enable multiple people to work an a common project.
+- **Publicity.** Your github page reflects your interests and productivity. Others might visit to evaluate your code samples.
 
 # Sharing results
 
 Once you have created an Rmarkdown document, there are several ways to share it with others.
 
-## Send the HTML file
+- **Send the HTML file**. One approach is to render the Rmarkdown file to an HTML and send the rendered HTML. This works OK for small analyses, but file sizes can quickly approach the attachment limit.
 
-One approach is to render the Rmarkdown file to an HTML and send the rendered HTML. This works OK for small analyses, but file sizes can quickly approach the attachment limit.
+- **Post the analysis on the web rpubs.com**
 
-## Post the analysis on the web
+# Getting help
 
-### Rpubs.com
+- Stack Overflow
 
-### Github
+- [The RStudio Community](https://community.rstudio.com/)
 
-# Goals
-
-- Form strong and lasting analysis habits
-- Keep cheatsheets handy early on
-- Learn new features and concepts as they arise (read the RStudio blog)
-
-# Reading
-
-- Bill Noble Guide to Computational BIology. Organization is paramount.
+- Follow #rstats folks on twitter (@drob, @hadleywickham, @JennyBryan)
