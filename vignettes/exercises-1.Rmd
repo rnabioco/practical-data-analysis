@@ -1,0 +1,64 @@
+---
+title: "Exercises 1"
+author: "Your Name Here"
+date: "12/3/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Question 1
+
+Tidy the `mtcars` data set. Note that car names are rownames in the built-in data, so they need to be moved to their own column prior to tibble conversion.
+
+The tidied data should look like:
+
+```
+# A tibble: 352 x 3
+                name   var value
+               <chr> <chr> <dbl>
+ 1         Mazda RX4   mpg  21.0
+ 2     Mazda RX4 Wag   mpg  21.0
+ 3        Datsun 710   mpg  22.8
+ 4    Hornet 4 Drive   mpg  21.4
+ 5 Hornet Sportabout   mpg  18.7
+ 6           Valiant   mpg  18.1
+ 7        Duster 360   mpg  14.3
+ 8         Merc 240D   mpg  24.4
+ 9          Merc 230   mpg  22.8
+10          Merc 280   mpg  19.2
+# ... with 342 more rows
+```
+
+## Strategy
+
+## Interpretation
+
+# Question 2
+
+For each car in the tidy `mtcars` data set, calculate the mean (`mean()`) and variance (`var()`) for each variable. Try using `summarize()` and `summarize_at()` and `summarize_all()`.
+
+## Strategy
+
+## Interpretation
+
+# Question 3
+
+Plot `mpg` vs `cyl` for the `mtcars` data set. Which format should you use? The original data set, or the tidied one? Why? 
+
+## Strategy
+
+## Interpretation
+
+
+# Question 4
+
+Using the provided `qpcr` data, plot the changes in gene expression over time. Use **colors** to represent genotypes and **facets** for the different genes. If that's too easy, add error bars (`geom_errorbar()`) to the plot and connect each point with a line (`geom_line()`).
+
+## Strategy
+
+## Interpretation
+
+
