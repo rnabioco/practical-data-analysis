@@ -52,7 +52,6 @@ Plot `mpg` vs `cyl` for the `mtcars` data set. Which format should you use? The 
 
 ## Interpretation
 
-
 # Question 4
 
 Using the provided `qpcr` data, plot the changes in gene expression over time. Use **colors** to represent genotypes and **facets** for the different genes. If that's too easy, add error bars (`geom_errorbar()`) to the plot and connect each point with a line (`geom_line()`).

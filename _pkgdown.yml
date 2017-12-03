@@ -12,6 +12,7 @@ reference:
     contents:
     - starts_with("qpcr")
     - mtcars_tbl
+    - brauer_gene_exp
 
 navbar:
   left:
@@ -25,17 +26,16 @@ navbar:
         href: articles/class-1.html
       - text: "Class 2: Writing Reproducible Reports"
         href: articles/class-2.html
-#      - text: "Class 3: Common Analysis Challenges"
-#        href: articles/class-3.html
-#      - text: "Class 4: Gene Expression Vignette"
-#        href: articles/class-4.html
-#      - text: "Class 5: Chromatin Vignette"
-#        href: articles/class-5.html
-#      - text: "Class 6: Single-Cell Analysis"
-#        href: articles/class-6.html
+      - text: "Class 3: Common Analysis Challenges"
+        href: articles/class-3.html
       - text: "---------"
-      - text: "Weekend Assignement 1"
+      - text: "Excercises 1"
+        href: "articles/exercises-1.html"
+      - text: "Excercises 2"
+        href: "articles/exercises-2.html"
+      - text: "---------"
+      - text: "Weekend Assignment 1"
         href: "articles/assignment-1.html"
       - text: "---------"
-      - text: "Submitting Assignments"
+      - text: "Assignment Submission and Grading Rubric"
         href: articles/assignments.html
