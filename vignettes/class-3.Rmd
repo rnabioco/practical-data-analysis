@@ -18,11 +18,84 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Concepts
+```{r load}
+library(tidyverse)
+library(eda)
+```
 
-- Too many variables (identifying important ones, and summarizing others. using colors and facets in plots)
-- Reducing dimensionality (PCA and t-SNE)
+## Missing data
+
+### Zeroes, `NA`, and `NULL`
+
+Don't use use zeroes to represent missing data. `0` is an observed value 
+
+`NA` (Not Available) is most often use to represent missing data.
+
+`NULL` means "undefined" and is only used in a programming context (i.e., a function that returns `NULL`). You can't put `NULL` values in a data frame.
+
+Let's examine a data frame with some missing data.
+
+```{r complete}
+# devtools::install_github('rnabioco/eda')
+missing
+```
+
+### `filter` with `is.na()`
+
+You can identify variables with `NA` values by combining `filter()` and `is.na()`.
+
+```{r filter_na}
+# find rows where name is NA
+missing %>% filter(is.na(name))
+
+# find rows where id is *not* NA
+missing %>% filter(!is.na(id))
+```
+
+### `na.omit()`
+
+You can remove all rows containing `NA` values with `na.omit()`.
+
+```{r na.omit}
+missing %>% na.omit()
+```
+
+### `na.rm` argument to stats
+
+You can exclude `NA` values from statistical operations with `na.rm = TRUE`.
+
+```{r stat_na}
+# if NAs are present, the result is NA
+sum(missing$value1)
+
+# solution: drop NAs from the calculation
+sum(missing$value1, na.rm = TRUE)
+```
+
+## Too much data
+
+### Databases
+
+### Sampling rows
+
++ `head()` and `tail()`
+
++ `sample()` and `sample_n()`
+
++ `set.seed()`
+
+### Reprex
+
+```{r reprex}
+```
+
+## Too many variables (identifying important ones, and summarizing others. using colors and facets in plots)
+
 - Assessing significance (light statistics overview, null distributions, hypothesis testing).
-- Dealing with untidy R results (broom::tidy())
-- Too much data (in-memory vs. database approaches, subsetting and sampling, simplify with a reprex).
-  
+
+## Assessing significance between groups
+
+### Tests - `t.test()` and `ks.test()`
+
+### Tidying results with `broom`
+
