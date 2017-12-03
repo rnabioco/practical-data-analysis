@@ -54,3 +54,9 @@
 #' @source \url{http://varianceexplained.org/r/tidy-genomics/}
 #' @source \url{http://varianceexplained.org/r/tidy-genomics-broom/}
 "brauer_gene_exp"
+
+#' Sample missing data
+#'
+#' A dataset for exploring missing data.
+#'
+"missing"
