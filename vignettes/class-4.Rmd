@@ -1,23 +1,32 @@
 ---
-title: "Class 4: Genomic Inveral Analysis Vignette"
+title: "Class 4: Genomic Interval Analysis Vignette"
 author: "Jay Hesselberth"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Class-5}
+  %\VignetteIndexEntry{Class-4}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-## Key concepts
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "img/class-2-",
+  fig.align = "center"
+)
+```
+
+# Genomic Interval Data
 
 - Introduce genome-wide data with the UCSC genome browser and ENCODE chromatin data
 - Summarizing genomic datatsets as intervals and signals
 - Intersecting gene models, SNP databases, and Chip-Seq data
 
-## Visualizing genomics data with the UCSC genome browser
+# Visualizing genomics data with the UCSC genome browser
  
-The [UCSC genome browser](http://genome.ucsc.edu/index.html) is a web interface for viewing genomics data. Numerous datasets are available to view, including:
+The [UCSC genome browser](http://genome.ucsc.edu/index.html) provides a web interface for viewing, downloading, and querying genomics data. Numerous datasets are available to view, including:
 
 1) Gene annotations ([GENCODE](http://www.gencodegenes.org/releases/current.html))
 2) Gene expression data ([GTEx](https://gtexportal.org/home/)) 
@@ -25,18 +34,46 @@ The [UCSC genome browser](http://genome.ucsc.edu/index.html) is a web interface 
 4) Functional genomics data ([ENCODE](https://www.encodeproject.org/))
 5) User-uploaded datasets
 
-## Genomics data can be summarized as intervals
+# Genomics data summarizes to intervals
 
 The genome can be described as a coordinate system:
+
+![](img/class-4-karyotype.png)
+    
+    
+    
+    
+
+
+## Nucleotides are represented in 1-D positional coordinates:
+
 ```
 chr1 ATGCTAGCTGATCGTAGCTG...
      0123456789...
+     
+chr2 ATGCTAGCTGATCGTAGCTG...
+     0123456789...
+     
+chr3 ATGCTAGCTGATCGTAGCTG...
+     0123456789...    
 ```
+
+## Intervals describe regions
 
 ```
 chr1 ATGCTAGCTGATCGTAGCTG...
-chr1 0  20
+
+# first 20 nucleotides
+#chrom  start end
+chr1    0     20
+
+# whole chromosomes
+chr1  0 249250621
+chr2  0 243199373
+chr3  0 198022430
 ```
+
+## Read alignments are intervals
 
 After aligning genomics data, each alignment can be represented as an interval covering a particular genomic sequence.
 
@@ -45,29 +82,39 @@ read 1:           ------
 read 2:     -----  
 read 3:    ----
       chr1 ATGCTAGCTGATCGTAGCTG...
-chr1 0 4
-chr1 1 6
-chr1 7 13
+      
+      
+chr1  0   4
+chr1  1   6
+chr1  7   13
 ```
+
+# BED format
 
 The [`BED`](https://genome.ucsc.edu/FAQ/FAQformat#format1) file format defines genomic regions of interest:
 
 ```
-#BED3
+#BED3 (3-columns)
+
 #chrom start end
-chr1  0 4
-chr1  1  6
-chr1  7  13
+chr1   0     4
+chr1   1     6
+chr1   7     13
 ```
 
-and can define any genomic feature of interest (reads, genes, interesting DNA sequences)
+and can define genomic features of interest:
+
+  - read alignments
+  - gene coordinates
+  - positions of genetic variation (i.e. SNPs, indels)
 
 ```
 #BED6
 #chrom start end name  score strand
-chr1  0 4 ELAVL1_binding_site 100.00  +
-chr1  1  6  microRNA  10  -
-chr1  7  13 alternative_exon  1 .
+
+chr1  0  4  ELAVL1_binding_site 100.00  +
+chr1  1  6  microRNA            10      -
+chr1  7  13 alternative_exon    1       .
 
 interval 1:       ----->            
 interval 2:  <----  
@@ -76,19 +123,22 @@ interval 3:<-->
 
 ```
 
-BED files can be downloaded from numerous sources:
+# Obtaining interval data
 
-1) [UCSC table browser](https://genome.ucsc.edu/cgi-bin/hgTables) provides an easy interface for downloading many types of data as BED (or other) format files  
-2) The ENCODE project provides a data access portal to download experimental datasets from many datasets (BED files [here](https://www.encodeproject.org/matrix/?type=Experiment&files.file_type=bed+narrowPeak)).  
+`BED` files can be downloaded from many sources:
 
-### Bedgraph files define genomic signals
+1) The [UCSC table browser](https://genome.ucsc.edu/cgi-bin/hgTables) provides an easy interface for downloading many types of genomic data as `BED` (and other) format files.
 
-The [`bedgraph`](https://genome.ucsc.edu/goldenPath/help/bedgraph.html) format is commonly used to summarize read coverage from ChIP-Seq, CLIP-Seq, RNA-Seq, and other genome-wide data. 
+2) The ENCODE project provides a data access portal to download experimental data from numerous types of high-throughput experiments (`BED` files [here](https://www.encodeproject.org/matrix/?type=Experiment&files.file_type=bed+narrowPeak)).  
+
+## Bedgraph files define genomic signals
+
+The [`bedGraph`](https://genome.ucsc.edu/goldenPath/help/bedgraph.html) format is an extension of the `BED` format commonly used to summarize single nucleotide read coverage from `ChIP-Seq`, `CLIP-Seq`, `mRNA-Seq`, and other genome-wide data. 
 
 ```
-interval 1:       ------            
-interval 2: -----  
-interval 3:----
+read 1:           ------            
+read 2:     -----  
+read 3:    ----
       chr1 ATGCTAGCTGATCGTAGCTG...
 Coverage   12221101111110000000
 
@@ -99,38 +149,66 @@ chr1  4  6  1
 chr1  7 13  1
 ```
 
-## Exploring ChIP-Seq Data
+# Exploring ChIP-Seq Data
 
-The ENCODE project produced hundreds of ChIP-Seq datasets across dozens of humans cell lines. A compendium of ChIP-Seq experiments from 161 DNA-binding proteins were aggregated into a single BED file, available from the UCSC genome browser. We will use this dataset (see [description](http://genome.ucsc.edu/cgi-bin/hgTables?db=hg19&hgta_group=regulation&hgta_track=wgEncodeRegTfbsClusteredV3&hgta_table=wgEncodeRegTfbsClusteredV3&hgta_doSchema=describe+table+schema)) to explore interval analysis methods.
-
-
-### Simplified Sequencing analysis workflow
-
-Genome Browser snapshot of reads + coverage + peaks
+## Simplified Sequencing analysis workflow
 
 Step | File Format | Description
------ | ------- | -----------
-Get Sequences | FASTQ | Sequencing Reads
-Align to genome | BAM | Alignment information for reads
-Summarize Coverage | BEDGRAPH | Coverage
-Define enriched regions | BED | Peaks
+--------------- | --------------- | ------------------------------
+Get read sequences | [`FASTQ`](https://en.wikipedia.org/wiki/FASTQ_format) | Sequencing Reads
+Align to genome | [`BAM/SAM`](http://samtools.github.io/hts-specs/SAMv1.pdf) | **S**equence **A**lignment **M**ap Alignment information for each read (BAM = binary file)
+Summarize Coverage | [`bedGraph/bigWig`](https://genome.ucsc.edu/FAQ/FAQformat.html#format1.8) | Count number of reads covering every position in genome i.e. read coverage (bigWig = binary file)
+Define enriched regions | [`BED`](https://genome.ucsc.edu/FAQ/FAQformat.html#format1) | Find regions with enriched coverage. i.e.("Peaks" of signal)
 
-### ChIP-Seq Peaks in Human Cells
-```{r}
+![](img/class-4-alignments.jpg)
+
+## ChIP-Seq Peaks in Human Cells
+
+The [`ENCODE`](https://www.encodeproject.org) project produced hundreds of [ChIP-Seq](https://en.wikipedia.org/wiki/ChIP-sequencing) datasets across dozens of humans cell lines. A compendium of ChIP-Seq experiments from 161 DNA-binding proteins were aggregated into a single BED file, available from the UCSC genome browser. We will use this dataset (see [description](http://genome.ucsc.edu/cgi-bin/hgTables?db=hg19&hgta_group=regulation&hgta_track=wgEncodeRegTfbsClusteredV3&hgta_table=wgEncodeRegTfbsClusteredV3&hgta_doSchema=describe+table+schema)) to explore interval analysis methods.
+
+First we will discuss a few methods for loading the data into R.
+
+## Download the data to your computer using R
+
+```{r, dl_file, eval = F}
 library(tidyverse)
-
 url <- "http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeRegTfbsClustered/wgEncodeRegTfbsClusteredV3.bed.gz"
 
 download.file(url, "wgEncodeRegTfbsClusteredV3.bed.gz")
 
-# or alternatively save to data-raw
-tf_bed <- read_tsv("wgEncodeRegTfbsClusteredV3.bed.gz",
-                   col_names = F)
+tf_bed <- read_tsv(url, col_names = F)
+```
 
-# or alternatively load directly
-# tf_bed <- read_tsv(url, col_names = F)
 
-colnames(tf_bed) <- c(
+## Load the data into memory directly from url link
+
+```{r, url_read, eval = F}
+
+url <- "http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeRegTfbsClustered/wgEncodeRegTfbsClusteredV3.bed.gz"
+
+tf_bed <- read_tsv(url, col_names = F)
+```
+
+
+## Load data from file that is included in `eda` package
+
+```{r, pkg_data, message = F}
+library(tidyverse)
+library(eda)
+
+file_name <- system.file("extdata", 
+                         "wgEncodeRegTfbsClusteredV3.bed.gz", 
+                         package = "eda")
+
+tf_bed <- read_tsv(file_name, col_names = F)
+
+tf_bed
+```
+
+## Fixing column names
+
+```{r colnames}
+new_names <- c(
   "chrom",
   "start",
   "end",
@@ -141,95 +219,228 @@ colnames(tf_bed) <- c(
   "expScore"
 )
 
+colnames(tf_bed) <- new_names
+tf_bed
 ```
 
+# In class exercises
 
 1) Which TF has the most binding-sites (AKA peaks)?
 
-2) Which TF covers the most nucleotides in the genome?
-
-```{r ex_1}
+```{r ex_1, eval = F, echo = F}
 group_by(tf_bed, TF) %>%  # group by TF
   summarize(total = n()) %>%  # calculate number of peaks per TF
   arrange(desc(total)) # sort 
 
 ```
 
-```{r ex_2}
+2) Which TF covers the most basepairs in the genome?
+
+```{r ex_2, eval = F, echo = F}
 mutate(tf_bed, 
        peak_length = end - start) %>% # calculate length of each interval
   group_by(TF) %>%  # group by TF
   summarize(total_bps = sum(peak_length)) %>% # sum peak_length per TF
   arrange(desc(total_bps)) # rank by total peak_lengths
+```
+
+
+3) Which TF has the broadest or the narrowest binding-sites on average?
+
+```{r ex_3, eval = F, echo = F}
+mutate(tf_bed, 
+       peak_length = end - start) %>% 
+  group_by(TF) %>% 
+  summarize(mean_bps = mean(peak_length)) %>% 
+  arrange(desc(mean_bps)) %>% 
+  slice(c(1, nrow(.))) %>% 
+  pull(TF)
 
 ```
 
-## How to analyze intervals and signals?
+# Integrating multiple datasets
 
-- [BEDTools](http://bedtools.readthedocs.io/en/latest/) (also [BedOPS](https://bedops.readthedocs.io/en/latest/))
-- [valr](https://rnabioco.github.io/valr/) (also  [bedr](https://scfbm.biomedcentral.com/articles/10.1186/s13029-016-0059-5), [GRanges](https://bioconductor.org/packages/release/bioc/html/GenomicRanges.html))
+We can now use the BED format as a common file to investigate multiple genome-wide datatypes. For example, let's examine a dataset of [`SNPs`](https://en.wikipedia.org/wiki/Single-nucleotide_polymorphism) taken from the ucsc genome browser. How would we go about finding `SNPs` that reside in known TF binding sites? 
 
-### Install valr
+
+```{r, dl_data, eval = F}
+snp_file <- system.file("extdata", 
+                        "hg19.snps147.chr22.bed.gz", 
+                        package = "valr")
+
+snps <- read_tsv(snp_file, col_names = c("chrom",
+                                 "start",
+                                 "end",
+                                 "name",
+                                 "score",
+                                 "strand"))
+
+tf_bed %>% 
+  dplyr::filter(chrom == "chr22") -> chr22_tf_bed
+
+# How to find intersecting intervals?
+```
+
+# How to efficiently analyze intervals and signals?
+
+  To efficiently query interval data a set of algorithms are used to speed up the querying process. Examples here: [Interval Tree](https://en.wikipedia.org/wiki/Interval_tree) or [ChromSweep](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0973-5). 
+  
+  These algorithms have been implemented in a set of tools specific for analyzing genomic interval data. 
+  
+  
+## Command-line tools
+  - [`BEDTools`](http://bedtools.readthedocs.io/en/latest/) (the most popular and original tool-suite) 
+  - [`BedOPS`](https://bedops.readthedocs.io/en/latest/) (similar to BEDTools but offers unique functionality)
+
+## R-Packages
+  - [`valr`](https://rnabioco.github.io/valr/) (Interval analysis with a `tidyverse` style syntax)
+  - [`GRanges`](https://bioconductor.org/packages/release/bioc/html/GenomicRanges.html) (Interval analysis used in many  [`BioConductor`](http://www.bioconductor.org/) packages)
+  
+  
+# Introduction to valr
 
 ```{r valr_install}
 #install.packages("valr")
+library(valr)
 ```
 
-### How many SNPs in TF binding sites?
+[`valr`](https://rnabioco.github.io/valr/) was developed to simplify genomic interval analysis and replace the need for learning the command line to perform interval analysis. We will use `valr` today to introduce genomic interval analysis. 
+
+## Reading in BED data
+
+`valr` assigns common column names to facilitate comparisons between tibbles. All tibbles will have `chrom`, `start`, and `end` columns, and some tibbles from multi-column formats will have additional pre-determined column names. See the [`read_bed()`](https://rnabioco.github.io/valr/reference/read_bed.html) documentation for additional details.
+
+```{r}
+
+# get path to bed file
+bed_file <- system.file("extdata",
+                        "6fields.bed.gz",
+                        package = "valr")
+
+# read in bed, indicate the number of columns with n_fields
+bed <- read_bed(bed_file, n_fields = 6)
+
+bed
+```
+
+
+## Find intersecting intervals with bed_intersect()
+
+One of the most commone operations in interval analysis is to determine if intervals in 1 BED file overlap with intervals in another file. This operation can be used to answer many questions including:
+
+1) Does a SNP overlap with a protein-coding region?
+2) Which genes does a transcription factor bind to?
+3) Which regions of the genome are depleted of genes?
+
+The [`bed_intersect()`](https://rnabioco.github.io/valr/reference/bed_intersect.html) in valr function finds intervals that overlap in two datasets and reports the intersecting intervals.
+
+```{r make_bed, echo = F}
+x <- trbl_interval(
+  ~chrom, ~start, ~end, ~name, ~score, ~strand,
+  'chr1', 25,      50,    "A", 0, "+",
+  'chr1', 40,      80,    "B", 0, "-",
+  'chr1', 100,     125,    "C", 0, "-"
+)
+
+y <- trbl_interval(
+  ~chrom, ~start, ~end, ~name, ~score, ~strand,
+  'chr1', 30,     75, "C", 0, "-"
+)
+```
+
+Imagine that we have a set of two bed files that we have read into R as `x` and `y`.
+```{r}
+x
+y
+```
+
+We can find intersecting intervals with bed_intersect()
+
+```{r}
+bed_intersect(x, y)
+```
+
+
+`valr` functions respect groups established by `group_by()`. For example to only intersect intervals if they are on the same strand, group_by strand prior to intersecting
+
+```{r}
+x <- group_by(x, strand)
+y <- group_by(y, strand)
+bed_intersect(x, y)
+```
+
+`valr` includes many functions for manipulating, comparing, and randomizing interval data. The [documentation](https://rnabioco.github.io/valr/reference/index.html) contains a list of all of the available functions.
+
+## How many SNPs in TF binding sites?
+
+First obtain a bed file of SNPs:
 
 ```{r}
 library(valr)
-snps <- read_bed(valr_example("hg19.snps147.chr22.bed.gz"), 
+snp_file <- system.file("extdata", 
+                        "hg19.snps147.chr22.bed.gz", 
+                        package = "valr")
+
+snps <- read_bed(snp_file, 
                  n_fields = 6)
 snps
 ```
 
-```{r}
-genes <- read_bed(valr_example("hg19.refGene.chr22.bed.gz"), 
-                 n_fields = 12)
-genes
-```
 
 ```{r}
 snps_in_tfs <- bed_intersect(tf_bed, snps) 
+
+snps_in_tfs
 ```
 
-### How close are these SNPs to transcription start sites?
+## How close are these SNPs to transcription start sites?
+
+The [`bed_closest()`](https://rnabioco.github.io/valr/reference/bed_intersect.html) function finds the closest intervals between two sets of intervals.
+
+First read in a BED file that contains genes (on `chr22` for simplicity) in the human genome (hg19 build).
 
 ```{r}
-genes <- read_bed(valr_example("hg19.refGene.chr22.bed.gz"), 
-                 n_fields = 12)
+genes <- read_bed(valr_example('genes.hg19.chr22.bed.gz'), 
+                 n_fields = 6)
 genes
 ```
 
-Next we'll generate transcription start sites:
+Next we'll generate a set of transcription start sites for each gene. The start site depends on the strand of the interval. Here we use `ifelse()` to conditionally define the start and end based on strand. 
 
 ```{r}
-tss <- filter(genes,
-       strand == "+") %>% 
-  mutate(end = start + 1) %>% 
-  dplyr::select(chrom:strand)
+tss <- mutate(genes,
+              start = ifelse(strand == "-",
+                             end - 1,
+                             start),
+              end = ifelse(strand == "-",
+                           end,
+                           start + 1)
+              )
 
 tss
 ```
 
-```{r}
-bed_closest(snps, tss, suffix = c("", ".tss")) %>% 
-  dplyr::filter(abs(.dist) < 50) %>% 
-  bed_intersect(., tf_bed, 
-              suffix = c("", ".tf"))   
+Lastly, we will use the `bed_closest()` tool to find the closest `TSS` to each `SNP`.
 
+```{r}
+bed_closest(snps, tss) 
+
+bed_closest(snps, tss) %>% 
+  dplyr::filter(abs(.dist) < 50)    
 ```
 
-### Distribution of ChIP-Seq Signals around a genomic feature
+# Exercises
 
-Show example metagene plot from a publication
+1) The Encode project has performed `eCLIP` experiments to map RNA binding protein  (RBP) binding sites for > 100 RBPs. Go to the [Encode website](https://www.encodeproject.org/matrix/?type=Experiment), search for `eCLIP` experiments, select an RBP eClip experiment, and load a `BED` file (bed narrowPeak format) with the binding sites into R using just the url. Use the [`read_narrowPeak()`](https://rnabioco.github.io/valr/reference/read_bed.html) function from `valr`. Make sure that the file was generated using the `hg19` genome build. 
 
-### Steps in generating a metagene
+2) Use `bed_intersect()` to determine how many `eCLIP` peaks are found in genes and how many are intergenic (see the documention on the `invert` argument for `bed_intersect()`). 
 
-### Use PolII P-Ser5 or H3K4 ChIP seq to show a TSS metagene
+3) Parse the output from question 2 to determine which gene has the most binding sites for your `RBP`. 
 
-## Assignment
+4) Use another tool from `valr` (overview and documentation [here](https://rnabioco.github.io/valr/articles/valr.html) to study your eClip binding sites and the `gene` bed files. Explain your question and answer.
 
+# Quiz
 
+Create an RMarkdown document and answer the questions from the Exercises section. Write your answers in the text, and print the final tibbles that your code produced that gave you the answer. Submit your final document as "Quiz 2" by Thurs at 10 PM.
 
+**Your submitted document must knit to HTML without errors**. I.e., when you click the "Knit" button, the document should build and display and HTML page. 
