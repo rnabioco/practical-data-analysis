@@ -62,7 +62,7 @@ You can remove **all** rows containing `NA` values with `na.omit()`.
 missing %>% na.omit()
 ```
 
-### `na.rm` argument to stats
+### Statistics with `NA` values
 
 Exclude `NA` values from statistical operations with `na.rm = TRUE`.
 
