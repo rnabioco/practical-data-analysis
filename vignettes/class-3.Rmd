@@ -23,15 +23,17 @@ library(tidyverse)
 library(eda)
 ```
 
-## Missing data
+## Missing and undefined data
 
-### Zeroes, `NA`, and `NULL`
+### Zeroes, `NA`, `NaN` and `NULL`
 
-Don't use use zeroes to represent missing data. `0` is an observed value 
++ Don't use use zeroes to represent missing data. `0` is valid observed value.
 
-`NA` (Not Available) is most often use to represent missing data.
++ `NA` (Not Available) is most often use to represent missing data.
 
-`NULL` means "undefined" and is only used in a programming context (i.e., a function that returns `NULL`). You can't put `NULL` values in a data frame.
++ `NaN` (Not a Number) is the result of an undefined operation, e.g. `0 / 0`.
+
++ `NULL` means "undefined" and is only used in a programming context (i.e., a function that returns `NULL`). You can't put `NULL` values in a data frame.
 
 Let's examine a data frame with some missing data.
 
@@ -65,6 +67,8 @@ missing %>% na.omit()
 You can exclude `NA` values from statistical operations with `na.rm = TRUE`.
 
 ```{r stat_na}
+missing$value1
+
 # if NAs are present, the result is NA
 sum(missing$value1)
 
@@ -72,24 +76,54 @@ sum(missing$value1)
 sum(missing$value1, na.rm = TRUE)
 ```
 
+### Exercises
+
+1. How many rows of `missing` have `NA` values for *either* `value1` or `value2` (27)?
+
+2. How many rows of `missing` remain after filtering out `id` values of `NA` (25)?
+
+3. Calculate the mean for values in each group in `missing`. Use `summarize()`, then try `summarize_at()`.
+
 ## Too much data
 
 ### Databases
 
-### Sampling rows
-
-+ `head()` and `tail()`
-
-+ `sample()` and `sample_n()`
-
-+ `set.seed()`
-
-### Reprex
-
-```{r reprex}
+```{r yeast_proteins}
+url <- 'https://downloads.yeastgenome.org/curation/calculated_protein_info/protein_properties.tab'
+protein_info <- read_tsv(url)
 ```
 
-## Too many variables (identifying important ones, and summarizing others. using colors and facets in plots)
+### Examining sorted data
+
+```{r head_tail}
+sorted <- brauer_gene_exp %>%
+  select(systematic_name, rate, expression) %>%
+  arrange(rate, desc(expression))
+
+sorted %>% head(10)
+
+sorted %>% tail(10)
+```
+
+### Sampling rows
+
+Use `sample_n()` and `sample_frac()` to randomly sample rows from a large data set. Get a reproducible sample using `set.seed()`
+
+```{r sample}
+brauer_gene_exp
+
+# sample 1e5 rows
+set.seed(47681)
+brauer_gene_exp %>% sample_n(1e3)
+
+# sample 10% of the rows
+set.seed(47681)
+brauer_gene_exp %>% sample_frac(0.1)
+```
+
+## Too many variables
+
+We'll use the `brauer_gene_exp` data set to illustrate how you can use summary statistics.
 
 - Assessing significance (light statistics overview, null distributions, hypothesis testing).
 
