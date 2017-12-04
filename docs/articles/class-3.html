@@ -100,8 +100,7 @@
 <div class="contents">
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="co">#&gt; ── Attaching packages ──────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</span>
-<span class="co">#&gt; ✔ ggplot2 2.2.1     ✔ purrr   0.2.4</span>
-<span class="co">#&gt; ✔ tibble  1.3.4     ✔ dplyr   0.7.4</span>
+<span class="co">#&gt; ✔ tibble  1.3.4     ✔ purrr   0.2.4</span>
 <span class="co">#&gt; ✔ tidyr   0.7.2     ✔ stringr 1.2.0</span>
 <span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.2.0</span>
 <span class="co">#&gt; ── Conflicts ─────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span>
@@ -423,8 +422,9 @@ fit &lt;-<span class="st"> </span>exp_data <span class="op">%&gt;%</span><span c
 <div id="summaries-for-mutliple-groups" class="section level3">
 <h3 class="hasAnchor">
 <a href="#summaries-for-mutliple-groups" class="anchor"></a>Summaries for mutliple groups</h3>
-<p>Can we capture linear relationships between expression and rate for all combinations of variables? This is surprisingly easy.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">models &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span>
+<p>Can we capture linear relationships between expression and rate for <em>all combinations</em> of variables? This is surprisingly easy.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this takes ~60 seconds to run</span>
+models &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(systematic_name, name, nutrient) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">do</span>(<span class="dt">model =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/broom/topics/tidy">tidy</a></span>(<span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>rate, <span class="dt">data =</span> .)))</code></pre></div>
 <p>Plot the expression / rate relationship for the top-ten most significant genes. Color lines by nutrient.</p>
@@ -443,13 +443,6 @@ topten_exp <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">'lm'</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>systematic_name <span class="op">+</span><span class="st"> </span>name) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Set1"</span>)</code></pre></div>
-</div>
-<div id="exercises-2" class="section level3">
-<h3 class="hasAnchor">
-<a href="#exercises-2" class="anchor"></a>Exercises</h3>
-<ol style="list-style-type: decimal">
-<li>
-</ol>
 </div>
 </div>
 </div>

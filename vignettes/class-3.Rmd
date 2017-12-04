@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
   fig.path = "img/class-3-",
   fig.align = "center"
 )
+library(ggplot2)
+library(dplyr)
 ```
 
 ```{r load}
@@ -187,9 +189,10 @@ tidy(fit)
 
 ### Summaries for mutliple groups
 
-Can we capture linear relationships between expression and rate for all combinations of variables? This is surprisingly easy.
+Can we capture linear relationships between expression and rate for *all combinations* of variables? This is surprisingly easy.
 
 ```{r brauer_mult_models, eval = FALSE}
+# this takes ~60 seconds to run
 models <- brauer_gene_exp %>%
   group_by(systematic_name, name, nutrient) %>%
   do(model = tidy(lm(expression ~ rate, data = .)))
@@ -214,8 +217,4 @@ topten_exp %>%
   facet_wrap(~systematic_name + name) +
   scale_color_brewer(palette = "Set1")
 ```
-
-### Exercises
-
-1. 
 
