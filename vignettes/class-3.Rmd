@@ -197,7 +197,7 @@ models <- brauer_gene_exp %>%
 
 Plot the expression / rate relationship for the top-ten most significant genes. Color lines by nutrient.
 
-```{r}
+```{r brauer_plot_models, eval = FALSE}
 topten <- models %>%
   unnest() %>%
   filter(name != "") %>%
