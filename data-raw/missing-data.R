@@ -8,6 +8,6 @@ x <- tibble(
   value2 = c(NA, 5:8, NA)
 )
 
-missing <- x %>% tidyr::complete(group, nesting(id, name)) %>% as_tibble()
+missing_ex <- x %>% tidyr::complete(group, nesting(id, name)) %>% as_tibble()
 
-devtools::use_data(missing, overwrite = TRUE)
+devtools::use_data(missing_ex, overwrite = TRUE)

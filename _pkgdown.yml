@@ -8,13 +8,16 @@ authors:
     href: https://hesselberthlab.org
 
 reference:
-  - title: Example data sets
+  - title: Example datasets
     contents:
     - starts_with("qpcr")
     - mtcars_tbl
-    - missing
+    - missing_ex
     - brauer_gene_exp
     - yeast_prot_prop
+  - title: Utilities
+    contents:
+    - update_eda
 
 navbar:
   left:

@@ -109,20 +109,20 @@
 <span class="kw">library</span>(eda)</code></pre></div>
 <div id="missing-data" class="section level2">
 <h2 class="hasAnchor">
-<a href="#missing-data" class="anchor"></a>Missing data</h2>
+<a href="#missing-data" class="anchor"></a>missing data</h2>
 <div id="zeroes-na-nan-and-null" class="section level3">
 <h3 class="hasAnchor">
 <a href="#zeroes-na-nan-and-null" class="anchor"></a>Zeroes, <code>NA</code>, <code>NaN</code> and <code>NULL</code>
 </h3>
 <ul>
 <li><p>Don’t use use zeroes to represent missing data. <code>0</code> is valid observed value.</p></li>
-<li><p><code>NA</code> (Not Available) is most often use to represent missing data.</p></li>
+<li><p><code>NA</code> (Not Available) is most often use to represent missing_ex data.</p></li>
 <li><p><code>NaN</code> (Not a Number) is the result of an undefined operation, e.g. <code>0 / 0</code>.</p></li>
 <li><p><code>NULL</code> means “undefined” and is only used in a programming context (i.e., a function that returns <code>NULL</code>). You can’t put <code>NULL</code> values in a data frame.</p></li>
 </ul>
 <p>Let’s examine a data frame with some missing data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># devtools::install_github('rnabioco/eda')</span>
-missing
+missing_ex
 <span class="co">#&gt; # A tibble: 30 x 5</span>
 <span class="co">#&gt;    group    id  name value1 value2</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;int&gt;</span>
@@ -144,7 +144,7 @@ missing
 </h3>
 <p>You can identify variables with <code>NA</code> values by combining <code>filter()</code> and <code>is.na()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find rows where name is NA</span>
-missing <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">is.na</span>(name))
+missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">is.na</span>(name))
 <span class="co">#&gt; # A tibble: 5 x 5</span>
 <span class="co">#&gt;   group    id  name value1 value2</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;int&gt;</span>
@@ -155,7 +155,7 @@ missing <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">
 <span class="co">#&gt; 5     4     3  &lt;NA&gt;     NA     NA</span>
 
 <span class="co"># find rows where id is *not* NA</span>
-missing <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(id))
+missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(id))
 <span class="co">#&gt; # A tibble: 25 x 5</span>
 <span class="co">#&gt;    group    id  name value1 value2</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;int&gt;</span>
@@ -176,7 +176,7 @@ missing <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">
 <a href="#na-omit" class="anchor"></a><code>na.omit()</code>
 </h3>
 <p>You can remove <strong>all</strong> rows containing <code>NA</code> values with <code>na.omit()</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">missing <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">na.omit</span>()
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">na.omit</span>()
 <span class="co">#&gt; # A tibble: 1 x 5</span>
 <span class="co">#&gt;   group    id  name value1 value2</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;int&gt;</span>
@@ -186,25 +186,25 @@ missing <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">
 <h3 class="hasAnchor">
 <a href="#statistics-with-na-values" class="anchor"></a>Statistics with <code>NA</code> values</h3>
 <p>Exclude <code>NA</code> values from statistical operations with <code>na.rm = TRUE</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">missing<span class="op">$</span>value1
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">missing_ex<span class="op">$</span>value1
 <span class="co">#&gt;  [1] NA NA NA NA NA NA NA  1 NA NA NA NA NA NA  2 NA NA NA NA NA NA NA  3</span>
 <span class="co">#&gt; [24] NA NA NA NA NA NA  4</span>
 
 <span class="co"># if NAs are present, the result is NA</span>
-<span class="kw">sum</span>(missing<span class="op">$</span>value1)
+<span class="kw">sum</span>(missing_ex<span class="op">$</span>value1)
 <span class="co">#&gt; [1] NA</span>
 
 <span class="co"># solution: drop NAs from the calculation</span>
-<span class="kw">sum</span>(missing<span class="op">$</span>value1, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
+<span class="kw">sum</span>(missing_ex<span class="op">$</span>value1, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
 <span class="co">#&gt; [1] 10</span></code></pre></div>
 </div>
 <div id="exercises" class="section level3">
 <h3 class="hasAnchor">
 <a href="#exercises" class="anchor"></a>Exercises</h3>
 <ol style="list-style-type: decimal">
-<li><p>How many rows of <code>missing</code> have <code>NA</code> values for <em>either</em> <code>value1</code> or <code>value2</code> (27)?</p></li>
-<li><p>How many rows of <code>missing</code> remain after filtering out <code>id</code> values of <code>NA</code> (25)?</p></li>
-<li><p>Calculate the mean for values in each group in <code>missing</code>. Use <code>summarize()</code>, then try <code>summarize_at()</code>.</p></li>
+<li><p>How many rows of <code>missing_ex</code> have <code>NA</code> values for <em>either</em> <code>value1</code> or <code>value2</code> (27)?</p></li>
+<li><p>How many rows of <code>missing_ex</code> remain after filtering out <code>id</code> values of <code>NA</code> (25)?</p></li>
+<li><p>Calculate the mean for values in each group in <code>missing_ex</code>. Use <code>summarize()</code>, then try <code>summarize_at()</code>.</p></li>
 </ol>
 </div>
 </div>
@@ -453,7 +453,7 @@ topten_exp <span class="op">%&gt;%</span>
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#missing-data">Missing data</a></li>
+<li><a href="#missing-data">missing data</a></li>
       <li><a href="#too-much-data">Too much data</a></li>
       <li><a href="#too-many-variables">Too many variables</a></li>
       </ul>

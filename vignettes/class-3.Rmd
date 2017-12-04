@@ -25,13 +25,13 @@ library(tidyverse)
 library(eda)
 ```
 
-## Missing data
+## missing data
 
 ### Zeroes, `NA`, `NaN` and `NULL`
 
 + Don't use use zeroes to represent missing data. `0` is valid observed value.
 
-+ `NA` (Not Available) is most often use to represent missing data.
++ `NA` (Not Available) is most often use to represent missing_ex data.
 
 + `NaN` (Not a Number) is the result of an undefined operation, e.g. `0 / 0`.
 
@@ -41,7 +41,7 @@ Let's examine a data frame with some missing data.
 
 ```{r complete}
 # devtools::install_github('rnabioco/eda')
-missing
+missing_ex
 ```
 
 ### `filter` with `is.na()`
@@ -50,10 +50,10 @@ You can identify variables with `NA` values by combining `filter()` and `is.na()
 
 ```{r filter_na}
 # find rows where name is NA
-missing %>% filter(is.na(name))
+missing_ex %>% filter(is.na(name))
 
 # find rows where id is *not* NA
-missing %>% filter(!is.na(id))
+missing_ex %>% filter(!is.na(id))
 ```
 
 ### `na.omit()`
@@ -61,7 +61,7 @@ missing %>% filter(!is.na(id))
 You can remove **all** rows containing `NA` values with `na.omit()`.
 
 ```{r na.omit}
-missing %>% na.omit()
+missing_ex %>% na.omit()
 ```
 
 ### Statistics with `NA` values
@@ -69,22 +69,22 @@ missing %>% na.omit()
 Exclude `NA` values from statistical operations with `na.rm = TRUE`.
 
 ```{r stat_na}
-missing$value1
+missing_ex$value1
 
 # if NAs are present, the result is NA
-sum(missing$value1)
+sum(missing_ex$value1)
 
 # solution: drop NAs from the calculation
-sum(missing$value1, na.rm = TRUE)
+sum(missing_ex$value1, na.rm = TRUE)
 ```
 
 ### Exercises
 
-1. How many rows of `missing` have `NA` values for *either* `value1` or `value2` (27)?
+1. How many rows of `missing_ex` have `NA` values for *either* `value1` or `value2` (27)?
 
-2. How many rows of `missing` remain after filtering out `id` values of `NA` (25)?
+2. How many rows of `missing_ex` remain after filtering out `id` values of `NA` (25)?
 
-3. Calculate the mean for values in each group in `missing`. Use `summarize()`, then try `summarize_at()`.
+3. Calculate the mean for values in each group in `missing_ex`. Use `summarize()`, then try `summarize_at()`.
 
 ## Too much data
 
