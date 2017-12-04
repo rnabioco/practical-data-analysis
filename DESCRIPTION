@@ -28,7 +28,8 @@ Imports:
     tidyr,
     tidyverse,
     valr,
-    viridis
+    viridis,
+    devtools
 Suggests: 
     knitr,
     rmarkdown
