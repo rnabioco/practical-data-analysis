@@ -12,7 +12,9 @@ reference:
     contents:
     - starts_with("qpcr")
     - mtcars_tbl
+    - missing
     - brauer_gene_exp
+    - yeast_prot_prop
 
 navbar:
   left:
