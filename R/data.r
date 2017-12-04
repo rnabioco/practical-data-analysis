@@ -55,6 +55,13 @@
 #' @source \url{http://varianceexplained.org/r/tidy-genomics-broom/}
 "brauer_gene_exp"
 
+#' Properties of yeast proteins
+#'
+#' A dataset containing physical parameters of yeast proteins.``
+#'
+#' @source \url{https://downloads.yeastgenome.org/curation/calculated_protein_info/protein_properties.tab}
+"yeast_prot_prop"
+
 #' Sample missing data
 #'
 #' A dataset for exploring missing data.
