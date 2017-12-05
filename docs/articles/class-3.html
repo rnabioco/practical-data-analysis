@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Class 3: Common Analysis Challenges • eda</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -51,7 +51,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/class-1.html">Class 1: Overview and Data Wrangling</a>
+      <a href="../articles/class-1.html">Class 1: Overview and Data Tidying</a>
     </li>
     <li>
       <a href="../articles/class-2.html">Class 2: Writing Reproducible Reports</a>
@@ -60,13 +60,14 @@
       <a href="../articles/class-3.html">Class 3: Common Analysis Challenges</a>
     </li>
     <li>
-      <a href="../articles/class-4.html">Class 4: Gene Expression Vignette</a>
+      <a href="../articles/class-4.html">Class 4: Genomic Interval Analysis part 1</a>
+    </li>
+    <li class="divider">
+    <li>
+      <a href="../articles/assignment-1.html">Weekend Assignment 1</a>
     </li>
     <li>
-      <a href="../articles/class-5.html">Class 5: Chromatin Vignette</a>
-    </li>
-    <li>
-      <a href="../articles/class-6.html">Class 6: Single-Cell Analysis</a>
+      <a href="../articles/assignment-2.html">Weekend Assignment 2</a>
     </li>
     <li class="divider">
     <li>
@@ -75,14 +76,7 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/rnabioco/eda">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -97,20 +91,23 @@
       <h1>Class 3: Common Analysis Challenges</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-11-11</h4>
+            <h4 class="date">2017-12-05</h4>
           </div>
 
     
     
 <div class="contents">
-<section id="concepts" class="level1"><h1>Concepts</h1>
+<div id="concepts" class="section level1">
+<h1 class="hasAnchor">
+<a href="#concepts" class="anchor"></a>Concepts</h1>
 <ul>
 <li>Too many variables (identifying important ones, and summarizing others. using colors and facets in plots)</li>
 <li>Reducing dimensionality (PCA and t-SNE)</li>
 <li>Assessing significance (light statistics overview, null distributions, hypothesis testing).</li>
 <li>Dealing with untidy R results (broom::tidy())</li>
 <li>Too much data (in-memory vs. database approaches, subsetting and sampling, simplify with a reprex).</li>
-</ul></section>
+</ul>
+</div>
 </div>
   </div>
 

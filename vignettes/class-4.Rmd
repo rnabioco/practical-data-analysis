@@ -1,5 +1,5 @@
 ---
-title: "Class 4: Genomic Interval Analysis Vignette"
+title: "Class 4: Genomic Interval Analysis part 1"
 author: "Jay Hesselberth"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -142,7 +142,7 @@ read 3:    ----
       chr1 ATGCTAGCTGATCGTAGCTG...
 Coverage   12221101111110000000
 
-chrom start end score
+chrom start end value
 chr1  0  1  1
 chr1  1  4  2
 chr1  4  6  1
@@ -151,7 +151,7 @@ chr1  7 13  1
 
 # Exploring ChIP-Seq Data
 
-## Simplified Sequencing analysis workflow
+## Simplified sequencing analysis workflow
 
 Step | File Format | Description
 --------------- | --------------- | ------------------------------
@@ -176,7 +176,9 @@ url <- "http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeRegTfbs
 
 download.file(url, "wgEncodeRegTfbsClusteredV3.bed.gz")
 
-tf_bed <- read_tsv(url, col_names = F)
+tf_bed <- read_tsv("wgEncodeRegTfbsClusteredV3.bed.gz", 
+                   col_names = F)
+
 ```
 
 
@@ -190,7 +192,7 @@ tf_bed <- read_tsv(url, col_names = F)
 ```
 
 
-## Load data from file that is included in `eda` package
+## Load data from file that is included in eda package
 
 ```{r, pkg_data, message = F}
 library(tidyverse)
@@ -212,11 +214,7 @@ new_names <- c(
   "chrom",
   "start",
   "end",
-  "TF",
-  "score",
-  "exptCount",
-  "expNum",
-  "expScore"
+  "TF"
 )
 
 colnames(tf_bed) <- new_names
@@ -228,9 +226,9 @@ tf_bed
 1) Which TF has the most binding-sites (AKA peaks)?
 
 ```{r ex_1, eval = F, echo = F}
-group_by(tf_bed, TF) %>%  # group by TF
-  summarize(total = n()) %>%  # calculate number of peaks per TF
-  arrange(desc(total)) # sort 
+group_by(tf_bed, TF) %>%  
+  summarize(total = n()) %>%  
+  arrange(desc(total)) 
 
 ```
 
@@ -238,10 +236,10 @@ group_by(tf_bed, TF) %>%  # group by TF
 
 ```{r ex_2, eval = F, echo = F}
 mutate(tf_bed, 
-       peak_length = end - start) %>% # calculate length of each interval
-  group_by(TF) %>%  # group by TF
-  summarize(total_bps = sum(peak_length)) %>% # sum peak_length per TF
-  arrange(desc(total_bps)) # rank by total peak_lengths
+       peak_length = end - start) %>% 
+  group_by(TF) %>% 
+  summarize(total_bps = sum(peak_length)) %>% 
+  arrange(desc(total_bps)) 
 ```
 
 
@@ -260,26 +258,31 @@ mutate(tf_bed,
 
 # Integrating multiple datasets
 
-We can now use the BED format as a common file to investigate multiple genome-wide datatypes. For example, let's examine a dataset of [`SNPs`](https://en.wikipedia.org/wiki/Single-nucleotide_polymorphism) taken from the ucsc genome browser. How would we go about finding `SNPs` that reside in known TF binding sites? 
+We can now use the BED format as a common file to investigate multiple genome-wide datatypes. Imagine that we had two bed files named (`x` and `y`). How would we go about finding intervals in `x` that overlap with `y`.
 
+```{r make_simple_bed, echo = F}
+library(valr)
+x <- trbl_interval(
+  ~chrom, ~start, ~end, 
+  'chr1', 25,      50,  
+  'chr1', 40,      80, 
+  'chr1', 100,     125 
+)
 
-```{r, dl_data, eval = F}
-snp_file <- system.file("extdata", 
-                        "hg19.snps147.chr22.bed.gz", 
-                        package = "valr")
-
-snps <- read_tsv(snp_file, col_names = c("chrom",
-                                 "start",
-                                 "end",
-                                 "name",
-                                 "score",
-                                 "strand"))
-
-tf_bed %>% 
-  dplyr::filter(chrom == "chr22") -> chr22_tf_bed
-
-# How to find intersecting intervals?
+y <- trbl_interval(
+  ~chrom, ~start, ~end, 
+  'chr1', 30,     75
+)
 ```
+
+
+
+```{r interesect_problem}
+x
+y
+```
+
+This is not very easy to do with dplyr or base R, and would be very slow. 
 
 # How to efficiently analyze intervals and signals?
 
@@ -290,7 +293,7 @@ tf_bed %>%
   
 ## Command-line tools
   - [`BEDTools`](http://bedtools.readthedocs.io/en/latest/) (the most popular and original tool-suite) 
-  - [`BedOPS`](https://bedops.readthedocs.io/en/latest/) (similar to BEDTools but offers unique functionality)
+  - [`BedOPS`](https://bedops.readthedocs.io/en/latest/) (similar to BEDTools but offers some unique functionality)
 
 ## R-Packages
   - [`valr`](https://rnabioco.github.io/valr/) (Interval analysis with a `tidyverse` style syntax)
@@ -304,7 +307,7 @@ tf_bed %>%
 library(valr)
 ```
 
-[`valr`](https://rnabioco.github.io/valr/) was developed to simplify genomic interval analysis and replace the need for learning the command line to perform interval analysis. We will use `valr` today to introduce genomic interval analysis. 
+[`valr`](https://rnabioco.github.io/valr/) was developed to simplify genomic interval analysis and replace the need for learning the command line. We will use `valr` today to introduce genomic interval analysis. 
 
 ## Reading in BED data
 
@@ -326,13 +329,13 @@ bed
 
 ## Find intersecting intervals with bed_intersect()
 
-One of the most commone operations in interval analysis is to determine if intervals in 1 BED file overlap with intervals in another file. This operation can be used to answer many questions including:
+One of the most common operations in interval analysis is to determine if intervals in 1 BED file overlap with intervals in another file. This operation can be used to answer many questions including:
 
 1) Does a SNP overlap with a protein-coding region?
 2) Which genes does a transcription factor bind to?
-3) Which regions of the genome are depleted of genes?
+3) Does an RNA binding protein bind to 3'UTRs?
 
-The [`bed_intersect()`](https://rnabioco.github.io/valr/reference/bed_intersect.html) in valr function finds intervals that overlap in two datasets and reports the intersecting intervals.
+The [`bed_intersect()`](https://rnabioco.github.io/valr/reference/bed_intersect.html) function in valr finds intervals that overlap in two datasets and reports the intersecting intervals.
 
 ```{r make_bed, echo = F}
 x <- trbl_interval(
@@ -354,14 +357,20 @@ x
 y
 ```
 
-We can find intersecting intervals with bed_intersect()
+We can find intersecting intervals by passing `x` ans `y` to `bed_intersect()`
 
 ```{r}
 bed_intersect(x, y)
+
+bed_intersect(x, y, suffix = c("_xfile", "_yfile"))
+
+x %>% 
+  bed_intersect(y)
+
 ```
 
 
-`valr` functions respect groups established by `group_by()`. For example to only intersect intervals if they are on the same strand, group_by strand prior to intersecting
+`valr` functions respect groups established by `group_by()`. For example to only intersect intervals if they are on the same strand, `group_by()` strand prior to intersecting.
 
 ```{r}
 x <- group_by(x, strand)
@@ -393,7 +402,7 @@ snps_in_tfs <- bed_intersect(tf_bed, snps)
 snps_in_tfs
 ```
 
-## How close are these SNPs to transcription start sites?
+## How close are SNPs to transcription start sites?
 
 The [`bed_closest()`](https://rnabioco.github.io/valr/reference/bed_intersect.html) function finds the closest intervals between two sets of intervals.
 
@@ -405,40 +414,47 @@ genes <- read_bed(valr_example('genes.hg19.chr22.bed.gz'),
 genes
 ```
 
-Next we'll generate a set of transcription start sites for each gene. The start site depends on the strand of the interval. Here we use `ifelse()` to conditionally define the start and end based on strand. 
+Next we'll generate a set of transcription start sites for each gene. The start site depends on the strand of the interval. Here for simplicity we will only look at intervals from the plus strand. If you want to keep the minus strand you need to use `ifelse()` in the `mutate()` call to conditionally define the start and end based on strand. 
 
 ```{r}
-tss <- mutate(genes,
-              start = ifelse(strand == "-",
-                             end - 1,
-                             start),
-              end = ifelse(strand == "-",
-                           end,
-                           start + 1)
-              )
-
+tss <- filter(genes, strand == "+") %>% 
+  mutate(end = start + 1)
+              
 tss
 ```
 
 Lastly, we will use the `bed_closest()` tool to find the closest `TSS` to each `SNP`.
 
 ```{r}
-bed_closest(snps, tss) 
+bed_closest(snps, tss) %>% 
+  select(chrom:strand.x, name.y, .overlap, .dist)
 
 bed_closest(snps, tss) %>% 
-  dplyr::filter(abs(.dist) < 50)    
+  dplyr::filter(abs(.dist) < 50) %>% 
+  select(chrom:strand.x, name.y, .overlap, .dist)
 ```
 
 # Exercises
 
-1) The Encode project has performed `eCLIP` experiments to map RNA binding protein  (RBP) binding sites for > 100 RBPs. Go to the [Encode website](https://www.encodeproject.org/matrix/?type=Experiment), search for `eCLIP` experiments, select an RBP eClip experiment, and load a `BED` file (bed narrowPeak format) with the binding sites into R using just the url. Use the [`read_narrowPeak()`](https://rnabioco.github.io/valr/reference/read_bed.html) function from `valr`. Make sure that the file was generated using the `hg19` genome build. 
+1) The Encode project has performed `eCLIP` experiments to map RNA binding protein  (RBP) binding sites for > 100 RBPs. Go to the [Encode website](https://www.encodeproject.org/matrix/?type=Experiment), search for `eCLIP` experiments, select an RBP eClip experiment, and load a `BED` file (bed narrowPeak format) with the binding sites into R using just the url. Use the [`read_narrowPeak()`](https://rnabioco.github.io/valr/reference/read_bed.html) function from `valr`. Make sure that the file was generated using the `hg19` genome build. Display the bed tibble that you pulled from the Encode database.
 
-2) Use `bed_intersect()` to determine how many `eCLIP` peaks are found in genes and how many are intergenic (see the documention on the `invert` argument for `bed_intersect()`). 
+2) Use `bed_intersect()` and some dplyr functions to determine how many `eCLIP` peaks are found in genes and how many are intergenic. (see the documentation on the `invert` argument for `bed_intersect()`). Use the `hg19_genes.bed.gz` bed file as your gene bed file (location shown below). 
+
+```{r, eval = F}
+genes <- system.file("extdata", "hg19_genes.bed.gz", package = "eda")
+read_bed(genes, n_fields = 6)
+```
 
 3) Parse the output from question 2 to determine which gene has the most binding sites for your `RBP`. 
 
-4) Use another tool from `valr` (overview and documentation [here](https://rnabioco.github.io/valr/articles/valr.html) to study your eClip binding sites and the `gene` bed files. Explain your question and answer.
+4) Use another function from `valr` (overview and documentation [here](https://rnabioco.github.io/valr/articles/valr.html) to study a relationship between your eClip binding sites and genes in the `gene` bed file. Explain your question and answer. Some `valr` functions require a `genome` file, which indicates the lengths of the chromosomes.You can access this file as shown below.
 
+```{r, eval = F}
+genome_file <- system.file("extdata", "hg19_genome.txt.gz", package = "eda")
+genome <- read_genome(genome_file)
+
+genome
+```
 # Quiz
 
 Create an RMarkdown document and answer the questions from the Exercises section. Write your answers in the text, and print the final tibbles that your code produced that gave you the answer. Submit your final document as "Quiz 2" by Thurs at 10 PM.
