@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exercises 2 • eda</title>
+<title>Exercises 3 • eda</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -98,10 +98,10 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Exercises 2</h1>
+      <h1>Exercises 3</h1>
                         <h4 class="author">Your Name Here</h4>
             
-            <h4 class="date">12/3/2017</h4>
+            <h4 class="date">12/7/2017</h4>
           </div>
 
     
@@ -110,12 +110,12 @@
 <div id="overview" class="section level1">
 <h1 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h1>
-<p>Here is a <a href="https://raw.githubusercontent.com/rnabioco/eda/master/vignettes/exercises-2.Rmd">link</a> to the text of these exercises.</p>
+<p>Here is a <a href="https://raw.githubusercontent.com/rnabioco/eda/master/vignettes/exercises-3.Rmd">link</a> to the text of these exercises.</p>
 </div>
 <div id="question-1" class="section level1">
 <h1 class="hasAnchor">
 <a href="#question-1" class="anchor"></a>Question 1</h1>
-<p>Calculate the mean and variance of the <code>Ozone</code>, <code>Solar.R</code>, <code>Wind</code>, and <code>Temp</code> variables for each month in the <code>airquality</code> dataset, ignoring <code>NA</code> values. Use <code>summarize()</code> first, then use <code>summarize_at()</code>. Note that arguments to summary functions can be passed as dots to <code>summarize_at()</code>.</p>
+<p>The Encode project has performed <code>eCLIP</code> experiments to map RNA binding protein (RBP) binding sites for &gt; 100 RBPs. Go to the <a href="https://www.encodeproject.org/matrix/?type=Experiment">Encode website</a>, search for <code>eCLIP</code> experiments, select an RBP eClip experiment, and load a <code>BED</code> file (bed narrowPeak format) with the binding sites into R using just the url. Use the <a href="https://rnabioco.github.io/valr/reference/read_bed.html"><code>read_narrowPeak()</code></a> function from <code>valr</code>. Make sure that the file was generated using the <code>hg19</code> genome build, and that you do <strong>not</strong> select the <code>eCLIP mock input</code> samples, which are negative controls. Display the bed tibble that you pulled from the Encode database and give a one to two sentence summary about the known functions of the RBP.</p>
 <div id="strategy" class="section level2">
 <h2 class="hasAnchor">
 <a href="#strategy" class="anchor"></a>Strategy</h2>
@@ -128,7 +128,9 @@
 <div id="question-2" class="section level1">
 <h1 class="hasAnchor">
 <a href="#question-2" class="anchor"></a>Question 2</h1>
-<p>Calculate mean expression values for each <code>systematic_name</code> and <code>nutrient</code> combination of <code>brauer_gene_exp</code>. Calculate the values by sampling 1%, 10% and 50% of the rows. How do your numbers change at each threshold?</p>
+<p>Use <code>bed_intersect()</code> and some dplyr functions to determine how many <code>eCLIP</code> peaks are found in genes and how many are intergenic. (see the documentation on the <code>invert</code> argument for <code>bed_intersect()</code>). Use the <code>hg19_genes.bed.gz</code> bed file as your gene bed file (location shown below). Explain in the interpretation whether or not the RBP primarily binds to known (geneic) or unannotated (intergeneic) regions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genes &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"hg19_genes.bed.gz"</span>, <span class="dt">package =</span> <span class="st">"eda"</span>)
+<span class="kw">read_bed</span>(genes, <span class="dt">n_fields =</span> <span class="dv">6</span>)</code></pre></div>
 <div id="strategy-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#strategy-1" class="anchor"></a>Strategy</h2>
@@ -141,7 +143,7 @@
 <div id="question-3" class="section level1">
 <h1 class="hasAnchor">
 <a href="#question-3" class="anchor"></a>Question 3</h1>
-<p>Join the <code>brauer_gene_exp</code> and <code>yeast_prot_prop</code> tables and calculate the mean codon adaptation index (<code>CAI</code> in <code>yeast_prot_prop</code>) for each molecular funtion (<code>MF</code> in <code>brauer_gene_exp</code>). Sort the results from largest to smallest mean CAI.</p>
+<p>Determine which gene has the largest number of binding sites for your <code>RBP</code>.</p>
 <div id="strategy-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#strategy-2" class="anchor"></a>Strategy</h2>
@@ -149,6 +151,23 @@
 <div id="interpretation-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#interpretation-2" class="anchor"></a>Interpretation</h2>
+</div>
+</div>
+<div id="question-4" class="section level1">
+<h1 class="hasAnchor">
+<a href="#question-4" class="anchor"></a>Question 4</h1>
+<p>Use another function from <code>valr</code> (overview and documentation <a href="https://rnabioco.github.io/valr/articles/valr.html">here</a> to study a relationship between your eClip binding sites and genes in the <code>gene</code> bed file. Explain your question and answer. Some <code>valr</code> functions require a <code>genome</code> file, which indicates the lengths of the chromosomes.You can access this file as shown below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genome_file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"hg19_genome.txt.gz"</span>, <span class="dt">package =</span> <span class="st">"eda"</span>)
+genome &lt;-<span class="st"> </span><span class="kw">read_genome</span>(genome_file)
+
+genome</code></pre></div>
+<div id="strategy-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#strategy-3" class="anchor"></a>Strategy</h2>
+</div>
+<div id="interpretation-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interpretation-3" class="anchor"></a>Interpretation</h2>
 </div>
 </div>
 </div>
@@ -176,6 +195,12 @@
 <a href="#question-3">Question 3</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#strategy-2">Strategy</a></li>
       <li><a href="#interpretation-2">Interpretation</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#question-4">Question 4</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#strategy-3">Strategy</a></li>
+      <li><a href="#interpretation-3">Interpretation</a></li>
       </ul>
 </li>
       </ul>
