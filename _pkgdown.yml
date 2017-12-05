@@ -8,10 +8,16 @@ authors:
     href: https://hesselberthlab.org
 
 reference:
-  - title: Example data sets
+  - title: Example datasets
     contents:
     - starts_with("qpcr")
     - mtcars_tbl
+    - missing_ex
+    - brauer_gene_exp
+    - yeast_prot_prop
+  - title: Utilities
+    contents:
+    - update_eda
 
 navbar:
   left:
@@ -27,17 +33,20 @@ navbar:
         href: articles/class-2.html
       - text: "Class 3: Common Analysis Challenges"
         href: articles/class-3.html
-      - text: "Class 4: Genomic Interval Analysis part 1"
+      - text: "Class 4: Genomic Interval Analysis part 1""
         href: articles/class-4.html
-#      - text: "Class 5: Chromatin Vignette"
-#        href: articles/class-5.html
-#      - text: "Class 6: Single-Cell Analysis"
-#        href: articles/class-6.html
+      - text: "---------"
+      - text: "Excercises 1"
+        href: "articles/exercises-1.html"
+      - text: "Excercises 2"
+        href: "articles/exercises-2.html"
+      - text: "Excercises 3"
+        href: "articles/exercises-3.html"
       - text: "---------"
       - text: "Weekend Assignment 1"
         href: "articles/assignment-1.html"
       - text: "Weekend Assignment 2"
         href: "articles/assignment-2.html"
       - text: "---------"
-      - text: "Submitting Assignments"
+      - text: "Assignment Submission and Grading Rubric"
         href: articles/assignments.html

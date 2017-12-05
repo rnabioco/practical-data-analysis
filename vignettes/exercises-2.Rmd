@@ -1,0 +1,50 @@
+---
+title: "Exercises 2"
+author: "Your Name Here"
+date: "12/3/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+
+Here is a [link](https://raw.githubusercontent.com/rnabioco/eda/master/vignettes/exercises-2.Rmd) to the text of these exercises.
+
+# Question 1
+
+Calculate the mean and variance of the `Ozone`, `Solar.R`, `Wind`, and `Temp` variables for each month in the `airquality` dataset, ignoring `NA` values. Use `summarize()` first, then use `summarize_at()`. Note that arguments to summary functions can be passed as dots to `summarize_at()`.
+
+## Strategy
+
+```{r q1}
+
+```
+
+## Interpretation
+
+# Question 2
+
+Calculate mean expression values for each `systematic_name` and `nutrient` combination of `brauer_gene_exp`. Calculate the values by sampling 1%, 10% and 50% of the rows. How do your numbers change at each threshold?
+
+## Strategy
+
+```{r q2}
+
+```
+
+## Interpretation
+
+# Question 3 
+
+Join the `brauer_gene_exp` and `yeast_prot_prop` tables and calculate the mean codon adaptation index (`CAI` in `yeast_prot_prop`) for each molecular funtion (`MF` in `brauer_gene_exp`). Sort the results from largest to smallest mean CAI.
+
+## Strategy
+
+```{r q3}
+
+```
+
+## Interpretation
