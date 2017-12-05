@@ -32,7 +32,8 @@ Imports:
     devtools
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    R.utils
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true

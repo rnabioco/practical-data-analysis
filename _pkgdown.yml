@@ -33,14 +33,20 @@ navbar:
         href: articles/class-2.html
       - text: "Class 3: Common Analysis Challenges"
         href: articles/class-3.html
+      - text: "Class 4: Genomic Interval Analysis part 1"
+        href: articles/class-4.html
       - text: "---------"
-      - text: "Excercises 1"
+      - text: "Exercises 1"
         href: "articles/exercises-1.html"
-      - text: "Excercises 2"
+      - text: "Exercises 2"
         href: "articles/exercises-2.html"
+      - text: "Exercises 3"
+        href: "articles/exercises-3.html"
       - text: "---------"
       - text: "Weekend Assignment 1"
         href: "articles/assignment-1.html"
+      - text: "Weekend Assignment 2"
+        href: "articles/assignment-2.html"
       - text: "---------"
       - text: "Assignment Submission and Grading Rubric"
         href: articles/assignments.html
