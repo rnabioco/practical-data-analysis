@@ -59,19 +59,20 @@
     <li>
       <a href="../articles/class-3.html">Class 3: Common Analysis Challenges</a>
     </li>
+    <li class="divider">
     <li>
-      <a href="../articles/class-4.html">Class 4: Genomic Interval Analysis part 1</a>
+      <a href="../articles/exercises-1.html">Excercises 1</a>
+    </li>
+    <li>
+      <a href="../articles/exercises-2.html">Excercises 2</a>
     </li>
     <li class="divider">
     <li>
       <a href="../articles/assignment-1.html">Weekend Assignment 1</a>
     </li>
-    <li>
-      <a href="../articles/assignment-2.html">Weekend Assignment 2</a>
-    </li>
     <li class="divider">
     <li>
-      <a href="../articles/assignments.html">Submitting Assignments</a>
+      <a href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
     </li>
   </ul>
 </li>
@@ -91,22 +92,358 @@
       <h1>Class 3: Common Analysis Challenges</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-12-05</h4>
+            <h4 class="date">2017-12-04</h4>
           </div>
 
     
     
 <div class="contents">
-<div id="concepts" class="section level1">
-<h1 class="hasAnchor">
-<a href="#concepts" class="anchor"></a>Concepts</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="co">#&gt; ── Attaching packages ──────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</span>
+<span class="co">#&gt; ✔ tibble  1.3.4     ✔ purrr   0.2.4</span>
+<span class="co">#&gt; ✔ tidyr   0.7.2     ✔ stringr 1.2.0</span>
+<span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.2.0</span>
+<span class="co">#&gt; ── Conflicts ─────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span>
+<span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span>
+<span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span>
+<span class="kw">library</span>(eda)</code></pre></div>
+<div id="missing-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#missing-data" class="anchor"></a>missing data</h2>
+<div id="zeroes-na-nan-and-null" class="section level3">
+<h3 class="hasAnchor">
+<a href="#zeroes-na-nan-and-null" class="anchor"></a>Zeroes, <code>NA</code>, <code>NaN</code> and <code>NULL</code>
+</h3>
 <ul>
-<li>Too many variables (identifying important ones, and summarizing others. using colors and facets in plots)</li>
-<li>Reducing dimensionality (PCA and t-SNE)</li>
-<li>Assessing significance (light statistics overview, null distributions, hypothesis testing).</li>
-<li>Dealing with untidy R results (broom::tidy())</li>
-<li>Too much data (in-memory vs. database approaches, subsetting and sampling, simplify with a reprex).</li>
+<li><p>Don’t use use zeroes to represent missing data. <code>0</code> is valid observed value.</p></li>
+<li><p><code>NA</code> (Not Available) is most often use to represent missing_ex data.</p></li>
+<li><p><code>NaN</code> (Not a Number) is the result of an undefined operation, e.g. <code>0 / 0</code>.</p></li>
+<li><p><code>NULL</code> means “undefined” and is only used in a programming context (i.e., a function that returns <code>NULL</code>). You can’t put <code>NULL</code> values in a data frame.</p></li>
 </ul>
+<p>Let’s examine a data frame with some missing data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># devtools::install_github('rnabioco/eda')</span>
+missing_ex
+<span class="co">#&gt; # A tibble: 30 x 5</span>
+<span class="co">#&gt;    group    id  name value1 value2</span>
+<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;int&gt;</span>
+<span class="co">#&gt;  1     0     0     d     NA     NA</span>
+<span class="co">#&gt;  2     0     1     a     NA     NA</span>
+<span class="co">#&gt;  3     0     2     b     NA     NA</span>
+<span class="co">#&gt;  4     0     2     c     NA      8</span>
+<span class="co">#&gt;  5     0     3  &lt;NA&gt;     NA     NA</span>
+<span class="co">#&gt;  6     0    NA     b     NA     NA</span>
+<span class="co">#&gt;  7     1     0     d     NA     NA</span>
+<span class="co">#&gt;  8     1     1     a      1     NA</span>
+<span class="co">#&gt;  9     1     2     b     NA     NA</span>
+<span class="co">#&gt; 10     1     2     c     NA     NA</span>
+<span class="co">#&gt; # ... with 20 more rows</span></code></pre></div>
+</div>
+<div id="filter-with-is-na" class="section level3">
+<h3 class="hasAnchor">
+<a href="#filter-with-is-na" class="anchor"></a><code>filter</code> with <code>is.na()</code>
+</h3>
+<p>You can identify variables with <code>NA</code> values by combining <code>filter()</code> and <code>is.na()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find rows where name is NA</span>
+missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">is.na</span>(name))
+<span class="co">#&gt; # A tibble: 5 x 5</span>
+<span class="co">#&gt;   group    id  name value1 value2</span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;int&gt;</span>
+<span class="co">#&gt; 1     0     3  &lt;NA&gt;     NA     NA</span>
+<span class="co">#&gt; 2     1     3  &lt;NA&gt;     NA     NA</span>
+<span class="co">#&gt; 3     2     3  &lt;NA&gt;     NA     NA</span>
+<span class="co">#&gt; 4     3     3  &lt;NA&gt;      3      6</span>
+<span class="co">#&gt; 5     4     3  &lt;NA&gt;     NA     NA</span>
+
+<span class="co"># find rows where id is *not* NA</span>
+missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(id))
+<span class="co">#&gt; # A tibble: 25 x 5</span>
+<span class="co">#&gt;    group    id  name value1 value2</span>
+<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;int&gt;</span>
+<span class="co">#&gt;  1     0     0     d     NA     NA</span>
+<span class="co">#&gt;  2     0     1     a     NA     NA</span>
+<span class="co">#&gt;  3     0     2     b     NA     NA</span>
+<span class="co">#&gt;  4     0     2     c     NA      8</span>
+<span class="co">#&gt;  5     0     3  &lt;NA&gt;     NA     NA</span>
+<span class="co">#&gt;  6     1     0     d     NA     NA</span>
+<span class="co">#&gt;  7     1     1     a      1     NA</span>
+<span class="co">#&gt;  8     1     2     b     NA     NA</span>
+<span class="co">#&gt;  9     1     2     c     NA     NA</span>
+<span class="co">#&gt; 10     1     3  &lt;NA&gt;     NA     NA</span>
+<span class="co">#&gt; # ... with 15 more rows</span></code></pre></div>
+</div>
+<div id="na-omit" class="section level3">
+<h3 class="hasAnchor">
+<a href="#na-omit" class="anchor"></a><code>na.omit()</code>
+</h3>
+<p>You can remove <strong>all</strong> rows containing <code>NA</code> values with <code>na.omit()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">na.omit</span>()
+<span class="co">#&gt; # A tibble: 1 x 5</span>
+<span class="co">#&gt;   group    id  name value1 value2</span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;int&gt;</span>
+<span class="co">#&gt; 1     2     2     b      2      5</span></code></pre></div>
+</div>
+<div id="statistics-with-na-values" class="section level3">
+<h3 class="hasAnchor">
+<a href="#statistics-with-na-values" class="anchor"></a>Statistics with <code>NA</code> values</h3>
+<p>Exclude <code>NA</code> values from statistical operations with <code>na.rm = TRUE</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">missing_ex<span class="op">$</span>value1
+<span class="co">#&gt;  [1] NA NA NA NA NA NA NA  1 NA NA NA NA NA NA  2 NA NA NA NA NA NA NA  3</span>
+<span class="co">#&gt; [24] NA NA NA NA NA NA  4</span>
+
+<span class="co"># if NAs are present, the result is NA</span>
+<span class="kw">sum</span>(missing_ex<span class="op">$</span>value1)
+<span class="co">#&gt; [1] NA</span>
+
+<span class="co"># solution: drop NAs from the calculation</span>
+<span class="kw">sum</span>(missing_ex<span class="op">$</span>value1, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
+<span class="co">#&gt; [1] 10</span></code></pre></div>
+</div>
+<div id="exercises" class="section level3">
+<h3 class="hasAnchor">
+<a href="#exercises" class="anchor"></a>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>How many rows of <code>missing_ex</code> have <code>NA</code> values for <em>either</em> <code>value1</code> or <code>value2</code> (27)?</p></li>
+<li><p>How many rows of <code>missing_ex</code> remain after filtering out <code>id</code> values of <code>NA</code> (25)?</p></li>
+<li><p>Calculate the mean for values in each group in <code>missing_ex</code>. Use <code>summarize()</code>, then try <code>summarize_at()</code>.</p></li>
+</ol>
+</div>
+</div>
+<div id="too-much-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#too-much-data" class="anchor"></a>Too much data</h2>
+<div id="examining-sorted-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#examining-sorted-data" class="anchor"></a>Examining sorted data</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sorted &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(systematic_name, rate, expression) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(rate, <span class="kw">desc</span>(expression))
+
+sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)
+<span class="co">#&gt; # A tibble: 10 x 3</span>
+<span class="co">#&gt;    systematic_name  rate expression</span>
+<span class="co">#&gt;              &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;</span>
+<span class="co">#&gt;  1         YKR039W  0.05       6.64</span>
+<span class="co">#&gt;  2         YJR152W  0.05       6.64</span>
+<span class="co">#&gt;  3         YCR098C  0.05       6.64</span>
+<span class="co">#&gt;  4         YDR281C  0.05       6.64</span>
+<span class="co">#&gt;  5         YLL057C  0.05       6.64</span>
+<span class="co">#&gt;  6         YGR087C  0.05       6.64</span>
+<span class="co">#&gt;  7         YBR072W  0.05       6.64</span>
+<span class="co">#&gt;  8         YAR071W  0.05       6.57</span>
+<span class="co">#&gt;  9         YIL166C  0.05       6.50</span>
+<span class="co">#&gt; 10         YBR093C  0.05       6.48</span>
+
+sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tail</span>(<span class="dv">10</span>)
+<span class="co">#&gt; # A tibble: 10 x 3</span>
+<span class="co">#&gt;    systematic_name  rate expression</span>
+<span class="co">#&gt;              &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;</span>
+<span class="co">#&gt;  1         YLR174W   0.3      -4.51</span>
+<span class="co">#&gt;  2         YDR343C   0.3      -4.61</span>
+<span class="co">#&gt;  3         YLR377C   0.3      -4.62</span>
+<span class="co">#&gt;  4         YER065C   0.3      -4.75</span>
+<span class="co">#&gt;  5         YDR342C   0.3      -4.83</span>
+<span class="co">#&gt;  6         YDR343C   0.3      -4.92</span>
+<span class="co">#&gt;  7         YNL117W   0.3      -4.97</span>
+<span class="co">#&gt;  8         YJR095W   0.3      -5.14</span>
+<span class="co">#&gt;  9         YKL217W   0.3      -5.44</span>
+<span class="co">#&gt; 10         YMR303C   0.3      -6.04</span></code></pre></div>
+<p>You can also use the <code>View()</code> function to examine the data in a spreadsheet-like viewer.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">View</span>()</code></pre></div>
+</div>
+<div id="sampling-rows" class="section level3">
+<h3 class="hasAnchor">
+<a href="#sampling-rows" class="anchor"></a>Sampling rows</h3>
+<p>Use <code>sample_n()</code> and <code>sample_frac()</code> to randomly select rows from a large data set. Get a reproducible sample using <code>set.seed()</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">brauer_gene_exp
+<span class="co">#&gt; # A tibble: 198,430 x 7</span>
+<span class="co">#&gt;     name                                    BP</span>
+<span class="co">#&gt;    &lt;chr&gt;                                 &lt;chr&gt;</span>
+<span class="co">#&gt;  1  SFB2                 ER to Golgi transport</span>
+<span class="co">#&gt;  2                  biological process unknown</span>
+<span class="co">#&gt;  3  QRI7          proteolysis and peptidolysis</span>
+<span class="co">#&gt;  4  CFT2               mRNA polyadenylylation*</span>
+<span class="co">#&gt;  5  SSO2                       vesicle fusion*</span>
+<span class="co">#&gt;  6  PSP2            biological process unknown</span>
+<span class="co">#&gt;  7  RIB2               riboflavin biosynthesis</span>
+<span class="co">#&gt;  8 VMA13                vacuolar acidification</span>
+<span class="co">#&gt;  9  EDC3 deadenylylation-independent decapping</span>
+<span class="co">#&gt; 10  VPS5           protein retention in Golgi*</span>
+<span class="co">#&gt; # ... with 198,420 more rows, and 5 more variables: MF &lt;chr&gt;,</span>
+<span class="co">#&gt; #   systematic_name &lt;chr&gt;, nutrient &lt;chr&gt;, rate &lt;dbl&gt;, expression &lt;dbl&gt;</span>
+
+<span class="co"># sample 1e5 rows</span>
+<span class="kw">set.seed</span>(<span class="dv">47681</span>)
+brauer_gene_exp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="fl">1e3</span>)
+<span class="co">#&gt; # A tibble: 1,000 x 7</span>
+<span class="co">#&gt;     name                                                BP</span>
+<span class="co">#&gt;    &lt;chr&gt;                                             &lt;chr&gt;</span>
+<span class="co">#&gt;  1  PUF6 regulation of transcription, mating-type specific</span>
+<span class="co">#&gt;  2  PMP2                                  cation transport</span>
+<span class="co">#&gt;  3  YPK1               protein amino acid phosphorylation*</span>
+<span class="co">#&gt;  4  YDJ1                 ER-associated protein catabolism*</span>
+<span class="co">#&gt;  5  SER3             serine family amino acid biosynthesis</span>
+<span class="co">#&gt;  6  PUF4 mRNA catabolism, deadenylylation-dependent decay*</span>
+<span class="co">#&gt;  7  MTR2                      poly(A)+ mRNA-nucleus export</span>
+<span class="co">#&gt;  8  APE2                                peptide metabolism</span>
+<span class="co">#&gt;  9  RPN6            ubiquitin-dependent protein catabolism</span>
+<span class="co">#&gt; 10  GLO1                           glutathione metabolism*</span>
+<span class="co">#&gt; # ... with 990 more rows, and 5 more variables: MF &lt;chr&gt;,</span>
+<span class="co">#&gt; #   systematic_name &lt;chr&gt;, nutrient &lt;chr&gt;, rate &lt;dbl&gt;, expression &lt;dbl&gt;</span>
+
+<span class="co"># sample 10% of the rows</span>
+<span class="kw">set.seed</span>(<span class="dv">47681</span>)
+brauer_gene_exp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_frac</span>(<span class="fl">0.1</span>)
+<span class="co">#&gt; # A tibble: 19,843 x 7</span>
+<span class="co">#&gt;     name                                                BP</span>
+<span class="co">#&gt;    &lt;chr&gt;                                             &lt;chr&gt;</span>
+<span class="co">#&gt;  1  PUF6 regulation of transcription, mating-type specific</span>
+<span class="co">#&gt;  2  PMP2                                  cation transport</span>
+<span class="co">#&gt;  3  YPK1               protein amino acid phosphorylation*</span>
+<span class="co">#&gt;  4  YDJ1                 ER-associated protein catabolism*</span>
+<span class="co">#&gt;  5  SER3             serine family amino acid biosynthesis</span>
+<span class="co">#&gt;  6  PUF4 mRNA catabolism, deadenylylation-dependent decay*</span>
+<span class="co">#&gt;  7  MTR2                      poly(A)+ mRNA-nucleus export</span>
+<span class="co">#&gt;  8  APE2                                peptide metabolism</span>
+<span class="co">#&gt;  9  RPN6            ubiquitin-dependent protein catabolism</span>
+<span class="co">#&gt; 10  GLO1                           glutathione metabolism*</span>
+<span class="co">#&gt; # ... with 19,833 more rows, and 5 more variables: MF &lt;chr&gt;,</span>
+<span class="co">#&gt; #   systematic_name &lt;chr&gt;, nutrient &lt;chr&gt;, rate &lt;dbl&gt;, expression &lt;dbl&gt;</span></code></pre></div>
+</div>
+<div id="joining-tables" class="section level3">
+<h3 class="hasAnchor">
+<a href="#joining-tables" class="anchor"></a>Joining tables</h3>
+<p>Many biological databases store information in multiple tables. These tables are related by a common identifier: a gene name, or possibly a numeric identifer.</p>
+<p>We will use two datasets <code>brauer_gene_exp</code> and <code>yeast_prot_prop</code> to illustrate how data from related tables can be combined using joining operations.</p>
+<ul>
+<li><p><code>brauer_gene_exp</code> contains gene expression data from yeast grown under different nutrient limitation conditions.</p></li>
+<li><p><code>yeast_prot_prop</code> contains descriptive data for yeast proteins.</p></li>
+</ul>
+<p>Examine the two tables and identify common variables for linking. If the variables have different names, Use the <code>by</code> argument to <code>left_join()</code> to specify common variables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gene_exp_rate &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(systematic_name, rate, expression)
+gene_mw &lt;-<span class="st"> </span>yeast_prot_prop <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(ORF, Mw)
+
+<span class="co"># Find rows from gene_exp_rate with a match in gene_mw and return all variables</span>
+<span class="kw">left_join</span>(gene_exp_rate, gene_mw, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"systematic_name"</span> =<span class="st"> "ORF"</span>))
+<span class="co">#&gt; # A tibble: 198,430 x 4</span>
+<span class="co">#&gt;    systematic_name  rate expression      Mw</span>
+<span class="co">#&gt;              &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;</span>
+<span class="co">#&gt;  1         YNL049C  0.05      -0.24 98919.4</span>
+<span class="co">#&gt;  2         YNL095C  0.05       0.28 71197.2</span>
+<span class="co">#&gt;  3         YDL104C  0.05      -0.02 45545.1</span>
+<span class="co">#&gt;  4         YLR115W  0.05      -0.33 96256.0</span>
+<span class="co">#&gt;  5         YMR183C  0.05       0.05 33716.9</span>
+<span class="co">#&gt;  6         YML017W  0.05      -0.69 65589.0</span>
+<span class="co">#&gt;  7         YOL066C  0.05      -0.55 67027.6</span>
+<span class="co">#&gt;  8         YPR036W  0.05      -0.75 54409.3</span>
+<span class="co">#&gt;  9         YEL015W  0.05      -0.24 61335.8</span>
+<span class="co">#&gt; 10         YOR069W  0.05      -0.16 76459.9</span>
+<span class="co">#&gt; # ... with 198,420 more rows</span>
+
+<span class="co"># Find rows from gene_exp_rate with a match in gene_mw and return only the gene_exp_rate variables</span>
+<span class="kw">semi_join</span>(gene_exp_rate, gene_mw, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"systematic_name"</span> =<span class="st"> "ORF"</span>))
+<span class="co">#&gt; # A tibble: 197,543 x 3</span>
+<span class="co">#&gt;    systematic_name  rate expression</span>
+<span class="co">#&gt;              &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;</span>
+<span class="co">#&gt;  1         YNL049C  0.05      -0.24</span>
+<span class="co">#&gt;  2         YNL095C  0.05       0.28</span>
+<span class="co">#&gt;  3         YDL104C  0.05      -0.02</span>
+<span class="co">#&gt;  4         YLR115W  0.05      -0.33</span>
+<span class="co">#&gt;  5         YMR183C  0.05       0.05</span>
+<span class="co">#&gt;  6         YML017W  0.05      -0.69</span>
+<span class="co">#&gt;  7         YOL066C  0.05      -0.55</span>
+<span class="co">#&gt;  8         YPR036W  0.05      -0.75</span>
+<span class="co">#&gt;  9         YEL015W  0.05      -0.24</span>
+<span class="co">#&gt; 10         YOR069W  0.05      -0.16</span>
+<span class="co">#&gt; # ... with 197,533 more rows</span>
+
+<span class="co"># Find rows from gene_exp_rate *without* a match in gene_mw</span>
+<span class="kw">anti_join</span>(gene_exp_rate, gene_mw, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"systematic_name"</span> =<span class="st"> "ORF"</span>))
+<span class="co">#&gt; # A tibble: 887 x 3</span>
+<span class="co">#&gt;    systematic_name  rate expression</span>
+<span class="co">#&gt;              &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;</span>
+<span class="co">#&gt;  1         YBR075W  0.05      -1.23</span>
+<span class="co">#&gt;  2         YPR090W  0.05      -0.59</span>
+<span class="co">#&gt;  3         YIR043C  0.05      -0.53</span>
+<span class="co">#&gt;  4         YER109C  0.05      -0.24</span>
+<span class="co">#&gt;  5         YGR272C  0.05      -0.61</span>
+<span class="co">#&gt;  6         YDL038C  0.05      -0.91</span>
+<span class="co">#&gt;  7       YJL012C-A  0.05       0.28</span>
+<span class="co">#&gt;  8         YJL018W  0.05       0.03</span>
+<span class="co">#&gt;  9         YFL057C  0.05       0.23</span>
+<span class="co">#&gt; 10         YFL056C  0.05       0.32</span>
+<span class="co">#&gt; # ... with 877 more rows</span></code></pre></div>
+</div>
+<div id="exercises-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#exercises-1" class="anchor"></a>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Calucate mean expression values for each <code>systematic_name</code> in <code>brauer_gene_exp</code>. How do the numbers change after sampling 1% of the data?</p></li>
+<li><p>How many unique gene names (<code>systematic_name</code>) are shared between the <code>brauer_gene_exp</code> and <code>yeast_prot_prop</code> tables? (5,536).</p></li>
+</ol>
+</div>
+</div>
+<div id="too-many-variables" class="section level2">
+<h2 class="hasAnchor">
+<a href="#too-many-variables" class="anchor"></a>Too many variables</h2>
+<p>We’ll use the <code>brauer_gene_exp</code> data set to illustrate how you can use summary statistics to capture relationships between many variables.</p>
+<p>This plot illustrates the relationship between gene expression and growth rate for the Grr1/YJR090C gene under glucose limitation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(cowplot)
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'cowplot'</span>
+<span class="co">#&gt; The following object is masked from 'package:ggplot2':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     ggsave</span>
+
+exp_data &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(nutrient <span class="op">==</span><span class="st"> "Glucose"</span> <span class="op">&amp;</span><span class="st"> </span>systematic_name <span class="op">==</span><span class="st"> "YJR090C"</span>)
+
+exp_data <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rate, <span class="dt">y =</span> expression)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">'lm'</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Gene expression vs. growth rate for Grr3 under glucose limitation"</span>)</code></pre></div>
+<p><img src="img/class-3-brauer_plot-1.png" width="672" style="display: block; margin: auto;"></p>
+<p>You can also use <code>lm()</code> to model this relationship.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>rate, exp_data)
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; lm(formula = expression ~ rate, data = exp_data)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt; (Intercept)         rate  </span>
+<span class="co">#&gt;      0.1600      -0.8857</span></code></pre></div>
+<p>The results of many statistical operations (<code>lm()</code>, <code>t.test()</code>, <code>cor.test()</code>) are not tidy and relevant parameters are not easily assessible. The <code>broom</code> package provides a function called <code><a href="http://www.rdocumentation.org/packages/broom/topics/tidy">tidy()</a></code> that tidies the results of these operations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(broom)
+fit &lt;-<span class="st"> </span>exp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>rate, <span class="dt">data =</span> .)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/broom/topics/tidy">tidy</a></span>(fit)
+<span class="co">#&gt;          term   estimate  std.error statistic      p.value</span>
+<span class="co">#&gt; 1 (Intercept)  0.1600000 0.01759329  9.094377 0.0008106615</span>
+<span class="co">#&gt; 2        rate -0.8857143 0.09035079 -9.803061 0.0006069620</span></code></pre></div>
+<div id="summaries-for-mutliple-groups" class="section level3">
+<h3 class="hasAnchor">
+<a href="#summaries-for-mutliple-groups" class="anchor"></a>Summaries for mutliple groups</h3>
+<p>Can we capture linear relationships between expression and rate for <em>all combinations</em> of variables? This is surprisingly easy.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this takes ~60 seconds to run</span>
+models &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(systematic_name, name, nutrient) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">do</span>(<span class="dt">model =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/broom/topics/tidy">tidy</a></span>(<span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>rate, <span class="dt">data =</span> .)))</code></pre></div>
+<p>Plot the expression / rate relationship for the top-ten most significant genes. Color lines by nutrient.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">topten &lt;-<span class="st"> </span>models <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(name <span class="op">!=</span><span class="st"> ""</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(p.value) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(systematic_name)
+
+topten_exp &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">semi_join</span>(topten)
+
+topten_exp <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rate, <span class="dt">y =</span> expression, <span class="dt">color =</span> nutrient)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">'lm'</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>systematic_name <span class="op">+</span><span class="st"> </span>name) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Set1"</span>)</code></pre></div>
+</div>
 </div>
 </div>
   </div>
@@ -116,7 +453,9 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#concepts">Concepts</a></li>
+<li><a href="#missing-data">missing data</a></li>
+      <li><a href="#too-much-data">Too much data</a></li>
+      <li><a href="#too-many-variables">Too many variables</a></li>
       </ul>
 </div>
       </div>

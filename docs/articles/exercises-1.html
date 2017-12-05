@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Assignments and Grading • eda</title>
+<title>Exercises 1 • eda</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -89,68 +89,86 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Assignments and Grading</h1>
-                        <h4 class="author">Jay Hesselberth</h4>
+      <h1>Exercises 1</h1>
+                        <h4 class="author">Your Name Here</h4>
             
-            <h4 class="date">2017-12-04</h4>
+            <h4 class="date">12/3/2017</h4>
           </div>
 
     
     
 <div class="contents">
-<div id="grades" class="section level1">
+<div id="overview" class="section level1">
 <h1 class="hasAnchor">
-<a href="#grades" class="anchor"></a>Grades</h1>
-<p>Your grade is based on a combination of:</p>
-<ul>
-<li>Pre-requisite completion (5%)</li>
-<li>Attendance and participation (15%)</li>
-<li>Assignments (80%)</li>
-</ul>
+<a href="#overview" class="anchor"></a>Overview</h1>
+<p>Here is a <a href="https://raw.githubusercontent.com/rnabioco/eda/master/vignettes/exercises-1.Rmd">link</a> to the text of these exercises.</p>
 </div>
-<div id="assignments" class="section level1">
+<div id="question-1" class="section level1">
 <h1 class="hasAnchor">
-<a href="#assignments" class="anchor"></a>Assignments</h1>
-<p>There are two types of assignments in the course:</p>
-<ul>
-<li>
-<strong>Nightly quizzes</strong> worth 30 points each.</li>
-<li>
-<strong>Weekend analyses</strong> worth 60 points each.</li>
-</ul>
-<p>Assignments must be turned in as Rmarkdown text files via Canvas. <strong>They must render completely when the Knit button is clicked</strong>. This means you will need to load all libraries within the document. This is a good chunk to put in your Rmarkdown code:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-<span class="kw">library</span>(eda)</code></pre></div>
-<p>You are welcome and encouraged to work in groups to complete the assignments. One stipulation: if you work together, tell us who your collaborators were in the assignment.</p>
+<a href="#question-1" class="anchor"></a>Question 1</h1>
+<p>Tidy the <code>mtcars</code> data set. Note that car names are rownames in the built-in data, so they need to be moved to their own column prior to tibble conversion.</p>
+<p>The tidied data should look like:</p>
+<pre><code># A tibble: 352 x 3
+                name   var value
+               &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+ 1         Mazda RX4   mpg  21.0
+ 2     Mazda RX4 Wag   mpg  21.0
+ 3        Datsun 710   mpg  22.8
+ 4    Hornet 4 Drive   mpg  21.4
+ 5 Hornet Sportabout   mpg  18.7
+ 6           Valiant   mpg  18.1
+ 7        Duster 360   mpg  14.3
+ 8         Merc 240D   mpg  24.4
+ 9          Merc 230   mpg  22.8
+10          Merc 280   mpg  19.2
+# ... with 342 more rows</code></pre>
+<div id="strategy" class="section level2">
+<h2 class="hasAnchor">
+<a href="#strategy" class="anchor"></a>Strategy</h2>
 </div>
-<div id="grading-rubric" class="section level1">
+<div id="interpretation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interpretation" class="anchor"></a>Interpretation</h2>
+</div>
+</div>
+<div id="question-2" class="section level1">
 <h1 class="hasAnchor">
-<a href="#grading-rubric" class="anchor"></a>Grading Rubric</h1>
-<p>Each assignment problem will be evaluated using the following rubric:</p>
-<ol style="list-style-type: decimal">
-<li>Text annotations are provided laying out the problem, the strategy, and the conclusions.</li>
-<li>Code is succinct and commented.</li>
-<li>Graph types and layouts are chosen carefully to illustrate a single point.</li>
-</ol>
-<p>Other required features include:</p>
-<ul>
-<li><p><strong>Remove extraneous information from your submission.</strong> If you start with the template from <code>File &gt; New File &gt; R Markdown...</code>, then delete the generic sections.</p></li>
-<li><p><strong>Include the text of the question into your submission.</strong> Use markdown to delineate the Question, Strategy and Interpretation sections. Here is an example layout.</p></li>
-</ul>
-<pre><code># Question 1
-
-Assess the relationship between hp and cyl in `mtcars`.
-
-## Strategy
-
-Plot hp vs cyl and examine.
-
-## Interpretation
-
-There is a linear relationship between hp and cyl.</code></pre>
-<ul>
-<li>Add <a href="rmarkdown.rstudio.com/html_document_format.html#code_folding"><code>code_folding</code></a> to your front matter so that code appears next to plots etc.</li>
-</ul>
+<a href="#question-2" class="anchor"></a>Question 2</h1>
+<p>For each car in the tidy <code>mtcars</code> data set, calculate the mean (<code>mean()</code>) and variance (<code>var()</code>) for each variable. Try using <code>summarize()</code> and <code>summarize_at()</code> and <code>summarize_all()</code>.</p>
+<div id="strategy-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#strategy-1" class="anchor"></a>Strategy</h2>
+</div>
+<div id="interpretation-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interpretation-1" class="anchor"></a>Interpretation</h2>
+</div>
+</div>
+<div id="question-3" class="section level1">
+<h1 class="hasAnchor">
+<a href="#question-3" class="anchor"></a>Question 3</h1>
+<p>Plot <code>mpg</code> vs <code>cyl</code> for the <code>mtcars</code> data set. Which format should you use? The original data set, or the tidied one? Why?</p>
+<div id="strategy-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#strategy-2" class="anchor"></a>Strategy</h2>
+</div>
+<div id="interpretation-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interpretation-2" class="anchor"></a>Interpretation</h2>
+</div>
+</div>
+<div id="question-4" class="section level1">
+<h1 class="hasAnchor">
+<a href="#question-4" class="anchor"></a>Question 4</h1>
+<p>Using the provided <code>qpcr</code> data, plot the changes in gene expression over time. Use <strong>colors</strong> to represent genotypes and <strong>facets</strong> for the different genes. If that’s too easy, add error bars (<code>geom_errorbar()</code>) to the plot and connect each point with a line (<code>geom_line()</code>).</p>
+<div id="strategy-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#strategy-3" class="anchor"></a>Strategy</h2>
+</div>
+<div id="interpretation-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interpretation-3" class="anchor"></a>Interpretation</h2>
+</div>
 </div>
 </div>
   </div>
@@ -160,9 +178,31 @@ There is a linear relationship between hp and cyl.</code></pre>
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#grades">Grades</a></li>
-      <li><a href="#assignments">Assignments</a></li>
-      <li><a href="#grading-rubric">Grading Rubric</a></li>
+<li><a href="#overview">Overview</a></li>
+      <li>
+<a href="#question-1">Question 1</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#strategy">Strategy</a></li>
+      <li><a href="#interpretation">Interpretation</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#question-2">Question 2</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#strategy-1">Strategy</a></li>
+      <li><a href="#interpretation-1">Interpretation</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#question-3">Question 3</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#strategy-2">Strategy</a></li>
+      <li><a href="#interpretation-2">Interpretation</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#question-4">Question 4</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#strategy-3">Strategy</a></li>
+      <li><a href="#interpretation-3">Interpretation</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>

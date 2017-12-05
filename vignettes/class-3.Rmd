@@ -16,13 +16,205 @@ knitr::opts_chunk$set(
   fig.path = "img/class-3-",
   fig.align = "center"
 )
+library(ggplot2)
+library(dplyr)
 ```
 
-# Concepts
+```{r load}
+library(tidyverse)
+library(eda)
+```
 
-- Too many variables (identifying important ones, and summarizing others. using colors and facets in plots)
-- Reducing dimensionality (PCA and t-SNE)
-- Assessing significance (light statistics overview, null distributions, hypothesis testing).
-- Dealing with untidy R results (broom::tidy())
-- Too much data (in-memory vs. database approaches, subsetting and sampling, simplify with a reprex).
-  
+## missing data
+
+### Zeroes, `NA`, `NaN` and `NULL`
+
++ Don't use use zeroes to represent missing data. `0` is valid observed value.
+
++ `NA` (Not Available) is most often use to represent missing_ex data.
+
++ `NaN` (Not a Number) is the result of an undefined operation, e.g. `0 / 0`.
+
++ `NULL` means "undefined" and is only used in a programming context (i.e., a function that returns `NULL`). You can't put `NULL` values in a data frame.
+
+Let's examine a data frame with some missing data.
+
+```{r complete}
+# devtools::install_github('rnabioco/eda')
+missing_ex
+```
+
+### `filter` with `is.na()`
+
+You can identify variables with `NA` values by combining `filter()` and `is.na()`.
+
+```{r filter_na}
+# find rows where name is NA
+missing_ex %>% filter(is.na(name))
+
+# find rows where id is *not* NA
+missing_ex %>% filter(!is.na(id))
+```
+
+### `na.omit()`
+
+You can remove **all** rows containing `NA` values with `na.omit()`.
+
+```{r na.omit}
+missing_ex %>% na.omit()
+```
+
+### Statistics with `NA` values
+
+Exclude `NA` values from statistical operations with `na.rm = TRUE`.
+
+```{r stat_na}
+missing_ex$value1
+
+# if NAs are present, the result is NA
+sum(missing_ex$value1)
+
+# solution: drop NAs from the calculation
+sum(missing_ex$value1, na.rm = TRUE)
+```
+
+### Exercises
+
+1. How many rows of `missing_ex` have `NA` values for *either* `value1` or `value2` (27)?
+
+2. How many rows of `missing_ex` remain after filtering out `id` values of `NA` (25)?
+
+3. Calculate the mean for values in each group in `missing_ex`. Use `summarize()`, then try `summarize_at()`.
+
+## Too much data
+
+### Examining sorted data
+
+```{r head_tail}
+sorted <- brauer_gene_exp %>%
+  select(systematic_name, rate, expression) %>%
+  arrange(rate, desc(expression))
+
+sorted %>% head(10)
+
+sorted %>% tail(10)
+```
+
+You can also use the `View()` function to examine the data in a spreadsheet-like viewer.
+
+```{r view, eval=FALSE}
+sorted %>% View()
+```
+
+### Sampling rows
+
+Use `sample_n()` and `sample_frac()` to randomly select rows from a large data set. Get a reproducible sample using `set.seed()`
+
+```{r sample}
+brauer_gene_exp
+
+# sample 1e5 rows
+set.seed(47681)
+brauer_gene_exp %>% sample_n(1e3)
+
+# sample 10% of the rows
+set.seed(47681)
+brauer_gene_exp %>% sample_frac(0.1)
+```
+
+### Joining tables
+
+Many biological databases store information in multiple tables. These tables are related by a common identifier: a gene name, or possibly a numeric identifer.
+
+We will use two datasets `brauer_gene_exp` and `yeast_prot_prop` to illustrate how data from related tables can be combined using joining operations.
+
+- `brauer_gene_exp` contains gene expression data from yeast grown under different nutrient limitation conditions.
+
+- `yeast_prot_prop` contains descriptive data for yeast proteins.
+
+Examine the two tables and identify common variables for linking. If the variables have different names, Use the `by` argument to `left_join()` to specify common variables.
+
+```{r left_join}
+gene_exp_rate <- brauer_gene_exp %>% select(systematic_name, rate, expression)
+gene_mw <- yeast_prot_prop %>% select(ORF, Mw)
+
+# Find rows from gene_exp_rate with a match in gene_mw and return all variables
+left_join(gene_exp_rate, gene_mw, by = c("systematic_name" = "ORF"))
+
+# Find rows from gene_exp_rate with a match in gene_mw and return only the gene_exp_rate variables
+semi_join(gene_exp_rate, gene_mw, by = c("systematic_name" = "ORF"))
+
+# Find rows from gene_exp_rate *without* a match in gene_mw
+anti_join(gene_exp_rate, gene_mw, by = c("systematic_name" = "ORF"))
+```
+
+### Exercises
+
+1. Calucate mean expression values for each `systematic_name` in `brauer_gene_exp`. How do the numbers change after sampling 1% of the data?
+
+2. How many unique gene names (`systematic_name`) are shared between the `brauer_gene_exp` and `yeast_prot_prop` tables? (5,536).
+
+## Too many variables
+
+We'll use the `brauer_gene_exp` data set to illustrate how you can use summary statistics to capture relationships between many variables.
+
+This plot illustrates the relationship between gene expression and growth rate for the Grr1/YJR090C gene under glucose limitation.
+
+```{r brauer_plot}
+library(cowplot)
+
+exp_data <- brauer_gene_exp %>%
+  filter(nutrient == "Glucose" & systematic_name == "YJR090C")
+
+exp_data %>%
+  ggplot(aes(x = rate, y = expression)) +
+  geom_point() +
+  geom_smooth(method = 'lm', se = FALSE) + 
+  ggtitle("Gene expression vs. growth rate for Grr3 under glucose limitation")
+```
+
+You can also use `lm()` to model this relationship.
+
+```{r brauer_lm}
+lm(expression ~ rate, exp_data)
+```
+
+The results of many statistical operations (`lm()`, `t.test()`, `cor.test()`) are not tidy and relevant parameters are not easily assessible. The `broom` package provides a function called `tidy()` that tidies the results of these operations. 
+
+```{r brauer_tidy}
+library(broom)
+fit <- exp_data %>% lm(expression ~ rate, data = .)
+tidy(fit)
+```
+
+### Summaries for mutliple groups
+
+Can we capture linear relationships between expression and rate for *all combinations* of variables? This is surprisingly easy.
+
+```{r brauer_mult_models, eval = FALSE}
+# this takes ~60 seconds to run
+models <- brauer_gene_exp %>%
+  group_by(systematic_name, name, nutrient) %>%
+  do(model = tidy(lm(expression ~ rate, data = .)))
+```
+
+Plot the expression / rate relationship for the top-ten most significant genes. Color lines by nutrient.
+
+```{r brauer_plot_models, eval = FALSE}
+topten <- models %>%
+  unnest() %>%
+  filter(name != "") %>%
+  arrange(p.value) %>%
+  head(10) %>%
+  select(systematic_name)
+
+topten_exp <- brauer_gene_exp %>% semi_join(topten)
+
+topten_exp %>%
+  ggplot(aes(x = rate, y = expression, color = nutrient)) +
+  geom_point() +
+  geom_smooth(method = 'lm', se = FALSE) +
+  facet_wrap(~systematic_name + name) +
+  scale_color_brewer(palette = "Set1")
+```
+

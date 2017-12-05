@@ -141,6 +141,8 @@ And wide format is useful for plotting.
 
 ```{r plot_label}
 library(ggrepel)
+
+set.seed(42)
 ggplot(mtcars_tbl) +
   geom_point(aes(hp, mpg, size = 5)) +
   geom_label_repel(aes(hp, mpg, fill = factor(cyl), label = name))

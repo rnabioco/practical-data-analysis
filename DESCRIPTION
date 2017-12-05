@@ -14,21 +14,26 @@ Authors@R: c(
     role = c("aut"))
     )
 Description: Provides course materials for IDPT 7620, Practical Biological Data Analysis in R.
-Depends:
-  R (>= 3.4.1)
-Imports:
-  valr,
-  tidyverse,
-  ggrepel,
-  gapminder,
-  viridis,
-  DT,
-  tidyr,
-  cowplot,
-  dplyr,
-  ggplot2,
-  stringr
 License: CC0
+Depends: 
+    R (>= 3.4.1)
+Imports: 
+    cowplot,
+    dplyr,
+    DT,
+    gapminder,
+    ggplot2,
+    ggrepel,
+    stringr,
+    tidyr,
+    tidyverse,
+    valr,
+    viridis,
+    devtools
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
 Suggests:
@@ -37,5 +42,6 @@ Suggests:
   R.utils
 Remotes: stephlocke/datasauRus,
 VignetteBuilder: knitr
+Remotes: stephlocke/datasauRus
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1

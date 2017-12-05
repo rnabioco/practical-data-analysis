@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Authors • eda</title>
+<title>Gene expression in yeast measured by microarray — brauer_gene_exp • eda</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -20,9 +20,9 @@
 
 
 <!-- pkgdown -->
-<link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script>
-<script src="pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
+<script src="../pkgdown.js"></script>
   
   
 <!-- mathjax -->
@@ -49,7 +49,7 @@
   </head>
 
   <body>
-    <div class="container template-authors">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -59,15 +59,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">eda</a>
+      <a class="navbar-brand" href="../index.html">eda</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="../index.html">Home</a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -77,28 +77,28 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="articles/class-1.html">Class 1: Overview and Data Tidying</a>
+      <a href="../articles/class-1.html">Class 1: Overview and Data Tidying</a>
     </li>
     <li>
-      <a href="articles/class-2.html">Class 2: Writing Reproducible Reports</a>
+      <a href="../articles/class-2.html">Class 2: Writing Reproducible Reports</a>
     </li>
     <li>
-      <a href="articles/class-3.html">Class 3: Common Analysis Challenges</a>
-    </li>
-    <li class="divider"></li>
-    <li>
-      <a href="articles/exercises-1.html">Excercises 1</a>
-    </li>
-    <li>
-      <a href="articles/exercises-2.html">Excercises 2</a>
+      <a href="../articles/class-3.html">Class 3: Common Analysis Challenges</a>
     </li>
     <li class="divider"></li>
     <li>
-      <a href="articles/assignment-1.html">Weekend Assignment 1</a>
+      <a href="../articles/exercises-1.html">Excercises 1</a>
+    </li>
+    <li>
+      <a href="../articles/exercises-2.html">Excercises 2</a>
     </li>
     <li class="divider"></li>
     <li>
-      <a href="articles/assignments.html">Assignment Submission and Grading Rubric</a>
+      <a href="../articles/assignment-1.html">Weekend Assignment 1</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
     </li>
   </ul>
 </li>
@@ -115,30 +115,55 @@
       </header>
 
       <div class="row">
-  <div class="contents col-md-12">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Authors</h1>
+    <h1>Gene expression in yeast measured by microarray</h1>
     </div>
 
-    <ul class="list-unstyled">
-      <li>
-        <p><strong><a href='https://hesselberthlab.org'>Jay Hesselberth</a></strong>. Author, maintainer.
-        <br /><small>0000-0002-6299-179X</small></p>
-      </li>
-      <li>
-        <p><strong>Austin Gillen</strong>. Author.
-        </p>
-      </li>
-      <li>
-        <p><strong>Kent Riemondy</strong>. Author.
-        </p>
-      </li>
-    </ul>
+    
+    <p>A dataset containing gene expression values of Saccharomyces cerevisiae grown
+under nutrient limitation conditions. The variables are as follows:</p>
+    
+
+    <pre class="usage"><span class='no'>brauer_gene_exp</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A data frame with 198,430 observations of 7 variables.</p>
+    
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p><a href='http://www.molbiolcell.org/content/19/1/352.long'>http://www.molbiolcell.org/content/19/1/352.long</a>
+    <a href='http://varianceexplained.org/r/tidy-genomics/'>http://varianceexplained.org/r/tidy-genomics/</a>
+    <a href='http://varianceexplained.org/r/tidy-genomics-broom/'>http://varianceexplained.org/r/tidy-genomics-broom/</a></p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <ul>
+<li><p><code>name</code> Common gene name</p></li>
+<li><p><code>BP</code> Gene Ontology Biological Process</p></li>
+<li><p><code>MF</code> Gene Ontology Molecular Function</p></li>
+<li><p><code>systematic_name</code> Systematic gene name</p></li>
+<li><p><code>nutrient</code> Nutrient omitted for growth</p></li>
+<li><p><code>rate</code> Growth rate</p></li>
+<li><p><code>expression</code> Gene expression value</p></li>
+</ul>
+    
 
   </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      
+      <li><a href="#format">Format</a></li>
 
+      <li><a href="#source">Source</a></li>
+
+      <li><a href="#details">Details</a></li>
+          </ul>
+
+  </div>
 </div>
-
 
       <footer>
       <div class="copyright">

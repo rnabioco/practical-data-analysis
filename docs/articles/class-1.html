@@ -59,19 +59,20 @@
     <li>
       <a href="../articles/class-3.html">Class 3: Common Analysis Challenges</a>
     </li>
+    <li class="divider">
     <li>
-      <a href="../articles/class-4.html">Class 4: Genomic Interval Analysis part 1</a>
+      <a href="../articles/exercises-1.html">Excercises 1</a>
+    </li>
+    <li>
+      <a href="../articles/exercises-2.html">Excercises 2</a>
     </li>
     <li class="divider">
     <li>
       <a href="../articles/assignment-1.html">Weekend Assignment 1</a>
     </li>
-    <li>
-      <a href="../articles/assignment-2.html">Weekend Assignment 2</a>
-    </li>
     <li class="divider">
     <li>
-      <a href="../articles/assignments.html">Submitting Assignments</a>
+      <a href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
     </li>
   </ul>
 </li>
@@ -91,7 +92,7 @@
       <h1>Class 1: Overview and data tidying</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-12-05</h4>
+            <h4 class="date">2017-12-04</h4>
           </div>
 
     
@@ -122,8 +123,8 @@
 <p>The Environment panel enables data import and environment browsing.</p>
 <p>There are two main ways to import data within RStudio. One is interactive, using the “Import Dataset” button in the Environment panel.</p>
 <p><img src="img/class-1-data-import.png" alt="data import"> Alternatively you can use functions in the <code>readr</code> and <code>readxl</code> libraries to load data on the console or within an RMarkdown report. All of the functions have consistent <code>read_*</code> names.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">readr::<span class="kw">read_tsv</span>(<span class="st">'XXX'</span>)
-readxl::<span class="kw">read_excel</span>(<span class="st">'XXX'</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">readr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">read_tsv</a></span>(<span class="st">'XXX'</span>)
+readxl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readxl/topics/read_excel">read_excel</a></span>(<span class="st">'XXX'</span>)</code></pre></div>
 <p>You can explore the environment with the “Global Environment” button.</p>
 </div>
 <div id="console" class="section level3">
@@ -132,11 +133,11 @@ readxl::<span class="kw">read_excel</span>(<span class="st">'XXX'</span>)</code>
 <p>The Console panel enables interactive analysis.</p>
 <p>The <code>tidyverse</code> is a collection of libraries that enable efficient data processing and visualization. You will probably start many analyses by loading the <code>tidyverse</code> library. This library loads a number of other libraries that are useful for data processing and plotting.:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-<span class="co">#&gt; ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</span>
+<span class="co">#&gt; ── Attaching packages ──────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</span>
 <span class="co">#&gt; ✔ tibble  1.3.4     ✔ purrr   0.2.4</span>
 <span class="co">#&gt; ✔ tidyr   0.7.2     ✔ stringr 1.2.0</span>
 <span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.2.0</span>
-<span class="co">#&gt; ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──</span>
+<span class="co">#&gt; ── Conflicts ─────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span>
 <span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span>
 <span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></code></pre></div>
 <p>This one invocation loads several libraries including <code>dplyr</code> and <code>ggplot2</code>.</p>
@@ -146,7 +147,7 @@ readxl::<span class="kw">read_excel</span>(<span class="st">'XXX'</span>)</code>
 <a href="#viewer" class="anchor"></a>Viewer</h3>
 <p>The <code>tidyverse</code> contains <code>ggplot2</code>, which you covered in your pre-requisites. Let’s make a simple plot in RStudio. Note that the plot appears in the “Plots” panel. From there, you can Zoom, Export to a file, or Publish on RPubs.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg, <span class="dt">color =</span> <span class="kw">factor</span>(cyl))) +<span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg, <span class="dt">color =</span> <span class="kw">factor</span>(cyl))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
 <p><img src="img/class-1-plot-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div id="editor" class="section level3">
@@ -231,7 +232,7 @@ mtcars_tbl
 <span class="co">#&gt; # ... with 22 more rows, and 2 more variables: gear &lt;dbl&gt;, carb &lt;dbl&gt;</span>
 
 <span class="co"># gather variables and observations into `key` and `value` columns - so-called "long" format</span>
-xx &lt;-<span class="st"> </span>mtcars_tbl %&gt;%<span class="st"> </span><span class="kw">gather</span>(key, value, -name)
+xx &lt;-<span class="st"> </span>mtcars_tbl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(key, value, <span class="op">-</span>name)
 xx
 <span class="co">#&gt; # A tibble: 352 x 3</span>
 <span class="co">#&gt;                 name   key value</span>
@@ -249,7 +250,7 @@ xx
 <span class="co">#&gt; # ... with 342 more rows</span>
 
 <span class="co"># and convert back to "wide" format</span>
-xx %&gt;%<span class="st"> </span><span class="kw">spread</span>(key, value)
+xx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(key, value)
 <span class="co">#&gt; # A tibble: 32 x 12</span>
 <span class="co">#&gt;                  name    am  carb   cyl  disp  drat  gear    hp   mpg</span>
 <span class="co">#&gt;  *              &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -266,7 +267,7 @@ xx %&gt;%<span class="st"> </span><span class="kw">spread</span>(key, value)
 <span class="co">#&gt; # ... with 22 more rows, and 3 more variables: qsec &lt;dbl&gt;, vs &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   wt &lt;dbl&gt;</span></code></pre></div>
 <p>Each form has its advantages. For example, long format makes it easy to calculate summaries:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xx %&gt;%<span class="st"> </span><span class="kw">group_by</span>(key) %&gt;%<span class="st"> </span><span class="kw">summarize</span>(<span class="kw">median</span>(value))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(key) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">median</span>(value))
 <span class="co">#&gt; # A tibble: 11 x 2</span>
 <span class="co">#&gt;      key `median(value)`</span>
 <span class="co">#&gt;    &lt;chr&gt;           &lt;dbl&gt;</span>
@@ -283,8 +284,10 @@ xx %&gt;%<span class="st"> </span><span class="kw">spread</span>(key, value)
 <span class="co">#&gt; 11    wt           3.325</span></code></pre></div>
 <p>And wide format is useful for plotting.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggrepel)
-<span class="kw">ggplot</span>(mtcars_tbl) +
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(hp, mpg, <span class="dt">size =</span> <span class="dv">5</span>)) +
+
+<span class="kw">set.seed</span>(<span class="dv">42</span>)
+<span class="kw">ggplot</span>(mtcars_tbl) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(hp, mpg, <span class="dt">size =</span> <span class="dv">5</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggrepel/topics/geom_text_repel">geom_label_repel</a></span>(<span class="kw">aes</span>(hp, mpg, <span class="dt">fill =</span> <span class="kw">factor</span>(cyl), <span class="dt">label =</span> name))</code></pre></div>
 <p><img src="img/class-1-plot_label-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
@@ -293,11 +296,11 @@ xx %&gt;%<span class="st"> </span><span class="kw">spread</span>(key, value)
 <a href="#separate-extract-and-unite" class="anchor"></a><code>separate</code>, <code>extract</code>, and <code>unite</code>
 </h3>
 <p><code>separate</code> takes a column containing multiple variables on input and returns multiple columns, each with a new variable. For example, a column with year/month/day information can be separated into invidual columns.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ys &lt;-<span class="st"> </span><span class="dv">1999</span>:<span class="dv">2002</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ys &lt;-<span class="st"> </span><span class="dv">1999</span><span class="op">:</span><span class="dv">2002</span>
 ms &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'Jan'</span>, <span class="st">'Feb'</span>, <span class="st">'Mar'</span>)
-ds &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span>
+ds &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>
 
-dates &lt;-<span class="st"> </span>tidyr::<span class="kw">crossing</span>(ys, ms, ds) %&gt;%<span class="st"> </span><span class="kw">unite</span>(date, ys:ds, <span class="dt">sep =</span> <span class="st">'-'</span>)</code></pre></div>
+dates &lt;-<span class="st"> </span>tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/expand">crossing</a></span>(ys, ms, ds) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unite</span>(date, ys<span class="op">:</span>ds, <span class="dt">sep =</span> <span class="st">'-'</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dates
 <span class="co">#&gt; # A tibble: 120 x 1</span>
 <span class="co">#&gt;           date</span>
@@ -315,7 +318,7 @@ dates &lt;-<span class="st"> </span>tidyr::<span class="kw">crossing</span>(ys, 
 <span class="co">#&gt; # ... with 110 more rows</span>
 
 <span class="co"># separate is the inverse of unite</span>
-dates %&gt;%<span class="st"> </span><span class="kw">separate</span>(date, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">'year'</span>, <span class="st">'month'</span>, <span class="st">'day'</span>), <span class="dt">sep =</span> <span class="st">'-'</span>)
+dates <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(date, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">'year'</span>, <span class="st">'month'</span>, <span class="st">'day'</span>), <span class="dt">sep =</span> <span class="st">'-'</span>)
 <span class="co">#&gt; # A tibble: 120 x 3</span>
 <span class="co">#&gt;     year month   day</span>
 <span class="co">#&gt;  * &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span>
@@ -346,9 +349,9 @@ dates %&gt;%<span class="st"> </span><span class="kw">separate</span>(date, <spa
 gene &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'IFN'</span>, <span class="st">'ACTIN'</span>)
 time &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="dv">24</span>, <span class="dv">48</span>)
 rt &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'+'</span>, <span class="st">'-'</span>) <span class="co"># reverse transcriptase added?</span>
-rep &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">3</span>
+rep &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>
 
-tidyr::<span class="kw">crossing</span>(sample, gene, time, rep, rt)
+tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/expand">crossing</a></span>(sample, gene, time, rep, rt)
 <span class="co">#&gt; # A tibble: 96 x 5</span>
 <span class="co">#&gt;    sample  gene  time   rep    rt</span>
 <span class="co">#&gt;     &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;</span>
@@ -394,8 +397,8 @@ tidyr::<span class="kw">crossing</span>(sample, gene, time, rep, rt)
 #&gt; 10     MT-t8-1    94
 #&gt; # ... with 14 more rows</code></pre>
 <p>Because the samples have systematic names, it is easy to separate this information into individual columns</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_info &lt;-<span class="st"> </span>samples %&gt;%
-<span class="st">  </span>tidyr::<span class="kw">separate</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_info &lt;-<span class="st"> </span>samples <span class="op">%&gt;%</span>
+<span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/separate">separate</a></span>(
     sample.name,
     <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">'sample'</span>, <span class="st">'hour'</span>, <span class="st">'rep'</span>),
     <span class="dt">sep =</span> <span class="st">"-"</span>
@@ -417,7 +420,7 @@ sample_info
 <span class="co">#&gt; 10     MT    t8     1    94</span>
 <span class="co">#&gt; # ... with 14 more rows</span></code></pre></div>
 <p>Now we can use <code>dplyr</code> and <code>tidyr</code> functions to manipulate the data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_info %&gt;%<span class="st"> </span><span class="kw">group_by</span>(sample, hour) %&gt;%<span class="st"> </span><span class="kw">summarize</span>(<span class="kw">mean</span>(value))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample, hour) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">mean</span>(value))
 <span class="co">#&gt; # A tibble: 8 x 3</span>
 <span class="co">#&gt; # Groups:   sample [?]</span>
 <span class="co">#&gt;   sample  hour `mean(value)`</span>
@@ -431,7 +434,7 @@ sample_info
 <span class="co">#&gt; 7     WT    t4      55.00000</span>
 <span class="co">#&gt; 8     WT    t8      42.33333</span>
 
-sample_info %&gt;%<span class="st"> </span><span class="kw">spread</span>(hour, value) %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">t24_norm =</span> t24 -<span class="st"> </span>t0)
+sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(hour, value) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">t24_norm =</span> t24 <span class="op">-</span><span class="st"> </span>t0)
 <span class="co">#&gt; # A tibble: 6 x 7</span>
 <span class="co">#&gt;   sample   rep    t0   t24    t4    t8 t24_norm</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;</span>
@@ -538,7 +541,7 @@ qpcr_data
 <ul>
 <li>Calculate summary statistics for each gene, cell and time point across replicates.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qpcr_tidy %&gt;%<span class="st"> </span><span class="kw">filter</span>(rt ==<span class="st"> "+"</span>) %&gt;%<span class="st"> </span><span class="kw">group_by</span>(sample, gene, time) %&gt;%<span class="st"> </span><span class="kw">summarize</span>(<span class="dt">mean_exp =</span> <span class="kw">mean</span>(exp), <span class="dt">var_exp =</span> <span class="kw">var</span>(exp))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qpcr_tidy <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(rt <span class="op">==</span><span class="st"> "+"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample, gene, time) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">mean_exp =</span> <span class="kw">mean</span>(exp), <span class="dt">var_exp =</span> <span class="kw">var</span>(exp))
 <span class="co">#&gt; # A tibble: 16 x 5</span>
 <span class="co">#&gt; # Groups:   sample, gene [?]</span>
 <span class="co">#&gt;    sample  gene  time   mean_exp      var_exp</span>
@@ -626,9 +629,9 @@ qpcr_data
 <ol start="3" style="list-style-type: decimal">
 <li>Plot the tidy <code>anscombe</code> data. Plot each <code>x</code>/<code>y</code> point on separate facets for each set, and plot a smoothing line. Examine the plots. How do they compare to the summary statistics?</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(anscombe_tidy, <span class="kw">aes</span>(x, y)) +
-<span class="st">  </span><span class="kw">geom_point</span>() +
-<span class="st">  </span><span class="kw">facet_wrap</span>(~set) +
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(anscombe_tidy, <span class="kw">aes</span>(x, y)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>set) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">'lm'</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
 </div>
 <div id="quiz" class="section level1">
