@@ -32,16 +32,11 @@ Imports:
     devtools
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    R.utils
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-Suggests:
-  knitr,
-  rmarkdown,
-  R.utils
-Remotes: stephlocke/datasauRus,
-VignetteBuilder: knitr
 Remotes: stephlocke/datasauRus
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
