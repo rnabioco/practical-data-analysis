@@ -174,7 +174,7 @@ The `bedGraph` file contains four columns, `chrom`, `start`, `end`, and `score`.
 $$\frac{reads\ overlapping\ the\ interval* 1e6}{total\ number\ of\ reads}$$
 
 ```{r}
-bed <- read_bed("http://amc-sandbox.ucdenver.edu/User33/tmp/polra2_hela_1e6.bg.gz", 
+bed <- read_bed("https://de.cyverse.org/anon-files/iplant/home/kriemo/data/class/polra2_hela_1e6.bg.gz", 
                 n_fields = 4)
 # rename name to value
 bg <- select(bed, everything(), value = name)
