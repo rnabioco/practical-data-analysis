@@ -406,10 +406,14 @@ snps_in_tfs
 
 The [`bed_closest()`](https://rnabioco.github.io/valr/reference/bed_intersect.html) function finds the closest intervals between two sets of intervals.
 
-First read in a BED file that contains genes (on `chr22` for simplicity) in the human genome (hg19 build).
+First read in a BED file that contains genes in the human genome (hg19 build).
 
 ```{r}
-genes <- read_bed(valr_example('genes.hg19.chr22.bed.gz'), 
+gene_file <- system.file("extdata", 
+                        "hg19_genes.bed.gz", 
+                        package = "eda")
+
+genes <- read_bed(gene_file, 
                  n_fields = 6)
 genes
 ```
@@ -436,9 +440,9 @@ bed_closest(snps, tss) %>%
 
 # Exercises
 
-1) The Encode project has performed `eCLIP` experiments to map RNA binding protein  (RBP) binding sites for > 100 RBPs. Go to the [Encode website](https://www.encodeproject.org/matrix/?type=Experiment), search for `eCLIP` experiments, select an RBP eClip experiment, and load a `BED` file (bed narrowPeak format) with the binding sites into R using just the url. Use the [`read_narrowPeak()`](https://rnabioco.github.io/valr/reference/read_bed.html) function from `valr`. Make sure that the file was generated using the `hg19` genome build. Display the bed tibble that you pulled from the Encode database.
+1) The Encode project has performed `eCLIP` experiments to map RNA binding protein  (RBP) binding sites for > 100 RBPs. Go to the [Encode website](https://www.encodeproject.org/matrix/?type=Experiment), search for `eCLIP` experiments, select an RBP eClip experiment, and load a `BED` file (bed narrowPeak format) with the binding sites into R using just the url. Use the [`read_narrowPeak()`](https://rnabioco.github.io/valr/reference/read_bed.html) function from `valr`. Make sure that the file was generated using the `hg19` genome build, and that you do **not** select the `eCLIP mock input` samples, which are negative controls. Display the bed tibble that you pulled from the Encode database and give a one to two sentence summary about the known functions of the RBP. 
 
-2) Use `bed_intersect()` and some dplyr functions to determine how many `eCLIP` peaks are found in genes and how many are intergenic. (see the documentation on the `invert` argument for `bed_intersect()`). Use the `hg19_genes.bed.gz` bed file as your gene bed file (location shown below). 
+2) Use `bed_intersect()` and some dplyr functions to determine how many `eCLIP` peaks are found in genes and how many are intergenic. (see the documentation on the `invert` argument for `bed_intersect()`). Use the `hg19_genes.bed.gz` bed file as your gene bed file (location shown below). Explain in the interpretation whether or not the RBP primarily binds to known (geneic) or unannotated (intergeneic) regions.  
 
 ```{r, eval = F}
 genes <- system.file("extdata", "hg19_genes.bed.gz", package = "eda")
@@ -457,6 +461,6 @@ genome
 ```
 # Quiz
 
-Create an RMarkdown document and answer the questions from the Exercises section. Write your answers in the text, and print the final tibbles that your code produced that gave you the answer. Submit your final document as "Quiz 2" by Thurs at 10 PM.
+Create an RMarkdown document and answer the questions from the Exercises section. Write your answers in the text, and print the final tibbles that your code produced that gave you the answer. Submit your final document as "Quiz 3" by Friday at 10 PM.
 
 **Your submitted document must knit to HTML without errors**. I.e., when you click the "Knit" button, the document should build and display and HTML page. 
