@@ -613,7 +613,7 @@ tss
 <span class="co">#&gt; # ... with 14,009 more rows, and 1 more variables: .dist &lt;int&gt;</span>
 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_closest">bed_closest</a></span>(snps, tss) %&gt;%<span class="st"> </span>
-<span class="st">  </span>dplyr::<span class="kw">filter</span>(<span class="kw">abs</span>(.dist) &lt;<span class="st"> </span><span class="dv">50</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="kw">abs</span>(.dist) &lt;<span class="st"> </span><span class="dv">50</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(chrom:strand.x, name.y, .overlap, .dist)
 <span class="co">#&gt; # A tibble: 14 x 9</span>
 <span class="co">#&gt;    chrom  start.x    end.x      name.x score.x strand.x       name.y</span>

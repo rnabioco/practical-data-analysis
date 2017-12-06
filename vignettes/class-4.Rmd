@@ -434,7 +434,7 @@ bed_closest(snps, tss) %>%
   select(chrom:strand.x, name.y, .overlap, .dist)
 
 bed_closest(snps, tss) %>% 
-  dplyr::filter(abs(.dist) < 50) %>% 
+  filter(abs(.dist) < 50) %>% 
   select(chrom:strand.x, name.y, .overlap, .dist)
 ```
 
