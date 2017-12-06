@@ -101,18 +101,18 @@
       <h1>Class 3: Common Analysis Challenges</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-12-05</h4>
+            <h4 class="date">2017-12-06</h4>
           </div>
 
     
     
 <div class="contents">
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-<span class="co">#&gt; ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</span>
+<span class="co">#&gt; ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</span>
 <span class="co">#&gt; ✔ tibble  1.3.4     ✔ purrr   0.2.4</span>
 <span class="co">#&gt; ✔ tidyr   0.7.2     ✔ stringr 1.2.0</span>
 <span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.2.0</span>
-<span class="co">#&gt; ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span>
+<span class="co">#&gt; ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──</span>
 <span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span>
 <span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span>
 <span class="kw">library</span>(eda)</code></pre></div>
@@ -153,7 +153,7 @@ missing_ex
 </h3>
 <p>You can identify variables with <code>NA</code> values by combining <code>filter()</code> and <code>is.na()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find rows where name is NA</span>
-missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">is.na</span>(name))
+missing_ex %&gt;%<span class="st"> </span><span class="kw">filter</span>(<span class="kw">is.na</span>(name))
 <span class="co">#&gt; # A tibble: 5 x 5</span>
 <span class="co">#&gt;   group    id  name value1 value2</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;int&gt;</span>
@@ -164,7 +164,7 @@ missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="k
 <span class="co">#&gt; 5     4     3  &lt;NA&gt;     NA     NA</span>
 
 <span class="co"># find rows where id is *not* NA</span>
-missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(id))
+missing_ex %&gt;%<span class="st"> </span><span class="kw">filter</span>(!<span class="kw">is.na</span>(id))
 <span class="co">#&gt; # A tibble: 25 x 5</span>
 <span class="co">#&gt;    group    id  name value1 value2</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;int&gt;</span>
@@ -185,7 +185,7 @@ missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="k
 <a href="#na-omit" class="anchor"></a><code>na.omit()</code>
 </h3>
 <p>You can remove <strong>all</strong> rows containing <code>NA</code> values with <code>na.omit()</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">na.omit</span>()
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">missing_ex %&gt;%<span class="st"> </span><span class="kw">na.omit</span>()
 <span class="co">#&gt; # A tibble: 1 x 5</span>
 <span class="co">#&gt;   group    id  name value1 value2</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;int&gt;</span>
@@ -195,16 +195,16 @@ missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="k
 <h3 class="hasAnchor">
 <a href="#statistics-with-na-values" class="anchor"></a>Statistics with <code>NA</code> values</h3>
 <p>Exclude <code>NA</code> values from statistical operations with <code>na.rm = TRUE</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">missing_ex<span class="op">$</span>value1
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">missing_ex$value1
 <span class="co">#&gt;  [1] NA NA NA NA NA NA NA  1 NA NA NA NA NA NA  2 NA NA NA NA NA NA NA  3</span>
 <span class="co">#&gt; [24] NA NA NA NA NA NA  4</span>
 
 <span class="co"># if NAs are present, the result is NA</span>
-<span class="kw">sum</span>(missing_ex<span class="op">$</span>value1)
+<span class="kw">sum</span>(missing_ex$value1)
 <span class="co">#&gt; [1] NA</span>
 
 <span class="co"># solution: drop NAs from the calculation</span>
-<span class="kw">sum</span>(missing_ex<span class="op">$</span>value1, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
+<span class="kw">sum</span>(missing_ex$value1, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
 <span class="co">#&gt; [1] 10</span></code></pre></div>
 </div>
 <div id="exercises" class="section level3">
@@ -223,11 +223,11 @@ missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="k
 <div id="examining-sorted-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#examining-sorted-data" class="anchor"></a>Examining sorted data</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sorted &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(systematic_name, rate, expression) <span class="op">%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sorted &lt;-<span class="st"> </span>brauer_gene_exp %&gt;%
+<span class="st">  </span><span class="kw">select</span>(systematic_name, rate, expression) %&gt;%
 <span class="st">  </span><span class="kw">arrange</span>(rate, <span class="kw">desc</span>(expression))
 
-sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)
+sorted %&gt;%<span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)
 <span class="co">#&gt; # A tibble: 10 x 3</span>
 <span class="co">#&gt;    systematic_name  rate expression</span>
 <span class="co">#&gt;              &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;</span>
@@ -242,7 +242,7 @@ sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">h
 <span class="co">#&gt;  9         YIL166C  0.05       6.50</span>
 <span class="co">#&gt; 10         YBR093C  0.05       6.48</span>
 
-sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tail</span>(<span class="dv">10</span>)
+sorted %&gt;%<span class="st"> </span><span class="kw">tail</span>(<span class="dv">10</span>)
 <span class="co">#&gt; # A tibble: 10 x 3</span>
 <span class="co">#&gt;    systematic_name  rate expression</span>
 <span class="co">#&gt;              &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;</span>
@@ -257,7 +257,7 @@ sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t
 <span class="co">#&gt;  9         YKL217W   0.3      -5.44</span>
 <span class="co">#&gt; 10         YMR303C   0.3      -6.04</span></code></pre></div>
 <p>You can also use the <code>View()</code> function to examine the data in a spreadsheet-like viewer.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">View</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sorted %&gt;%<span class="st"> </span><span class="kw">View</span>()</code></pre></div>
 </div>
 <div id="sampling-rows" class="section level3">
 <h3 class="hasAnchor">
@@ -282,7 +282,7 @@ sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t
 
 <span class="co"># sample 1e5 rows</span>
 <span class="kw">set.seed</span>(<span class="dv">47681</span>)
-brauer_gene_exp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="fl">1e3</span>)
+brauer_gene_exp %&gt;%<span class="st"> </span><span class="kw">sample_n</span>(<span class="fl">1e3</span>)
 <span class="co">#&gt; # A tibble: 1,000 x 7</span>
 <span class="co">#&gt;     name                                                BP</span>
 <span class="co">#&gt;    &lt;chr&gt;                                             &lt;chr&gt;</span>
@@ -301,7 +301,7 @@ brauer_gene_exp <span class="op">%&gt;%</span><span class="st"> </span><span cla
 
 <span class="co"># sample 10% of the rows</span>
 <span class="kw">set.seed</span>(<span class="dv">47681</span>)
-brauer_gene_exp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_frac</span>(<span class="fl">0.1</span>)
+brauer_gene_exp %&gt;%<span class="st"> </span><span class="kw">sample_frac</span>(<span class="fl">0.1</span>)
 <span class="co">#&gt; # A tibble: 19,843 x 7</span>
 <span class="co">#&gt;     name                                                BP</span>
 <span class="co">#&gt;    &lt;chr&gt;                                             &lt;chr&gt;</span>
@@ -328,8 +328,8 @@ brauer_gene_exp <span class="op">%&gt;%</span><span class="st"> </span><span cla
 <li><p><code>yeast_prot_prop</code> contains descriptive data for yeast proteins.</p></li>
 </ul>
 <p>Examine the two tables and identify common variables for linking. If the variables have different names, Use the <code>by</code> argument to <code>left_join()</code> to specify common variables.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gene_exp_rate &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(systematic_name, rate, expression)
-gene_mw &lt;-<span class="st"> </span>yeast_prot_prop <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(ORF, Mw)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gene_exp_rate &lt;-<span class="st"> </span>brauer_gene_exp %&gt;%<span class="st"> </span><span class="kw">select</span>(systematic_name, rate, expression)
+gene_mw &lt;-<span class="st"> </span>yeast_prot_prop %&gt;%<span class="st"> </span><span class="kw">select</span>(ORF, Mw)
 
 <span class="co"># Find rows from gene_exp_rate with a match in gene_mw and return all variables</span>
 <span class="kw">left_join</span>(gene_exp_rate, gene_mw, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"systematic_name"</span> =<span class="st"> "ORF"</span>))
@@ -403,17 +403,17 @@ gene_mw &lt;-<span class="st"> </span>yeast_prot_prop <span class="op">%&gt;%</s
 <span class="co">#&gt; </span>
 <span class="co">#&gt;     ggsave</span>
 
-exp_data &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(nutrient <span class="op">==</span><span class="st"> "Glucose"</span> <span class="op">&amp;</span><span class="st"> </span>systematic_name <span class="op">==</span><span class="st"> "YJR090C"</span>)
+exp_data &lt;-<span class="st"> </span>brauer_gene_exp %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(nutrient ==<span class="st"> "Glucose"</span> &amp;<span class="st"> </span>systematic_name ==<span class="st"> "YJR090C"</span>)
 
-exp_data <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rate, <span class="dt">y =</span> expression)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">'lm'</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+exp_data %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rate, <span class="dt">y =</span> expression)) +
+<span class="st">  </span><span class="kw">geom_point</span>() +
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">'lm'</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Gene expression vs. growth rate for Grr3 under glucose limitation"</span>)</code></pre></div>
 <p><img src="img/class-3-brauer_plot-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>You can also use <code>lm()</code> to model this relationship.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>rate, exp_data)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(expression ~<span class="st"> </span>rate, exp_data)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = expression ~ rate, data = exp_data)</span>
@@ -423,7 +423,7 @@ exp_data <span class="op">%&gt;%</span>
 <span class="co">#&gt;      0.1600      -0.8857</span></code></pre></div>
 <p>The results of many statistical operations (<code>lm()</code>, <code>t.test()</code>, <code>cor.test()</code>) are not tidy and relevant parameters are not easily assessible. The <code>broom</code> package provides a function called <code><a href="http://www.rdocumentation.org/packages/broom/topics/tidy">tidy()</a></code> that tidies the results of these operations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(broom)
-fit &lt;-<span class="st"> </span>exp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>rate, <span class="dt">data =</span> .)
+fit &lt;-<span class="st"> </span>exp_data %&gt;%<span class="st"> </span><span class="kw">lm</span>(expression ~<span class="st"> </span>rate, <span class="dt">data =</span> .)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/broom/topics/tidy">tidy</a></span>(fit)
 <span class="co">#&gt;          term   estimate  std.error statistic      p.value</span>
 <span class="co">#&gt; 1 (Intercept)  0.1600000 0.01759329  9.094377 0.0008106615</span>
@@ -433,24 +433,24 @@ fit &lt;-<span class="st"> </span>exp_data <span class="op">%&gt;%</span><span c
 <a href="#summaries-for-mutliple-groups" class="anchor"></a>Summaries for mutliple groups</h3>
 <p>Can we capture linear relationships between expression and rate for <em>all combinations</em> of variables? This is surprisingly easy.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this takes ~60 seconds to run</span>
-models &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(systematic_name, name, nutrient) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">do</span>(<span class="dt">model =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/broom/topics/tidy">tidy</a></span>(<span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>rate, <span class="dt">data =</span> .)))</code></pre></div>
+models &lt;-<span class="st"> </span>brauer_gene_exp %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(systematic_name, name, nutrient) %&gt;%
+<span class="st">  </span><span class="kw">do</span>(<span class="dt">model =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/broom/topics/tidy">tidy</a></span>(<span class="kw">lm</span>(expression ~<span class="st"> </span>rate, <span class="dt">data =</span> .)))</code></pre></div>
 <p>Plot the expression / rate relationship for the top-ten most significant genes. Color lines by nutrient.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">topten &lt;-<span class="st"> </span>models <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(name <span class="op">!=</span><span class="st"> ""</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(p.value) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">topten &lt;-<span class="st"> </span>models %&gt;%
+<span class="st">  </span><span class="kw">unnest</span>() %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(name !=<span class="st"> ""</span>) %&gt;%
+<span class="st">  </span><span class="kw">arrange</span>(p.value) %&gt;%
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) %&gt;%
 <span class="st">  </span><span class="kw">select</span>(systematic_name)
 
-topten_exp &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">semi_join</span>(topten)
+topten_exp &lt;-<span class="st"> </span>brauer_gene_exp %&gt;%<span class="st"> </span><span class="kw">semi_join</span>(topten)
 
-topten_exp <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rate, <span class="dt">y =</span> expression, <span class="dt">color =</span> nutrient)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">'lm'</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>systematic_name <span class="op">+</span><span class="st"> </span>name) <span class="op">+</span>
+topten_exp %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rate, <span class="dt">y =</span> expression, <span class="dt">color =</span> nutrient)) +
+<span class="st">  </span><span class="kw">geom_point</span>() +
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">'lm'</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) +
+<span class="st">  </span><span class="kw">facet_wrap</span>(~systematic_name +<span class="st"> </span>name) +
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Set1"</span>)</code></pre></div>
 </div>
 </div>
