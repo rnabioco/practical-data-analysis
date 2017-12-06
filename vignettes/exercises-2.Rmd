@@ -27,7 +27,7 @@ Calculate the mean and variance of the `Ozone`, `Solar.R`, `Wind`, and `Temp` va
 
 # Question 2
 
-Calculate mean expression values for each `systematic_name` and `nutrient` combination of `brauer_gene_exp`. Calculate the values by sampling 1%, 10% and 50% of the rows. How do your numbers change at each threshold?
+Calculate mean expression values for each `nutrient` in `brauer_gene_exp`. Calculate the values by sampling 1%, 10% and 50% of the rows. How do your numbers change at each threshold?
 
 ## Strategy
 
