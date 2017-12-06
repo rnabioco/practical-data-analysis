@@ -360,9 +360,49 @@ tf_bed
 <h1 class="hasAnchor">
 <a href="#in-class-exercises" class="anchor"></a>In class exercises</h1>
 <ol style="list-style-type: decimal">
-<li><p>Which TF has the most binding-sites (AKA peaks)?</p></li>
-<li><p>Which TF covers the most basepairs in the genome?</p></li>
-<li><p>Which TF has the broadest or the narrowest binding-sites on average?</p></li>
+<li>Which TF has the most binding-sites (AKA peaks)?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(tf_bed, TF) %&gt;%<span class="st">  </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total =</span> <span class="kw">n</span>()) %&gt;%<span class="st">  </span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(total)) 
+<span class="co">#&gt; # A tibble: 161 x 2</span>
+<span class="co">#&gt;        TF  total</span>
+<span class="co">#&gt;     &lt;chr&gt;  &lt;int&gt;</span>
+<span class="co">#&gt;  1   CTCF 162209</span>
+<span class="co">#&gt;  2  CEBPB 146873</span>
+<span class="co">#&gt;  3  EP300 138836</span>
+<span class="co">#&gt;  4 POLR2A 134990</span>
+<span class="co">#&gt;  5    FOS 131528</span>
+<span class="co">#&gt;  6  RAD21 119039</span>
+<span class="co">#&gt;  7   JUND  97411</span>
+<span class="co">#&gt;  8    MYC  96959</span>
+<span class="co">#&gt;  9  FOXA1  89906</span>
+<span class="co">#&gt; 10    MAX  85949</span>
+<span class="co">#&gt; # ... with 151 more rows</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Which TF covers the most basepairs in the genome?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(tf_bed, 
+       <span class="dt">peak_length =</span> end -<span class="st"> </span>start) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(TF) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total_bps =</span> <span class="kw">sum</span>(peak_length)) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(total_bps)) 
+<span class="co">#&gt; # A tibble: 161 x 2</span>
+<span class="co">#&gt;        TF total_bps</span>
+<span class="co">#&gt;     &lt;chr&gt;     &lt;int&gt;</span>
+<span class="co">#&gt;  1 POLR2A  89294720</span>
+<span class="co">#&gt;  2   CTCF  58703098</span>
+<span class="co">#&gt;  3  EP300  48927186</span>
+<span class="co">#&gt;  4  CEBPB  40528940</span>
+<span class="co">#&gt;  5    FOS  40220836</span>
+<span class="co">#&gt;  6    MYC  37956453</span>
+<span class="co">#&gt;  7    MAX  33399586</span>
+<span class="co">#&gt;  8   JUND  32234838</span>
+<span class="co">#&gt;  9  GATA2  30382649</span>
+<span class="co">#&gt; 10  RAD21  29887860</span>
+<span class="co">#&gt; # ... with 151 more rows</span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Which TF has the broadest or the narrowest binding-sites on average?</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(tf_bed, 
        <span class="dt">peak_length =</span> end -<span class="st"> </span>start) %&gt;%<span class="st"> </span>
