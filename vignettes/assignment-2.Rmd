@@ -21,7 +21,7 @@ For this assignment you will be generating a "metagene" plot which summarizes ge
 The main idea of this analysis is depicted in Figure 1. We first calculate the coverage across at each individual TSS for every gene, then we average these profiles across every gene to produce a single metagene.
 
 ```{r, echo = FALSE, fig.cap = "Figure 1. Conceptual metagene of Chip-Seq coverage over the TSS. (A) Shown are examples Chip-Seq read coverage (reads per nucleotide) across intervals +/- 1000 nucleotides surrounding the TSS for 5 genes. (B) Metagene that shows the average coverage binned in 10 nucleotide windows across a TSS metagene +/- 1000 nucleotides surrounding the TSS"}
-knitr::include_graphics('img/assignment-2-metagene.png')
+knitr::include_graphics('https://github.com/rnabioco/eda/raw/master/vignettes/img/assignment-2-metagene.png')
 ```
 
 ## Files used for this analysis:
@@ -53,7 +53,7 @@ genome
 ```
 
 ```{r bedgraph}
-bed <- read_bed("http://amc-sandbox.ucdenver.edu/User33/tmp/polra2_hela_1e6.bg.gz", 
+bed <- read_bed("https://de.cyverse.org/anon-files/iplant/home/kriemo/data/class/polra2_hela_1e6.bg.gz", 
                 n_fields = 4)
 # rename name to value
 bg <- select(bed, everything(), value = name)
@@ -174,7 +174,7 @@ The `bedGraph` file contains four columns, `chrom`, `start`, `end`, and `score`.
 $$\frac{reads\ overlapping\ the\ interval* 1e6}{total\ number\ of\ reads}$$
 
 ```{r}
-bed <- read_bed("http://amc-sandbox.ucdenver.edu/User33/tmp/polra2_hela_1e6.bg.gz", 
+bed <- read_bed("https://de.cyverse.org/anon-files/iplant/home/kriemo/data/class/polra2_hela_1e6.bg.gz", 
                 n_fields = 4)
 # rename name to value
 bg <- select(bed, everything(), value = name)
@@ -285,5 +285,5 @@ scale_x_continuous(labels = x_labels, breaks = x_breaks)
 ```
 
 ```{r, echo = FALSE, fig.cap = "Figure 2. Example metagene plot"}
-knitr::include_graphics('img/assignment-2-metagene_plot.png')
+knitr::include_graphics('https://github.com/rnabioco/eda/raw/master/vignettes/img/assignment-2-metagene_plot.png')
 ```

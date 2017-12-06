@@ -101,7 +101,7 @@
       <h1>Class 4: Genomic Interval Analysis part 1</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-12-05</h4>
+            <h4 class="date">2017-12-06</h4>
           </div>
 
     
@@ -485,7 +485,7 @@ y
 <span class="co">#&gt; #   name_yfile &lt;chr&gt;, score_yfile &lt;dbl&gt;, strand_yfile &lt;chr&gt;,</span>
 <span class="co">#&gt; #   .overlap &lt;int&gt;</span>
 
-x <span class="op">%&gt;%</span><span class="st"> </span>
+x %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_intersect">bed_intersect</a></span>(y)
 <span class="co">#&gt; # A tibble: 2 x 12</span>
 <span class="co">#&gt;   chrom start.x end.x name.x score.x strand.x start.y end.y name.y score.y</span>
@@ -553,82 +553,94 @@ snps_in_tfs
 <h2 class="hasAnchor">
 <a href="#how-close-are-snps-to-transcription-start-sites" class="anchor"></a>How close are SNPs to transcription start sites?</h2>
 <p>The <a href="https://rnabioco.github.io/valr/reference/bed_intersect.html"><code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_closest">bed_closest()</a></code></a> function finds the closest intervals between two sets of intervals.</p>
-<p>First read in a BED file that contains genes (on <code>chr22</code> for simplicity) in the human genome (hg19 build).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genes &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/read_bed">read_bed</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/valr_example">valr_example</a></span>(<span class="st">'genes.hg19.chr22.bed.gz'</span>), 
+<p>First read in a BED file that contains genes in the human genome (hg19 build).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gene_file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, 
+                        <span class="st">"hg19_genes.bed.gz"</span>, 
+                        <span class="dt">package =</span> <span class="st">"eda"</span>)
+
+genes &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/read_bed">read_bed</a></span>(gene_file, 
                  <span class="dt">n_fields =</span> <span class="dv">6</span>)
 genes
-<span class="co">#&gt; # A tibble: 732 x 6</span>
-<span class="co">#&gt;    chrom    start      end      name score strand</span>
-<span class="co">#&gt;    &lt;chr&gt;    &lt;int&gt;    &lt;int&gt;     &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;</span>
-<span class="co">#&gt;  1 chr22 16150259 16193004  AK022914     8      -</span>
-<span class="co">#&gt;  2 chr22 16162065 16172265 LINC00516     3      +</span>
-<span class="co">#&gt;  3 chr22 16179617 16181004  BC017398     1      -</span>
-<span class="co">#&gt;  4 chr22 16239287 16239327  DQ590589     1      +</span>
-<span class="co">#&gt;  5 chr22 16240245 16240277  DQ573684     1      -</span>
-<span class="co">#&gt;  6 chr22 16240300 16240340  DQ595048     1      -</span>
-<span class="co">#&gt;  7 chr22 16241085 16241125  DQ590589     1      +</span>
-<span class="co">#&gt;  8 chr22 16242753 16242785  DQ573684     1      -</span>
-<span class="co">#&gt;  9 chr22 16243382 16243414  DQ573684     1      -</span>
-<span class="co">#&gt; 10 chr22 16243447 16243487  DQ587539     1      -</span>
-<span class="co">#&gt; # ... with 722 more rows</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 55,006 x 6</span>
+<span class="co">#&gt;    chrom start   end         name score strand</span>
+<span class="co">#&gt;    &lt;chr&gt; &lt;int&gt; &lt;int&gt;        &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;</span>
+<span class="co">#&gt;  1  chr1 11868 14362 LOC102725121     3      +</span>
+<span class="co">#&gt;  2  chr1 11873 14409      DDX11L1     3      +</span>
+<span class="co">#&gt;  3  chr1 14361 29370       WASH7P    11      -</span>
+<span class="co">#&gt;  4  chr1 17368 17436    MIR6859-1     1      -</span>
+<span class="co">#&gt;  5  chr1 17368 17436    MIR6859-2     1      -</span>
+<span class="co">#&gt;  6  chr1 17368 17436    MIR6859-3     1      -</span>
+<span class="co">#&gt;  7  chr1 17368 17436    MIR6859-4     1      -</span>
+<span class="co">#&gt;  8  chr1 30365 30503    MIR1302-2     1      +</span>
+<span class="co">#&gt;  9  chr1 30365 30503    MIR1302-9     1      +</span>
+<span class="co">#&gt; 10  chr1 30365 30503   MIR1302-10     1      +</span>
+<span class="co">#&gt; # ... with 54,996 more rows</span></code></pre></div>
 <p>Next we’ll generate a set of transcription start sites for each gene. The start site depends on the strand of the interval. Here for simplicity we will only look at intervals from the plus strand. If you want to keep the minus strand you need to use <code>ifelse()</code> in the <code>mutate()</code> call to conditionally define the start and end based on strand.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tss &lt;-<span class="st"> </span><span class="kw">filter</span>(genes, strand <span class="op">==</span><span class="st"> "+"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">end =</span> start <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tss &lt;-<span class="st"> </span><span class="kw">filter</span>(genes, strand ==<span class="st"> "+"</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">end =</span> start +<span class="st"> </span><span class="dv">1</span>)
               
 tss
-<span class="co">#&gt; # A tibble: 330 x 6</span>
-<span class="co">#&gt;    chrom    start      end      name score strand</span>
-<span class="co">#&gt;    &lt;chr&gt;    &lt;int&gt;    &lt;dbl&gt;     &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;</span>
-<span class="co">#&gt;  1 chr22 16162065 16162066 LINC00516     3      +</span>
-<span class="co">#&gt;  2 chr22 16239287 16239288  DQ590589     1      +</span>
-<span class="co">#&gt;  3 chr22 16241085 16241086  DQ590589     1      +</span>
-<span class="co">#&gt;  4 chr22 16244205 16244206  DQ590589     1      +</span>
-<span class="co">#&gt;  5 chr22 16245997 16245998  DQ590589     1      +</span>
-<span class="co">#&gt;  6 chr22 16274557 16274558     P712P     2      +</span>
-<span class="co">#&gt;  7 chr22 17029615 17029616  DQ571479     1      +</span>
-<span class="co">#&gt;  8 chr22 17082800 17082801    TPTEP1     9      +</span>
-<span class="co">#&gt;  9 chr22 17308363 17308364   HSFY1P1     2      +</span>
-<span class="co">#&gt; 10 chr22 17517459 17517460     CECR7     4      +</span>
-<span class="co">#&gt; # ... with 320 more rows</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 28,035 x 6</span>
+<span class="co">#&gt;    chrom  start    end         name score strand</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;int&gt;  &lt;dbl&gt;        &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;</span>
+<span class="co">#&gt;  1  chr1  11868  11869 LOC102725121     3      +</span>
+<span class="co">#&gt;  2  chr1  11873  11874      DDX11L1     3      +</span>
+<span class="co">#&gt;  3  chr1  30365  30366    MIR1302-2     1      +</span>
+<span class="co">#&gt;  4  chr1  30365  30366    MIR1302-9     1      +</span>
+<span class="co">#&gt;  5  chr1  30365  30366   MIR1302-10     1      +</span>
+<span class="co">#&gt;  6  chr1  30365  30366   MIR1302-11     1      +</span>
+<span class="co">#&gt;  7  chr1  69090  69091        OR4F5     1      +</span>
+<span class="co">#&gt;  8  chr1 323891 323892 LOC100132287     3      +</span>
+<span class="co">#&gt;  9  chr1 323891 323892 LOC100132062     3      +</span>
+<span class="co">#&gt; 10  chr1 323891 323892 LOC100133331     4      +</span>
+<span class="co">#&gt; # ... with 28,025 more rows</span></code></pre></div>
 <p>Lastly, we will use the <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_closest">bed_closest()</a></code> tool to find the closest <code>TSS</code> to each <code>SNP</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_closest">bed_closest</a></span>(snps, tss) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(chrom<span class="op">:</span>strand.x, name.y, .overlap, .dist)
-<span class="co">#&gt; # A tibble: 10,121 x 9</span>
-<span class="co">#&gt;    chrom  start.x    end.x      name.x score.x strand.x    name.y .overlap</span>
-<span class="co">#&gt;    &lt;chr&gt;    &lt;int&gt;    &lt;int&gt;       &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;    &lt;int&gt;</span>
-<span class="co">#&gt;  1 chr22 16053247 16053248 rs587721086       0        + LINC00516        0</span>
-<span class="co">#&gt;  2 chr22 16053443 16053444  rs80167676       0        + LINC00516        0</span>
-<span class="co">#&gt;  3 chr22 16055964 16055965 rs587706951       0        + LINC00516        0</span>
-<span class="co">#&gt;  4 chr22 16069373 16069374   rs2154787       0        + LINC00516        0</span>
-<span class="co">#&gt;  5 chr22 16069782 16069783   rs1963212       0        + LINC00516        0</span>
-<span class="co">#&gt;  6 chr22 16100513 16100514   rs8140563       0        + LINC00516        0</span>
-<span class="co">#&gt;  7 chr22 16114622 16114623 rs558374111       0        + LINC00516        0</span>
-<span class="co">#&gt;  8 chr22 16115181 16115182 rs567521927       0        + LINC00516        0</span>
-<span class="co">#&gt;  9 chr22 16115377 16115378 rs538733846       0        + LINC00516        0</span>
-<span class="co">#&gt; 10 chr22 16121639 16121640 rs544560983       0        + LINC00516        0</span>
-<span class="co">#&gt; # ... with 10,111 more rows, and 1 more variables: .dist &lt;int&gt;</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_closest">bed_closest</a></span>(snps, tss) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(chrom:strand.x, name.y, .overlap, .dist)
+<span class="co">#&gt; # A tibble: 14,019 x 9</span>
+<span class="co">#&gt;    chrom  start.x    end.x      name.x score.x strand.x  name.y .overlap</span>
+<span class="co">#&gt;    &lt;chr&gt;    &lt;int&gt;    &lt;int&gt;       &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;    &lt;int&gt;</span>
+<span class="co">#&gt;  1 chr22 16053247 16053248 rs587721086       0        + BMS1P22        0</span>
+<span class="co">#&gt;  2 chr22 16053443 16053444  rs80167676       0        + BMS1P22        0</span>
+<span class="co">#&gt;  3 chr22 16055964 16055965 rs587706951       0        + BMS1P22        0</span>
+<span class="co">#&gt;  4 chr22 16069373 16069374   rs2154787       0        + BMS1P22        0</span>
+<span class="co">#&gt;  5 chr22 16069782 16069783   rs1963212       0        + BMS1P22        0</span>
+<span class="co">#&gt;  6 chr22 16100513 16100514   rs8140563       0        + BMS1P22        0</span>
+<span class="co">#&gt;  7 chr22 16114622 16114623 rs558374111       0        + BMS1P22        0</span>
+<span class="co">#&gt;  8 chr22 16115181 16115182 rs567521927       0        + BMS1P22        0</span>
+<span class="co">#&gt;  9 chr22 16115377 16115378 rs538733846       0        + BMS1P22        0</span>
+<span class="co">#&gt; 10 chr22 16121639 16121640 rs544560983       0        + BMS1P22        0</span>
+<span class="co">#&gt; # ... with 14,009 more rows, and 1 more variables: .dist &lt;int&gt;</span>
 
-<span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_closest">bed_closest</a></span>(snps, tss) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">abs</span>(.dist) <span class="op">&lt;</span><span class="st"> </span><span class="dv">50</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(chrom<span class="op">:</span>strand.x, name.y, .overlap, .dist)
-<span class="co">#&gt; # A tibble: 6 x 9</span>
-<span class="co">#&gt;   chrom  start.x    end.x      name.x score.x strand.x    name.y .overlap</span>
-<span class="co">#&gt;   &lt;chr&gt;    &lt;int&gt;    &lt;int&gt;       &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;    &lt;int&gt;</span>
-<span class="co">#&gt; 1 chr22 21043817 21043818 rs373084233       0        + POM121L4P        0</span>
-<span class="co">#&gt; 2 chr22 23229961 23229962   rs6003365       0        +     IGLL5        0</span>
-<span class="co">#&gt; 3 chr22 25423930 25423931  rs11912058       0        +  KIAA1671        0</span>
-<span class="co">#&gt; 4 chr22 31090785 31090786  rs79717894       0        +     OSBP2        0</span>
-<span class="co">#&gt; 5 chr22 38203871 38203872   rs5995499       0        +      GCAT        0</span>
-<span class="co">#&gt; 6 chr22 46156445 46156446  rs60308683       0        +   MIR4762        0</span>
-<span class="co">#&gt; # ... with 1 more variables: .dist &lt;int&gt;</span></code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_closest">bed_closest</a></span>(snps, tss) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="kw">abs</span>(.dist) &lt;<span class="st"> </span><span class="dv">50</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(chrom:strand.x, name.y, .overlap, .dist)
+<span class="co">#&gt; # A tibble: 14 x 9</span>
+<span class="co">#&gt;    chrom  start.x    end.x      name.x score.x strand.x       name.y</span>
+<span class="co">#&gt;    &lt;chr&gt;    &lt;int&gt;    &lt;int&gt;       &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;</span>
+<span class="co">#&gt;  1 chr22 21043817 21043818 rs373084233       0        +    POM121L4P</span>
+<span class="co">#&gt;  2 chr22 21319416 21319417 rs112080977       0        +        AIFM3</span>
+<span class="co">#&gt;  3 chr22 21319416 21319417 rs112080977       0        +        AIFM3</span>
+<span class="co">#&gt;  4 chr22 23229961 23229962   rs6003365       0        +        IGLL5</span>
+<span class="co">#&gt;  5 chr22 23229961 23229962   rs6003365       0        +        IGLL5</span>
+<span class="co">#&gt;  6 chr22 25423930 25423931  rs11912058       0        +     KIAA1671</span>
+<span class="co">#&gt;  7 chr22 26908525 26908525 rs147381057       0        + LOC100507599</span>
+<span class="co">#&gt;  8 chr22 31090785 31090786  rs79717894       0        +        OSBP2</span>
+<span class="co">#&gt;  9 chr22 38005057 38005058  rs13053965       0        +         GGA1</span>
+<span class="co">#&gt; 10 chr22 38142198 38142199 rs117955278       0        +       TRIOBP</span>
+<span class="co">#&gt; 11 chr22 38142198 38142199 rs117955278       0        +       TRIOBP</span>
+<span class="co">#&gt; 12 chr22 38203871 38203872   rs5995499       0        +         GCAT</span>
+<span class="co">#&gt; 13 chr22 38203871 38203872   rs5995499       0        +         GCAT</span>
+<span class="co">#&gt; 14 chr22 46156445 46156446  rs60308683       0        +      MIR4762</span>
+<span class="co">#&gt; # ... with 2 more variables: .overlap &lt;int&gt;, .dist &lt;int&gt;</span></code></pre></div>
 </div>
 </div>
 <div id="exercises" class="section level1">
 <h1 class="hasAnchor">
 <a href="#exercises" class="anchor"></a>Exercises</h1>
 <ol style="list-style-type: decimal">
-<li><p>The Encode project has performed <code>eCLIP</code> experiments to map RNA binding protein (RBP) binding sites for &gt; 100 RBPs. Go to the <a href="https://www.encodeproject.org/matrix/?type=Experiment">Encode website</a>, search for <code>eCLIP</code> experiments, select an RBP eClip experiment, and load a <code>BED</code> file (bed narrowPeak format) with the binding sites into R using just the url. Use the <a href="https://rnabioco.github.io/valr/reference/read_bed.html"><code>read_narrowPeak()</code></a> function from <code>valr</code>. Make sure that the file was generated using the <code>hg19</code> genome build. Display the bed tibble that you pulled from the Encode database.</p></li>
-<li><p>Use <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_intersect">bed_intersect()</a></code> and some dplyr functions to determine how many <code>eCLIP</code> peaks are found in genes and how many are intergenic. (see the documentation on the <code>invert</code> argument for <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_intersect">bed_intersect()</a></code>). Use the <code>hg19_genes.bed.gz</code> bed file as your gene bed file (location shown below).</p></li>
+<li><p>The Encode project has performed <code>eCLIP</code> experiments to map RNA binding protein (RBP) binding sites for &gt; 100 RBPs. Go to the <a href="https://www.encodeproject.org/matrix/?type=Experiment">Encode website</a>, search for <code>eCLIP</code> experiments, select an RBP eClip experiment, and load a <code>BED</code> file (bed narrowPeak format) with the binding sites into R using just the url. Use the <a href="https://rnabioco.github.io/valr/reference/read_bed.html"><code>read_narrowPeak()</code></a> function from <code>valr</code>. Make sure that the file was generated using the <code>hg19</code> genome build, and that you do <strong>not</strong> select the <code>eCLIP mock input</code> samples, which are negative controls. Display the bed tibble that you pulled from the Encode database and give a one to two sentence summary about the known functions of the RBP.</p></li>
+<li><p>Use <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_intersect">bed_intersect()</a></code> and some dplyr functions to determine how many <code>eCLIP</code> peaks are found in genes and how many are intergenic. (see the documentation on the <code>invert</code> argument for <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_intersect">bed_intersect()</a></code>). Use the <code>hg19_genes.bed.gz</code> bed file as your gene bed file (location shown below). Explain in the interpretation whether or not the RBP primarily binds to known (geneic) or unannotated (intergeneic) regions.</p></li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genes &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"hg19_genes.bed.gz"</span>, <span class="dt">package =</span> <span class="st">"eda"</span>)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/read_bed">read_bed</a></span>(genes, <span class="dt">n_fields =</span> <span class="dv">6</span>)</code></pre></div>
@@ -644,7 +656,7 @@ genome</code></pre></div>
 <div id="quiz" class="section level1">
 <h1 class="hasAnchor">
 <a href="#quiz" class="anchor"></a>Quiz</h1>
-<p>Create an RMarkdown document and answer the questions from the Exercises section. Write your answers in the text, and print the final tibbles that your code produced that gave you the answer. Submit your final document as “Quiz 2” by Thurs at 10 PM.</p>
+<p>Create an RMarkdown document and answer the questions from the Exercises section. Write your answers in the text, and print the final tibbles that your code produced that gave you the answer. Submit your final document as “Quiz 3” by Friday at 10 PM.</p>
 <p><strong>Your submitted document must knit to HTML without errors</strong>. I.e., when you click the “Knit” button, the document should build and display and HTML page.</p>
 </div>
 </div>

@@ -114,9 +114,7 @@
 <p>For this assignment you will be generating a “metagene” plot which summarizes genomic signals over a specific genomic feature in the human genome. This type of analysis is commonly performed with Chip-Seq and Clip-Seq datasets to investigate patterns of DNA or RNA binding protein occupancy around a genomic feature (splice site, transcription start site, start/stop codons, etc.). For this assignment we will be generating a metagene profile surrounding the transcription start site that summarize the coverage of an RNA PolII Chip-Seq experiment genome-wide.</p>
 <p>The main idea of this analysis is depicted in Figure 1. We first calculate the coverage across at each individual TSS for every gene, then we average these profiles across every gene to produce a single metagene.</p>
 <div class="figure">
-<img src="img/assignment-2-metagene.png" alt="Figure 1. Conceptual metagene of Chip-Seq coverage over the TSS. (A) Shown are examples Chip-Seq read coverage (reads per nucleotide) across intervals +/- 1000 nucleotides surrounding the TSS for 5 genes. (B) Metagene that shows the average coverage binned in 10 nucleotide windows across a TSS metagene +/- 1000 nucleotides surrounding the TSS" width="994"><p class="caption">
-Figure 1. Conceptual metagene of Chip-Seq coverage over the TSS. (A) Shown are examples Chip-Seq read coverage (reads per nucleotide) across intervals +/- 1000 nucleotides surrounding the TSS for 5 genes. (B) Metagene that shows the average coverage binned in 10 nucleotide windows across a TSS metagene +/- 1000 nucleotides surrounding the TSS
-</p>
+<img src="https://github.com/rnabioco/eda/raw/master/vignettes/img/assignment-2-metagene.png" alt="Figure 1. Conceptual metagene of Chip-Seq coverage over the TSS. (A) Shown are examples Chip-Seq read coverage (reads per nucleotide) across intervals +/- 1000 nucleotides surrounding the TSS for 5 genes. (B) Metagene that shows the average coverage binned in 10 nucleotide windows across a TSS metagene +/- 1000 nucleotides surrounding the TSS"><p class="caption">Figure 1. Conceptual metagene of Chip-Seq coverage over the TSS. (A) Shown are examples Chip-Seq read coverage (reads per nucleotide) across intervals +/- 1000 nucleotides surrounding the TSS for 5 genes. (B) Metagene that shows the average coverage binned in 10 nucleotide windows across a TSS metagene +/- 1000 nucleotides surrounding the TSS</p>
 </div>
 </div>
 <div id="files-used-for-this-analysis" class="section level2">
@@ -186,7 +184,7 @@ genome</code></pre></div>
 ##  9  chr8 146364022
 ## 10  chr9 141213431
 ## # ... with 83 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bed &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/read_bed">read_bed</a></span>(<span class="st">"http://amc-sandbox.ucdenver.edu/User33/tmp/polra2_hela_1e6.bg.gz"</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bed &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/read_bed">read_bed</a></span>(<span class="st">"https://de.cyverse.org/anon-files/iplant/home/kriemo/data/class/polra2_hela_1e6.bg.gz"</span>, 
                 <span class="dt">n_fields =</span> <span class="dv">4</span>)
 <span class="co"># rename name to value</span>
 bg &lt;-<span class="st"> </span><span class="kw">select</span>(bed, <span class="kw">everything</span>(), <span class="dt">value =</span> name)
@@ -218,8 +216,8 @@ bg</code></pre></div>
 <h3 class="hasAnchor">
 <a href="#exercise-1" class="anchor"></a>Exercise 1</h3>
 <p>Generate a tibble that contains the positions of transcription start sites for all genes on the plus strand.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tss &lt;-<span class="st"> </span>genes <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(strand <span class="op">==</span><span class="st"> "+"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tss &lt;-<span class="st"> </span>genes %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(strand ==<span class="st"> "+"</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span>...
 
 tss</code></pre></div>
@@ -270,7 +268,7 @@ slop_bed</code></pre></div>
 <p>Smaller bin values will increase the resolution of the final plot, but dramatically increase the size of your bed interval tibble (i.e. if you break every 2001 nt region into 1 nt, then for each gene you generate 2001 new intervals). Similarly, larger bin values will decrease resolution of the metagene, but compute faster.</p>
 <p><code>valr</code> provides the <a href="https://rnabioco.github.io/valr/reference/bed_makewindows.htmll"><code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_makewindows">bed_makewindows()</a></code></a> function, which will split up each interval into sub-intervals (i.e windows). This function has many options to control the size of the windows generated. Read the documentation for <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_makewindows">bed_makewindows()</a></code> to pick an option that will generate non-overlapping 10 nucleotide windows across each TSS interval.</p>
 <p>Note that <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_makewindows">bed_makewindows()</a></code> will dramatically increase the size of your output tibble. <strong>Do not select a window size less than 10, as this will generate a tibble with potentially 10s of millions of rows(!).</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tss_windows &lt;-<span class="st"> </span>slop_bed <span class="op">%&gt;%</span><span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tss_windows &lt;-<span class="st"> </span>slop_bed %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">bed_makewindow</span>(genome, ...)</code></pre></div>
 <p>Your output <code>tss_windows</code> tibble should look like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&gt; # A tibble: 5,634,834 x 7</span>
@@ -299,7 +297,7 @@ slop_bed</code></pre></div>
 <p>We have now obtained a proper set set of intervals to calculate Chip-Seq coverage values. The Chip-seq data that we will use is derived from an Encode experiment in which RNA polII was Chip’ed in Hela-S3 cells. The Chip experiment is described <a href="https://www.encodeproject.org/experiments/ENCSR000EZL/">here</a>. The coverage data is supplied as a <a href="http://genome.ucsc.edu/goldenPath/help/bigWig.html"><code>bigWig</code></a> file, which is an indexed binary format, not suitable for R. I’ve converted the <code>bigWig</code> to a <code>bedGraph</code> file using the <code>bigWigToBedgraph</code> C program available from <code>USCS</code> (only available for <a href="http://hgdownload.soe.ucsc.edu/admin/exe/macOSX.x86_64/">macOS</a> and <a href="http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/">linux</a>). <code>bedGraph</code> files can be read into R using the <code><a href="http://www.rdocumentation.org/packages/valr/topics/read_bed">read_bed()</a></code> function.</p>
 <p>The <code>bedGraph</code> file contains four columns, <code>chrom</code>, <code>start</code>, <code>end</code>, and <code>score</code>. The <code>score</code> column contains the number of reads overlapping the interval. The score is normalized by the total number of reads in the experiment, and is represented as <strong>R</strong>eads <strong>P</strong>er <strong>M</strong>illon:</p>
 <p><span class="math display">\[\frac{reads\ overlapping\ the\ interval* 1e6}{total\ number\ of\ reads}\]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bed &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/read_bed">read_bed</a></span>(<span class="st">"http://amc-sandbox.ucdenver.edu/User33/tmp/polra2_hela_1e6.bg.gz"</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bed &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/read_bed">read_bed</a></span>(<span class="st">"https://de.cyverse.org/anon-files/iplant/home/kriemo/data/class/polra2_hela_1e6.bg.gz"</span>, 
                 <span class="dt">n_fields =</span> <span class="dv">4</span>)
 <span class="co"># rename name to value</span>
 bg &lt;-<span class="st"> </span><span class="kw">select</span>(bed, <span class="kw">everything</span>(), <span class="dt">value =</span> name)
@@ -399,23 +397,21 @@ Imagine that each X interval is a TSS interval and the Y intervals are the Pol2 
 <h3 class="hasAnchor">
 <a href="#exercise-6" class="anchor"></a>Exercise 6</h3>
 <p>Now we have arrived at the exciting part of the analysis. To review, we first defined a set of intervals surrounding each TSS. Then we split these intervals into bins of sub-intervals. Finally, we summed up the Chip-Seq coverage across each sub-interval. Now our bed file <code>chip_coverage</code> contains the RNA polII coverage surrounding the TSS for every gene across the genome. Now in this last step we will summarize the coverage in each bin and plot as a metagene.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(chip_coverage, ...) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">summarize</span>(...) <span class="op">%&gt;%</span><span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(chip_coverage, ...) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(...) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>()</code></pre></div>
 <p>The x-axis values displayed will not be ideal. To center the x-axis values around zero use the following code.</p>
 <p>Add informative <code>x-axis</code>, <code>y-axis</code>, and <code>main</code> plot titles and explain what the plot demonstrates. Additionally add a figure caption using the <code>fig.cap="your caption"</code> chunk option.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">region_size &lt;-<span class="st"> </span><span class="dv">1000</span>
 win_size &lt;-<span class="st"> </span><span class="dv">10</span>
 
-x_labels &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span>region_size, region_size, <span class="dt">by =</span> win_size <span class="op">*</span><span class="st"> </span><span class="dv">25</span>)
+x_labels &lt;-<span class="st"> </span><span class="kw">seq</span>(-region_size, region_size, <span class="dt">by =</span> win_size *<span class="st"> </span><span class="dv">25</span>)
 x_breaks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">201</span>, <span class="dt">by =</span> <span class="dv">25</span>)
 
 <span class="co"># add this to your ggplot call:</span>
 <span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> x_labels, <span class="dt">breaks =</span> x_breaks) </code></pre></div>
 <div class="figure">
-<img src="img/assignment-2-metagene_plot.png" alt="Figure 2. Example metagene plot" width="1050"><p class="caption">
-Figure 2. Example metagene plot
-</p>
+<img src="https://github.com/rnabioco/eda/raw/master/vignettes/img/assignment-2-metagene_plot.png" alt="Figure 2. Example metagene plot"><p class="caption">Figure 2. Example metagene plot</p>
 </div>
 </div>
 </div>
