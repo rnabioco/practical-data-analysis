@@ -245,14 +245,26 @@ mutate(tf_bed,
 
 3) Which TF has the broadest or the narrowest binding-sites on average?
 
-```{r ex_3, eval = F, echo = F}
+```{r ex_3 }
+mutate(tf_bed, 
+       peak_length = end - start) %>% 
+  group_by(TF) %>% 
+  summarize(mean_bps = mean(peak_length)) %>% 
+  arrange(desc(mean_bps))
+
+mutate(tf_bed, 
+       peak_length = end - start) %>% 
+  group_by(TF) %>% 
+  summarize(mean_bps = mean(peak_length)) %>% 
+  arrange(mean_bps)
+
+
 mutate(tf_bed, 
        peak_length = end - start) %>% 
   group_by(TF) %>% 
   summarize(mean_bps = mean(peak_length)) %>% 
   arrange(desc(mean_bps)) %>% 
-  slice(c(1, nrow(.))) %>% 
-  pull(TF)
+  slice(c(1, nrow(.)))
 
 ```
 
