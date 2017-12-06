@@ -21,7 +21,7 @@ Use the [`read_narrowPeak()`](https://rnabioco.github.io/valr/reference/read_bed
 
 Also, make sure that the file was generated using the `hg19` genome build, and that you do **not** select the `eCLIP mock input` samples, which are negative controls. Display the bed tibble that you pulled from the Encode database and give a one to two sentence summary about the known functions of the RBP. 
 
-Here's an example. An eClip experiment for `PTPB1` was performed ([info here](https://www.encodeproject.org/experiments/ENCSR384KAN/). I selected `hg19` and in the `file details` menu selected a bed narrowPeak file [here](https://www.encodeproject.org/files/ENCFF471GJE/). I copied the URL by right-clicking on `Download ENCFF471GJe` and selecting copy link address.  Note that the extension of the file in the URL is `.bed.gz`, do not use `bigBed`, `fastq`, `bam`, or `bigWig` files. 
+Here's an example. An eClip experiment for `PTPB1` was performed ([info here](https://www.encodeproject.org/experiments/ENCSR384KAN/). I selected `hg19` and in the `file details` menu and selected a bed narrowPeak file [here](https://www.encodeproject.org/files/ENCFF471GJE/). I copied the URL by right-clicking on `Download ENCFF471GJ` and selecting copy link address.  Note that the extension of the file in the URL that you use should be `.bed.gz`, do not use `bigBed`, `fastq`, `bam`, or `bigWig` files. 
 
 ```{r q1_example}
 library(valr)
