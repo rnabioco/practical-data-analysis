@@ -115,7 +115,29 @@
 <div id="question-1" class="section level1">
 <h1 class="hasAnchor">
 <a href="#question-1" class="anchor"></a>Question 1</h1>
-<p>The Encode project has performed <code>eCLIP</code> experiments to map RNA binding protein (RBP) binding sites for &gt; 100 RBPs. Go to the <a href="https://www.encodeproject.org/matrix/?type=Experiment">Encode website</a>, search for <code>eCLIP</code> experiments, select an RBP eClip experiment, and load a <code>BED</code> file (bed narrowPeak format) with the binding sites into R using just the url. Use the <a href="https://rnabioco.github.io/valr/reference/read_bed.html"><code>read_narrowPeak()</code></a> function from <code>valr</code>. Make sure that the file was generated using the <code>hg19</code> genome build, and that you do <strong>not</strong> select the <code>eCLIP mock input</code> samples, which are negative controls. Display the bed tibble that you pulled from the Encode database and give a one to two sentence summary about the known functions of the RBP.</p>
+<p>The Encode project has performed <code>eCLIP</code> experiments to map RNA binding protein (RBP) binding sites for &gt; 100 RBPs. Go to the <a href="https://www.encodeproject.org/matrix/?type=Experiment">Encode website</a>, search for <code>eCLIP</code> experiments, select an RBP eClip experiment, and load a <code>BED</code> file (<strong>bed narrowPeak</strong> file format) with the binding sites into R using just the url.</p>
+<p>Use the <a href="https://rnabioco.github.io/valr/reference/read_bed.html"><code>read_narrowPeak()</code></a> function from <code>valr</code> to read in your bed file using just the URL. Do not download the file locally.</p>
+<p>Also, make sure that the file was generated using the <code>hg19</code> genome build, and that you do <strong>not</strong> select the <code>eCLIP mock input</code> samples, which are negative controls. Display the bed tibble that you pulled from the Encode database and give a one to two sentence summary about the known functions of the RBP.</p>
+<p>Here’s an example. An eClip experiment for <code>PTPB1</code> was performed (<a href="https://www.encodeproject.org/experiments/ENCSR384KAN/">info here</a>. I selected <code>hg19</code> and in the <code>file details</code> menu and selected a bed narrowPeak file <a href="https://www.encodeproject.org/files/ENCFF471GJE/">here</a>. I copied the URL by right-clicking on <code>Download ENCFF471GJ</code> and selecting copy link address. Note that the extension of the file in the URL that you use should be <code>.bed.gz</code>, do not use <code>bigBed</code>, <code>fastq</code>, <code>bam</code>, or <code>bigWig</code> files.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(valr)
+url &lt;-<span class="st"> "https://www.encodeproject.org/files/ENCFF471GJE/@@download/ENCFF471GJE.bed.gz"</span>
+
+<span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/read_bed">read_narrowpeak</a></span>(url)</code></pre></div>
+<pre><code>## # A tibble: 229,446 x 10
+##    chrom     start       end              name score strand   signal
+##    &lt;chr&gt;     &lt;int&gt;     &lt;int&gt;             &lt;chr&gt; &lt;int&gt;  &lt;chr&gt;    &lt;dbl&gt;
+##  1  chr7  98479380  98479408 PTBP1_HepG2_rep01  1000      + 4.114247
+##  2  chr7  94298932  94298976 PTBP1_HepG2_rep01  1000      + 3.698511
+##  3  chr7  98479417  98479421 PTBP1_HepG2_rep01  1000      + 3.654315
+##  4  chr7  98479439  98479445 PTBP1_HepG2_rep01  1000      + 3.549617
+##  5  chr7  98479445  98479471 PTBP1_HepG2_rep01  1000      + 3.540029
+##  6  chr7  98479429  98479439 PTBP1_HepG2_rep01  1000      + 3.490715
+##  7  chr7  94298901  94298932 PTBP1_HepG2_rep01  1000      + 3.414660
+##  8  chr7  98479408  98479417 PTBP1_HepG2_rep01  1000      + 3.614998
+##  9  chr7 104691135 104691224 PTBP1_HepG2_rep01  1000      + 5.400467
+## 10  chr7  98479421  98479429 PTBP1_HepG2_rep01  1000      + 3.349229
+## # ... with 229,436 more rows, and 3 more variables: pvalue &lt;dbl&gt;,
+## #   qvalue &lt;dbl&gt;, peak &lt;int&gt;</code></pre>
 <div id="strategy" class="section level2">
 <h2 class="hasAnchor">
 <a href="#strategy" class="anchor"></a>Strategy</h2>
@@ -128,9 +150,9 @@
 <div id="question-2" class="section level1">
 <h1 class="hasAnchor">
 <a href="#question-2" class="anchor"></a>Question 2</h1>
-<p>Use <code>bed_intersect()</code> and some dplyr functions to determine how many <code>eCLIP</code> peaks are found in genes and how many are intergenic. (see the documentation on the <code>invert</code> argument for <code>bed_intersect()</code>). Use the <code>hg19_genes.bed.gz</code> bed file as your gene bed file (location shown below). Explain in the interpretation whether or not the RBP primarily binds to known (geneic) or unannotated (intergeneic) regions.</p>
+<p>Use <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_intersect">bed_intersect()</a></code> and some dplyr functions to determine how many <code>eCLIP</code> peaks are found in genes and how many are intergenic. (see the documentation on the <code>invert</code> argument for <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_intersect">bed_intersect()</a></code>). Use the <code>hg19_genes.bed.gz</code> bed file as your gene bed file (location shown below). Explain in the interpretation whether or not the RBP primarily binds to known (geneic) or unannotated (intergeneic) regions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genes &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"hg19_genes.bed.gz"</span>, <span class="dt">package =</span> <span class="st">"eda"</span>)
-<span class="kw">read_bed</span>(genes, <span class="dt">n_fields =</span> <span class="dv">6</span>)</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/read_bed">read_bed</a></span>(genes, <span class="dt">n_fields =</span> <span class="dv">6</span>)</code></pre></div>
 <div id="strategy-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#strategy-1" class="anchor"></a>Strategy</h2>
@@ -158,7 +180,7 @@
 <a href="#question-4" class="anchor"></a>Question 4</h1>
 <p>Use another function from <code>valr</code> (overview and documentation <a href="https://rnabioco.github.io/valr/articles/valr.html">here</a> to study a relationship between your eClip binding sites and genes in the <code>gene</code> bed file. Explain your question and answer. Some <code>valr</code> functions require a <code>genome</code> file, which indicates the lengths of the chromosomes.You can access this file as shown below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genome_file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"hg19_genome.txt.gz"</span>, <span class="dt">package =</span> <span class="st">"eda"</span>)
-genome &lt;-<span class="st"> </span><span class="kw">read_genome</span>(genome_file)
+genome &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/read_genome">read_genome</a></span>(genome_file)
 
 genome</code></pre></div>
 <div id="strategy-3" class="section level2">

@@ -225,7 +225,7 @@ tf_bed
 
 1) Which TF has the most binding-sites (AKA peaks)?
 
-```{r ex_1, eval = F, echo = F}
+```{r ex_1}
 group_by(tf_bed, TF) %>%  
   summarize(total = n()) %>%  
   arrange(desc(total)) 
@@ -234,7 +234,7 @@ group_by(tf_bed, TF) %>%
 
 2) Which TF covers the most basepairs in the genome?
 
-```{r ex_2, eval = F, echo = F}
+```{r ex_2}
 mutate(tf_bed, 
        peak_length = end - start) %>% 
   group_by(TF) %>% 
@@ -245,14 +245,26 @@ mutate(tf_bed,
 
 3) Which TF has the broadest or the narrowest binding-sites on average?
 
-```{r ex_3, eval = F, echo = F}
+```{r ex_3 }
+mutate(tf_bed, 
+       peak_length = end - start) %>% 
+  group_by(TF) %>% 
+  summarize(mean_bps = mean(peak_length)) %>% 
+  arrange(desc(mean_bps))
+
+mutate(tf_bed, 
+       peak_length = end - start) %>% 
+  group_by(TF) %>% 
+  summarize(mean_bps = mean(peak_length)) %>% 
+  arrange(mean_bps)
+
+
 mutate(tf_bed, 
        peak_length = end - start) %>% 
   group_by(TF) %>% 
   summarize(mean_bps = mean(peak_length)) %>% 
   arrange(desc(mean_bps)) %>% 
-  slice(c(1, nrow(.))) %>% 
-  pull(TF)
+  slice(c(1, nrow(.)))
 
 ```
 
