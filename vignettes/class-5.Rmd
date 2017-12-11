@@ -444,26 +444,3 @@ The exercises for today's class are presented [here](https://rnabioco.github.io/
 Create an RMarkdown document and answer the questions from the Exercises section. Write your answers in the text, and print the final tibbles that your code produced that gave you the answer. Submit your final document as "Quiz 4" by **Tuesday at 10 PM**.
 
 **Your submitted document must knit to HTML without errors**. I.e., when you click the "Knit" button, the document should build and display and HTML page. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

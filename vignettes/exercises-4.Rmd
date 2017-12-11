@@ -31,6 +31,10 @@ What is the difference between `bed_shuffle()` and `bed_random()`? Explain your 
 Run your function using the following bed tibbles as input arguments
 
 ```{r files}
+library(valr)
+library(eda)
+library(tidyverse)
+
 # genes_bed 
 genes_file <- system.file("extdata", "hg19_genes.bed.gz", package = "eda")
 genes <- read_bed(genes_file, n_fields = 6)

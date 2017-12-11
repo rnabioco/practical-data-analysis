@@ -36,7 +36,7 @@ navbar:
       - text: "Class 4: Genomic Interval Analysis part 1"
         href: articles/class-4.html
       - text: "Class 5: Genomic Interval Analysis part 2"
-        href: articles/class-4.html
+        href: articles/class-5.html
       - text: "---------"
       - text: "Exercises 1"
         href: "articles/exercises-1.html"
@@ -45,7 +45,7 @@ navbar:
       - text: "Exercises 3"
         href: "articles/exercises-3.html"
       - text: "Exercises 4"
-        href: "articles/exercises-3.html"
+        href: "articles/exercises-4.html"
       - text: "---------"
       - text: "Weekend Assignment 1"
         href: "articles/assignment-1.html"
