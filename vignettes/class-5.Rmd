@@ -31,7 +31,7 @@ knitr::opts_chunk$set(
 ## Generating random intervals using `bed_shuffle()` and `bed_random()`
   In the weekend assignment you were asked to generate a metagene profile of RNAPolII ChIP-Seq density surrounding the transcription start site (TSS) of human genes. The plot obtained suggested that RNAPolII seems to be enriched near the TSS. One way to strengthen this argument would be to determine what this profile would look like if we randomly placed RNAPolII binding sites around the genome. 
   
-  `valr` provides two functions for randomzing intervals. `bed_random()` which generates intervals of a fixed length throughout the genome and `bed_shuffle()` which shuffles the location of a set of predefined intervals, but maintains there lengths.  
+  `valr` provides two functions for randomzing intervals. `bed_random()` which generates intervals of a fixed length throughout the genome and `bed_shuffle()` which shuffles the location of a set of predefined intervals, but maintains each intervals length.  
   
 ```{r}
 library(valr)
@@ -58,13 +58,13 @@ shuffled_ivls <- bed_shuffle(bg, genome)
 
 1) Generate 100,000 random intervals of 100 bp each. Set the random number generator seed to `42` Use the `genome` R object above. Which chromosome has the most intervals?
 
-2) Assign the random intervals produced in question 2 to a new object called `random_ivls`. Shuffle these intervals using `bed_shuffle()`, and supply a seed set to `42`. How many intervals are now on `chr1`? Shuffle the random intervals (`random_ivls`) again, but set the `within` argument to `TRUE`. What effect does this have on the number of intervals per chromosome?
+2) Assign the random intervals produced in question 1 to a new object called `random_ivls`. Shuffle these intervals using `bed_shuffle()`, and supply a seed set to `42`. How many intervals are now on `chr1`? Shuffle the random intervals (`random_ivls`) again, but set the `within` argument to `TRUE`. What effect does this have on the number of intervals per chromosome?
 
-3) Use `bed_shuffle()` to generate a set of shuffled intervals for the RNA-PolII ChIP-Seq bedgraphs. Again set the seed argument to 42. Assign the output to an object named `shuffled_coverage`. Calculate the total number of basepairs covered in the shuffled and the original bed tibbles. 
+3) Use `bed_shuffle()` to generate a set of shuffled intervals for the RNA-PolII ChIP-Seq bedgraphs. Again set the seed argument to `42`. Assign the output to an object named `shuffled_coverage`. Calculate the total number of basepairs covered in the shuffled and the original bed tibbles. 
 
 ## How to generate a metagene plot with multiple samples?
 
-In the previous exercise we generated a shuffled bedgraph (`shuffled_coverage`). Using this as our `bedgraph` file (object `bg`), we can recompute our metagene to examine the distribution of randomly positioned RNA-PolII. But how would we plot the shuffled and the original ChIP-seq data on the same graph?
+In the previous exercise we generated a shuffled bedgraph (`shuffled_ivls`). Using this as our `bedgraph` file (object `bg`), we can recompute our metagene to examine the distribution of randomly positioned RNA-PolII. But how would we plot the shuffled and the original ChIP-seq data on the same graph?
 
 Shown below is an example metagene profile computed for 1 bedgraph. Each `.win_id` corresponds to one `bin` or `window` region surrounding the `TSS`. The first `.win_id` represents the mean coverage from the region -1000 to -990 for all TSS in the genome. The second `.win_id` represents regions -990 to -980 and so on. 
 
@@ -199,7 +199,7 @@ ggplot(res, aes(.win_id, total_coverage)) +
 
 ## Writing a function to produce a metagene
 
-At this point we have generated profiles for the RNAPolII chip and a shuffled control. As you may have noticed, we most of the code that we wrote was duplicated.
+At this point we have generated profiles for the RNAPolII chip and a shuffled control. As you may have noticed, a lot of the code that we wrote was duplicated.
 
 Here's all of the code used to compute the metagene profile. Imagine that we wanted to now generate additional metagene profiles. We could copy and paste the code below and change it to make a new plot. What parts of the code would we need to change in order to make a metagene for a new bedGraph file? 
 
@@ -341,10 +341,10 @@ metagene_chipseq_rep6 <- compute_metagene(bg_chipseq_rep6, genome, genes)
 
 ```r
 chipseq_bgs <- list(bg_chipseq_rep1,
-                    bg_chipseq_rep2
-                    bg_chipseq_rep3
-                    bg_chipseq_rep4
-                    bg_chipseq_rep5
+                    bg_chipseq_rep2,
+                    bg_chipseq_rep3,
+                    bg_chipseq_rep4,
+                    bg_chipseq_rep5,
                     bg_chipseq_rep6)
 
 chipseq_bgs
@@ -376,7 +376,7 @@ chipseq_bgs$rep1$chrom
 select(chipseq_bgs$rep1, chrom)
 ```
 
-## Now were can refer to a single object
+Now we can refer to a single list object:
 
 ```
 metagenes_chipseq = list()
@@ -401,7 +401,14 @@ map(my_numbers, add_one)
 map(my_numbers, ~add_one(.x))
 ```
 
-This is extremely useful, as it allows us to apply a function to any number of R objects. 
+This is extremely useful, as it allows us to apply a function to any number of R objects. In our toy example, to compute a metagene profile for the six chip-seq experiments, we now only need one line.
+
+```r
+metagenes_chipses <- map(chipseq_bgs, ~compute_metagene(.x, genome, genes))
+```
+
+
+Here's a live example using shuffled bedgraphs for simplicity:
 
 ```{r map_example}
 
@@ -419,6 +426,7 @@ bgs <- list(bg1,
 res <- map(bgs, ~compute_metagene(.x, genes, genome))
 res
 ```
+
 
 ## Combining many tibbles
 
