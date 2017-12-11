@@ -136,12 +136,12 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(valr)
 <span class="kw">library</span>(eda)
 <span class="kw">library</span>(tidyverse)</code></pre></div>
-<pre><code>## ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 2.2.1          ✔ purrr   0.2.4     
-## ✔ tibble  1.3.4          ✔ dplyr   0.7.4.9000
-## ✔ tidyr   0.7.2          ✔ stringr 1.2.0     
-## ✔ readr   1.1.1          ✔ forcats 0.2.0</code></pre>
-<pre><code>## ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
+## ✔ tibble  1.3.4     ✔ dplyr   0.7.4
+## ✔ tidyr   0.7.2     ✔ stringr 1.2.0
+## ✔ readr   1.1.1     ✔ forcats 0.2.0</code></pre>
+<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># genes_bed </span>
@@ -187,17 +187,17 @@ genome &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocum
 <a href="#question-3" class="anchor"></a>Question 3</h1>
 <p>Write a function that plots a metagene. The function should take one argument, the output from question 2, and produce a plot. Run the function on the output of question 2, and show your plot.</p>
 <p>Here’s some pseudo-code to get you started. I’ve also included some code that fixes the x-axis.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_metagene &lt;-<span class="st"> </span>function(dat) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_metagene &lt;-<span class="st"> </span><span class="cf">function</span>(dat) {
   
   region_size &lt;-<span class="st"> </span><span class="dv">1000</span>
   win_size &lt;-<span class="st"> </span><span class="dv">10</span>
 
-  x_labels &lt;-<span class="st"> </span><span class="kw">seq</span>(-region_size, region_size, <span class="dt">by =</span> win_size *<span class="st"> </span><span class="dv">25</span>)
+  x_labels &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span>region_size, region_size, <span class="dt">by =</span> win_size <span class="op">*</span><span class="st"> </span><span class="dv">25</span>)
   x_breaks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">201</span>, <span class="dt">by =</span> <span class="dv">25</span>)
 
-  <span class="kw">ggplot</span>(..., <span class="kw">aes</span>(..., ...)) +
-<span class="st">  </span>... +
-<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> x_labels, <span class="dt">breaks =</span> x_breaks)  +
+  <span class="kw">ggplot</span>(..., <span class="kw">aes</span>(..., ...)) <span class="op">+</span>
+<span class="st">  </span>... <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> x_labels, <span class="dt">breaks =</span> x_breaks)  <span class="op">+</span>
 }
 
 <span class="kw">plot_metagene</span>(metagene_data)</code></pre></div>
@@ -208,6 +208,23 @@ genome &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocum
 <div id="interpretation-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#interpretation-2" class="anchor"></a>Interpretation</h2>
+</div>
+</div>
+<div id="question-4" class="section level1">
+<h1 class="hasAnchor">
+<a href="#question-4" class="anchor"></a>Question 4</h1>
+<p>Use the <code>brauer_gene_exp</code> table to answer the following questions.</p>
+<ul>
+<li><p>Are there any rows with <code>NA</code> values in <code>brauer_gene_exp</code>? Show your work. Hint: calculate the number of rows before and after removing <code>NA</code> values.</p></li>
+<li><p>Which <code>systematic_name</code> and <code>nutrient</code> combination has the highest expression value? Interpret this result in the section below, keeping in mind that the <code>nutrient</code> condition indicates when the nutrient is <em>omitted</em> from the growth medium. Look up this gene at the <a href="http://yeastgenome.org">Saccharomyces Genome Database</a>.</p></li>
+</ul>
+<div id="strategy-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#strategy-2" class="anchor"></a>Strategy</h2>
+</div>
+<div id="interpretation-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interpretation-3" class="anchor"></a>Interpretation</h2>
 </div>
 </div>
 </div>
@@ -234,6 +251,12 @@ genome &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocum
 <a href="#question-3">Question 3</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#strategy-1">Strategy</a></li>
       <li><a href="#interpretation-2">Interpretation</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#question-4">Question 4</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#strategy-2">Strategy</a></li>
+      <li><a href="#interpretation-3">Interpretation</a></li>
       </ul>
 </li>
       </ul>

@@ -2,7 +2,9 @@
 title: "Exercises 4"
 author: "Your Name Here"
 date: "12/11/2017"
-output: html_document
+output:
+  html_document:
+    code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
@@ -84,6 +86,7 @@ Your output tibble should look like this:
 Write a function that plots a metagene. The function should take one argument, the output from question 2, and produce a plot. Run the function on the output of question 2, and show your plot. 
 
 Here's some pseudo-code to get you started. I've also included some code that fixes the x-axis. 
+
 ``` r
 plot_metagene <- function(dat) {
   
@@ -105,6 +108,21 @@ plot_metagene(metagene_data)
 
 ```{r q3}
 
+```
+
+## Interpretation
+
+# Question 4
+
+Use the `brauer_gene_exp` table to answer the following questions.
+
++ Are there any rows with `NA` values in `brauer_gene_exp`? Show your work. Hint: calculate the number of rows before and after removing `NA` values.
+
++ Which `systematic_name` and `nutrient` combination has the highest expression value? Interpret this result in the section below, keeping in mind that the `nutrient` condition indicates when the nutrient is *omitted* from the growth medium. Look up this gene at the [Saccharomyces Genome Database](http://yeastgenome.org).
+
+## Strategy
+
+```{r q4}
 ```
 
 ## Interpretation
