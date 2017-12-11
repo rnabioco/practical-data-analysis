@@ -129,7 +129,7 @@
 <a href="#generating-random-intervals-using-bed_shuffle-and-bed_random" class="anchor"></a>Generating random intervals using <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_shuffle">bed_shuffle()</a></code> and <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_random">bed_random()</a></code>
 </h2>
 <p>In the weekend assignment you were asked to generate a metagene profile of RNAPolII ChIP-Seq density surrounding the transcription start site (TSS) of human genes. The plot obtained suggested that RNAPolII seems to be enriched near the TSS. One way to strengthen this argument would be to determine what this profile would look like if we randomly placed RNAPolII binding sites around the genome.</p>
-<p><code>valr</code> provides two functions for randomzing intervals. <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_random">bed_random()</a></code> which generates intervals of a fixed length throughout the genome and <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_shuffle">bed_shuffle()</a></code> which shuffles the location of a set of predefined intervals, but maintains there lengths.</p>
+<p><code>valr</code> provides two functions for randomzing intervals. <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_random">bed_random()</a></code> which generates intervals of a fixed length throughout the genome and <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_shuffle">bed_shuffle()</a></code> which shuffles the location of a set of predefined intervals, but maintains each intervals length.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(valr)
 <span class="kw">library</span>(tidyverse)
 <span class="co">#&gt; ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</span>
@@ -161,14 +161,14 @@ shuffled_ivls &lt;-<span class="st"> </span><span class="kw"><a href="http://www
 <a href="#exercises" class="anchor"></a>Exercises</h2>
 <ol style="list-style-type: decimal">
 <li><p>Generate 100,000 random intervals of 100 bp each. Set the random number generator seed to <code>42</code> Use the <code>genome</code> R object above. Which chromosome has the most intervals?</p></li>
-<li><p>Assign the random intervals produced in question 2 to a new object called <code>random_ivls</code>. Shuffle these intervals using <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_shuffle">bed_shuffle()</a></code>, and supply a seed set to <code>42</code>. How many intervals are now on <code>chr1</code>? Shuffle the random intervals (<code>random_ivls</code>) again, but set the <code>within</code> argument to <code>TRUE</code>. What effect does this have on the number of intervals per chromosome?</p></li>
-<li><p>Use <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_shuffle">bed_shuffle()</a></code> to generate a set of shuffled intervals for the RNA-PolII ChIP-Seq bedgraphs. Again set the seed argument to 42. Assign the output to an object named <code>shuffled_coverage</code>. Calculate the total number of basepairs covered in the shuffled and the original bed tibbles.</p></li>
+<li><p>Assign the random intervals produced in question 1 to a new object called <code>random_ivls</code>. Shuffle these intervals using <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_shuffle">bed_shuffle()</a></code>, and supply a seed set to <code>42</code>. How many intervals are now on <code>chr1</code>? Shuffle the random intervals (<code>random_ivls</code>) again, but set the <code>within</code> argument to <code>TRUE</code>. What effect does this have on the number of intervals per chromosome?</p></li>
+<li><p>Use <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_shuffle">bed_shuffle()</a></code> to generate a set of shuffled intervals for the RNA-PolII ChIP-Seq bedgraphs. Again set the seed argument to <code>42</code>. Assign the output to an object named <code>shuffled_coverage</code>. Calculate the total number of basepairs covered in the shuffled and the original bed tibbles.</p></li>
 </ol>
 </div>
 <div id="how-to-generate-a-metagene-plot-with-multiple-samples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#how-to-generate-a-metagene-plot-with-multiple-samples" class="anchor"></a>How to generate a metagene plot with multiple samples?</h2>
-<p>In the previous exercise we generated a shuffled bedgraph (<code>shuffled_coverage</code>). Using this as our <code>bedgraph</code> file (object <code>bg</code>), we can recompute our metagene to examine the distribution of randomly positioned RNA-PolII. But how would we plot the shuffled and the original ChIP-seq data on the same graph?</p>
+<p>In the previous exercise we generated a shuffled bedgraph (<code>shuffled_ivls</code>). Using this as our <code>bedgraph</code> file (object <code>bg</code>), we can recompute our metagene to examine the distribution of randomly positioned RNA-PolII. But how would we plot the shuffled and the original ChIP-seq data on the same graph?</p>
 <p>Shown below is an example metagene profile computed for 1 bedgraph. Each <code>.win_id</code> corresponds to one <code>bin</code> or <code>window</code> region surrounding the <code>TSS</code>. The first <code>.win_id</code> represents the mean coverage from the region -1000 to -990 for all TSS in the genome. The second <code>.win_id</code> represents regions -990 to -980 and so on.</p>
 <p>How would we modify our tibble to be able to plot multiple ChIP-Seq experiments?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&gt; # A tibble: 201 x 2</span>
@@ -212,16 +212,16 @@ tibble_1
 <span class="co">#&gt; # A tibble: 100 x 2</span>
 <span class="co">#&gt;       id measurement_1</span>
 <span class="co">#&gt;    &lt;int&gt;         &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     1   -1.78912909</span>
-<span class="co">#&gt;  2     2   -0.58493051</span>
-<span class="co">#&gt;  3     3    0.08612917</span>
-<span class="co">#&gt;  4     4    0.54855715</span>
-<span class="co">#&gt;  5     5    0.14142608</span>
-<span class="co">#&gt;  6     6   -1.44270003</span>
-<span class="co">#&gt;  7     7    0.18577389</span>
-<span class="co">#&gt;  8     8    1.08529676</span>
-<span class="co">#&gt;  9     9   -0.18839174</span>
-<span class="co">#&gt; 10    10    0.25487193</span>
+<span class="co">#&gt;  1     1    0.66679462</span>
+<span class="co">#&gt;  2     2    0.24049896</span>
+<span class="co">#&gt;  3     3    1.55512874</span>
+<span class="co">#&gt;  4     4   -0.75274870</span>
+<span class="co">#&gt;  5     5    0.80749442</span>
+<span class="co">#&gt;  6     6    0.25470467</span>
+<span class="co">#&gt;  7     7    0.02687301</span>
+<span class="co">#&gt;  8     8    1.53449670</span>
+<span class="co">#&gt;  9     9    1.28550345</span>
+<span class="co">#&gt; 10    10   -0.61429068</span>
 <span class="co">#&gt; # ... with 90 more rows</span>
 
 tibble_2 &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">id =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>),
@@ -230,48 +230,48 @@ tibble_2
 <span class="co">#&gt; # A tibble: 100 x 2</span>
 <span class="co">#&gt;       id measurement_1</span>
 <span class="co">#&gt;    &lt;int&gt;         &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     1     1.1356297</span>
-<span class="co">#&gt;  2     2    -1.2941985</span>
-<span class="co">#&gt;  3     3     0.3008547</span>
-<span class="co">#&gt;  4     4    -1.2456826</span>
-<span class="co">#&gt;  5     5    -0.6129688</span>
-<span class="co">#&gt;  6     6     1.8442503</span>
-<span class="co">#&gt;  7     7     0.3267079</span>
-<span class="co">#&gt;  8     8    -0.2820313</span>
-<span class="co">#&gt;  9     9    -1.1645643</span>
-<span class="co">#&gt; 10    10    -0.5296710</span>
+<span class="co">#&gt;  1     1     1.4841634</span>
+<span class="co">#&gt;  2     2     0.5934025</span>
+<span class="co">#&gt;  3     3     0.1297867</span>
+<span class="co">#&gt;  4     4    -0.4987656</span>
+<span class="co">#&gt;  5     5     0.2150065</span>
+<span class="co">#&gt;  6     6     0.4736234</span>
+<span class="co">#&gt;  7     7    -1.6283166</span>
+<span class="co">#&gt;  8     8    -1.4868916</span>
+<span class="co">#&gt;  9     9    -0.8753699</span>
+<span class="co">#&gt; 10    10     1.4377516</span>
 <span class="co">#&gt; # ... with 90 more rows</span>
 
 <span class="kw">bind_rows</span>(tibble_1, tibble_2)
 <span class="co">#&gt; # A tibble: 200 x 2</span>
 <span class="co">#&gt;       id measurement_1</span>
 <span class="co">#&gt;    &lt;int&gt;         &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     1   -1.78912909</span>
-<span class="co">#&gt;  2     2   -0.58493051</span>
-<span class="co">#&gt;  3     3    0.08612917</span>
-<span class="co">#&gt;  4     4    0.54855715</span>
-<span class="co">#&gt;  5     5    0.14142608</span>
-<span class="co">#&gt;  6     6   -1.44270003</span>
-<span class="co">#&gt;  7     7    0.18577389</span>
-<span class="co">#&gt;  8     8    1.08529676</span>
-<span class="co">#&gt;  9     9   -0.18839174</span>
-<span class="co">#&gt; 10    10    0.25487193</span>
+<span class="co">#&gt;  1     1    0.66679462</span>
+<span class="co">#&gt;  2     2    0.24049896</span>
+<span class="co">#&gt;  3     3    1.55512874</span>
+<span class="co">#&gt;  4     4   -0.75274870</span>
+<span class="co">#&gt;  5     5    0.80749442</span>
+<span class="co">#&gt;  6     6    0.25470467</span>
+<span class="co">#&gt;  7     7    0.02687301</span>
+<span class="co">#&gt;  8     8    1.53449670</span>
+<span class="co">#&gt;  9     9    1.28550345</span>
+<span class="co">#&gt; 10    10   -0.61429068</span>
 <span class="co">#&gt; # ... with 190 more rows</span>
 
 <span class="kw">bind_rows</span>(tibble_1, tibble_2, <span class="dt">.id =</span> <span class="st">"tibble_id"</span>)
 <span class="co">#&gt; # A tibble: 200 x 3</span>
 <span class="co">#&gt;    tibble_id    id measurement_1</span>
 <span class="co">#&gt;        &lt;chr&gt; &lt;int&gt;         &lt;dbl&gt;</span>
-<span class="co">#&gt;  1         1     1   -1.78912909</span>
-<span class="co">#&gt;  2         1     2   -0.58493051</span>
-<span class="co">#&gt;  3         1     3    0.08612917</span>
-<span class="co">#&gt;  4         1     4    0.54855715</span>
-<span class="co">#&gt;  5         1     5    0.14142608</span>
-<span class="co">#&gt;  6         1     6   -1.44270003</span>
-<span class="co">#&gt;  7         1     7    0.18577389</span>
-<span class="co">#&gt;  8         1     8    1.08529676</span>
-<span class="co">#&gt;  9         1     9   -0.18839174</span>
-<span class="co">#&gt; 10         1    10    0.25487193</span>
+<span class="co">#&gt;  1         1     1    0.66679462</span>
+<span class="co">#&gt;  2         1     2    0.24049896</span>
+<span class="co">#&gt;  3         1     3    1.55512874</span>
+<span class="co">#&gt;  4         1     4   -0.75274870</span>
+<span class="co">#&gt;  5         1     5    0.80749442</span>
+<span class="co">#&gt;  6         1     6    0.25470467</span>
+<span class="co">#&gt;  7         1     7    0.02687301</span>
+<span class="co">#&gt;  8         1     8    1.53449670</span>
+<span class="co">#&gt;  9         1     9    1.28550345</span>
+<span class="co">#&gt; 10         1    10   -0.61429068</span>
 <span class="co">#&gt; # ... with 190 more rows</span></code></pre></div>
 </div>
 <div id="generating-a-metagene-with-multiple-samples" class="section level2">
@@ -371,7 +371,7 @@ res
 <div id="writing-a-function-to-produce-a-metagene" class="section level2">
 <h2 class="hasAnchor">
 <a href="#writing-a-function-to-produce-a-metagene" class="anchor"></a>Writing a function to produce a metagene</h2>
-<p>At this point we have generated profiles for the RNAPolII chip and a shuffled control. As you may have noticed, we most of the code that we wrote was duplicated.</p>
+<p>At this point we have generated profiles for the RNAPolII chip and a shuffled control. As you may have noticed, a lot of the code that we wrote was duplicated.</p>
 <p>Here’s all of the code used to compute the metagene profile. Imagine that we wanted to now generate additional metagene profiles. We could copy and paste the code below and change it to make a new plot. What parts of the code would we need to change in order to make a metagene for a new bedGraph file?</p>
 <pre><code>output &lt;- genes %&gt;% 
   filter(strand == "+") %&gt;% 
@@ -506,10 +506,10 @@ metagene_chipseq_rep6 &lt;-<span class="st"> </span><span class="kw">compute_met
 <h2 class="hasAnchor">
 <a href="#lists-make-it-easy-to-store-and-organize-many-objects" class="anchor"></a>Lists make it easy to store and organize many objects</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chipseq_bgs &lt;-<span class="st"> </span><span class="kw">list</span>(bg_chipseq_rep1,
-                    bg_chipseq_rep2
-                    bg_chipseq_rep3
-                    bg_chipseq_rep4
-                    bg_chipseq_rep5
+                    bg_chipseq_rep2,
+                    bg_chipseq_rep3,
+                    bg_chipseq_rep4,
+                    bg_chipseq_rep5,
                     bg_chipseq_rep6)
 
 chipseq_bgs</code></pre></div>
@@ -531,10 +531,7 @@ chipseq_bgs$rep1
 chipseq_bgs$rep1$chrom
 
 <span class="kw">select</span>(chipseq_bgs$rep1, chrom)</code></pre></div>
-</div>
-<div id="now-were-can-refer-to-a-single-object" class="section level2">
-<h2 class="hasAnchor">
-<a href="#now-were-can-refer-to-a-single-object" class="anchor"></a>Now were can refer to a single object</h2>
+<p>Now we can refer to a single list object:</p>
 <pre><code>metagenes_chipseq = list()
 metagenes_chipseq$rep1 &lt;- compute_metagene(chipseq_bgs$rep1, genome, genes)
 metagenes_chipseq$rep2 &lt;- compute_metagene(chipseq_bgs$rep2, genome, genes)
@@ -553,7 +550,9 @@ add_one
 
 map(my_numbers, add_one)
 map(my_numbers, ~add_one(.x))</code></pre>
-<p>This is extremely useful, as it allows us to apply a function to any number of R objects.</p>
+<p>This is extremely useful, as it allows us to apply a function to any number of R objects. In our toy example, to compute a metagene profile for the six chip-seq experiments, we now only need one line.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">metagenes_chipses &lt;-<span class="st"> </span><span class="kw">map</span>(chipseq_bgs, ~<span class="kw">compute_metagene</span>(.x, genome, genes))</code></pre></div>
+<p>Here’s a live example using shuffled bedgraphs for simplicity:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 <span class="co"># make smaller bg </span>
 small_bg &lt;-<span class="st"> </span><span class="kw">sample_n</span>(bg, <span class="fl">1e5</span>)
@@ -572,48 +571,48 @@ res
 <span class="co">#&gt; # A tibble: 201 x 2</span>
 <span class="co">#&gt;    .win_id total_coverage</span>
 <span class="co">#&gt;      &lt;int&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1       4.951786</span>
-<span class="co">#&gt;  2       2       2.287273</span>
-<span class="co">#&gt;  3       3      10.749153</span>
-<span class="co">#&gt;  4       4       6.320000</span>
-<span class="co">#&gt;  5       5       7.748000</span>
-<span class="co">#&gt;  6       6       3.494000</span>
-<span class="co">#&gt;  7       7       1.782979</span>
-<span class="co">#&gt;  8       8       7.841176</span>
-<span class="co">#&gt;  9       9       8.244262</span>
-<span class="co">#&gt; 10      10       6.400000</span>
+<span class="co">#&gt;  1       1      0.8479167</span>
+<span class="co">#&gt;  2       2      4.7904762</span>
+<span class="co">#&gt;  3       3      0.9065217</span>
+<span class="co">#&gt;  4       4      4.7795918</span>
+<span class="co">#&gt;  5       5      4.1403846</span>
+<span class="co">#&gt;  6       6      2.3000000</span>
+<span class="co">#&gt;  7       7      6.1677419</span>
+<span class="co">#&gt;  8       8      2.9953846</span>
+<span class="co">#&gt;  9       9      7.5516667</span>
+<span class="co">#&gt; 10      10      0.9807018</span>
 <span class="co">#&gt; # ... with 191 more rows</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
 <span class="co">#&gt; # A tibble: 201 x 2</span>
 <span class="co">#&gt;    .win_id total_coverage</span>
 <span class="co">#&gt;      &lt;int&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1      0.5080000</span>
-<span class="co">#&gt;  2       2      0.6428571</span>
-<span class="co">#&gt;  3       3      2.5765625</span>
-<span class="co">#&gt;  4       4      0.8811321</span>
-<span class="co">#&gt;  5       5      5.1301887</span>
-<span class="co">#&gt;  6       6      7.7950000</span>
-<span class="co">#&gt;  7       7      1.8354167</span>
-<span class="co">#&gt;  8       8      0.5254902</span>
-<span class="co">#&gt;  9       9      7.5720000</span>
-<span class="co">#&gt; 10      10      0.5255319</span>
+<span class="co">#&gt;  1       1       4.665517</span>
+<span class="co">#&gt;  2       2       9.992857</span>
+<span class="co">#&gt;  3       3       3.770492</span>
+<span class="co">#&gt;  4       4       2.020000</span>
+<span class="co">#&gt;  5       5       2.292727</span>
+<span class="co">#&gt;  6       6       6.014286</span>
+<span class="co">#&gt;  7       7       1.310909</span>
+<span class="co">#&gt;  8       8       2.226667</span>
+<span class="co">#&gt;  9       9       4.430435</span>
+<span class="co">#&gt; 10      10       0.887500</span>
 <span class="co">#&gt; # ... with 191 more rows</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
 <span class="co">#&gt; # A tibble: 201 x 2</span>
 <span class="co">#&gt;    .win_id total_coverage</span>
 <span class="co">#&gt;      &lt;int&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1      5.2863014</span>
-<span class="co">#&gt;  2       2      6.5180556</span>
-<span class="co">#&gt;  3       3      4.6017544</span>
-<span class="co">#&gt;  4       4      0.7689655</span>
-<span class="co">#&gt;  5       5     21.5633333</span>
-<span class="co">#&gt;  6       6      2.9578125</span>
-<span class="co">#&gt;  7       7      0.7741935</span>
-<span class="co">#&gt;  8       8      5.3924242</span>
-<span class="co">#&gt;  9       9      1.5964286</span>
-<span class="co">#&gt; 10      10      2.9661017</span>
+<span class="co">#&gt;  1       1      0.5370370</span>
+<span class="co">#&gt;  2       2      3.2555556</span>
+<span class="co">#&gt;  3       3      0.4534884</span>
+<span class="co">#&gt;  4       4      1.4900000</span>
+<span class="co">#&gt;  5       5      1.0415094</span>
+<span class="co">#&gt;  6       6      4.3157895</span>
+<span class="co">#&gt;  7       7      0.8145161</span>
+<span class="co">#&gt;  8       8      4.1476923</span>
+<span class="co">#&gt;  9       9      8.9347222</span>
+<span class="co">#&gt; 10      10      1.8328571</span>
 <span class="co">#&gt; # ... with 191 more rows</span></code></pre></div>
 </div>
 <div id="combining-many-tibbles" class="section level2">
@@ -625,16 +624,16 @@ all_res
 <span class="co">#&gt; # A tibble: 603 x 3</span>
 <span class="co">#&gt;     expt .win_id total_coverage</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;int&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     1       1       4.951786</span>
-<span class="co">#&gt;  2     1       2       2.287273</span>
-<span class="co">#&gt;  3     1       3      10.749153</span>
-<span class="co">#&gt;  4     1       4       6.320000</span>
-<span class="co">#&gt;  5     1       5       7.748000</span>
-<span class="co">#&gt;  6     1       6       3.494000</span>
-<span class="co">#&gt;  7     1       7       1.782979</span>
-<span class="co">#&gt;  8     1       8       7.841176</span>
-<span class="co">#&gt;  9     1       9       8.244262</span>
-<span class="co">#&gt; 10     1      10       6.400000</span>
+<span class="co">#&gt;  1     1       1      0.8479167</span>
+<span class="co">#&gt;  2     1       2      4.7904762</span>
+<span class="co">#&gt;  3     1       3      0.9065217</span>
+<span class="co">#&gt;  4     1       4      4.7795918</span>
+<span class="co">#&gt;  5     1       5      4.1403846</span>
+<span class="co">#&gt;  6     1       6      2.3000000</span>
+<span class="co">#&gt;  7     1       7      6.1677419</span>
+<span class="co">#&gt;  8     1       8      2.9953846</span>
+<span class="co">#&gt;  9     1       9      7.5516667</span>
+<span class="co">#&gt; 10     1      10      0.9807018</span>
 <span class="co">#&gt; # ... with 593 more rows</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(all_res, <span class="kw">aes</span>(.win_id, total_coverage)) +
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> expt))</code></pre></div>
@@ -674,7 +673,6 @@ all_res
       <li><a href="#computing-the-metagene-profile-using-a-function">Computing the metagene profile using a function</a></li>
       <li><a href="#using-lists-to-organize-many-objects">Using lists to organize many objects</a></li>
       <li><a href="#lists-make-it-easy-to-store-and-organize-many-objects">Lists make it easy to store and organize many objects</a></li>
-      <li><a href="#now-were-can-refer-to-a-single-object">Now were can refer to a single object</a></li>
       <li><a href="#the-map-function">The map function</a></li>
       <li><a href="#combining-many-tibbles">Combining many tibbles</a></li>
       <li><a href="#exercises-1">Exercises</a></li>
