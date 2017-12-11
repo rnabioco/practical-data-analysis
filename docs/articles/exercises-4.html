@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exercises 1 • eda</title>
+<title>Exercises 4 • eda</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -104,10 +104,10 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Exercises 1</h1>
+      <h1>Exercises 4</h1>
                         <h4 class="author">Your Name Here</h4>
             
-            <h4 class="date">12/3/2017</h4>
+            <h4 class="date">12/11/2017</h4>
           </div>
 
     
@@ -116,31 +116,12 @@
 <div id="overview" class="section level1">
 <h1 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h1>
-<p>Here is a <a href="https://raw.githubusercontent.com/rnabioco/eda/master/vignettes/exercises-1.Rmd">link</a> to the text of these exercises.</p>
+<p>Here is a <a href="https://raw.githubusercontent.com/rnabioco/eda/master/vignettes/exercises-4.Rmd">link</a> to the text of these exercises.</p>
 </div>
 <div id="question-1" class="section level1">
 <h1 class="hasAnchor">
 <a href="#question-1" class="anchor"></a>Question 1</h1>
-<p>Tidy the <code>mtcars</code> data set. Note that car names are rownames in the built-in data, so they need to be moved to their own column prior to tibble conversion.</p>
-<p>The tidied data should look like:</p>
-<pre><code># A tibble: 352 x 3
-                name   var value
-               &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
- 1         Mazda RX4   mpg  21.0
- 2     Mazda RX4 Wag   mpg  21.0
- 3        Datsun 710   mpg  22.8
- 4    Hornet 4 Drive   mpg  21.4
- 5 Hornet Sportabout   mpg  18.7
- 6           Valiant   mpg  18.1
- 7        Duster 360   mpg  14.3
- 8         Merc 240D   mpg  24.4
- 9          Merc 230   mpg  22.8
-10          Merc 280   mpg  19.2
-# ... with 342 more rows</code></pre>
-<div id="strategy" class="section level2">
-<h2 class="hasAnchor">
-<a href="#strategy" class="anchor"></a>Strategy</h2>
-</div>
+<p>What is the difference between <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_shuffle">bed_shuffle()</a></code> and <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_random">bed_random()</a></code>? Explain your answer. No code is necessary, but you are welcome to show some example usage if it helps your explanation.</p>
 <div id="interpretation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#interpretation" class="anchor"></a>Interpretation</h2>
@@ -149,10 +130,52 @@
 <div id="question-2" class="section level1">
 <h1 class="hasAnchor">
 <a href="#question-2" class="anchor"></a>Question 2</h1>
-<p>For each car in the tidy <code>mtcars</code> data set, calculate the mean (<code>mean()</code>) and variance (<code>var()</code>) for each variable. Try using <code>summarize()</code> and <code>summarize_at()</code> and <code>summarize_all()</code>.</p>
-<div id="strategy-1" class="section level2">
+<p>Write a function that computes the final tibble needed for plotting a metagene. Explain in your interpretation why writing a function is useful for this task.</p>
+<p>The function should take three arguments. - <code>genes_bed</code> is a bed tibble that contains positions of human genes. (<code>chrom</code>, <code>start</code>, <code>end</code>, <code>name</code>, <code>score</code>, <code>strand</code>) - <code>chipseq_bedgraph</code> is a bedgraph tibble (<code>chrom</code>, <code>start</code>, <code>end</code>, <code>value</code>) - <code>genome_bed</code> is a genome tibble (<code>chrom</code>, <code>size</code>)</p>
+<p>Run your function using the following bed tibbles as input arguments</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(valr)
+<span class="kw">library</span>(eda)
+<span class="kw">library</span>(tidyverse)</code></pre></div>
+<pre><code>## ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 2.2.1          ✔ purrr   0.2.4     
+## ✔ tibble  1.3.4          ✔ dplyr   0.7.4.9000
+## ✔ tidyr   0.7.2          ✔ stringr 1.2.0     
+## ✔ readr   1.1.1          ✔ forcats 0.2.0</code></pre>
+<pre><code>## ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># genes_bed </span>
+genes_file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"hg19_genes.bed.gz"</span>, <span class="dt">package =</span> <span class="st">"eda"</span>)
+genes &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/read_bed">read_bed</a></span>(genes_file, <span class="dt">n_fields =</span> <span class="dv">6</span>)
+
+<span class="co"># chipseq_bedgraph</span>
+bed &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/read_bed">read_bed</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/valr_example">valr_example</a></span>(<span class="st">"hela.h3k4.chip.bg.gz"</span>),
+                <span class="dt">n_fields =</span> <span class="dv">4</span>)
+bg &lt;-<span class="st"> </span><span class="kw">select</span>(bed, <span class="kw">everything</span>(), <span class="dt">value =</span> name)
+bg &lt;-<span class="st"> </span><span class="kw">mutate</span>(bg, 
+              <span class="dt">value =</span> <span class="kw">as.numeric</span>(value))
+
+<span class="co"># genome_bed </span>
+genome_file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"hg19_genome.txt.gz"</span>, <span class="dt">package =</span> <span class="st">"eda"</span>)
+genome &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/read_genome">read_genome</a></span>(genome_file)</code></pre></div>
+<p>Your output tibble should look like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&gt; # A tibble: 201 x 2</span>
+<span class="co">#&gt;    .win_id total_coverage</span>
+<span class="co">#&gt;      &lt;int&gt;          &lt;dbl&gt;</span>
+<span class="co">#&gt;  1       1       46.97059</span>
+<span class="co">#&gt;  2       2       56.48529</span>
+<span class="co">#&gt;  3       3       47.42667</span>
+<span class="co">#&gt;  4       4       53.97297</span>
+<span class="co">#&gt;  5       5       48.36842</span>
+<span class="co">#&gt;  6       6       56.05333</span>
+<span class="co">#&gt;  7       7       47.08861</span>
+<span class="co">#&gt;  8       8       55.15190</span>
+<span class="co">#&gt;  9       9       47.33750</span>
+<span class="co">#&gt; 10      10       55.94937</span>
+<span class="co">#&gt; # ... with 191 more rows</span></code></pre></div>
+<div id="strategy" class="section level2">
 <h2 class="hasAnchor">
-<a href="#strategy-1" class="anchor"></a>Strategy</h2>
+<a href="#strategy" class="anchor"></a>Strategy</h2>
 </div>
 <div id="interpretation-1" class="section level2">
 <h2 class="hasAnchor">
@@ -162,27 +185,29 @@
 <div id="question-3" class="section level1">
 <h1 class="hasAnchor">
 <a href="#question-3" class="anchor"></a>Question 3</h1>
-<p>Plot <code>mpg</code> vs <code>cyl</code> for the <code>mtcars</code> data set. Which format should you use? The original data set, or the tidied one? Why?</p>
-<div id="strategy-2" class="section level2">
+<p>Write a function that plots a metagene. The function should take one argument, the output from question 2, and produce a plot. Run the function on the output of question 2, and show your plot.</p>
+<p>Here’s some pseudo-code to get you started. I’ve also included some code that fixes the x-axis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_metagene &lt;-<span class="st"> </span>function(dat) {
+  
+  region_size &lt;-<span class="st"> </span><span class="dv">1000</span>
+  win_size &lt;-<span class="st"> </span><span class="dv">10</span>
+
+  x_labels &lt;-<span class="st"> </span><span class="kw">seq</span>(-region_size, region_size, <span class="dt">by =</span> win_size *<span class="st"> </span><span class="dv">25</span>)
+  x_breaks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">201</span>, <span class="dt">by =</span> <span class="dv">25</span>)
+
+  <span class="kw">ggplot</span>(..., <span class="kw">aes</span>(..., ...)) +
+<span class="st">  </span>... +
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> x_labels, <span class="dt">breaks =</span> x_breaks)  +
+}
+
+<span class="kw">plot_metagene</span>(metagene_data)</code></pre></div>
+<div id="strategy-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#strategy-2" class="anchor"></a>Strategy</h2>
+<a href="#strategy-1" class="anchor"></a>Strategy</h2>
 </div>
 <div id="interpretation-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#interpretation-2" class="anchor"></a>Interpretation</h2>
-</div>
-</div>
-<div id="question-4" class="section level1">
-<h1 class="hasAnchor">
-<a href="#question-4" class="anchor"></a>Question 4</h1>
-<p>Using the provided <code>qpcr</code> data, plot the changes in gene expression over time. Use <strong>colors</strong> to represent genotypes and <strong>facets</strong> for the different genes. If that’s too easy, add error bars (<code>geom_errorbar()</code>) to the plot and connect each point with a line (<code>geom_line()</code>).</p>
-<div id="strategy-3" class="section level2">
-<h2 class="hasAnchor">
-<a href="#strategy-3" class="anchor"></a>Strategy</h2>
-</div>
-<div id="interpretation-3" class="section level2">
-<h2 class="hasAnchor">
-<a href="#interpretation-3" class="anchor"></a>Interpretation</h2>
 </div>
 </div>
 </div>
@@ -196,26 +221,19 @@
 <li><a href="#overview">Overview</a></li>
       <li>
 <a href="#question-1">Question 1</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#strategy">Strategy</a></li>
-      <li><a href="#interpretation">Interpretation</a></li>
+<li><a href="#interpretation">Interpretation</a></li>
       </ul>
 </li>
       <li>
 <a href="#question-2">Question 2</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#strategy-1">Strategy</a></li>
+<li><a href="#strategy">Strategy</a></li>
       <li><a href="#interpretation-1">Interpretation</a></li>
       </ul>
 </li>
       <li>
 <a href="#question-3">Question 3</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#strategy-2">Strategy</a></li>
+<li><a href="#strategy-1">Strategy</a></li>
       <li><a href="#interpretation-2">Interpretation</a></li>
-      </ul>
-</li>
-      <li>
-<a href="#question-4">Question 4</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#strategy-3">Strategy</a></li>
-      <li><a href="#interpretation-3">Interpretation</a></li>
       </ul>
 </li>
       </ul>
