@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "img/class-2-",
+  fig.path = "img/class-6-",
   fig.align = "center"
 )
 
@@ -37,6 +37,8 @@ library(eda)
 source("https://bioconductor.org/biocLite.R")
 biocLite("DESeq2")
 
+library(eda)
+
 update_eda()
 
 library(DESeq2)
@@ -44,7 +46,6 @@ library(pheatmap)
 library(RColorBrewer)
 library(tidyverse)
 library(cowplot)
-library(eda)
 ```
 
 ## Matrices in R are two dimensional objects that contain elements of one atomic type
@@ -229,7 +230,7 @@ pheatmap(sampleDistMatrix,
 
 Another method for visualizing relationships in multidimensional data is principle component analysis. PCA identifies clusters of variables (in this case, genes) that explain the majority of the variance present. PCA plots are x-y plots of the first two principle components; they spread the samples out in the two directions that explain most of the differences.
 
-``` {r fig.height=5, fig.width=6}
+``` {r pca, fig.height=5, fig.width=6}
 # Generate PCA plot with DESeq2 plotPCA() wrapper
 plotPCA(rld, intgroup = "drug") +
   scale_color_brewer(palette = "Set1")

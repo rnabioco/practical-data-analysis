@@ -17,7 +17,7 @@ Here is a [link](https://raw.githubusercontent.com/rnabioco/eda/master/vignettes
 
 # Question 1
 
-The `drug_resistant2_counts` and `drug_resistant2_coldata` objects contain a count matrix and metadata for an experiment in which two parental cell lines and their drug resistant derivatives were sequenced. You're interested in determining the changes in gene expression associated with acquired resistance to the drug. Build a DESeqDataSet from these objects and calculate differential gene expression. For now, ignore the contribution of cell line identity (`design = ~drug`). Convert the results to a tibble and use dyplr verbss to determine the number of genes that are differentially expressed between the parent and resistant group (padj <= 0.01).
+The `drug_resistant2_counts` and `drug_resistant2_coldata` objects contain a count matrix and metadata for an experiment in which two parental cell lines and their drug resistant derivatives were sequenced. You're interested in determining the changes in gene expression associated with acquired resistance to the drug. Build a DESeqDataSet from these objects and calculate differential gene expression. For now, ignore the contribution of cell line identity (`design = ~drug`). Convert the results to a tibble and use dyplr verbs to determine the number of genes that are differentially expressed between the parent and resistant group (padj <= 0.01).
 
 ## Strategy
 
