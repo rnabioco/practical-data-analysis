@@ -29,7 +29,8 @@ Imports:
     tidyverse,
     valr,
     viridis,
-    devtools
+    devtools,
+    DESeq2
 Suggests: 
     knitr,
     rmarkdown,
