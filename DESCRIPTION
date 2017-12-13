@@ -29,12 +29,12 @@ Imports:
     tidyverse,
     valr,
     viridis,
-    devtools,
-    DESeq2
+    devtools
 Suggests: 
     knitr,
     rmarkdown,
-    R.utils
+    R.utils,
+    DESeq2
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
