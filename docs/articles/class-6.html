@@ -113,7 +113,7 @@
       <h1>Class 6: RNA-seq Analysis part 1</h1>
                         <h4 class="author">Austin Gillen</h4>
             
-            <h4 class="date">2017-12-12</h4>
+            <h4 class="date">2017-12-13</h4>
           </div>
 
     
@@ -133,8 +133,7 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)
 <span class="kw">biocLite</span>(<span class="st">"DESeq2"</span>)
 
-<span class="co"># Also install two packages from CRAN</span>
-<span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">"pheatmap"</span>,<span class="st">"RColorBrewer"</span>))
+<span class="kw">library</span>(eda)
 
 <span class="kw"><a href="../reference/update_eda.html">update_eda</a></span>()
 
@@ -142,8 +141,7 @@
 <span class="kw">library</span>(pheatmap)
 <span class="kw">library</span>(RColorBrewer)
 <span class="kw">library</span>(tidyverse)
-<span class="kw">library</span>(cowplot)
-<span class="kw">library</span>(eda)</code></pre></div>
+<span class="kw">library</span>(cowplot)</code></pre></div>
 </div>
 <div id="matrices-in-r-are-two-dimensional-objects-that-contain-elements-of-one-atomic-type" class="section level2">
 <h2 class="hasAnchor">
@@ -452,7 +450,7 @@ colors &lt;-<span class="st"> </span><span class="kw">colorRampPalette</span>(<s
 <span class="co"># Plot sample distance heatmap with pheatmap</span>
 <span class="kw"><a href="http://www.rdocumentation.org/packages/pheatmap/topics/pheatmap">pheatmap</a></span>(sampleDistMatrix,
          <span class="dt">col =</span> colors)</code></pre></div>
-<p><img src="img/class-2-unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="img/class-6-unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="principle-component-analysis-pca-plots" class="section level2">
 <h2 class="hasAnchor">
@@ -461,7 +459,7 @@ colors &lt;-<span class="st"> </span><span class="kw">colorRampPalette</span>(<s
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Generate PCA plot with DESeq2 plotPCA() wrapper</span>
 <span class="kw"><a href="http://www.rdocumentation.org/packages/DESeq2/topics/plotPCA">plotPCA</a></span>(rld, <span class="dt">intgroup =</span> <span class="st">"drug"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Set1"</span>)</code></pre></div>
-<p><img src="img/class-2-unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="img/class-6-pca-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="calculating-differential-expression" class="section level2">
 <h2 class="hasAnchor">
@@ -513,7 +511,7 @@ res_ma &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocum
 
 <span class="co"># Plot MA</span>
 <span class="kw"><a href="http://www.rdocumentation.org/packages/DESeq2/topics/plotMA">plotMA</a></span>(res_ma, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">6</span>,<span class="dv">6</span>))</code></pre></div>
-<p><img src="img/class-2-unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="img/class-6-unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="plotting-differential-expression-results" class="section level2">
 <h2 class="hasAnchor">
@@ -523,7 +521,7 @@ res_ma &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocum
 <span class="kw"><a href="http://www.rdocumentation.org/packages/DESeq2/topics/plotCounts">plotCounts</a></span>(dds,
            <span class="dt">gene =</span> <span class="st">"ESR1"</span>,
            <span class="dt">intgroup=</span><span class="kw">c</span>(<span class="st">"drug"</span>))</code></pre></div>
-<p><img src="img/class-2-unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="img/class-6-unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 dds_plot &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/DESeq2/topics/plotCounts">plotCounts</a></span>(dds,
            <span class="dt">gene =</span> <span class="st">"ESR1"</span>,
@@ -534,7 +532,7 @@ dds_plot &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdoc
 <span class="kw">ggplot</span>(dds_plot, <span class="kw">aes</span>(<span class="dt">x =</span> drug, <span class="dt">y =</span> count, <span class="dt">color =</span> drug)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_y_log10</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">cex =</span> <span class="dv">3</span>)</code></pre></div>
-<p><img src="img/class-2-unnamed-chunk-9-2.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="img/class-6-unnamed-chunk-8-2.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="plotting-heatmaps-of-differentially-expressed-genes" class="section level2">
 <h2 class="hasAnchor">
@@ -551,7 +549,7 @@ mat  &lt;-<span class="st"> </span>mat <span class="op">-</span><span class="st"
 
 <span class="co"># plot heatmap</span>
 <span class="kw"><a href="http://www.rdocumentation.org/packages/pheatmap/topics/pheatmap">pheatmap</a></span>(mat)</code></pre></div>
-<p><img src="img/class-2-unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="img/class-6-unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="exercises" class="section level2">
 <h2 class="hasAnchor">
