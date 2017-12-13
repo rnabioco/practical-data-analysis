@@ -65,6 +65,9 @@
     <li>
       <a href="../articles/class-5.html">Class 5: Genomic Interval Analysis part 2</a>
     </li>
+    <li>
+      <a href="../articles/class-6.html">Class 6: RNA-Seq Analysis part 1</a>
+    </li>
     <li class="divider">
     <li>
       <a href="../articles/exercises-1.html">Exercises 1</a>
@@ -77,6 +80,9 @@
     </li>
     <li>
       <a href="../articles/exercises-4.html">Exercises 4</a>
+    </li>
+    <li>
+      <a href="../articles/exercises-5.html">Exercises 5</a>
     </li>
     <li class="divider">
     <li>
@@ -107,7 +113,7 @@
       <h1>Class 4: Genomic Interval Analysis part 1</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-12-11</h4>
+            <h4 class="date">2017-12-12</h4>
           </div>
 
     
@@ -368,8 +374,8 @@ tf_bed
 <ol style="list-style-type: decimal">
 <li>Which TF has the most binding-sites (AKA peaks)?</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(tf_bed, TF) %&gt;%<span class="st">  </span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total =</span> <span class="kw">n</span>()) %&gt;%<span class="st">  </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(tf_bed, TF) <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st">  </span>
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(total)) 
 <span class="co">#&gt; # A tibble: 161 x 2</span>
 <span class="co">#&gt;        TF  total</span>
@@ -389,9 +395,9 @@ tf_bed
 <li>Which TF covers the most basepairs in the genome?</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(tf_bed, 
-       <span class="dt">peak_length =</span> end -<span class="st"> </span>start) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(TF) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total_bps =</span> <span class="kw">sum</span>(peak_length)) %&gt;%<span class="st"> </span>
+       <span class="dt">peak_length =</span> end <span class="op">-</span><span class="st"> </span>start) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(TF) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total_bps =</span> <span class="kw">sum</span>(peak_length)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(total_bps)) 
 <span class="co">#&gt; # A tibble: 161 x 2</span>
 <span class="co">#&gt;        TF total_bps</span>
@@ -411,9 +417,9 @@ tf_bed
 <li>Which TF has the broadest or the narrowest binding-sites on average?</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(tf_bed, 
-       <span class="dt">peak_length =</span> end -<span class="st"> </span>start) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(TF) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_bps =</span> <span class="kw">mean</span>(peak_length)) %&gt;%<span class="st"> </span>
+       <span class="dt">peak_length =</span> end <span class="op">-</span><span class="st"> </span>start) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(TF) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_bps =</span> <span class="kw">mean</span>(peak_length)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean_bps))
 <span class="co">#&gt; # A tibble: 161 x 2</span>
 <span class="co">#&gt;         TF mean_bps</span>
@@ -431,9 +437,9 @@ tf_bed
 <span class="co">#&gt; # ... with 151 more rows</span>
 
 <span class="kw">mutate</span>(tf_bed, 
-       <span class="dt">peak_length =</span> end -<span class="st"> </span>start) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(TF) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_bps =</span> <span class="kw">mean</span>(peak_length)) %&gt;%<span class="st"> </span>
+       <span class="dt">peak_length =</span> end <span class="op">-</span><span class="st"> </span>start) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(TF) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_bps =</span> <span class="kw">mean</span>(peak_length)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">arrange</span>(mean_bps)
 <span class="co">#&gt; # A tibble: 161 x 2</span>
 <span class="co">#&gt;        TF mean_bps</span>
@@ -452,10 +458,10 @@ tf_bed
 
 
 <span class="kw">mutate</span>(tf_bed, 
-       <span class="dt">peak_length =</span> end -<span class="st"> </span>start) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(TF) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_bps =</span> <span class="kw">mean</span>(peak_length)) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean_bps)) %&gt;%<span class="st"> </span>
+       <span class="dt">peak_length =</span> end <span class="op">-</span><span class="st"> </span>start) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(TF) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_bps =</span> <span class="kw">mean</span>(peak_length)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean_bps)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">slice</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(.)))
 <span class="co">#&gt; # A tibble: 2 x 2</span>
 <span class="co">#&gt;      TF mean_bps</span>
@@ -583,7 +589,7 @@ y
 <span class="co">#&gt; #   name_yfile &lt;chr&gt;, score_yfile &lt;dbl&gt;, strand_yfile &lt;chr&gt;,</span>
 <span class="co">#&gt; #   .overlap &lt;int&gt;</span>
 
-x %&gt;%<span class="st"> </span>
+x <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_intersect">bed_intersect</a></span>(y)
 <span class="co">#&gt; # A tibble: 2 x 12</span>
 <span class="co">#&gt;   chrom start.x end.x name.x score.x strand.x start.y end.y name.y score.y</span>
@@ -674,8 +680,8 @@ genes
 <span class="co">#&gt; 10  chr1 30365 30503   MIR1302-10     1      +</span>
 <span class="co">#&gt; # ... with 54,996 more rows</span></code></pre></div>
 <p>Next we’ll generate a set of transcription start sites for each gene. The start site depends on the strand of the interval. Here for simplicity we will only look at intervals from the plus strand. If you want to keep the minus strand you need to use <code>ifelse()</code> in the <code>mutate()</code> call to conditionally define the start and end based on strand.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tss &lt;-<span class="st"> </span><span class="kw">filter</span>(genes, strand ==<span class="st"> "+"</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">end =</span> start +<span class="st"> </span><span class="dv">1</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tss &lt;-<span class="st"> </span><span class="kw">filter</span>(genes, strand <span class="op">==</span><span class="st"> "+"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">end =</span> start <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)
               
 tss
 <span class="co">#&gt; # A tibble: 28,035 x 6</span>
@@ -693,8 +699,8 @@ tss
 <span class="co">#&gt; 10  chr1 323891 323892 LOC100133331     4      +</span>
 <span class="co">#&gt; # ... with 28,025 more rows</span></code></pre></div>
 <p>Lastly, we will use the <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_closest">bed_closest()</a></code> tool to find the closest <code>TSS</code> to each <code>SNP</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_closest">bed_closest</a></span>(snps, tss) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(chrom:strand.x, name.y, .overlap, .dist)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_closest">bed_closest</a></span>(snps, tss) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(chrom<span class="op">:</span>strand.x, name.y, .overlap, .dist)
 <span class="co">#&gt; # A tibble: 14,019 x 9</span>
 <span class="co">#&gt;    chrom  start.x    end.x      name.x score.x strand.x  name.y .overlap</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;int&gt;    &lt;int&gt;       &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;    &lt;int&gt;</span>
@@ -710,9 +716,9 @@ tss
 <span class="co">#&gt; 10 chr22 16121639 16121640 rs544560983       0        + BMS1P22        0</span>
 <span class="co">#&gt; # ... with 14,009 more rows, and 1 more variables: .dist &lt;int&gt;</span>
 
-<span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_closest">bed_closest</a></span>(snps, tss) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(<span class="kw">abs</span>(.dist) &lt;<span class="st"> </span><span class="dv">50</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(chrom:strand.x, name.y, .overlap, .dist)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_closest">bed_closest</a></span>(snps, tss) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="kw">abs</span>(.dist) <span class="op">&lt;</span><span class="st"> </span><span class="dv">50</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(chrom<span class="op">:</span>strand.x, name.y, .overlap, .dist)
 <span class="co">#&gt; # A tibble: 14 x 9</span>
 <span class="co">#&gt;    chrom  start.x    end.x      name.x score.x strand.x       name.y</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;int&gt;    &lt;int&gt;       &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;</span>
