@@ -29,11 +29,14 @@ Imports:
     tidyverse,
     valr,
     viridis,
-    devtools
+    devtools,
+    pheatmap,
+    RColorBrewer
 Suggests: 
     knitr,
     rmarkdown,
-    R.utils
+    R.utils,
+    DESeq2
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true

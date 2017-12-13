@@ -65,6 +65,9 @@
     <li>
       <a href="../articles/class-5.html">Class 5: Genomic Interval Analysis part 2</a>
     </li>
+    <li>
+      <a href="../articles/class-6.html">Class 6: RNA-Seq Analysis part 1</a>
+    </li>
     <li class="divider">
     <li>
       <a href="../articles/exercises-1.html">Exercises 1</a>
@@ -77,6 +80,9 @@
     </li>
     <li>
       <a href="../articles/exercises-4.html">Exercises 4</a>
+    </li>
+    <li>
+      <a href="../articles/exercises-5.html">Exercises 5</a>
     </li>
     <li class="divider">
     <li>
@@ -107,7 +113,7 @@
       <h1>Class 5: Genomic Interval Analysis part 2</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-12-11</h4>
+            <h4 class="date">2017-12-12</h4>
           </div>
 
     
@@ -132,12 +138,12 @@
 <p><code>valr</code> provides two functions for randomzing intervals. <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_random">bed_random()</a></code> which generates intervals of a fixed length throughout the genome and <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_shuffle">bed_shuffle()</a></code> which shuffles the location of a set of predefined intervals, but maintains each intervals length.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(valr)
 <span class="kw">library</span>(tidyverse)
-<span class="co">#&gt; ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</span>
-<span class="co">#&gt; ✔ ggplot2 2.2.1          ✔ purrr   0.2.4     </span>
-<span class="co">#&gt; ✔ tibble  1.3.4          ✔ dplyr   0.7.4.9000</span>
-<span class="co">#&gt; ✔ tidyr   0.7.2          ✔ stringr 1.2.0     </span>
-<span class="co">#&gt; ✔ readr   1.1.1          ✔ forcats 0.2.0</span>
-<span class="co">#&gt; ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──</span>
+<span class="co">#&gt; ── Attaching packages ───────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</span>
+<span class="co">#&gt; ✔ ggplot2 2.2.1     ✔ purrr   0.2.4</span>
+<span class="co">#&gt; ✔ tibble  1.3.4     ✔ dplyr   0.7.4</span>
+<span class="co">#&gt; ✔ tidyr   0.7.2     ✔ stringr 1.2.0</span>
+<span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.2.0</span>
+<span class="co">#&gt; ── Conflicts ──────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span>
 <span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span>
 <span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span>
 <span class="kw">library</span>(eda)
@@ -206,72 +212,72 @@ shuffled_ivls &lt;-<span class="st"> </span><span class="kw"><a href="http://www
 <a href="#bind_rows-binds-rows-of-multiple-tibbles-together" class="anchor"></a>bind_rows(), binds rows of multiple tibbles together</h2>
 <p>The <code>dplyr</code> function <code>bind_rows()</code> combines multiple tibbles together in a row-wise fashion. <code>bind_cols</code> binds tibbles together column-wise.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-tibble_1 &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">id =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>),
+tibble_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">id =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>),
   <span class="dt">measurement_1 =</span> <span class="kw">rnorm</span>(<span class="dv">100</span>))
-tibble_1
+tibble_<span class="dv">1</span>
 <span class="co">#&gt; # A tibble: 100 x 2</span>
 <span class="co">#&gt;       id measurement_1</span>
 <span class="co">#&gt;    &lt;int&gt;         &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     1    0.66679462</span>
-<span class="co">#&gt;  2     2    0.24049896</span>
-<span class="co">#&gt;  3     3    1.55512874</span>
-<span class="co">#&gt;  4     4   -0.75274870</span>
-<span class="co">#&gt;  5     5    0.80749442</span>
-<span class="co">#&gt;  6     6    0.25470467</span>
-<span class="co">#&gt;  7     7    0.02687301</span>
-<span class="co">#&gt;  8     8    1.53449670</span>
-<span class="co">#&gt;  9     9    1.28550345</span>
-<span class="co">#&gt; 10    10   -0.61429068</span>
+<span class="co">#&gt;  1     1   -0.39826268</span>
+<span class="co">#&gt;  2     2    0.01168635</span>
+<span class="co">#&gt;  3     3    0.13909002</span>
+<span class="co">#&gt;  4     4   -0.47077218</span>
+<span class="co">#&gt;  5     5    1.31826655</span>
+<span class="co">#&gt;  6     6   -0.40728391</span>
+<span class="co">#&gt;  7     7    1.10589872</span>
+<span class="co">#&gt;  8     8   -0.62939843</span>
+<span class="co">#&gt;  9     9   -0.31305914</span>
+<span class="co">#&gt; 10    10    0.47731098</span>
 <span class="co">#&gt; # ... with 90 more rows</span>
 
-tibble_2 &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">id =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>),
+tibble_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">id =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>),
   <span class="dt">measurement_1 =</span> <span class="kw">rnorm</span>(<span class="dv">100</span>))
-tibble_2
+tibble_<span class="dv">2</span>
 <span class="co">#&gt; # A tibble: 100 x 2</span>
 <span class="co">#&gt;       id measurement_1</span>
 <span class="co">#&gt;    &lt;int&gt;         &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     1     1.4841634</span>
-<span class="co">#&gt;  2     2     0.5934025</span>
-<span class="co">#&gt;  3     3     0.1297867</span>
-<span class="co">#&gt;  4     4    -0.4987656</span>
-<span class="co">#&gt;  5     5     0.2150065</span>
-<span class="co">#&gt;  6     6     0.4736234</span>
-<span class="co">#&gt;  7     7    -1.6283166</span>
-<span class="co">#&gt;  8     8    -1.4868916</span>
-<span class="co">#&gt;  9     9    -0.8753699</span>
-<span class="co">#&gt; 10    10     1.4377516</span>
+<span class="co">#&gt;  1     1     0.5511803</span>
+<span class="co">#&gt;  2     2    -1.0885072</span>
+<span class="co">#&gt;  3     3     0.9704129</span>
+<span class="co">#&gt;  4     4    -1.0306153</span>
+<span class="co">#&gt;  5     5    -1.7682606</span>
+<span class="co">#&gt;  6     6    -1.6135538</span>
+<span class="co">#&gt;  7     7     0.7044703</span>
+<span class="co">#&gt;  8     8    -0.5956612</span>
+<span class="co">#&gt;  9     9     0.8366668</span>
+<span class="co">#&gt; 10    10    -1.4127199</span>
 <span class="co">#&gt; # ... with 90 more rows</span>
 
-<span class="kw">bind_rows</span>(tibble_1, tibble_2)
+<span class="kw">bind_rows</span>(tibble_<span class="dv">1</span>, tibble_<span class="dv">2</span>)
 <span class="co">#&gt; # A tibble: 200 x 2</span>
 <span class="co">#&gt;       id measurement_1</span>
 <span class="co">#&gt;    &lt;int&gt;         &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     1    0.66679462</span>
-<span class="co">#&gt;  2     2    0.24049896</span>
-<span class="co">#&gt;  3     3    1.55512874</span>
-<span class="co">#&gt;  4     4   -0.75274870</span>
-<span class="co">#&gt;  5     5    0.80749442</span>
-<span class="co">#&gt;  6     6    0.25470467</span>
-<span class="co">#&gt;  7     7    0.02687301</span>
-<span class="co">#&gt;  8     8    1.53449670</span>
-<span class="co">#&gt;  9     9    1.28550345</span>
-<span class="co">#&gt; 10    10   -0.61429068</span>
+<span class="co">#&gt;  1     1   -0.39826268</span>
+<span class="co">#&gt;  2     2    0.01168635</span>
+<span class="co">#&gt;  3     3    0.13909002</span>
+<span class="co">#&gt;  4     4   -0.47077218</span>
+<span class="co">#&gt;  5     5    1.31826655</span>
+<span class="co">#&gt;  6     6   -0.40728391</span>
+<span class="co">#&gt;  7     7    1.10589872</span>
+<span class="co">#&gt;  8     8   -0.62939843</span>
+<span class="co">#&gt;  9     9   -0.31305914</span>
+<span class="co">#&gt; 10    10    0.47731098</span>
 <span class="co">#&gt; # ... with 190 more rows</span>
 
-<span class="kw">bind_rows</span>(tibble_1, tibble_2, <span class="dt">.id =</span> <span class="st">"tibble_id"</span>)
+<span class="kw">bind_rows</span>(tibble_<span class="dv">1</span>, tibble_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">"tibble_id"</span>)
 <span class="co">#&gt; # A tibble: 200 x 3</span>
 <span class="co">#&gt;    tibble_id    id measurement_1</span>
 <span class="co">#&gt;        &lt;chr&gt; &lt;int&gt;         &lt;dbl&gt;</span>
-<span class="co">#&gt;  1         1     1    0.66679462</span>
-<span class="co">#&gt;  2         1     2    0.24049896</span>
-<span class="co">#&gt;  3         1     3    1.55512874</span>
-<span class="co">#&gt;  4         1     4   -0.75274870</span>
-<span class="co">#&gt;  5         1     5    0.80749442</span>
-<span class="co">#&gt;  6         1     6    0.25470467</span>
-<span class="co">#&gt;  7         1     7    0.02687301</span>
-<span class="co">#&gt;  8         1     8    1.53449670</span>
-<span class="co">#&gt;  9         1     9    1.28550345</span>
-<span class="co">#&gt; 10         1    10   -0.61429068</span>
+<span class="co">#&gt;  1         1     1   -0.39826268</span>
+<span class="co">#&gt;  2         1     2    0.01168635</span>
+<span class="co">#&gt;  3         1     3    0.13909002</span>
+<span class="co">#&gt;  4         1     4   -0.47077218</span>
+<span class="co">#&gt;  5         1     5    1.31826655</span>
+<span class="co">#&gt;  6         1     6   -0.40728391</span>
+<span class="co">#&gt;  7         1     7    1.10589872</span>
+<span class="co">#&gt;  8         1     8   -0.62939843</span>
+<span class="co">#&gt;  9         1     9   -0.31305914</span>
+<span class="co">#&gt; 10         1    10    0.47731098</span>
 <span class="co">#&gt; # ... with 190 more rows</span></code></pre></div>
 </div>
 <div id="generating-a-metagene-with-multiple-samples" class="section level2">
@@ -291,16 +297,16 @@ bg &lt;-<span class="st"> </span><span class="kw">select</span>(bed, <span class
 bg &lt;-<span class="st"> </span><span class="kw">mutate</span>(bg, 
               <span class="dt">value =</span> <span class="kw">as.numeric</span>(value))</code></pre></div>
 <p>Then let’s generate our set of windows surrounding each TSS (“+” strand only)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tss_windows &lt;-<span class="st"> </span>genes %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(strand ==<span class="st"> "+"</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">end =</span> start +<span class="st"> </span><span class="dv">1</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_slop">bed_slop</a></span>(genome, <span class="dt">both =</span> <span class="dv">1000</span>) %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tss_windows &lt;-<span class="st"> </span>genes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(strand <span class="op">==</span><span class="st"> "+"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">end =</span> start <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_slop">bed_slop</a></span>(genome, <span class="dt">both =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_makewindows">bed_makewindows</a></span>(genome, <span class="dt">win_size =</span> <span class="dv">10</span>)</code></pre></div>
 <p>Next, let’s compute coverage for the rnapolII bedgraph.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rnapolII &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_map">bed_map</a></span>(tss_windows, 
           bg,
-          <span class="dt">total_reads =</span> <span class="kw">sum</span>(value)) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(.win_id) %&gt;%
+          <span class="dt">total_reads =</span> <span class="kw">sum</span>(value)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(.win_id) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total_coverage =</span> <span class="kw">mean</span>(total_reads, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) </code></pre></div>
 <p>Lastly, let’s compute coverage for a shuffled bedgraph.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
@@ -308,8 +314,8 @@ shuffled_coverage &lt;-<span class="st"> </span><span class="kw"><a href="http:/
 
 shuffled &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_map">bed_map</a></span>(tss_windows, 
           shuffled_coverage,
-          <span class="dt">total_reads =</span> <span class="kw">sum</span>(value)) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(.win_id) %&gt;%
+          <span class="dt">total_reads =</span> <span class="kw">sum</span>(value)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(.win_id) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total_coverage =</span> <span class="kw">mean</span>(total_reads, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) 
 
 rnapolII
@@ -364,7 +370,7 @@ res
 <span class="co">#&gt; # ... with 392 more rows</span></code></pre></div>
 <p>Add finally plot the results</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="kw">ggplot</span>(res, <span class="kw">aes</span>(.win_id, total_coverage)) +
+<span class="kw">ggplot</span>(res, <span class="kw">aes</span>(.win_id, total_coverage)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> expt))</code></pre></div>
 <p><img src="img/class-2-unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
@@ -393,21 +399,21 @@ res
 <div id="introduction-to-functions-in-r" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction-to-functions-in-r" class="anchor"></a>Introduction to functions in R</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hello_world &lt;-<span class="st"> </span>function(){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hello_world &lt;-<span class="st"> </span><span class="cf">function</span>(){
   <span class="kw">print</span>(<span class="st">"hello world"</span>)
 }
 
 <span class="kw">hello_world</span>()
 <span class="co">#&gt; [1] "hello world"</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">add_one_to_one &lt;-<span class="st"> </span>function(){
-  <span class="dv">1</span> +<span class="st"> </span><span class="dv">1</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">add_one_to_one &lt;-<span class="st"> </span><span class="cf">function</span>(){
+  <span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
 }
 
 <span class="kw">add_one_to_one</span>()
 <span class="co">#&gt; [1] 2</span>
 
-add_one &lt;-<span class="st"> </span>function(number_to_add){
-  <span class="dv">1</span> +<span class="st"> </span>number_to_add
+add_one &lt;-<span class="st"> </span><span class="cf">function</span>(number_to_add){
+  <span class="dv">1</span> <span class="op">+</span><span class="st"> </span>number_to_add
 }
 
 <span class="kw">add_one</span>(<span class="dv">42</span>)
@@ -420,8 +426,8 @@ int_to_add &lt;-<span class="st"> </span><span class="dv">42</span>
 <div id="functions-can-have-default-arguments" class="section level2">
 <h2 class="hasAnchor">
 <a href="#functions-can-have-default-arguments" class="anchor"></a>Functions can have default arguments</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">add_any &lt;-<span class="st"> </span>function(<span class="dt">first =</span> <span class="dv">1</span>, <span class="dt">second =</span> <span class="dv">2</span>){
-  res &lt;-<span class="st"> </span>first +<span class="st"> </span>second
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">add_any &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">first =</span> <span class="dv">1</span>, <span class="dt">second =</span> <span class="dv">2</span>){
+  res &lt;-<span class="st"> </span>first <span class="op">+</span><span class="st"> </span>second
   res
 }
 
@@ -437,29 +443,29 @@ int_to_add &lt;-<span class="st"> </span><span class="dv">42</span>
 <a href="#computing-the-metagene-profile-using-a-function" class="anchor"></a>Computing the metagene profile using a function</h2>
 <p>When writing a function we need to identify all of the objects that need to be passed to the function. A function should not depend on objects in in the environment (i.e. current session) to run.</p>
 <p>For example in the following code, <code>genes</code>, <code>genome</code>, and <code>bg</code> all need to be in the environment for this code to run. Therefore we should make these arguments that are passed to the function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">output &lt;-<span class="st"> </span>genes %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(strand ==<span class="st"> "+"</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">end =</span> start +<span class="st"> </span><span class="dv">1</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_slop">bed_slop</a></span>(genome, <span class="dt">both =</span> <span class="dv">1000</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_makewindows">bed_makewindows</a></span>(genome, <span class="dt">win_size =</span> <span class="dv">10</span>) %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">output &lt;-<span class="st"> </span>genes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(strand <span class="op">==</span><span class="st"> "+"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">end =</span> start <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_slop">bed_slop</a></span>(genome, <span class="dt">both =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_makewindows">bed_makewindows</a></span>(genome, <span class="dt">win_size =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_map">bed_map</a></span>(., 
           bg,
-          <span class="dt">total_reads =</span> <span class="kw">sum</span>(value)) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(.win_id) %&gt;%
+          <span class="dt">total_reads =</span> <span class="kw">sum</span>(value)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(.win_id) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total_coverage =</span> <span class="kw">mean</span>(total_reads, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) </code></pre></div>
 <p>Here, we’ve designated the <code>genes</code>, <code>genome</code> and <code>bg</code> objects as function arguments and renamed them to make it clearer what the identity of each argument is.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">compute_metagene &lt;-<span class="st"> </span>function(chip_seq_bedgraph,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">compute_metagene &lt;-<span class="st"> </span><span class="cf">function</span>(chip_seq_bedgraph,
                                 genes_bed,
                               genome_bed){
-  output &lt;-<span class="st"> </span>genes_bed %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">filter</span>(strand ==<span class="st"> "+"</span>) %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">end =</span> start +<span class="st"> </span><span class="dv">1</span>) %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_slop">bed_slop</a></span>(genome_bed, <span class="dt">both =</span> <span class="dv">1000</span>) %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_makewindows">bed_makewindows</a></span>(genome_bed, <span class="dt">win_size =</span> <span class="dv">10</span>) %&gt;%<span class="st"> </span>
+  output &lt;-<span class="st"> </span>genes_bed <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(strand <span class="op">==</span><span class="st"> "+"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">end =</span> start <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_slop">bed_slop</a></span>(genome_bed, <span class="dt">both =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_makewindows">bed_makewindows</a></span>(genome_bed, <span class="dt">win_size =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/valr/topics/bed_map">bed_map</a></span>(., 
             chip_seq_bedgraph,
-            <span class="dt">total_reads =</span> <span class="kw">sum</span>(value)) %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">group_by</span>(.win_id) %&gt;%
+            <span class="dt">total_reads =</span> <span class="kw">sum</span>(value)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(.win_id) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">summarize</span>(<span class="dt">total_coverage =</span> <span class="kw">mean</span>(total_reads, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) 
   output
 }
@@ -525,12 +531,12 @@ chipseq_bgs[[<span class="dv">2</span>]] <span class="co"># second object</span>
                     <span class="dt">rep6 =</span> bg_chipseq_rep6)
                  
 <span class="co"># access first tibble                    </span>
-chipseq_bgs$rep1 
+chipseq_bgs<span class="op">$</span>rep1 
 
 <span class="co"># print chrom column from first tibble</span>
-chipseq_bgs$rep1$chrom
+chipseq_bgs<span class="op">$</span>rep1<span class="op">$</span>chrom
 
-<span class="kw">select</span>(chipseq_bgs$rep1, chrom)</code></pre></div>
+<span class="kw">select</span>(chipseq_bgs<span class="op">$</span>rep1, chrom)</code></pre></div>
 <p>Now we can refer to a single list object:</p>
 <pre><code>metagenes_chipseq = list()
 metagenes_chipseq$rep1 &lt;- compute_metagene(chipseq_bgs$rep1, genome, genes)
@@ -551,7 +557,7 @@ add_one
 map(my_numbers, add_one)
 map(my_numbers, ~add_one(.x))</code></pre>
 <p>This is extremely useful, as it allows us to apply a function to any number of R objects. In our toy example, to compute a metagene profile for the six chip-seq experiments, we now only need one line.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">metagenes_chipses &lt;-<span class="st"> </span><span class="kw">map</span>(chipseq_bgs, ~<span class="kw">compute_metagene</span>(.x, genome, genes))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">metagenes_chipses &lt;-<span class="st"> </span><span class="kw">map</span>(chipseq_bgs, <span class="op">~</span><span class="kw">compute_metagene</span>(.x, genome, genes))</code></pre></div>
 <p>Here’s a live example using shuffled bedgraphs for simplicity:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 <span class="co"># make smaller bg </span>
@@ -565,54 +571,54 @@ bgs &lt;-<span class="st"> </span><span class="kw">list</span>(bg1,
             bg2,
             bg3)
             
-res &lt;-<span class="st"> </span><span class="kw">map</span>(bgs, ~<span class="kw">compute_metagene</span>(.x, genes, genome))
+res &lt;-<span class="st"> </span><span class="kw">map</span>(bgs, <span class="op">~</span><span class="kw">compute_metagene</span>(.x, genes, genome))
 res
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; # A tibble: 201 x 2</span>
 <span class="co">#&gt;    .win_id total_coverage</span>
 <span class="co">#&gt;      &lt;int&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1      0.8479167</span>
-<span class="co">#&gt;  2       2      4.7904762</span>
-<span class="co">#&gt;  3       3      0.9065217</span>
-<span class="co">#&gt;  4       4      4.7795918</span>
-<span class="co">#&gt;  5       5      4.1403846</span>
-<span class="co">#&gt;  6       6      2.3000000</span>
-<span class="co">#&gt;  7       7      6.1677419</span>
-<span class="co">#&gt;  8       8      2.9953846</span>
-<span class="co">#&gt;  9       9      7.5516667</span>
-<span class="co">#&gt; 10      10      0.9807018</span>
+<span class="co">#&gt;  1       1      1.3084507</span>
+<span class="co">#&gt;  2       2      0.9666667</span>
+<span class="co">#&gt;  3       3      4.4560606</span>
+<span class="co">#&gt;  4       4      1.8984615</span>
+<span class="co">#&gt;  5       5      2.2600000</span>
+<span class="co">#&gt;  6       6      7.9044118</span>
+<span class="co">#&gt;  7       7      0.9805970</span>
+<span class="co">#&gt;  8       8      2.2768116</span>
+<span class="co">#&gt;  9       9     12.6029412</span>
+<span class="co">#&gt; 10      10      0.8521127</span>
 <span class="co">#&gt; # ... with 191 more rows</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
 <span class="co">#&gt; # A tibble: 201 x 2</span>
 <span class="co">#&gt;    .win_id total_coverage</span>
 <span class="co">#&gt;      &lt;int&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1       4.665517</span>
-<span class="co">#&gt;  2       2       9.992857</span>
-<span class="co">#&gt;  3       3       3.770492</span>
-<span class="co">#&gt;  4       4       2.020000</span>
-<span class="co">#&gt;  5       5       2.292727</span>
-<span class="co">#&gt;  6       6       6.014286</span>
-<span class="co">#&gt;  7       7       1.310909</span>
-<span class="co">#&gt;  8       8       2.226667</span>
-<span class="co">#&gt;  9       9       4.430435</span>
-<span class="co">#&gt; 10      10       0.887500</span>
+<span class="co">#&gt;  1       1      2.9365854</span>
+<span class="co">#&gt;  2       2      2.7705882</span>
+<span class="co">#&gt;  3       3      0.8088889</span>
+<span class="co">#&gt;  4       4      7.1000000</span>
+<span class="co">#&gt;  5       5     16.4775000</span>
+<span class="co">#&gt;  6       6      2.1205128</span>
+<span class="co">#&gt;  7       7     36.6106383</span>
+<span class="co">#&gt;  8       8      1.6972973</span>
+<span class="co">#&gt;  9       9      2.6317073</span>
+<span class="co">#&gt; 10      10      6.2260000</span>
 <span class="co">#&gt; # ... with 191 more rows</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
 <span class="co">#&gt; # A tibble: 201 x 2</span>
 <span class="co">#&gt;    .win_id total_coverage</span>
 <span class="co">#&gt;      &lt;int&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1      0.5370370</span>
-<span class="co">#&gt;  2       2      3.2555556</span>
-<span class="co">#&gt;  3       3      0.4534884</span>
-<span class="co">#&gt;  4       4      1.4900000</span>
-<span class="co">#&gt;  5       5      1.0415094</span>
-<span class="co">#&gt;  6       6      4.3157895</span>
-<span class="co">#&gt;  7       7      0.8145161</span>
-<span class="co">#&gt;  8       8      4.1476923</span>
-<span class="co">#&gt;  9       9      8.9347222</span>
-<span class="co">#&gt; 10      10      1.8328571</span>
+<span class="co">#&gt;  1       1      0.6510638</span>
+<span class="co">#&gt;  2       2      1.0900000</span>
+<span class="co">#&gt;  3       3      6.1541667</span>
+<span class="co">#&gt;  4       4      0.8930233</span>
+<span class="co">#&gt;  5       5      5.2440000</span>
+<span class="co">#&gt;  6       6      1.8923077</span>
+<span class="co">#&gt;  7       7      2.7270833</span>
+<span class="co">#&gt;  8       8      0.4239130</span>
+<span class="co">#&gt;  9       9      0.6941176</span>
+<span class="co">#&gt; 10      10      1.9211538</span>
 <span class="co">#&gt; # ... with 191 more rows</span></code></pre></div>
 </div>
 <div id="combining-many-tibbles" class="section level2">
@@ -624,18 +630,18 @@ all_res
 <span class="co">#&gt; # A tibble: 603 x 3</span>
 <span class="co">#&gt;     expt .win_id total_coverage</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;int&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     1       1      0.8479167</span>
-<span class="co">#&gt;  2     1       2      4.7904762</span>
-<span class="co">#&gt;  3     1       3      0.9065217</span>
-<span class="co">#&gt;  4     1       4      4.7795918</span>
-<span class="co">#&gt;  5     1       5      4.1403846</span>
-<span class="co">#&gt;  6     1       6      2.3000000</span>
-<span class="co">#&gt;  7     1       7      6.1677419</span>
-<span class="co">#&gt;  8     1       8      2.9953846</span>
-<span class="co">#&gt;  9     1       9      7.5516667</span>
-<span class="co">#&gt; 10     1      10      0.9807018</span>
+<span class="co">#&gt;  1     1       1      1.3084507</span>
+<span class="co">#&gt;  2     1       2      0.9666667</span>
+<span class="co">#&gt;  3     1       3      4.4560606</span>
+<span class="co">#&gt;  4     1       4      1.8984615</span>
+<span class="co">#&gt;  5     1       5      2.2600000</span>
+<span class="co">#&gt;  6     1       6      7.9044118</span>
+<span class="co">#&gt;  7     1       7      0.9805970</span>
+<span class="co">#&gt;  8     1       8      2.2768116</span>
+<span class="co">#&gt;  9     1       9     12.6029412</span>
+<span class="co">#&gt; 10     1      10      0.8521127</span>
 <span class="co">#&gt; # ... with 593 more rows</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(all_res, <span class="kw">aes</span>(.win_id, total_coverage)) +
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(all_res, <span class="kw">aes</span>(.win_id, total_coverage)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> expt))</code></pre></div>
 <p><img src="img/class-2-plot_random-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
