@@ -37,9 +37,6 @@ library(eda)
 source("https://bioconductor.org/biocLite.R")
 biocLite("DESeq2")
 
-# Also install two packages from CRAN
-install.packages(c("pheatmap","RColorBrewer"))
-
 update_eda()
 
 library(DESeq2)

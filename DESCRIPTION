@@ -29,7 +29,9 @@ Imports:
     tidyverse,
     valr,
     viridis,
-    devtools
+    devtools,
+    pheatmap,
+    RColorBrewer
 Suggests: 
     knitr,
     rmarkdown,
