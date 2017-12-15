@@ -31,7 +31,9 @@ Imports:
     viridis,
     devtools,
     pheatmap,
-    RColorBrewer
+    RColorBrewer,
+    Seurat,
+    Matrix
 Suggests: 
     knitr,
     rmarkdown,

@@ -39,6 +39,8 @@ navbar:
         href: articles/class-5.html
       - text: "Class 6: RNA-Seq Analysis part 1"
         href: articles/class-6.html
+      - text: "Class 7: RNA-Seq Analysis part 2"
+        href: articles/class-7.html
       - text: "---------"
       - text: "Exercises 1"
         href: "articles/exercises-1.html"

@@ -68,6 +68,9 @@
     <li>
       <a href="../articles/class-6.html">Class 6: RNA-Seq Analysis part 1</a>
     </li>
+    <li>
+      <a href="../articles/class-7.html">Class 7: RNA-Seq Analysis part 2</a>
+    </li>
     <li class="divider">
     <li>
       <a href="../articles/exercises-1.html">Exercises 1</a>
@@ -113,7 +116,7 @@
       <h1>Class 5: Genomic Interval Analysis part 2</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2017-12-13</h4>
+            <h4 class="date">2017-12-14</h4>
           </div>
 
     
@@ -138,12 +141,12 @@
 <p><code>valr</code> provides two functions for randomzing intervals. <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_random">bed_random()</a></code> which generates intervals of a fixed length throughout the genome and <code><a href="http://www.rdocumentation.org/packages/valr/topics/bed_shuffle">bed_shuffle()</a></code> which shuffles the location of a set of predefined intervals, but maintains each intervals length.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(valr)
 <span class="kw">library</span>(tidyverse)
-<span class="co">#&gt; ── Attaching packages ───────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</span>
+<span class="co">#&gt; ── Attaching packages ──────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</span>
 <span class="co">#&gt; ✔ ggplot2 2.2.1     ✔ purrr   0.2.4</span>
 <span class="co">#&gt; ✔ tibble  1.3.4     ✔ dplyr   0.7.4</span>
 <span class="co">#&gt; ✔ tidyr   0.7.2     ✔ stringr 1.2.0</span>
 <span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.2.0</span>
-<span class="co">#&gt; ── Conflicts ──────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span>
+<span class="co">#&gt; ── Conflicts ─────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span>
 <span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span>
 <span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span>
 <span class="kw">library</span>(eda)
@@ -218,16 +221,16 @@ tibble_<span class="dv">1</span>
 <span class="co">#&gt; # A tibble: 100 x 2</span>
 <span class="co">#&gt;       id measurement_1</span>
 <span class="co">#&gt;    &lt;int&gt;         &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     1   -0.30580369</span>
-<span class="co">#&gt;  2     2   -0.67636135</span>
-<span class="co">#&gt;  3     3   -0.68646376</span>
-<span class="co">#&gt;  4     4   -0.98490908</span>
-<span class="co">#&gt;  5     5   -0.98262070</span>
-<span class="co">#&gt;  6     6    0.56552837</span>
-<span class="co">#&gt;  7     7    0.06024514</span>
-<span class="co">#&gt;  8     8   -1.51551501</span>
-<span class="co">#&gt;  9     9    1.93240073</span>
-<span class="co">#&gt; 10    10    2.27429230</span>
+<span class="co">#&gt;  1     1    -0.9898476</span>
+<span class="co">#&gt;  2     2    -0.5172603</span>
+<span class="co">#&gt;  3     3    -1.1869339</span>
+<span class="co">#&gt;  4     4     0.3199665</span>
+<span class="co">#&gt;  5     5     1.7499123</span>
+<span class="co">#&gt;  6     6     1.1685645</span>
+<span class="co">#&gt;  7     7    -1.1732607</span>
+<span class="co">#&gt;  8     8     0.9089613</span>
+<span class="co">#&gt;  9     9     0.1397709</span>
+<span class="co">#&gt; 10    10    -0.5977940</span>
 <span class="co">#&gt; # ... with 90 more rows</span>
 
 tibble_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">id =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>),
@@ -236,48 +239,48 @@ tibble_<span class="dv">2</span>
 <span class="co">#&gt; # A tibble: 100 x 2</span>
 <span class="co">#&gt;       id measurement_1</span>
 <span class="co">#&gt;    &lt;int&gt;         &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     1   -1.42815869</span>
-<span class="co">#&gt;  2     2   -0.04452206</span>
-<span class="co">#&gt;  3     3   -1.60591127</span>
-<span class="co">#&gt;  4     4    0.30242393</span>
-<span class="co">#&gt;  5     5    1.33890243</span>
-<span class="co">#&gt;  6     6   -0.32726724</span>
-<span class="co">#&gt;  7     7    0.36582073</span>
-<span class="co">#&gt;  8     8   -0.30272388</span>
-<span class="co">#&gt;  9     9   -0.36108522</span>
-<span class="co">#&gt; 10    10   -0.53981213</span>
+<span class="co">#&gt;  1     1     0.9809766</span>
+<span class="co">#&gt;  2     2    -0.6293168</span>
+<span class="co">#&gt;  3     3    -1.9167389</span>
+<span class="co">#&gt;  4     4     0.5318827</span>
+<span class="co">#&gt;  5     5     0.2324515</span>
+<span class="co">#&gt;  6     6    -0.7345286</span>
+<span class="co">#&gt;  7     7    -0.4672206</span>
+<span class="co">#&gt;  8     8     0.6719840</span>
+<span class="co">#&gt;  9     9    -1.1521059</span>
+<span class="co">#&gt; 10    10    -0.5319422</span>
 <span class="co">#&gt; # ... with 90 more rows</span>
 
 <span class="kw">bind_rows</span>(tibble_<span class="dv">1</span>, tibble_<span class="dv">2</span>)
 <span class="co">#&gt; # A tibble: 200 x 2</span>
 <span class="co">#&gt;       id measurement_1</span>
 <span class="co">#&gt;    &lt;int&gt;         &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     1   -0.30580369</span>
-<span class="co">#&gt;  2     2   -0.67636135</span>
-<span class="co">#&gt;  3     3   -0.68646376</span>
-<span class="co">#&gt;  4     4   -0.98490908</span>
-<span class="co">#&gt;  5     5   -0.98262070</span>
-<span class="co">#&gt;  6     6    0.56552837</span>
-<span class="co">#&gt;  7     7    0.06024514</span>
-<span class="co">#&gt;  8     8   -1.51551501</span>
-<span class="co">#&gt;  9     9    1.93240073</span>
-<span class="co">#&gt; 10    10    2.27429230</span>
+<span class="co">#&gt;  1     1    -0.9898476</span>
+<span class="co">#&gt;  2     2    -0.5172603</span>
+<span class="co">#&gt;  3     3    -1.1869339</span>
+<span class="co">#&gt;  4     4     0.3199665</span>
+<span class="co">#&gt;  5     5     1.7499123</span>
+<span class="co">#&gt;  6     6     1.1685645</span>
+<span class="co">#&gt;  7     7    -1.1732607</span>
+<span class="co">#&gt;  8     8     0.9089613</span>
+<span class="co">#&gt;  9     9     0.1397709</span>
+<span class="co">#&gt; 10    10    -0.5977940</span>
 <span class="co">#&gt; # ... with 190 more rows</span>
 
 <span class="kw">bind_rows</span>(tibble_<span class="dv">1</span>, tibble_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">"tibble_id"</span>)
 <span class="co">#&gt; # A tibble: 200 x 3</span>
 <span class="co">#&gt;    tibble_id    id measurement_1</span>
 <span class="co">#&gt;        &lt;chr&gt; &lt;int&gt;         &lt;dbl&gt;</span>
-<span class="co">#&gt;  1         1     1   -0.30580369</span>
-<span class="co">#&gt;  2         1     2   -0.67636135</span>
-<span class="co">#&gt;  3         1     3   -0.68646376</span>
-<span class="co">#&gt;  4         1     4   -0.98490908</span>
-<span class="co">#&gt;  5         1     5   -0.98262070</span>
-<span class="co">#&gt;  6         1     6    0.56552837</span>
-<span class="co">#&gt;  7         1     7    0.06024514</span>
-<span class="co">#&gt;  8         1     8   -1.51551501</span>
-<span class="co">#&gt;  9         1     9    1.93240073</span>
-<span class="co">#&gt; 10         1    10    2.27429230</span>
+<span class="co">#&gt;  1         1     1    -0.9898476</span>
+<span class="co">#&gt;  2         1     2    -0.5172603</span>
+<span class="co">#&gt;  3         1     3    -1.1869339</span>
+<span class="co">#&gt;  4         1     4     0.3199665</span>
+<span class="co">#&gt;  5         1     5     1.7499123</span>
+<span class="co">#&gt;  6         1     6     1.1685645</span>
+<span class="co">#&gt;  7         1     7    -1.1732607</span>
+<span class="co">#&gt;  8         1     8     0.9089613</span>
+<span class="co">#&gt;  9         1     9     0.1397709</span>
+<span class="co">#&gt; 10         1    10    -0.5977940</span>
 <span class="co">#&gt; # ... with 190 more rows</span></code></pre></div>
 </div>
 <div id="generating-a-metagene-with-multiple-samples" class="section level2">
@@ -577,48 +580,48 @@ res
 <span class="co">#&gt; # A tibble: 201 x 2</span>
 <span class="co">#&gt;    .win_id total_coverage</span>
 <span class="co">#&gt;      &lt;int&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1      1.0365385</span>
-<span class="co">#&gt;  2       2      7.0596154</span>
-<span class="co">#&gt;  3       3      2.9145833</span>
-<span class="co">#&gt;  4       4      2.8054545</span>
-<span class="co">#&gt;  5       5      0.7339623</span>
-<span class="co">#&gt;  6       6      6.0636364</span>
-<span class="co">#&gt;  7       7      1.6622642</span>
-<span class="co">#&gt;  8       8      0.9491228</span>
-<span class="co">#&gt;  9       9      0.5912281</span>
-<span class="co">#&gt; 10      10      1.0452830</span>
+<span class="co">#&gt;  1       1      0.7886364</span>
+<span class="co">#&gt;  2       2      6.0740000</span>
+<span class="co">#&gt;  3       3      2.2714286</span>
+<span class="co">#&gt;  4       4      5.5518519</span>
+<span class="co">#&gt;  5       5      2.7980392</span>
+<span class="co">#&gt;  6       6      2.4560976</span>
+<span class="co">#&gt;  7       7     15.2729730</span>
+<span class="co">#&gt;  8       8     10.9729730</span>
+<span class="co">#&gt;  9       9      8.1545455</span>
+<span class="co">#&gt; 10      10      6.0727273</span>
 <span class="co">#&gt; # ... with 191 more rows</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
 <span class="co">#&gt; # A tibble: 201 x 2</span>
 <span class="co">#&gt;    .win_id total_coverage</span>
 <span class="co">#&gt;      &lt;int&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1      3.9923077</span>
-<span class="co">#&gt;  2       2      0.4365854</span>
-<span class="co">#&gt;  3       3      0.5066667</span>
-<span class="co">#&gt;  4       4      0.5240000</span>
-<span class="co">#&gt;  5       5      0.2733333</span>
-<span class="co">#&gt;  6       6      2.1465116</span>
-<span class="co">#&gt;  7       7      0.2043478</span>
-<span class="co">#&gt;  8       8      1.1750000</span>
-<span class="co">#&gt;  9       9      5.9279070</span>
-<span class="co">#&gt; 10      10      5.0860000</span>
+<span class="co">#&gt;  1       1      3.1340426</span>
+<span class="co">#&gt;  2       2      0.8840909</span>
+<span class="co">#&gt;  3       3      3.5604167</span>
+<span class="co">#&gt;  4       4      0.5617021</span>
+<span class="co">#&gt;  5       5      2.4039216</span>
+<span class="co">#&gt;  6       6      0.6551020</span>
+<span class="co">#&gt;  7       7      6.3947368</span>
+<span class="co">#&gt;  8       8      1.7036364</span>
+<span class="co">#&gt;  9       9      3.6039216</span>
+<span class="co">#&gt; 10      10      2.8647059</span>
 <span class="co">#&gt; # ... with 191 more rows</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
 <span class="co">#&gt; # A tibble: 201 x 2</span>
 <span class="co">#&gt;    .win_id total_coverage</span>
 <span class="co">#&gt;      &lt;int&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1       3.315625</span>
-<span class="co">#&gt;  2       2      12.159459</span>
-<span class="co">#&gt;  3       3       1.068421</span>
-<span class="co">#&gt;  4       4       4.865000</span>
-<span class="co">#&gt;  5       5       1.228205</span>
-<span class="co">#&gt;  6       6       4.670270</span>
-<span class="co">#&gt;  7       7       3.600000</span>
-<span class="co">#&gt;  8       8       4.330233</span>
-<span class="co">#&gt;  9       9      11.148780</span>
-<span class="co">#&gt; 10      10      23.357500</span>
+<span class="co">#&gt;  1       1     20.0272727</span>
+<span class="co">#&gt;  2       2      0.8800000</span>
+<span class="co">#&gt;  3       3      1.4586207</span>
+<span class="co">#&gt;  4       4      7.4640625</span>
+<span class="co">#&gt;  5       5      6.7169231</span>
+<span class="co">#&gt;  6       6     11.1047619</span>
+<span class="co">#&gt;  7       7      6.3672414</span>
+<span class="co">#&gt;  8       8      0.4649123</span>
+<span class="co">#&gt;  9       9      0.9215385</span>
+<span class="co">#&gt; 10      10      3.2852941</span>
 <span class="co">#&gt; # ... with 191 more rows</span></code></pre></div>
 </div>
 <div id="combining-many-tibbles" class="section level2">
@@ -630,16 +633,16 @@ all_res
 <span class="co">#&gt; # A tibble: 603 x 3</span>
 <span class="co">#&gt;     expt .win_id total_coverage</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;int&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     1       1      1.0365385</span>
-<span class="co">#&gt;  2     1       2      7.0596154</span>
-<span class="co">#&gt;  3     1       3      2.9145833</span>
-<span class="co">#&gt;  4     1       4      2.8054545</span>
-<span class="co">#&gt;  5     1       5      0.7339623</span>
-<span class="co">#&gt;  6     1       6      6.0636364</span>
-<span class="co">#&gt;  7     1       7      1.6622642</span>
-<span class="co">#&gt;  8     1       8      0.9491228</span>
-<span class="co">#&gt;  9     1       9      0.5912281</span>
-<span class="co">#&gt; 10     1      10      1.0452830</span>
+<span class="co">#&gt;  1     1       1      0.7886364</span>
+<span class="co">#&gt;  2     1       2      6.0740000</span>
+<span class="co">#&gt;  3     1       3      2.2714286</span>
+<span class="co">#&gt;  4     1       4      5.5518519</span>
+<span class="co">#&gt;  5     1       5      2.7980392</span>
+<span class="co">#&gt;  6     1       6      2.4560976</span>
+<span class="co">#&gt;  7     1       7     15.2729730</span>
+<span class="co">#&gt;  8     1       8     10.9729730</span>
+<span class="co">#&gt;  9     1       9      8.1545455</span>
+<span class="co">#&gt; 10     1      10      6.0727273</span>
 <span class="co">#&gt; # ... with 593 more rows</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(all_res, <span class="kw">aes</span>(.win_id, total_coverage)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> expt))</code></pre></div>
