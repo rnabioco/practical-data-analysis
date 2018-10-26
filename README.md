@@ -1,13 +1,18 @@
 
-Practical Biological Data Analysis with R/RStudio
-=================================================
+# Practical Biological Data Analysis with R/RStudio
 
-[![Travis-CI Build Status](https://travis-ci.org/rnabioco/eda.svg?branch=master)](https://travis-ci.org/rnabioco/eda)
+[![Build
+Status](https://travis-ci.org/rnabioco/practical-data-analysis.svg?branch=master)](https://travis-ci.org/rnabioco/practical-data-analysis)
 
-Syllabus
---------
+## Syllabus
 
-This short course teaches you to analyze and visualize large, complex biological data sets use the R statistical programming language, RStudio, and new tools available in the "tidyverse". We use common biological experiments to illustrate analysis strategies including studies of mRNA expression, histone post-translational modification in the context of chromatin, and cell-type characterization using single cell approaches.
+This short course teaches you to analyze and visualize large, complex
+biological data sets use the R statistical programming language,
+RStudio, and new tools available in the “tidyverse”. We use common
+biological experiments to illustrate analysis strategies including
+studies of mRNA expression, histone post-translational modification in
+the context of chromatin, and cell-type characterization using single
+cell approaches.
 
 ### Course number
 
@@ -15,9 +20,14 @@ IDPT 7810 006
 
 ### Dates and Times
 
-The course (2 credit hours) consists of 13 2 hour classes held Mon through Fri from Nov 28 through Dec 14 in P28-1202 (P28-2301 on Dec 6, 7, and 12) from 1:00-3:00 pm.
+The course (2 credit hours) consists of seven 2 hour classes held Mon,
+Wed and Fri from Nov 29 through Dec 15 in the Health Sciences Library
+Teaching Lab 2 from 1:00-3:00 pm.
 
-We have dedicated office hours on Thurs from 2:30-4pm in RC1 South 9th floor in the main office (behind the glass walls). Come with questions, problems, etc. Please send an email to `rbi.fellows@ucdenver.edu` to let us know you're coming.
+We have dedicated office hours on Thurs from 2:30-4pm in RC1 South 9th
+floor in the main office (behind the glass walls). Come with questions,
+problems, etc. Please send an email to `rbi.fellows@ucdenver.edu` to let
+us know you’re coming.
 
 ### Instructor
 
@@ -29,13 +39,12 @@ Austin Gillen (<austin.gillen@gmail.com>)
 
 Kent Riemondy (<kent.riemondy@gmail.com>)
 
-Course marks
-------------
+## Course marks
 
-See [Grading and Assignments](https://rnabioco.github.io/eda/articles/assignments.html).
+See [Grading and
+Assignments](https://rnabioco.github.io/practical-data-analysis/articles/assignments.html).
 
-Installation
-------------
+## Installation
 
 You can install `eda` from github with:
 

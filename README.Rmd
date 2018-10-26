@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 
 # Practical Biological Data Analysis with R/RStudio
 
-[![Travis-CI Build Status](https://travis-ci.org/rnabioco/eda.svg?branch=master)](https://travis-ci.org/rnabioco/eda)
+[![Build Status](https://travis-ci.org/rnabioco/practical-data-analysis.svg?branch=master)](https://travis-ci.org/rnabioco/practical-data-analysis)
 
 ## Syllabus
 
@@ -40,7 +40,7 @@ Kent Riemondy (kent.riemondy@gmail.com)
 
 ## Course marks
 
-See [Grading and Assignments](https://rnabioco.github.io/eda/articles/assignments.html).
+See [Grading and Assignments](https://rnabioco.github.io/practical-data-analysis/articles/assignments.html).
 
 ## Installation
 
