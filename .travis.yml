@@ -5,7 +5,9 @@ sudo: false
 cache: packages
 warnings_are_errors: false
 
-before_deploy: Rscript -e 'install.packages("pkgdown")'
+r_github_packages:
+  - r-lib/pkgdown
+
 deploy:
   provider: script
   script: Rscript -e 'pkgdown::deploy_site_github()'
