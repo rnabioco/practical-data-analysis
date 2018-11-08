@@ -30,10 +30,7 @@ Imports:
     valr,
     viridis,
     devtools,
-    pheatmap,
     RColorBrewer,
-    Seurat,
-    Matrix
 biocViews:
     DESeq2
 Suggests: 
@@ -45,4 +42,4 @@ Encoding: UTF-8
 LazyData: true
 Remotes: stephlocke/datasauRus
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
