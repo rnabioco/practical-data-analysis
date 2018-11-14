@@ -3,9 +3,8 @@
 
 [![Build
 Status](https://travis-ci.org/rnabioco/practical-data-analysis.svg?branch=master)](https://travis-ci.org/rnabioco/practical-data-analysis)
-
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/rnabioco/practical-data-analysis?branch=master&svg=true)](https://ci.appveyor.com/project/rnabioco/practical-data-analysis)
+[![Build
+status](https://ci.appveyor.com/api/projects/status/nmsmgqp6nr1898wq?svg=true)](https://ci.appveyor.com/project/kriemo/practical-data-analysis)
 
 ## Syllabus
 
