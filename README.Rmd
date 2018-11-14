@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 
 [![Build Status](https://travis-ci.org/rnabioco/practical-data-analysis.svg?branch=master)](https://travis-ci.org/rnabioco/practical-data-analysis)
 
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rnabioco/practical-data-analysis?branch=master&svg=true)](https://ci.appveyor.com/project/rnabioco/practical-data-analysis)
+
 ## Syllabus
 
 This short course teaches you to analyze and visualize large, complex biological data sets use the R statistical programming language, RStudio, and new tools available in the "tidyverse". We use common biological experiments to illustrate analysis strategies including studies of mRNA expression, histone post-translational modification in the context of chromatin, and cell-type characterization using single cell approaches.

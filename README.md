@@ -4,6 +4,9 @@
 [![Build
 Status](https://travis-ci.org/rnabioco/practical-data-analysis.svg?branch=master)](https://travis-ci.org/rnabioco/practical-data-analysis)
 
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/rnabioco/practical-data-analysis?branch=master&svg=true)](https://ci.appveyor.com/project/rnabioco/practical-data-analysis)
+
 ## Syllabus
 
 This short course teaches you to analyze and visualize large, complex
