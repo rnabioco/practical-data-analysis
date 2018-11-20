@@ -27,7 +27,6 @@ Imports:
     stringr,
     tidyr,
     tidyverse,
-    valr,
     viridis,
     devtools,
     RColorBrewer,

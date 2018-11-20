@@ -4,10 +4,9 @@
 \name{eda}
 \alias{eda}
 \alias{eda-package}
-\alias{eda-package}
 \title{Exploratory Data Analysis in R/RStudio}
 \description{
-Exploratory Data Analysis in R/RStudio
+Provides course materials for IDPT 7620, Practical Biological Data Analysis in R.
 }
 \author{
 \strong{Maintainer}: Jay Hesselberth \email{jay.hesselberth@gmail.com} (0000-0002-6299-179X)

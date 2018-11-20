@@ -4,7 +4,6 @@
 #' @name eda
 #'
 #' @import tidyverse
-#' @import valr
 #' @import ggrepel
 #' @import gapminder
 "_PACKAGE"

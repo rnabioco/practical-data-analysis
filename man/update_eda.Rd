@@ -4,7 +4,7 @@
 \alias{update_eda}
 \title{Update eda package using devtools}
 \usage{
-update_eda(repo = "rnabioco/eda", ...)
+update_eda(repo = "IDPT7810/practical-data-analysis", ...)
 }
 \arguments{
 \item{repo}{repository to update}
