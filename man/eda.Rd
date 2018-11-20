@@ -15,6 +15,7 @@ Authors:
 \itemize{
   \item Austin Gillen \email{austin.gillen@gmail.com}
   \item Kent Riemondy \email{kent.riemondy@gmail.com}
+  \item Rui Fu \email{rui.fu@ucdenver.edu}
 }
 
 }

@@ -11,6 +11,9 @@ Authors@R: c(
     role = c("aut")),
   person("Kent", "Riemondy", ,
     email = "kent.riemondy@gmail.com",
+    role = c("aut")),
+  person("Rui", "Fu", ,
+    email = "rui.fu@ucdenver.edu",
     role = c("aut"))
     )
 Description: Provides course materials for IDPT 7620, Practical Biological Data Analysis in R.
