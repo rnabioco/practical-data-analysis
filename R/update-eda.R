@@ -8,6 +8,6 @@
 #' update_eda()
 #' }
 #' @export
-update_eda <- function(repo = "rnabioco/eda", ...){
+update_eda <- function(repo = "IDPT7810/practical-data-analysis", ...){
   devtools::install_github(repo, ...)
 }
