@@ -33,10 +33,6 @@ navbar:
         href: articles/class-2.html
       - text: "Class 3: Common Analysis Challenges"
         href: articles/class-3.html
-      - text: "Class 4: Genomic Interval Analysis part 1"
-        href: articles/class-4.html
-      - text: "Class 5: Genomic Interval Analysis part 2"
-        href: articles/class-5.html
       - text: "Class 6: RNA-Seq Analysis part 1"
         href: articles/class-6.html
       - text: "Class 7: RNA-Seq Analysis part 2"
@@ -48,8 +44,6 @@ navbar:
         href: "articles/exercises-2.html"
       - text: "Exercises 3"
         href: "articles/exercises-3.html"
-      - text: "Exercises 4"
-        href: "articles/exercises-4.html"
       - text: "Exercises 5"
         href: "articles/exercises-5.html"
       - text: "---------"
