@@ -2,11 +2,9 @@
 title: "Class 2: Developing Reproducible Reports"
 author: "Jay Hesselberth"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Class-2}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output:
+  powerpoint_presentation:
+    reference_doc: slide-styles.pptx
 ---
 
 ```{r setup, include = FALSE}

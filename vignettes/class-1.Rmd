@@ -1,12 +1,10 @@
 ---
-title: "Class 1: Overview and data tidying"
+title: "Class 1: Course Overview | Data Import and Tidying"
 author: "Jay Hesselberth"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Class-1}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output:
+  powerpoint_presentation:
+    reference_doc: slide-styles.pptx
 ---
 
 ```{r setup, include = FALSE}
@@ -16,8 +14,6 @@ knitr::opts_chunk$set(
   fig.path = "img/class-1-",
   fig.align = "center"
 )
-library(dplyr)
-library(ggplot2)
 ```
 
 # Goals for the course
@@ -306,7 +302,7 @@ ggplot(qpcr_tidy, aes(x = time, y = exp, color = rt)) + geom_point(size=3) + fac
   
 # Exercises
 
-1. Tidy the `mtcars` data set. Note that car names are rownames in the built-in data, so they need to be moved to their own column prior to tibble conversion.
+1. Tidy the `mtcars` data set. Note that car names are rownames in the built-in data, so they need to be moved to their own column prior to tibble conversion. You can use `tibble:rownames_to_column()` for this purpose.
 
 The tidied data should look something like:
 
@@ -314,7 +310,7 @@ The tidied data should look something like:
 mtcars %>% mutate(name = rownames(.)) %>% as_tibble() %>% gather(var, value, -name)
 ```
 
-2. For each car in the tidy `mtcars` data set, calculate the mean (`mean()`) and variance (`var()`) for each variable. Try using both `summarize()` and `summarize_at()` and `summarize_all()`.
+2. For each car in the tidy `mtcars` data set, calculate the mean (`mean()`) and variance (`var()`) for each variable. Try using `summarize()`, and `summarize_at()` or `summarize_all()`.
 
 3. Plot `mpg` vs `cyl` for the `mtcars` data set. Which format should you use? The original data set, or the tidied one? Why? 
 

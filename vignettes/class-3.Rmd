@@ -2,11 +2,9 @@
 title: "Class 3: Common Analysis Challenges"
 author: "Jay Hesselberth"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Class-3}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output:
+  powerpoint_presentation:
+    reference_doc: slide-styles.pptx
 ---
 
 ```{r setup, include = FALSE}
@@ -25,13 +23,13 @@ library(tidyverse)
 library(eda)
 ```
 
-## missing data
+## Missing data
 
 ### Zeroes, `NA`, `NaN` and `NULL`
 
 + Don't use use zeroes to represent missing data. `0` is valid observed value.
 
-+ `NA` (Not Available) is most often use to represent missing_ex data.
++ `NA` (Not Available) is most often use to represent missing data.
 
 + `NaN` (Not a Number) is the result of an undefined operation, e.g. `0 / 0`.
 
@@ -194,8 +192,16 @@ Can we capture linear relationships between expression and rate for *all combina
 ```{r brauer_mult_models, eval = FALSE}
 # this takes ~60 seconds to run
 models <- brauer_gene_exp %>%
-  group_by(systematic_name, name, nutrient) %>%
-  do(model = tidy(lm(expression ~ rate, data = .)))
+  select(systematic_name:expression) %>%
+  group_by(systematic_name, nutrient) %>%
+  nest() %>%
+  # remove `head` to generate the full data set
+  head() %>% 
+  mutate(
+    model = map(data, ~ tidy(lm(rate ~ expression, data = .x)))
+  ) %>%
+  select(-data)
+
 ```
 
 Plot the expression / rate relationship for the top-ten most significant genes. Color lines by nutrient.
@@ -203,7 +209,6 @@ Plot the expression / rate relationship for the top-ten most significant genes. 
 ```{r brauer_plot_models, eval = FALSE}
 topten <- models %>%
   unnest() %>%
-  filter(name != "") %>%
   arrange(p.value) %>%
   head(10) %>%
   select(systematic_name)
