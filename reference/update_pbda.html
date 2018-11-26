@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Gene expression in yeast measured by microarray — brauer_gene_exp • pbda</title>
+<title>Update pbda package using devtools — update_pbda • pbda</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Gene expression in yeast measured by microarray — brauer_gene_exp" />
+<meta property="og:title" content="Update pbda package using devtools — update_pbda" />
 
-<meta property="og:description" content="A dataset containing gene expression values of Saccharomyces cerevisiae grown
-under nutrient limitation conditions. The variables are as follows:" />
+<meta property="og:description" content="Update pbda package using devtools" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -113,54 +112,45 @@ under nutrient limitation conditions. The variables are as follows:" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Gene expression in yeast measured by microarray</h1>
+    <h1>Update pbda package using devtools</h1>
     
-    <div class="hidden name"><code>brauer_gene_exp.Rd</code></div>
+    <div class="hidden name"><code>update_pbda.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A dataset containing gene expression values of Saccharomyces cerevisiae grown
-under nutrient limitation conditions. The variables are as follows:</p>
+    <p>Update pbda package using devtools</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>brauer_gene_exp</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A data frame with 198,430 observations of 7 variables.</p>
+    <pre class="usage"><span class='fu'>update_pbda</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='st'>"IDPT7810/practical-data-analysis"</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p><a href='http://www.molbiolcell.org/content/19/1/352.long'>http://www.molbiolcell.org/content/19/1/352.long</a></p>
-<p><a href='http://varianceexplained.org/r/tidy-genomics/'>http://varianceexplained.org/r/tidy-genomics/</a></p>
-<p><a href='http://varianceexplained.org/r/tidy-genomics-broom/'>http://varianceexplained.org/r/tidy-genomics-broom/</a></p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <ul>
-<li><p><code>name</code> Common gene name</p></li>
-<li><p><code>BP</code> Gene Ontology Biological Process</p></li>
-<li><p><code>MF</code> Gene Ontology Molecular Function</p></li>
-<li><p><code>systematic_name</code> Systematic gene name</p></li>
-<li><p><code>nutrient</code> Nutrient omitted for growth</p></li>
-<li><p><code>rate</code> Growth rate</p></li>
-<li><p><code>expression</code> Gene expression value</p></li>
-</ul>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>repo</th>
+      <td><p>repository to update</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments to pass to devtools::install_github()</p></td>
+    </tr>
+    </table>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>update_pbda</span>()
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#source">Source</a></li>
-
-      <li><a href="#details">Details</a></li>
-          </ul>
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

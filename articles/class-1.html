@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Class 1: Course Overview | Data Import and Tidying • eda</title>
+<title>Class 1: Course Overview | Data Import and Tidying • pbda</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -29,8 +29,8 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">eda</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <a class="navbar-link" href="../index.html">pbda</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -102,8 +102,8 @@
 <a href="#rstudio-overview" class="anchor"></a>RStudio Overview</h1>
 <p>We’ll cover the basic steps of data import and analysis within RStudio and will highlight some features of the software as we go.</p>
 <p><strong>The class has its own R package, so you should begin by loading it into your session.</strong> You will need to reinstall the package when we make updates.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># devtools::install_github('rnabioco/eda')</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eda)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># devtools::install_github('idpt7810/practical-data-analysis')</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(pbda)</a></code></pre></div>
 <div id="panels" class="section level2">
 <h2 class="hasAnchor">
 <a href="#panels" class="anchor"></a>Panels</h2>
@@ -204,7 +204,7 @@
 <a href="#gather-and-spread" class="anchor"></a><code>gather</code> and <code>spread</code>
 </h3>
 <p>These are the workhorse functions in <code>tidyr</code>. Use <code>gather</code> when variables are in columns and you want them in tidy format.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eda)</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(pbda)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># column names in "wide" format are variables</span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">mtcars_tbl</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; # A tibble: 32 x 12</span></a>
@@ -439,7 +439,7 @@
 <h2 class="hasAnchor">
 <a href="#qpcr-data" class="anchor"></a>qPCR data</h2>
 <p>The class library provides two related tibbles that describe a simulated qPCR experiment called <code>qpcr_names</code> and <code>qpcr_data</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eda)</a>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(pbda)</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2">qpcr_names</a>
 <a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt; # A tibble: 8 x 13</span></a>
 <a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt;   row   `1`    `2`   `3`   `4`   `5`   `6`   `7`   `8`   `9`   `10`  `11` </span></a>
