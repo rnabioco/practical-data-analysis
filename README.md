@@ -2,7 +2,7 @@
 # Practical Biological Data Analysis with R/RStudio
 
 [![Build
-Status](https://travis-ci.org/rnabioco/practical-data-analysis.svg?branch=master)](https://travis-ci.org/rnabioco/practical-data-analysis)
+Status](https://travis-ci.org/IDPT7810/practical-data-analysis.svg?branch=master)](https://travis-ci.org/IDPT7810/practical-data-analysis)
 [![Build
 status](https://ci.appveyor.com/api/projects/status/nmsmgqp6nr1898wq?svg=true)](https://ci.appveyor.com/project/kriemo/practical-data-analysis)
 
