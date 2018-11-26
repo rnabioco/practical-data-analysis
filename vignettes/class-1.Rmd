@@ -31,8 +31,8 @@ We'll cover the basic steps of data import and analysis within RStudio and will 
 **The class has its own R package, so you should begin by loading it into your session.** You will need to reinstall the package when we make updates.
 
 ```{r load_eda}
-# devtools::install_github('rnabioco/eda')
-library(eda)
+# devtools::install_github('idpt7810/practical-data-analysis')
+library(pbda)
 ```
 
 ## Panels

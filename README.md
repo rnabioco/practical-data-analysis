@@ -48,9 +48,9 @@ Assignments](https://idpt7810.github.io/practical-data-analysis/articles/assignm
 
 ## Installation
 
-You can install `eda` from github with:
+You can install the course package from github with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("idpt7810/pbda")
+devtools::install_github("idpt7810/practical-data-analysis")
 ```

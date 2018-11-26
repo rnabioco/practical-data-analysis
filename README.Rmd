@@ -44,9 +44,9 @@ See [Grading and Assignments](https://idpt7810.github.io/practical-data-analysis
 
 ## Installation
 
-You can install `eda` from github with:
+You can install the course package from github with:
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("idpt7810/pbda")
+devtools::install_github("idpt7810/practical-data-analysis")
 ```
