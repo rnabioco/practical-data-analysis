@@ -5,24 +5,17 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Class 1: Overview and data tidying • eda</title>
-<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min.js" integrity="sha256-hIvIxeqhGZF+VVeM55k0mJvWpQ6gTkWk3Emc+NmowYA=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Class 1: Overview and data tidying">
+<title>Class 1: Course Overview | Data Import and Tidying • eda</title>
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Class 1: Course Overview | Data Import and Tidying">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-54095998-4"></script><script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-54095998-4');
-</script>
+<![endif]-->
 </head>
 <body>
     <div class="container template-article">
@@ -37,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eda</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
       </span>
     </div>
 
@@ -57,50 +50,14 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/class-1.html">Class 1: Overview and Data Tidying</a>
+      <a href="../articles/class-1.html">Class 1: Overview, Data Import and Tidying</a>
     </li>
     <li>
-      <a href="../articles/class-2.html">Class 2: Writing Reproducible Reports</a>
+      <a href="../articles/class-2.html">Class 2: Analyzing Biological Data</a>
     </li>
     <li>
-      <a href="../articles/class-3.html">Class 3: Common Analysis Challenges</a>
+      <a href="../articles/class-3.html">Class 3: Exploring Biological Data</a>
     </li>
-    <li>
-      <a href="../articles/class-4.html">Class 4: Genomic Interval Analysis part 1</a>
-    </li>
-    <li>
-      <a href="../articles/class-5.html">Class 5: Genomic Interval Analysis part 2</a>
-    </li>
-    <li>
-      <a href="../articles/class-6.html">Class 6: RNA-Seq Analysis part 1</a>
-    </li>
-    <li>
-      <a href="../articles/class-7.html">Class 7: RNA-Seq Analysis part 2</a>
-    </li>
-    <li class="divider">
-    <li>
-      <a href="../articles/exercises-1.html">Exercises 1</a>
-    </li>
-    <li>
-      <a href="../articles/exercises-2.html">Exercises 2</a>
-    </li>
-    <li>
-      <a href="../articles/exercises-3.html">Exercises 3</a>
-    </li>
-    <li>
-      <a href="../articles/exercises-4.html">Exercises 4</a>
-    </li>
-    <li>
-      <a href="../articles/exercises-5.html">Exercises 5</a>
-    </li>
-    <li class="divider">
-    <li>
-      <a href="../articles/assignment-1.html">Weekend Assignment 1</a>
-    </li>
-    <li>
-      <a href="../articles/assignment-2.html">Weekend Assignment 2</a>
-    </li>
-    <li class="divider">
     <li>
       <a href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
     </li>
@@ -119,10 +76,10 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Class 1: Overview and data tidying</h1>
+      <h1>Class 1: Course Overview | Data Import and Tidying</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2018-11-08</h4>
+            <h4 class="date">2018-11-26</h4>
       
       
       <div class="hidden name"><code>class-1.Rmd</code></div>
@@ -146,7 +103,7 @@
 <p>We’ll cover the basic steps of data import and analysis within RStudio and will highlight some features of the software as we go.</p>
 <p><strong>The class has its own R package, so you should begin by loading it into your session.</strong> You will need to reinstall the package when we make updates.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># devtools::install_github('rnabioco/eda')</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(eda)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eda)</a></code></pre></div>
 <div id="panels" class="section level2">
 <h2 class="hasAnchor">
 <a href="#panels" class="anchor"></a>Panels</h2>
@@ -156,8 +113,8 @@
 <p>The Environment panel enables data import and environment browsing.</p>
 <p>There are two main ways to import data within RStudio. One is interactive, using the “Import Dataset” button in the Environment panel.</p>
 <p><img src="img/class-1-data-import.png" alt="data import"> Alternatively you can use functions in the <code>readr</code> and <code>readxl</code> libraries to load data on the console or within an RMarkdown report. All of the functions have consistent <code>read_*</code> names.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">readr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">read_tsv</a></span>(<span class="st">'XXX'</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">readxl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readxl/topics/read_excel">read_excel</a></span>(<span class="st">'XXX'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span>(<span class="st">'XXX'</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">readxl<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/readxl/topics/read_excel">read_excel</a></span>(<span class="st">'XXX'</span>)</a></code></pre></div>
 <p>You can explore the environment with the “Global Environment” button.</p>
 </div>
 <div id="console" class="section level3">
@@ -165,22 +122,23 @@
 <a href="#console" class="anchor"></a>Console</h3>
 <p>The Console panel enables interactive analysis.</p>
 <p>The <code>tidyverse</code> is a collection of libraries that enable efficient data processing and visualization. You will probably start many analyses by loading the <code>tidyverse</code> library. This library loads a number of other libraries that are useful for data processing and plotting.:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; ✔ tibble  1.4.2     ✔ purrr   0.2.5</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; ✔ tidyr   0.8.2     ✔ stringr 1.3.1</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.3.0</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; ✔ ggplot2 3.1.0     ✔ purrr   0.2.5</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; ✔ tibble  1.4.2     ✔ dplyr   0.7.8</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; ✔ tidyr   0.8.2     ✔ stringr 1.3.1</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; ✔ readr   1.2.1     ✔ forcats 0.3.0</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></a></code></pre></div>
 <p>This one invocation loads several libraries including <code>dplyr</code> and <code>ggplot2</code>.</p>
 </div>
 <div id="viewer" class="section level3">
 <h3 class="hasAnchor">
 <a href="#viewer" class="anchor"></a>Viewer</h3>
 <p>The <code>tidyverse</code> contains <code>ggplot2</code>, which you covered in your pre-requisites. Let’s make a simple plot in RStudio. Note that the plot appears in the “Plots” panel. From there, you can Zoom, Export to a file, or Publish on RPubs.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg, <span class="dt">color =</span> <span class="kw">factor</span>(cyl))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg, <span class="dt">color =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(cyl))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="img/class-1-plot-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div id="editor" class="section level3">
@@ -211,7 +169,7 @@
 <a href="#the-tibble" class="anchor"></a>The <code>tibble</code>
 </h2>
 <p>A <code>tibble</code> is similar to a <code>data.frame</code> with some important differences. A <code>tibble</code> provides a quick overview of your data including its structure (rows and columns) and column types. Use <code>as_tibble()</code> to convert a <code>data.frame</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">head</span>(iris)</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(iris)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; 1          5.1         3.5          1.4         0.2  setosa</span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; 2          4.9         3.0          1.4         0.2  setosa</span></a>
@@ -220,7 +178,7 @@
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; 5          5.0         3.6          1.4         0.2  setosa</span></a>
 <a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; 6          5.4         3.9          1.7         0.4  setosa</span></a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="kw">as_tibble</span>(iris)</a>
 <a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; # A tibble: 150 x 5</span></a>
 <a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></a>
@@ -246,7 +204,7 @@
 <a href="#gather-and-spread" class="anchor"></a><code>gather</code> and <code>spread</code>
 </h3>
 <p>These are the workhorse functions in <code>tidyr</code>. Use <code>gather</code> when variables are in columns and you want them in tidy format.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">library</span>(eda)</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eda)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># column names in "wide" format are variables</span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">mtcars_tbl</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; # A tibble: 32 x 12</span></a>
@@ -299,7 +257,7 @@
 <a class="sourceLine" id="cb6-51" data-line-number="51"><span class="co">#&gt; 10 Fiat…     1     1     4  79    4.08     4    66  27.3  18.9     1  1.94</span></a>
 <a class="sourceLine" id="cb6-52" data-line-number="52"><span class="co">#&gt; # ... with 22 more rows</span></a></code></pre></div>
 <p>Each form has its advantages. For example, long format makes it easy to calculate summaries:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">xx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(key) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">median</span>(value))</a>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">xx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(key) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(value))</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; # A tibble: 11 x 2</span></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;    key   `median(value)`</span></a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;           &lt;dbl&gt;</span></a>
@@ -315,12 +273,12 @@
 <a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; 10 vs               0   </span></a>
 <a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; 11 wt               3.32</span></a></code></pre></div>
 <p>And wide format is useful for plotting.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">library</span>(ggrepel)</a>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggrepel)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">42</span>)</a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw">ggplot</span>(mtcars_tbl) <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(hp, mpg, <span class="dt">size =</span> <span class="dv">5</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggrepel/topics/geom_text_repel">geom_label_repel</a></span>(<span class="kw">aes</span>(hp, mpg, <span class="dt">fill =</span> <span class="kw">factor</span>(cyl), <span class="dt">label =</span> name))</a></code></pre></div>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggrepel/topics/geom_text_repel">geom_label_repel</a></span>(<span class="kw">aes</span>(hp, mpg, <span class="dt">fill =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(cyl), <span class="dt">label =</span> name))</a></code></pre></div>
 <p><img src="img/class-1-plot_label-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div id="separate-extract-and-unite" class="section level3">
@@ -329,7 +287,7 @@
 </h3>
 <p><code>separate</code> takes a column containing multiple variables on input and returns multiple columns, each with a new variable. For example, a column with year/month/day information can be separated into invidual columns.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">ys &lt;-<span class="st"> </span><span class="dv">1999</span><span class="op">:</span><span class="dv">2002</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">ms &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'Jan'</span>, <span class="st">'Feb'</span>, <span class="st">'Mar'</span>)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">ms &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'Jan'</span>, <span class="st">'Feb'</span>, <span class="st">'Mar'</span>)</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3">ds &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
 <a class="sourceLine" id="cb9-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb9-5" data-line-number="5">dates &lt;-<span class="st"> </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/expand.html">crossing</a></span>(ys, ms, ds) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unite</span>(date, ys<span class="op">:</span>ds, <span class="dt">sep =</span> <span class="st">'-'</span>)</a></code></pre></div>
@@ -350,7 +308,7 @@
 <a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">#&gt; # ... with 110 more rows</span></a>
 <a class="sourceLine" id="cb10-16" data-line-number="16"></a>
 <a class="sourceLine" id="cb10-17" data-line-number="17"><span class="co"># separate is the inverse of unite</span></a>
-<a class="sourceLine" id="cb10-18" data-line-number="18">dates <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(date, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">'year'</span>, <span class="st">'month'</span>, <span class="st">'day'</span>), <span class="dt">sep =</span> <span class="st">'-'</span>)</a>
+<a class="sourceLine" id="cb10-18" data-line-number="18">dates <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(date, <span class="dt">into =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'year'</span>, <span class="st">'month'</span>, <span class="st">'day'</span>), <span class="dt">sep =</span> <span class="st">'-'</span>)</a>
 <a class="sourceLine" id="cb10-19" data-line-number="19"><span class="co">#&gt; # A tibble: 120 x 3</span></a>
 <a class="sourceLine" id="cb10-20" data-line-number="20"><span class="co">#&gt;    year  month day  </span></a>
 <a class="sourceLine" id="cb10-21" data-line-number="21"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span></a>
@@ -377,10 +335,10 @@
 <a href="#crossing-and-complete" class="anchor"></a><code>crossing</code> and <code>complete</code>
 </h3>
 <p><code>crossing</code> is useful for generating combinations of variables in tibble format. For example, use <code>crossing</code> to generate combinations of experimental varaibles including sample names, gene names, reaction conditions, and replicates.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">sample &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'wt'</span>, <span class="st">'mut'</span>)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">gene &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'IFN'</span>, <span class="st">'ACTIN'</span>)</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">time &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="dv">24</span>, <span class="dv">48</span>)</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">rt &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'+'</span>, <span class="st">'-'</span>) <span class="co"># reverse transcriptase added?</span></a>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">sample &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'wt'</span>, <span class="st">'mut'</span>)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">gene &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'IFN'</span>, <span class="st">'ACTIN'</span>)</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">time &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="dv">24</span>, <span class="dv">48</span>)</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">rt &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'+'</span>, <span class="st">'-'</span>) <span class="co"># reverse transcriptase added?</span></a>
 <a class="sourceLine" id="cb11-5" data-line-number="5">rep &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span></a>
 <a class="sourceLine" id="cb11-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb11-7" data-line-number="7">tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/expand.html">crossing</a></span>(sample, gene, time, rep, rt)</a>
@@ -432,7 +390,7 @@
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">sample_info &lt;-<span class="st"> </span>samples <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span>(</a>
 <a class="sourceLine" id="cb13-3" data-line-number="3">    sample.name,</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">    <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">'sample'</span>, <span class="st">'hour'</span>, <span class="st">'rep'</span>),</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">    <span class="dt">into =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'sample'</span>, <span class="st">'hour'</span>, <span class="st">'rep'</span>),</a>
 <a class="sourceLine" id="cb13-5" data-line-number="5">    <span class="dt">sep =</span> <span class="st">"-"</span></a>
 <a class="sourceLine" id="cb13-6" data-line-number="6">  )</a>
 <a class="sourceLine" id="cb13-7" data-line-number="7"></a>
@@ -452,7 +410,7 @@
 <a class="sourceLine" id="cb13-21" data-line-number="21"><span class="co">#&gt; 10 MT     t8    1        94</span></a>
 <a class="sourceLine" id="cb13-22" data-line-number="22"><span class="co">#&gt; # ... with 14 more rows</span></a></code></pre></div>
 <p>Now we can use <code>dplyr</code> and <code>tidyr</code> functions to manipulate the data.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample, hour) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">mean</span>(value))</a>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample, hour) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(value))</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co">#&gt; # A tibble: 8 x 3</span></a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt; # Groups:   sample [?]</span></a>
 <a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt;   sample hour  `mean(value)`</span></a>
@@ -481,7 +439,7 @@
 <h2 class="hasAnchor">
 <a href="#qpcr-data" class="anchor"></a>qPCR data</h2>
 <p>The class library provides two related tibbles that describe a simulated qPCR experiment called <code>qpcr_names</code> and <code>qpcr_data</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">library</span>(eda)</a>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eda)</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2">qpcr_names</a>
 <a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt; # A tibble: 8 x 13</span></a>
 <a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt;   row   `1`    `2`   `3`   `4`   `5`   `6`   `7`   `8`   `9`   `10`  `11` </span></a>
@@ -572,7 +530,7 @@
 <ul>
 <li>Calculate summary statistics for each gene, cell and time point across replicates.</li>
 </ul>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">qpcr_tidy <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(rt <span class="op">==</span><span class="st"> "+"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample, gene, time) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">mean_exp =</span> <span class="kw">mean</span>(exp), <span class="dt">var_exp =</span> <span class="kw">var</span>(exp))</a>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">qpcr_tidy <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(rt <span class="op">==</span><span class="st"> "+"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample, gene, time) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">mean_exp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(exp), <span class="dt">var_exp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor">var</a></span>(exp))</a>
 <a class="sourceLine" id="cb19-2" data-line-number="2"><span class="co">#&gt; # A tibble: 16 x 5</span></a>
 <a class="sourceLine" id="cb19-3" data-line-number="3"><span class="co">#&gt; # Groups:   sample, gene [?]</span></a>
 <a class="sourceLine" id="cb19-4" data-line-number="4"><span class="co">#&gt;    sample gene  time  mean_exp   var_exp</span></a>
@@ -613,7 +571,7 @@
 <h1 class="hasAnchor">
 <a href="#exercises" class="anchor"></a>Exercises</h1>
 <ol style="list-style-type: decimal">
-<li>Tidy the <code>mtcars</code> data set. Note that car names are rownames in the built-in data, so they need to be moved to their own column prior to tibble conversion.</li>
+<li>Tidy the <code>mtcars</code> data set. Note that car names are rownames in the built-in data, so they need to be moved to their own column prior to tibble conversion. You can use <code>tibble:rownames_to_column()</code> for this purpose.</li>
 </ol>
 <p>The tidied data should look something like:</p>
 <pre><code>#&gt; # A tibble: 352 x 3
@@ -631,7 +589,7 @@
 #&gt; 10 Merc 280          mpg    19.2
 #&gt; # ... with 342 more rows</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li><p>For each car in the tidy <code>mtcars</code> data set, calculate the mean (<code>mean()</code>) and variance (<code>var()</code>) for each variable. Try using both <code>summarize()</code> and <code>summarize_at()</code> and <code>summarize_all()</code>.</p></li>
+<li><p>For each car in the tidy <code>mtcars</code> data set, calculate the mean (<code><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean()</a></code>) and variance (<code><a href="https://www.rdocumentation.org/packages/stats/topics/cor">var()</a></code>) for each variable. Try using <code>summarize()</code>, and <code>summarize_at()</code> or <code>summarize_all()</code>.</p></li>
 <li><p>Plot <code>mpg</code> vs <code>cyl</code> for the <code>mtcars</code> data set. Which format should you use? The original data set, or the tidied one? Why?</p></li>
 <li><p>Using the provided <code>qpcr</code> data, plot the changes in gene expression over time. Use colors to represent genotypes and facets for the different genes. If that’s too easy, add error bars (<code>geom_errorbar()</code>) and connect each point with a line (<code>geom_line()</code>).</p></li>
 </ol>
@@ -711,13 +669,12 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://hesselberthlab.org">Jay Hesselberth</a>, Austin Gillen, Kent Riemondy.</p>
+  <p>Developed by <a href="https://hesselberthlab.org">Jay Hesselberth</a>, Austin Gillen, Kent Riemondy, Rui Fu.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
 </div>
-
       </footer>
 </div>
 
