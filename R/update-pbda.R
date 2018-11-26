@@ -1,13 +1,13 @@
-#' Update eda package using devtools
+#' Update pbda package using devtools
 #'
 #' @param repo repository to update
 #' @param ... additional arguments to pass to devtools::install_github()
 #'
 #' @examples
 #' \dontrun{
-#' update_eda()
+#' update_pbda()
 #' }
 #' @export
-update_eda <- function(repo = "IDPT7810/practical-data-analysis", ...){
+update_pbda <- function(repo = "IDPT7810/practical-data-analysis", ...){
   devtools::install_github(repo, ...)
 }

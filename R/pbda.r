@@ -1,7 +1,7 @@
-#' Exploratory Data Analysis in R/RStudio
+#' Practical Biological Data Analysis in R/RStudio
 #'
 #' @docType package
-#' @name eda
+#' @name pbda 
 #'
 #' @import tidyverse
 #' @import ggrepel

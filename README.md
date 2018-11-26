@@ -44,7 +44,7 @@ Kent Riemondy (<kent.riemondy@gmail.com>)
 ## Course marks
 
 See [Grading and
-Assignments](https://rnabioco.github.io/practical-data-analysis/articles/assignments.html).
+Assignments](https://idpt7810.github.io/practical-data-analysis/articles/assignments.html).
 
 ## Installation
 
@@ -52,5 +52,5 @@ You can install `eda` from github with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("rnabioco/eda")
+devtools::install_github("idpt7810/pbda")
 ```
