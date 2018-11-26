@@ -20,7 +20,7 @@ library(dplyr)
 
 ```{r load}
 library(tidyverse)
-library(eda)
+library(pbda)
 ```
 
 ## Missing data
@@ -38,7 +38,7 @@ library(eda)
 Let's examine a data frame with some missing data.
 
 ```{r complete}
-# devtools::install_github('rnabioco/eda')
+# devtools::install_github('idpt7810/pbda')
 missing_ex
 ```
 

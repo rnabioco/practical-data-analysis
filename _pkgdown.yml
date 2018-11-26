@@ -16,7 +16,7 @@ reference:
     - yeast_prot_prop
   - title: Utilities
     contents:
-    - update_eda
+    - update_pbda
 
 navbar:
   left:

@@ -30,7 +30,7 @@ We'll cover the basic steps of data import and analysis within RStudio and will 
 
 **The class has its own R package, so you should begin by loading it into your session.** You will need to reinstall the package when we make updates.
 
-```{r load_eda}
+```{r load_pbda}
 # devtools::install_github('idpt7810/practical-data-analysis')
 library(pbda)
 ```
@@ -115,7 +115,7 @@ The `tidyr` package has useful functions to format data for efficient analysis. 
 These are the workhorse functions in `tidyr`. Use `gather` when variables are in columns and you want them in tidy format.
 
 ```{r gather}
-library(eda)
+library(pbda)
 # column names in "wide" format are variables
 mtcars_tbl
 
@@ -246,7 +246,7 @@ sample_info %>% spread(hour, value) %>% mutate(t24_norm = t24 - t0)
 The class library provides two related tibbles that describe a simulated qPCR experiment called `qpcr_names` and `qpcr_data`.
 
 ```{r qpcr}
-library(eda)
+library(pbda)
 qpcr_names
 
 qpcr_data
