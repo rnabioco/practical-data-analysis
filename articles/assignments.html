@@ -94,8 +94,8 @@
 <p>Your grade is based on a combination of:</p>
 <ul>
 <li>Pre-requisite completion (5%)</li>
-<li>Attendance and participation (15%)</li>
-<li>Assignments (80%)</li>
+<li>Attendance and participation (5%)</li>
+<li>Assignments (90%)</li>
 </ul>
 </div>
 <div id="assignments" class="section level1">
@@ -104,25 +104,68 @@
 <p>There are two types of assignments in the course:</p>
 <ul>
 <li>
-<strong>Nightly quizzes</strong> worth 30 points each.</li>
+<strong>Nightly quizzes</strong> worth 60 points each.</li>
 <li>
-<strong>Weekend analyses</strong> worth 60 points each.</li>
+<strong>Weekend analyses</strong>, also worth 60 points each.</li>
 </ul>
-<p>Assignments must be turned in as Rmarkdown text files via Canvas. <strong>They must render completely when the Knit button is clicked</strong>. This means you will need to load all libraries within the document. This is a good chunk to put in your Rmarkdown code:</p>
+<p>Assignments must be turned in via Github. <strong>They must render completely when the Knit button is clicked</strong>. This means you will need to load all libraries within the document.</p>
+<p>This is a good way to start your Rmarkdown document:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eda)</a></code></pre></div>
-<p>You are welcome and encouraged to work in groups to complete the assignments. One stipulation: if you work together, tell us who your collaborators were in the assignment.</p>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(pbda)</a></code></pre></div>
+<p>You are welcome and encouraged to work in groups to complete the assignments, with one stipulation: if you work together, tell us who your collaborators were in the assignment.</p>
 </div>
 <div id="grading-rubric" class="section level1">
 <h1 class="hasAnchor">
 <a href="#grading-rubric" class="anchor"></a>Grading Rubric</h1>
 <p>Each assignment problem will be evaluated using the following rubric:</p>
-<ol style="list-style-type: decimal">
-<li>Text annotations are provided laying out the problem, the strategy, and the conclusions.</li>
-<li>Code is succinct and commented.</li>
-<li>Graph types and layouts are chosen carefully to illustrate a single point.</li>
-</ol>
-<p>Other required features include:</p>
+<table class="table">
+<thead><tr class="header">
+<th><strong>Topic</strong></th>
+<th><strong>Excellent (10)</strong></th>
+<th><strong>Satisfactory (8)</strong></th>
+<th><strong>Needs work (6)</strong></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Coding Style</td>
+<td>✔️</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Coding strategy</td>
+<td>✔️</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Presentation: graphs</td>
+<td>✔️</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Presentation: tables</td>
+<td>✔️</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Achievement, creativity</td>
+<td>✔️</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Ease of access</td>
+<td>✔️</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Grade: (60 points)</strong></p>
+<p>Before you submit, please ensure you also do the following:</p>
 <ul>
 <li><p><strong>Remove extraneous information from your submission.</strong> If you start with the template from <code>File &gt; New File &gt; R Markdown...</code>, then delete the generic sections.</p></li>
 <li><p><strong>Include the text of the question into your submission.</strong> Use markdown to delineate the Question, Strategy and Interpretation sections. Here is an example layout.</p></li>
