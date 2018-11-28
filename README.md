@@ -22,9 +22,9 @@ IDPT 7810 006
 
 ### Dates and Times
 
-The course (2 credit hours) consists of seven 2 hour classes held Mon,
-Wed and Fri from Nov 29 through Dec 15 in the Health Sciences Library
-Teaching Lab 2 from 1:00-3:00 pm.
+The course (2 credit hours) consists of 13 2 hour classes held Mon
+through Fri from Nov 28 through Dec 14 in P28-1202 (P28-2301 on Dec 6,
+7, and 12) from 1:00-3:00 pm. Building P28 is Education 2 North.
 
 We have dedicated office hours on Thurs from 2:30-4pm in RC1 South 9th
 floor in the main office (behind the glass walls). Come with questions,
