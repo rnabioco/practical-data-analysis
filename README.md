@@ -37,9 +37,11 @@ Jay Hesselberth (<jay.hesselberth@gmail.com>)
 
 ### Co-instructors
 
-Austin Gillen (<austin.gillen@gmail.com>)
+Austin Gillen (<austin.gillen@ucdenver.edu>)
 
-Kent Riemondy (<kent.riemondy@gmail.com>)
+Kent Riemondy (<kent.riemondy@ucdenver.edu>)
+
+Rui Fu (<rui.fu@ucdenver.edu>)
 
 ## Course marks
 
