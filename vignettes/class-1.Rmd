@@ -169,6 +169,10 @@ ggplot(mtcars_tbl) +
   geom_label_repel(aes(hp, mpg, fill = factor(cyl), label = name))
 ```
 
+# Exercise
+
+Examine the `beavers` data set (`beaver1` and `beaver2`) to identify its variables. Is it in tidy format? If not, how would you rearrange it to make it tidy?
+
 # `separate` and `unite`
 
 `separate` takes a column containing multiple variables on input and returns multiple columns, each with a new variable. For example, a column with year/month/day information can be separated into invidual columns.
