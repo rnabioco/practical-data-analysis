@@ -53,7 +53,7 @@ Alternatively you can use functions in `readr` and `readxl` to load data on the 
 
 ```{r read_data}
 library(readr)
-read_tsv(readr_example("mtcars.csv"))
+read_csv(readr_example("mtcars.csv"))
 
 library(readxl)
 read_excel(readxl_example("datasets.xlsx"))
