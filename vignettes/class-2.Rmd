@@ -1,10 +1,8 @@
 ---
-title: "Class 2: Developing Reproducible Reports"
+title: "Class 2: Analyzing qPCR data"
 author: "Jay Hesselberth"
 date: "`r Sys.Date()`"
-output:
-  powerpoint_presentation:
-    reference_doc: slide-styles.pptx
+output: html_document
 ---
 
 ```{r setup, include = FALSE}
@@ -14,19 +12,197 @@ knitr::opts_chunk$set(
   fig.path = "img/class-2-",
   fig.align = "center"
 )
+
+library(tidyverse)
 ```
 
-# Performing analyses in RStudio
+# Dealing with sample names
 
-## Keep cheatsheets handy!
+`separate` takes a column containing multiple variables on input and returns multiple columns, each with a new variable. For example, a column with year/month/day information can be separated into invidual columns.
 
-See `Help > Cheatsheets` for helpful references. Print them out and pin them up next to your screen. The `dplyr` and `ggplot2` cheatsheets are especially useful for beginners.
+```{r sep_dates}
+ys <- 1999:2002
+ms <- c('Jan', 'Feb', 'Mar')
+ds <- 1:10
+
+dates <- tidyr::crossing(ys, ms, ds) %>% unite(date, ys:ds, sep = '-')
+```
+
+# `separate`
+
+```{r sep_dates2}
+dates
+
+# separate is the inverse of unite
+dates %>% separate(date, into = c('year', 'month', 'day'), sep = '-')
+```
+
+The `sep` argument can take:
+
+- a character (split `rep_value` using `sep = '_'` into `rep` and `value`)
+- a position (split `a1` using `sep = 1` into `a` and `1`)
+
+Finally the `extra` and `fill` arguments to `separate` control what happens when there are too many and not enough variables.
+
+# `crossing` 
+
+`crossing` is useful for generating combinations of variables in tibble format. For example, use `crossing` to generate combinations of experimental varaibles including sample names, gene names, reaction conditions, and replicates.
+
+```{r crossing}
+genotype <- c('wt', 'mut')
+gene <- c('IFN', 'ACTIN')
+time <- c(0, 12, 24, 48)
+rt <- c('+', '-') # reverse transcriptase added?
+rep <- 1:3
+
+samples <- tidyr::crossing(genotype, gene, time, rep, rt)
+
+samples
+```
+
+# Data in the 96-well plate format.
+
+Now we'll use tidy data principles to analyze some qPCR data.
+
+Many biological assays make use of the 96 (or 384) well plate. Note the similarity between the plate and a `tibble`: there are rows and columns, and each well contains a reaction that will generate one or more data points.
+
+![plate](img/plate.jpg)
+
+# Sample names
+
+All variables should be systematically listed in your sample names, i.e. `name_rep_time_RT`. Systematic naming makes it easy to extract relevant information.
+
+Take this example, where the sample names are a combination of a genotype (`WT` and `MT`), a time point (0,4,8,24 hour), and a replicate (1,2,3), separated by a hyphen.
+
+```{r sample_names}
+library(tidyverse)
+
+# for reproducible `sample`
+set.seed(47681)
+
+samples <-
+  tidyr::crossing(
+    name = c('WT', 'MT'),
+    hours = c('t0', 't4', 't8', 't24'),
+    reps = 1:3
+    ) %>%
+  mutate(
+    value = sample(1:100, n(), replace = TRUE),
+    .id = row_number()
+    ) %>%
+  unite('sample.name', name, hours, reps, sep = '-') %>%
+  select(-.id)
+
+samples
+```
+
+# Extracting sample names
+
+Because the samples have systematic names, it is easy to separate this information into individual columns.
+
+```{r extract_info}
+sample_info <- samples %>%
+  tidyr::separate(
+    sample.name,
+    into = c('sample', 'hour', 'rep'),
+    sep = "-"
+  )
+
+sample_info
+```
+
+# Data manipulation
+
+Now we can use `dplyr` and `tidyr` functions to manipulate the data.
+
+```{r manip}
+# calculate summary statistics
+sample_info %>% group_by(sample, hour) %>% summarize(mean(value))
+
+# subtract a background value. N.B.: rearranging the table makes this calculation easy.
+sample_info %>% spread(hour, value) %>% mutate(t24_norm = t24 - t0)
+```
+
+# qPCR data
+
+The class library provides two related tibbles that describe a simulated qPCR experiment called `qpcr_names` and `qpcr_data`.
+
+```{r qpcr}
+library(pbda)
+
+qpcr_names
+
+qpcr_data
+```
+
+We will use tidying concepts to prepare this data for efficient analysis and visualization.
+
+# qPCR data tidying
+
++ Tidy `qpcr_data` and `qpcr_names` into a structure like:
+
+```{r tidy_qpcr, echo=FALSE}
+qpcr_names_tidy <- qpcr_names %>% gather(col, value, -row)
+# `exp` is the relative expression level
+qpcr_data_tidy <- qpcr_data %>% gather(col, exp, -row)
+
+qpcr_data_tidy
+```
+
+# Sample names
+
++ Separate variables into new columns in `qpcr_names_tidy`.
+
+```{r tidy_ex, echo = FALSE}
+qpcr_names_tidy <- separate(
+  qpcr_names_tidy,
+  value,
+  into = c('sample', 'time', 'gene', 'rt', 'rep'),
+  sep = '_'
+)
+
+qpcr_names_tidy
+```
+
+# Data joining
+
++ Join the tidied data together.
+
+```{r qpcr_join, echo = FALSE}
+qpcr_tidy <- left_join(qpcr_names_tidy, qpcr_data_tidy)
+
+qpcr_tidy
+```
+
+# Statistical summary
+
++ Calculate summary statistics for each gene, cell and time point across replicates.
+
+```{r qpcr_stats}
+qpcr_tidy %>%
+  filter(rt == "+") %>%
+  group_by(sample, gene, time) %>%
+  summarize(mean_exp = mean(exp), var_exp = var(exp))
+```
+
+# Plots
+
++ Plot the expression for each gene over time.
+
++ Calculate a fold-change for IFN over ACTIN and re-plot.
+  
+```{r qpcr_plot, echo = FALSE}
+ggplot(qpcr_tidy, aes(x = time, y = exp, color = rt)) + geom_point(size=3) + facet_wrap(~gene)
+```
+  
+# Rmarkdown
 
 ## Code Chunks
 
-**Chunk options** control the behaviour of code chunks. Useful settings include:
+**Chunk options** control the behaviour of code chunks. Some useful settings:
 
-- Show but don't run code with `eval = FALSE`
+- Show but don't run code with `eval = FALSE`. Useful if you have chunk that is failing but want to build the rest of the document.
+
 - Suppress messages with `message = FALSE` and warnings with `warnings = FALSE`
 
 **Code folding** lets you embed collapsible code chunks in your rendered HTML document. Please use this for your assignments.
@@ -44,23 +220,20 @@ output:
 
 ```{r wrap_lines, eval=FALSE}
 # nope
-mtcars %>% rownames_to_columns(.) %>% as_tibble() %>% ggplot(mtcars, aes(x = mpg, y = hp)) + geom_point() + geom_line() + scale_color_brewer(palette = "Set1")
+mtcars %>% ggplot(aes(x = mpg, y = hp)) + geom_point('red') + geom_line()
 
 # yep
 mtcars %>%
-  rownames_to_columns(.) %>%
-  as_tibble() %>%
-  ggplot(mtcars, aes(x = mpg, y = hp)) +
-  geom_point() +
-  geom_line() +
-  scale_color_brewer(palette = "Set1")
+  ggplot(aes(x = mpg, y = hp)) +
+  geom_point(color = 'red') +
+  geom_line()
 ```
 
 ## Writing notes on your analysis
 
 - Adopt a systematic markdown framework for commenting on your data analysis, making use hierarchical markdown headings. Create sections like:
 
-``` rmd
+```
 # Hypothesis
 
 # Approach
@@ -74,9 +247,9 @@ mtcars %>%
 ## Conclusions
 ```
 
-# Plot advice
+# Making quality plots
 
-## Figure Legends
+## Figure legends
 
 - Figure legends can be added using the `fig.cap=` chunk option.
 
@@ -161,42 +334,9 @@ DT::datatable(mtcars)
 knitr::kable(mtcars)
 ```
 
-# Organizing analyses
+## Resources
 
-Use Markdown headings to organize your document. You can use the Document Outline in RStudio to display your organziation.
-
-## Develop a framework
-
-Each project should have a systematic hierarchy to organize data and results. I recommend reading this [short article](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000424) from Bill Noble to organize your data.
-
-The article forces you to organize your data into a standard hierarchy where:
-
-- Items in `data/` are static, unchanging data files. Tables of metadata, fastq files etc.
-- Items in `results/` are analyses organized by date and can change.
-
-## RStudio Projects
-
-A Project is a self-contained set of files that can be easily accessed in RStudio.
-
-To make a Project, choose File > New Project... . Answer a few prompts and you will have your own 
-
-## Github
-
-Github is beyond the scope of this class. But if you are using Rmarkdown--or writing other types of code--then it is worth the effort to set it up. Jenny Bryan has an excellent tutorial for setting up Github and integrating it with RStudio (XXX githug).
-
-Github provides several advantages:
-
-- **Revision control.** You have a history of all changes to your documents and can go back to any point.
-- **Collaboration.** It is easy to share analyses with your colleagues and is built to enable multiple people to work an a common project.
-- **Publicity.** Your github page reflects your interests and productivity. Others might visit to evaluate your code samples.
-
-# Sharing results
-
-Once you have created an Rmarkdown document, there are several ways to share it with others.
-
-- **Send the HTML file**. One approach is to render the Rmarkdown file to an HTML and send the rendered HTML. This works OK for small analyses, but file sizes can quickly approach the attachment limit.
-
-- **Post the analysis on the web rpubs.com**
+- [Fundamentals of Data Visualization](https://serialmentor.com/dataviz/)
 
 # Getting help
 
@@ -205,3 +345,9 @@ Once you have created an Rmarkdown document, there are several ways to share it 
 - [The RStudio Community](https://community.rstudio.com/)
 
 - Follow #rstats folks on twitter (@drob, @hadleywickham, @JennyBryan)
+
+# Quiz
+
+Create an RMarkdown document for Problem Set 1. Submit your final document as "Quiz 1" on Canvas by Friday at 5 PM.
+
+**Your submitted document must knit to HTML without errors**. I.e., when you click the "Knit" button, the document should build and display and HTML page.
