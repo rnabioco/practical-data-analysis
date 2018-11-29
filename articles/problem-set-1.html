@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Assignments and Grading • pbda</title>
+<title>Exercises 1 • pbda</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Assignments and Grading">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Exercises 1">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -77,114 +77,89 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Assignments and Grading</h1>
-                        <h4 class="author">Jay Hesselberth</h4>
+      <h1>Exercises 1</h1>
+                        <h4 class="author">Your Name Here</h4>
             
-            <h4 class="date">2018-11-29</h4>
+            <h4 class="date">12/3/2017</h4>
       
       
-      <div class="hidden name"><code>assignments.Rmd</code></div>
+      <div class="hidden name"><code>problem-set-1.Rmd</code></div>
 
     </div>
 
     
     
-<div id="grades" class="section level1">
+<div id="overview" class="section level1">
 <h1 class="hasAnchor">
-<a href="#grades" class="anchor"></a>Grades</h1>
-<p>Your grade is based on a combination of:</p>
-<ul>
-<li>Pre-requisite completion (5%)</li>
-<li>Attendance and participation (5%)</li>
-<li>Assignments (90%)</li>
-</ul>
+<a href="#overview" class="anchor"></a>Overview</h1>
+<p>Here is a <a href="https://raw.githubusercontent.com/rnabioco/eda/master/vignettes/exercises-1.Rmd">link</a> to the text of these exercises.</p>
 </div>
-<div id="assignments" class="section level1">
+<div id="question-1" class="section level1">
 <h1 class="hasAnchor">
-<a href="#assignments" class="anchor"></a>Assignments</h1>
-<p>There are two types of assignments in the course:</p>
-<ul>
-<li>
-<strong>Nightly quizzes</strong> worth 60 points each.</li>
-<li>
-<strong>Weekend analyses</strong>, also worth 60 points each.</li>
-</ul>
-<p>Assignments must be turned in via Github. <strong>They must render completely when the Knit button is clicked</strong>. This means you will need to load all libraries within the document.</p>
-<p>This is a good way to start your Rmarkdown document:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(pbda)</a></code></pre></div>
-<p>You are welcome and encouraged to work in groups to complete the assignments, with one stipulation: if you work together, tell us who your collaborators were in the assignment.</p>
+<a href="#question-1" class="anchor"></a>Question 1</h1>
+<p>Tidy the <code>mtcars</code> data set. Note that car names are rownames in the built-in data, so they need to be moved to their own column prior to tibble conversion.</p>
+<p>The tidied data should look like:</p>
+<pre><code># A tibble: 352 x 3
+                name   var value
+               &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+ 1         Mazda RX4   mpg  21.0
+ 2     Mazda RX4 Wag   mpg  21.0
+ 3        Datsun 710   mpg  22.8
+ 4    Hornet 4 Drive   mpg  21.4
+ 5 Hornet Sportabout   mpg  18.7
+ 6           Valiant   mpg  18.1
+ 7        Duster 360   mpg  14.3
+ 8         Merc 240D   mpg  24.4
+ 9          Merc 230   mpg  22.8
+10          Merc 280   mpg  19.2
+# ... with 342 more rows</code></pre>
+<div id="strategy" class="section level2">
+<h2 class="hasAnchor">
+<a href="#strategy" class="anchor"></a>Strategy</h2>
 </div>
-<div id="grading-rubric" class="section level1">
+<div id="interpretation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interpretation" class="anchor"></a>Interpretation</h2>
+</div>
+</div>
+<div id="question-2" class="section level1">
 <h1 class="hasAnchor">
-<a href="#grading-rubric" class="anchor"></a>Grading Rubric</h1>
-<p>Each assignment problem will be evaluated using the following rubric:</p>
-<table class="table">
-<thead><tr class="header">
-<th><strong>Topic</strong></th>
-<th><strong>Excellent (10)</strong></th>
-<th><strong>Satisfactory (8)</strong></th>
-<th><strong>Needs work (6)</strong></th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>Coding Style</td>
-<td>✔️</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Coding strategy</td>
-<td>✔️</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Presentation: graphs</td>
-<td>✔️</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Presentation: tables</td>
-<td>✔️</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Achievement, creativity</td>
-<td>✔️</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Ease of access</td>
-<td>✔️</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Grade: (60 points)</strong></p>
-<p>Before you submit, please ensure you also do the following:</p>
-<ul>
-<li><p><strong>Remove extraneous information from your submission.</strong> If you start with the template from <code>File &gt; New File &gt; R Markdown...</code>, then delete the generic sections.</p></li>
-<li><p><strong>Include the text of the question into your submission.</strong> Use markdown to delineate the Question, Strategy and Interpretation sections. Here is an example layout.</p></li>
-</ul>
-<pre><code># Question 1
-
-Assess the relationship between hp and cyl in `mtcars`.
-
-## Strategy
-
-Plot hp vs cyl and examine.
-
-## Interpretation
-
-There is a linear relationship between hp and cyl.</code></pre>
-<ul>
-<li>Add <a href="rmarkdown.rstudio.com/html_document_format.html#code_folding"><code>code_folding</code></a> to your front matter so that code appears next to plots etc.</li>
-</ul>
+<a href="#question-2" class="anchor"></a>Question 2</h1>
+<p>For each car in the tidy <code>mtcars</code> data set, calculate the mean (<code><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean()</a></code>) and variance (<code><a href="https://www.rdocumentation.org/packages/stats/topics/cor">var()</a></code>) for each variable. Try using <code>summarize()</code> and <code>summarize_at()</code> and <code>summarize_all()</code>.</p>
+<div id="strategy-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#strategy-1" class="anchor"></a>Strategy</h2>
+</div>
+<div id="interpretation-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interpretation-1" class="anchor"></a>Interpretation</h2>
+</div>
+</div>
+<div id="question-3" class="section level1">
+<h1 class="hasAnchor">
+<a href="#question-3" class="anchor"></a>Question 3</h1>
+<p>Plot <code>mpg</code> vs <code>cyl</code> for the <code>mtcars</code> data set. Which format should you use? The original data set, or the tidied one? Why?</p>
+<div id="strategy-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#strategy-2" class="anchor"></a>Strategy</h2>
+</div>
+<div id="interpretation-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interpretation-2" class="anchor"></a>Interpretation</h2>
+</div>
+</div>
+<div id="question-4" class="section level1">
+<h1 class="hasAnchor">
+<a href="#question-4" class="anchor"></a>Question 4</h1>
+<p>Using the provided <code>qpcr</code> data, plot the changes in gene expression over time. Use <strong>colors</strong> to represent genotypes and <strong>facets</strong> for the different genes. If that’s too easy, add error bars (<code>geom_errorbar()</code>) to the plot and connect each point with a line (<code>geom_line()</code>).</p>
+<div id="strategy-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#strategy-3" class="anchor"></a>Strategy</h2>
+</div>
+<div id="interpretation-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interpretation-3" class="anchor"></a>Interpretation</h2>
+</div>
 </div>
   </div>
 
@@ -193,9 +168,31 @@ There is a linear relationship between hp and cyl.</code></pre>
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#grades">Grades</a></li>
-      <li><a href="#assignments">Assignments</a></li>
-      <li><a href="#grading-rubric">Grading Rubric</a></li>
+<li><a href="#overview">Overview</a></li>
+      <li>
+<a href="#question-1">Question 1</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#strategy">Strategy</a></li>
+      <li><a href="#interpretation">Interpretation</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#question-2">Question 2</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#strategy-1">Strategy</a></li>
+      <li><a href="#interpretation-1">Interpretation</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#question-3">Question 3</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#strategy-2">Strategy</a></li>
+      <li><a href="#interpretation-2">Interpretation</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#question-4">Question 4</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#strategy-3">Strategy</a></li>
+      <li><a href="#interpretation-3">Interpretation</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>
