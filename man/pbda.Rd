@@ -13,8 +13,8 @@ Provides course materials for IDPT 7810, Practical Biological Data Analysis in R
 
 Authors:
 \itemize{
-  \item Austin Gillen \email{austin.gillen@gmail.com}
-  \item Kent Riemondy \email{kent.riemondy@gmail.com}
+  \item Austin Gillen \email{austin.gillen@ucdenver.edu}
+  \item Kent Riemondy \email{kent.riemondy@ucdenver.edu}
   \item Rui Fu \email{rui.fu@ucdenver.edu}
 }
 

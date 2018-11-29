@@ -28,5 +28,10 @@ navbar:
     menu:
       - text: "Class 1: Overview, Data Import and Tidying"
         href: articles/class-1.html
+      - text: "Class 2: Analyzing qPCR data"
+        href: articles/class-2.html
+      - text: "--------"
       - text: "Assignment Submission and Grading Rubric"
         href: articles/assignments.html
+      - text: "Problem Set 1"
+        href: articles/problem-set-1.html
