@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Overview
 
-Here is a [link](https://raw.githubusercontent.com/rnabioco/eda/master/vignettes/exercises-1.Rmd) to the text of these exercises.
+Here is a [link](https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/vignettes/problem-set-1.Rmd) to the text of these exercises.
 
 # Question 1
 
