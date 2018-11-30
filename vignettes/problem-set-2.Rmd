@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Analyze a qPCR experiment
 
-Here is a [link]() to the Rmarkdown for this assignment. Download that and update your name at the top.
+Here is a [link](https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/vignettes/problem-set-2.Rmd) to the Rmarkdown for this assignment. Download that and update your name at the top.
 
 You are investigating how the transcription factor MAGIC regulates the expression of two genes WAND and POOF. You use wild-type and mutant lines with different forms of the MAGIC gene and examine the expression of MAGIC, WAND, and POOF. The experiment is a time-course after you add an activator of MAGIC. You collect 4 time points (0, 12, 24, 48 hour) with three biological replicates.
 
