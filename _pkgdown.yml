@@ -35,3 +35,5 @@ navbar:
         href: articles/assignments.html
       - text: "Problem Set 1"
         href: articles/problem-set-1.html
+      - text: "Problem Set 2"
+        href: articles/problem-set-2.html
