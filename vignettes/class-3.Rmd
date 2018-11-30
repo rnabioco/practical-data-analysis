@@ -1,5 +1,5 @@
 ---
-title: "Class 3: Common Analysis Challenges"
+title: "Class 3: Exploring a biological data set"
 author: "Jay Hesselberth"
 date: "`r Sys.Date()`"
 output:
@@ -14,14 +14,14 @@ knitr::opts_chunk$set(
   fig.path = "img/class-3-",
   fig.align = "center"
 )
-library(ggplot2)
-library(dplyr)
 ```
 
 ```{r load}
 library(tidyverse)
 library(pbda)
 ```
+
+# Exploring a Biological Data Set
 
 ## Missing data
 
@@ -38,7 +38,6 @@ library(pbda)
 Let's examine a data frame with some missing data.
 
 ```{r complete}
-# devtools::install_github('idpt7810/pbda')
 missing_ex
 ```
 
@@ -84,9 +83,13 @@ sum(missing_ex$value1, na.rm = TRUE)
 
 3. Calculate the mean for values in each group in `missing_ex`. Use `summarize()`, then try `summarize_at()`.
 
-## Too much data
+## A "simple" biological data set
 
-### Examining sorted data
+The `brauer_gene_exp` data contains a data set from a [manuscript](https://www.ncbi.nlm.nih.gov/pubmed/17959824) describing how gene expression changes in yeast under several nutrient limitation conditions.
+
+We'll explore this data in broad strokes to get you thinking about how to ask simple biological questions with a complex data set. We'll draw from a more thorough examination by David Robinson in a [blog post](http://varianceexplained.org/r/tidy-genomics-broom/)---this is a good read if you're interested in digging more deeply.
+
+### Sorting and sampling data
 
 ```{r head_tail}
 sorted <- brauer_gene_exp %>%
@@ -112,11 +115,11 @@ Use `sample_n()` and `sample_frac()` to randomly select rows from a large data s
 brauer_gene_exp
 
 # sample 1e5 rows
-set.seed(47681)
+set.seed(1234)
 brauer_gene_exp %>% sample_n(1e3)
 
 # sample 10% of the rows
-set.seed(47681)
+set.seed(1234)
 brauer_gene_exp %>% sample_frac(0.1)
 ```
 
@@ -152,7 +155,7 @@ anti_join(gene_exp_rate, gene_mw, by = c("systematic_name" = "ORF"))
 
 2. How many unique gene names (`systematic_name`) are shared between the `brauer_gene_exp` and `yeast_prot_prop` tables? (5,536).
 
-## Too many variables
+## Relationships between variables
 
 We'll use the `brauer_gene_exp` data set to illustrate how you can use summary statistics to capture relationships between many variables.
 
