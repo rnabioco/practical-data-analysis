@@ -61,9 +61,9 @@ You can remove **all** rows containing `NA` values with `na.omit()`.
 missing_ex %>% na.omit()
 ```
 
-### Statistics with `NA` values
+### Computing with `NA` values
 
-Exclude `NA` values from statistical operations with `na.rm = TRUE`.
+Exclude `NA` values from operations with `na.rm = TRUE`.
 
 ```{r stat_na}
 missing_ex$value1
@@ -87,7 +87,7 @@ sum(missing_ex$value1, na.rm = TRUE)
 
 The `brauer_gene_exp` data contains a data set from a [manuscript](https://www.ncbi.nlm.nih.gov/pubmed/17959824) describing how gene expression changes in yeast under several nutrient limitation conditions.
 
-We'll explore this data in broad strokes to get you thinking about how to ask simple biological questions with a complex data set. We'll draw from a more thorough examination by David Robinson in a [blog post](http://varianceexplained.org/r/tidy-genomics-broom/)---this is a good read if you're interested in digging more deeply.
+We'll explore this data in broad strokes to get you thinking about how to ask simple biological questions with a complex data set. We'll draw from a more thorough examination by David Robinson in a [blog post](http://varianceexplained.org/r/tidy-genomics-broom/)---this is a good read if you're interested in digging in more deeply.
 
 ### Sorting and sampling data
 
@@ -225,4 +225,3 @@ topten_exp %>%
   facet_wrap(~systematic_name + name) +
   scale_color_brewer(palette = "Set1")
 ```
-
