@@ -191,42 +191,71 @@
 <a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">systematic_name =</span> ORF) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(systematic_name, n_sulfur)</a></code></pre></div>
 <ul>
-<li>Identify genes that are repressed under sulfate starvation conditions. Use the linear modeling approach to identify genes with negative slopes.</li>
+<li>Test whether gene expression and <code>n_sulfur</code> are correlated.</li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(broom)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">models &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(systematic_name<span class="op">:</span>expression) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(systematic_name, nutrient) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw">nest</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="co"># head() %&gt;% </span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">    <span class="dt">model =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/tidy">tidy</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(expression <span class="op">~</span><span class="st"> </span>rate, <span class="dt">data =</span> .x)))</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>data)</a></code></pre></div>
+<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">brauer_gene_exp <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(systematic_name, nutrient, expression) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw">left_join</span>(sulfurs) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>systematic_name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw">group_by</span>(nutrient) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw">nest</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">    <span class="dt">cor =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/tidy">tidy</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor.test">cor.test</a></span>(.<span class="op">$</span>n_sulfur, .<span class="op">$</span>expression)))</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="st">  </span><span class="kw">select</span>(nutrient, cor) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>estimate)</a></code></pre></div>
+<pre><code>## Joining, by = "systematic_name"</code></pre>
+<pre><code>## # A tibble: 6 x 9
+##   nutrient estimate statistic   p.value parameter conf.low conf.high method
+##   &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; 
+## 1 Ammonia   0.127       23.2  5.00e-118     32989  0.116      0.137  Pears…
+## 2 Leucine   0.0449       8.16 3.48e- 16     33027  0.0341     0.0556 Pears…
+## 3 Phospha…  0.0420       7.63 2.47e- 14     32919  0.0312     0.0528 Pears…
+## 4 Glucose   0.0367       6.68 2.49e- 11     32987  0.0260     0.0475 Pears…
+## 5 Sulfate   0.00680      1.23 2.18e-  1     32751 -0.00403    0.0176 Pears…
+## 6 Uracil   -0.0313      -5.67 1.44e-  8     32858 -0.0421    -0.0205 Pears…
+## # ... with 1 more variable: alternative &lt;chr&gt;</code></pre>
+<ul>
+<li>Identify genes that are repressed under sulfate starvation conditions. Use the linear modeling approach to identify genes with negative slopes.</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(broom)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">models &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(systematic_name<span class="op">:</span>expression) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(systematic_name, nutrient) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw">nest</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="st">  </span><span class="co"># head() %&gt;% </span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">    <span class="dt">model =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/tidy">tidy</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(expression <span class="op">~</span><span class="st"> </span>rate, <span class="dt">data =</span> .x)))</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>data)</a></code></pre></div>
 <pre><code>## Warning in summary.lm(x): essentially perfect fit: summary may be
 ## unreliable</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Now unnest and grab relevant data, i.e. genes with negative slopes</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">models &lt;-<span class="st"> </span>models <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(term <span class="op">==</span><span class="st"> "rate"</span> <span class="op">&amp;</span><span class="st"> </span>estimate <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(nutrient)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(systematic_name, nutrient, estimate)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># Now unnest and grab relevant data, i.e. genes with negative slopes</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">models &lt;-<span class="st"> </span>models <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(term <span class="op">==</span><span class="st"> "rate"</span> <span class="op">&amp;</span><span class="st"> </span>estimate <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(nutrient)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(systematic_name, nutrient, estimate)</a></code></pre></div>
 <ul>
 <li>Cross-reference the two tables above to count the overlaps. What is a good control here? Need to ask whether the downregulation of these genes is <em>specific</em> to sulfate limitation. Are these same genes affected by limitation of other nutrients?</li>
 </ul>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">combined &lt;-<span class="st"> </span><span class="kw">left_join</span>(sulfurs, models)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">combined &lt;-<span class="st"> </span><span class="kw">left_join</span>(sulfurs, models) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>systematic_name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(nutrient))</a></code></pre></div>
 <pre><code>## Joining, by = "systematic_name"</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(cowplot)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(cowplot)</a></code></pre></div>
 <pre><code>## 
 ## Attaching package: 'cowplot'</code></pre>
 <pre><code>## The following object is masked from 'package:ggplot2':
 ## 
 ##     ggsave</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">ggplot</span>(combined, <span class="kw">aes</span>(<span class="dt">x =</span> n_sulfur, <span class="dt">y =</span> estimate)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">  </span><span class="kw">facet_grid</span>(<span class="op">~</span>nutrient)</a></code></pre></div>
-<pre><code>## Warning: Removed 2381 rows containing missing values (geom_point).</code></pre>
-<p><img src="problem-set-2_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">ggplot</span>(combined, <span class="kw">aes</span>(<span class="dt">x =</span> n_sulfur, <span class="dt">y =</span> estimate)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw">facet_grid</span>(<span class="op">~</span>nutrient)</a></code></pre></div>
+<p><img src="problem-set-2_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
 <div id="interpretation" class="section level3">
 <h3 class="hasAnchor">
