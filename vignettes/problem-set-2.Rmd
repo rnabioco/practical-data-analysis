@@ -119,17 +119,19 @@ sulfurs <- yeast_prot_prop %>%
   select(systematic_name, n_sulfur)
 ```
 
-+ Test whether the slope (`estimate`) and `n_sulfur` are correlated
-
++ Test whether gene expression and `n_sulfur` are correlated.
 
 ```{r}
 library(broom)
 
-combined %>%
+brauer_gene_exp %>%
+  select(systematic_name, nutrient, expression) %>%
+  left_join(sulfurs) %>%
+  select(-systematic_name) %>%
   group_by(nutrient) %>%
   nest() %>%
   mutate(
-    cor = map(data, ~ tidy(cor.test(.$n_sulfur, .$estimate)))
+    cor = map(data, ~ tidy(cor.test(.$n_sulfur, .$expression)))
     ) %>%
   select(nutrient, cor) %>%
   unnest() %>%
@@ -139,6 +141,7 @@ combined %>%
 + Identify genes that are repressed under sulfate starvation conditions. Use the linear modeling approach to identify genes with negative slopes.
 
 ```{r}
+library(broom)
 models <- brauer_gene_exp %>%
   select(systematic_name:expression) %>%
   group_by(systematic_name, nutrient) %>%
