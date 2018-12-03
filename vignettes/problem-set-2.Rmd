@@ -119,10 +119,26 @@ sulfurs <- yeast_prot_prop %>%
   select(systematic_name, n_sulfur)
 ```
 
-+ Identify genes that are repressed under sulfate starvation conditions. Use the linear modeling approach to identify genes with negative slopes.
++ Test whether the slope (`estimate`) and `n_sulfur` are correlated
+
 
 ```{r}
 library(broom)
+
+combined %>%
+  group_by(nutrient) %>%
+  nest() %>%
+  mutate(
+    cor = map(data, ~ tidy(cor.test(.$n_sulfur, .$estimate)))
+    ) %>%
+  select(nutrient, cor) %>%
+  unnest() %>%
+  arrange(-estimate)
+```
+
++ Identify genes that are repressed under sulfate starvation conditions. Use the linear modeling approach to identify genes with negative slopes.
+
+```{r}
 models <- brauer_gene_exp %>%
   select(systematic_name:expression) %>%
   group_by(systematic_name, nutrient) %>%
@@ -143,7 +159,9 @@ models <- models %>%
 + Cross-reference the two tables above to count the overlaps. What is a good control here? Need to ask whether the downregulation of these genes is *specific* to sulfate limitation. Are these same genes affected by limitation of other nutrients?
 
 ```{r}
-combined <- left_join(sulfurs, models)
+combined <- left_join(sulfurs, models) %>%
+  select(-systematic_name) %>%
+  filter(!is.na(nutrient))
 
 library(cowplot)
 ggplot(combined, aes(x = n_sulfur, y = estimate)) +
