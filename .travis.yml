@@ -5,6 +5,10 @@ sudo: false
 cache: packages
 warnings_are_errors: false
 
+bioc_packages:
+  - DESeq2
+  - ComplexHeatmap
+  
 before_deploy: Rscript -e 'install.packages("pkgdown")'
 
 deploy:
