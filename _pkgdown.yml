@@ -32,6 +32,8 @@ navbar:
         href: articles/class-2.html
       - text: "Class 3: Exploring a biological data set"
         href: articles/class-3.html
+      - text: "Class 4: RNA-seq Analysis"
+        href: articles/class-4.html
       - text: "--------"
       - text: "Assignment Submission and Grading Rubric"
         href: articles/assignments.html
