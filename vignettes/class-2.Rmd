@@ -9,7 +9,6 @@ output: html_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "img/class-2-",
   fig.align = "center"
 )
 
