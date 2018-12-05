@@ -33,8 +33,11 @@ Imports:
     viridis,
     devtools,
     RColorBrewer,
+    DESeq2,
+    ComplexHeatmap
 biocViews:
-    DESeq2
+    DESeq2,
+    ComplexHeatmap
 Suggests: 
     knitr,
     rmarkdown,
