@@ -86,7 +86,7 @@
       <h1>Class 3: Exploring a biological data set</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2018-12-03</h4>
+            <h4 class="date">2018-12-05</h4>
       
       
       <div class="hidden name"><code>class-3.Rmd</code></div>
@@ -411,10 +411,10 @@
 <a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; Coefficients:</span></a>
 <a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt; (Intercept)         rate  </span></a>
 <a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt;      0.1600      -0.8857</span></a></code></pre></div>
-<p>The results of many statistical operations (<code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code>, <code><a href="https://www.rdocumentation.org/packages/stats/topics/t.test">t.test()</a></code>, <code><a href="https://www.rdocumentation.org/packages/stats/topics/cor.test">cor.test()</a></code>) are not tidy and relevant parameters are not easily assessible. The <code>broom</code> package provides a function called <code><a href="https://www.rdocumentation.org/packages/broom/topics/tidy">tidy()</a></code> that tidies the results of these operations.</p>
+<p>The results of many statistical operations (<code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code>, <code><a href="https://www.rdocumentation.org/packages/stats/topics/t.test">t.test()</a></code>, <code><a href="https://www.rdocumentation.org/packages/stats/topics/cor.test">cor.test()</a></code>) are not tidy and relevant parameters are not easily assessible. The <code>broom</code> package provides a function called <code><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">tidy()</a></code> that tidies the results of these operations.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(broom)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2">fit &lt;-<span class="st"> </span>exp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(expression <span class="op">~</span><span class="st"> </span>rate, <span class="dt">data =</span> .)</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/tidy">tidy</a></span>(fit)</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">tidy</a></span>(fit)</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; # A tibble: 2 x 5</span></a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt;   term        estimate std.error statistic  p.value</span></a>
 <a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span></a>
@@ -432,7 +432,7 @@
 <a class="sourceLine" id="cb13-6" data-line-number="6"><span class="st">  </span><span class="co"># remove `head` to generate the full data set</span></a>
 <a class="sourceLine" id="cb13-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb13-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb13-9" data-line-number="9">    <span class="dt">model =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/tidy">tidy</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(rate <span class="op">~</span><span class="st"> </span>expression, <span class="dt">data =</span> .x)))</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">    <span class="dt">model =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">tidy</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(rate <span class="op">~</span><span class="st"> </span>expression, <span class="dt">data =</span> .x)))</a>
 <a class="sourceLine" id="cb13-10" data-line-number="10">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-11" data-line-number="11"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>data)</a></code></pre></div>
 <p>Plot the expression / rate relationship for the top-ten most significant genes. Color lines by nutrient.</p>
