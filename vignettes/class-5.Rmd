@@ -2,7 +2,11 @@
 title: "Class 5: Working with gene lists"
 author: "Rui Fu"
 date: "`r Sys.Date()`"
-output: html_document
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Class-4}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE, message = FALSE, warning = FALSE, echo = TRUE}
@@ -41,11 +45,13 @@ loc <- system.file("extdata", "res_class4.rds", package = 'pbda')
 res <- readRDS(loc) # loading a DESeq2 object automatically loads DESeq2
 
 class(res)
+
 head(res)
 
 res_tibble <- as.data.frame(res) %>%
   tibble::rownames_to_column(var = "gene") %>%
   as.tibble()
+
 res_tibble
 
 # res_tibble contains calculations for all genes, pick out "interesting" genes
@@ -53,6 +59,7 @@ gene_tibble <- res_tibble %>%
   filter(!is.na(padj) & padj <= 0.01) %>% # p <= 0.05 is common, but can be lowered, sometimes even 0.1 is acceptable
   filter(log2FoldChange >= 1 | log2FoldChange <= -1) %>%
   arrange(desc(log2FoldChange))
+
 gene_tibble
 
 # get a vector of gene names
@@ -74,11 +81,12 @@ write_lines(gene_vector, "gene_tibble_v.txt") # write for vector
 ## Feed gene lists to other software outside of R, get enrichment score back
 DAVID https://david.ncifcrf.gov/
 
-```{r david, message = FALSE, warning = FALSE}
+```{r david, message = FALSE, warning = FALSE, fig.height=5, fig.width=6}
 # save output and load in R
 loc <- system.file("extdata", "david.txt", package = 'pbda')
 david <- read_tsv(loc)
-# View(david)
+
+david
 
 # do whatever you want, for instance plot fold change of all genes in row 1
 g1 <- david$Genes[1]
@@ -110,6 +118,7 @@ Depending on the transcriptome and analysis options used in RNA-seq/scRNA-seq, t
 ```{r stringr, message = FALSE, warning = FALSE}
 loc <- system.file("extdata", "ensg_tibble.csv", package = 'pbda')
 ensg_tibble <- read_csv(loc)
+
 ensg_tibble
 ```
 
@@ -118,10 +127,12 @@ ensg_tibble
 
 ```{r str_replace, message = FALSE, warning = FALSE}
 ensg_tibble_rm <- ensg_tibble %>% mutate(gene = str_replace(gene, pattern = "ENSG", replacement = ""))
+
 ensg_tibble_rm
 
 # trimming of gene/transcript version
 ensg_tibble2 <- ensg_tibble %>% mutate(gene = str_replace(gene, pattern = "\\..*", replacement = "")) # regular expressions are useful and worth the time to learn, see ?base::regex
+
 ensg_tibble2
 ```
 
@@ -129,9 +140,11 @@ ensg_tibble2
 
 ```{r str_to, message = FALSE, warning = FALSE}
 gene_tibble_l <- gene_tibble %>% mutate(gene = str_to_lower(gene))
+
 gene_tibble_l
 
 gene_tibble_u <- gene_tibble_l %>% mutate(gene = str_to_upper(gene))
+
 gene_tibble_u # note that this is not ideal for most biology situations, see below for better way
 ```
 
@@ -139,6 +152,7 @@ gene_tibble_u # note that this is not ideal for most biology situations, see bel
 
 ```{r str_length, message = FALSE, warning = FALSE}
 gene_tibble3 <- gene_tibble %>% mutate(len = str_length(gene))
+
 gene_tibble3
 ```
 
@@ -147,6 +161,7 @@ gene_tibble3
 ```{r str_detect, message = FALSE, warning = FALSE}
 # "-AS" denotes antisense genes, we can find all those
 gene_tibble_as <- gene_tibble %>% filter(str_detect(gene, "-AS"))
+
 gene_tibble_as
 ```
 
@@ -155,6 +170,7 @@ gene_tibble_as
 ```{r str_c, message = FALSE, warning = FALSE}
 # also add annotations of our own
 gene_tibble_as2 <- gene_tibble_as %>% mutate(gene = str_c("HUMAN-", gene))
+
 gene_tibble_as2
 ```
 
@@ -163,13 +179,15 @@ gene_tibble_as2
 ```{r str_sub, message = FALSE, warning = FALSE}
 # to remove annotations
 gene_tibble_as3 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 2, 4)) # from gene name, "HUMAN-ELOVL2-AS1", the string 2-4 is "UMA"
+
 gene_tibble_as3
 
 gene_tibble_as4 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 7, -5)) # extract just the gene name from "HUMAN-ELOVL2-AS1"
+
 gene_tibble_as4
 ```
 
-## various conversions in R - BioMart
+## Various conversions in R - BioMart
 BioMart can be used outside of R too: http://www.ensembl.org/biomart/martview
 
 We will be using `biomaRt`
@@ -195,12 +213,14 @@ ensg_sym2 <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"), # columns y
                  filters = "ensembl_gene_id",                       # type of info you are providing
                  mart = human_mart,                                 # dataset of certain species
                  values = ensg_tibble2$gene) %>% as_tibble()        # values of the filter
+
 ensg_sym2
 
 ensg_sym <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"),
                  filters = "ensembl_gene_id",
                  mart = human_mart, 
                  values = ensg_tibble$gene) %>% as_tibble() 
+
 ensg_sym # with . version #, can't find matches
 ```
 
@@ -217,18 +237,21 @@ drerio_mart <- useMart("ensembl", dataset = "drerio_gene_ensembl")
 
 loc <- system.file("extdata", "genes_drerio.csv", package = 'pbda')
 genes_drerio <- read_csv(loc)
+
 genes_drerio
 
 genesGO <- getBM(attributes = c("zfin_id_symbol", "go_id", "name_1006", "namespace_1003"), 
                  filters = "zfin_id_symbol", 
                  mart = drerio_mart, 
                  values = genes_drerio$gene, TRUE) %>% as_tibble()
+
 genesGO
 genesGO <- genesGO %>% filter(go_id != "") # note that there are lines with empty go terms, remember to remove those
 
 # join GO dataframe with original RNA-seq/scRNA-seq data if needed
 genes_drerio_joinedGO <- left_join(genes_drerio, genesGO, 
                                    by = c("gene" = "zfin_id_symbol"))
+
 genes_drerio_joinedGO
 
 # or, get all genes with GO term of interest, by providing multiple filters
@@ -236,6 +259,7 @@ genesGO_filtered <- getBM(attributes = c("zfin_id_symbol"),
                   filters = c("zfin_id_symbol", "go"), 
                   mart = drerio_mart, 
                   values = list(genes_drerio$gene, c("GO:0003677")))
+
 genesGO_filtered
 ```
 
@@ -250,6 +274,7 @@ genes_human <- getLDS(attributes = c("hgnc_symbol"),
                       martL = drerio_mart, 
                       uniqueRows=T, 
                       values = genes_drerio$gene) %>% as_tibble()
+
 genes_human
 ```
 
@@ -265,8 +290,5 @@ Find enriched sequence elements in promoters, UTRs, etc. See https://bedtools.re
 WGCNA: weighted correlation network analysis
 
 SCENIC: infer gene regulatory networks and cell types from single-cell RNA-seq data
-
-
-
 
 
