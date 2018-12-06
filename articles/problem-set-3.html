@@ -132,13 +132,11 @@
 <div id="question-3" class="section level1">
 <h1 class="hasAnchor">
 <a href="#question-3" class="anchor"></a>Question 3</h1>
-<p>There are two reasonable ways to deal with the problem identified in question 2. One involves subsetting the counts matrix and colData as in the pseudo-code below…</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">drug_resistant2_counts_fixed &lt;-<span class="st"> </span>drug_resistant2_counts[,<span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(?,?)]</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">drug_resistant2_coldata_fixed &lt;-<span class="st"> </span>drug_resistant2_coldata[<span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(?,?),]</a></code></pre></div>
+<p>There are two reasonable ways to deal with the problem identified in question 2. One involves dropping samples from the DESeq object as in the pseudo-code below…</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">dds &lt;-<span class="st"> </span>dds[,<span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(?,?)]</a></code></pre></div>
 <p>…and the other requires only editing the colData…</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">drug_resistant2_coldata_fixed &lt;-<span class="st"> </span>drug_resistant2_coldata</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">drug_resistant2_coldata_fixed<span class="op">$</span>drug[?] &lt;-<span class="st"> "parent"</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">drug_resistant2_coldata_fixed<span class="op">$</span>drug[?] &lt;-<span class="st"> "resistant"</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">colData</span>(dds)<span class="op">$</span>drug[?] &lt;-<span class="st"> "parent"</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">colData</span>(dds)<span class="op">$</span>drug[?] &lt;-<span class="st"> "resistant"</span></a></code></pre></div>
 <p>Use the approach that you think is most appropriate and generate a new, corrected DESeqDataSet. Justify your choice briefly in the interpretation. Calculate differential gene expression and report the new number of genes differentially expressed between the parent and resistant group.</p>
 <div id="strategy-2" class="section level2">
 <h2 class="hasAnchor">
