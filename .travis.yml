@@ -8,6 +8,7 @@ warnings_are_errors: false
 bioc_packages:
   - DESeq2
   - ComplexHeatmap
+  - biomaRt
   
 before_deploy: Rscript -e 'install.packages("pkgdown")'
 

@@ -20,6 +20,8 @@ build_script:
   - travis-tool.sh install_bioc_deps
   - travis-tool.sh install_bioc DESeq2
   - travis-tool.sh install_bioc ComplexHeatmap
+  - travis-tool.sh install_bioc biomaRt
+  
 test_script:
   - travis-tool.sh run_tests
 

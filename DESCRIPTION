@@ -34,10 +34,12 @@ Imports:
     devtools,
     RColorBrewer,
     DESeq2,
-    ComplexHeatmap
+    ComplexHeatmap,
+    biomaRt
 biocViews:
     DESeq2,
-    ComplexHeatmap
+    ComplexHeatmap,
+    biomaRt
 Suggests: 
     knitr,
     rmarkdown,
