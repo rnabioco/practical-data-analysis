@@ -1,0 +1,235 @@
+---
+title: "Class 5: Working with gene lists"
+author: "Rui Fu"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include = FALSE, message = FALSE, warning = FALSE, echo = TRUE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "img/class-5-",
+  fig.align = "center"
+)
+```
+
+```{r load, message = FALSE, warning = FALSE}
+# devtools::install_github('idpt7810/practical-data-analysis') run this before class
+library(pbda)
+library(tidyverse)
+```
+
+## Did experiment, ran through analysis pipeline, what now?
+Handle gene lists
+
+Try to connect prior knowledge to the results
+
+Recall some basic R and dataframe manipulation commands
+
+## Retrieve gene lists from RNA-seq or scRNA-seq
+Recall how data is saved in objects
+
+Or whatever file you already saved containing lists of gene names
+
+```{r getlist, message = FALSE, warning = FALSE}
+# from DEseq output, get a tibble back
+loc <- system.file("extdata", "res_class4.rds", package = 'pbda')
+res <- readRDS(loc) # loading a DESeq2 object automatically loads DESeq2
+
+class(res)
+head(res)
+
+res_tibble <- as.data.frame(res) %>%
+  tibble::rownames_to_column(var = "gene") %>%
+  as.tibble()
+res_tibble
+
+# res_tibble contains calculations for all genes, pick out "interesting" genes
+gene_tibble <- res_tibble %>% 
+  filter(!is.na(padj) & padj <= 0.01) %>% # p <= 0.05 is common, but can be lowered, sometimes even 0.1 is acceptable
+  filter(log2FoldChange >= 1 | log2FoldChange <= -1) %>%
+  arrange(desc(log2FoldChange))
+gene_tibble
+
+# get a vector of gene names
+gene_vector <- gene_tibble$gene
+gene_vector <- gene_tibble %>% pull(gene) # at least 5 more ways to do this
+```
+
+```{r getlist2, message = FALSE, warning = FALSE}
+# or load already saved file on disk
+loc <- system.file("extdata", "gene_tibble.csv", package = 'pbda')
+gene_tibble2 <- read_csv(loc) # reads out as tibble
+write_csv(gene_tibble, "gene_tibble.csv")
+
+# or write as txt file, without col name
+write_csv(gene_tibble %>% select(gene), "gene_tibble.txt", col_names = FALSE) # write from tibble
+write_lines(gene_vector, "gene_tibble_v.txt") # write for vector
+```
+
+## Feed gene lists to other software outside of R, get enrichment score back
+DAVID https://david.ncifcrf.gov/
+
+```{r david, message = FALSE, warning = FALSE}
+# save output and load in R
+# for macs: curl -o david.txt -k https://david.ncifcrf.gov/data/download/chart_F3B3023831201544032516222.txt
+loc <- system.file("extdata", "david.txt", package = 'pbda')
+david <- read_tsv(loc)
+# View(david)
+
+# do whatever you want, for instance plot fold change of all genes in row 1
+g1 <- david$Genes[1]
+g1_split <- str_split(g1, ", ")[[1]]
+library(cowplot)
+ggplot(gene_tibble %>% filter(gene %in% g1_split), 
+       aes(x = gene, y = log2FoldChange, fill = -log10(padj))) +
+  geom_bar(stat = "identity") +
+  labs(x = david$Term[1]) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  scale_fill_gradient2(low = "white", high = "black")
+```
+
+other options:
+
+Panther http://www.geneontology.org/page/go-enrichment-analysis
+
+GSEA (requires ranked list, for instance by fold-change, and requires full list of genes instead of just "significant") http://software.broadinstitute.org/gsea/index.jsp
+
+or, GO and GSEA right in R (will require additional packages):
+
+topGO: https://bioconductor.org/packages/release/bioc/html/topGO.html
+
+fgsea: http://bioconductor.org/packages/release/bioc/html/fgsea.html
+
+## Sometimes transformation of names is needed - `stringr` package, part of tidyverse
+Depending on the transcriptome and analysis options used in RNA-seq/scRNA-seq, the list of names can be messy.
+
+For instance, trimming of gene/transcript version.
+
+```{r stringr, message = FALSE, warning = FALSE}
+loc <- system.file("extdata", "ensg_tibble.csv", package = 'pbda')
+ensg_tibble <- read_csv(loc)
+ensg_tibble
+
+ensg_tibble2 <- ensg_tibble %>% mutate(gene = str_replace(gene, pattern = "\\..*", replacement = "")) # regular expressions are useful and worth the time to learn, see ?base::regex
+ensg_tibble2
+
+# some other simple and useful functions
+gene_tibble_l <- gene_tibble %>% mutate(gene = str_to_lower(gene))
+gene_tibble_l
+
+gene_tibble_u <- gene_tibble_l %>% mutate(gene = str_to_upper(gene))
+gene_tibble_u # note that this is not ideal for most biology situations, see below for better way
+
+gene_tibble3 <- gene_tibble %>% mutate(len = str_length(gene))
+gene_tibble3
+
+# "-AS" denotes antisense genes, we can find all those
+gene_tibble_as <- gene_tibble %>% filter(str_detect(gene, "-AS"))
+gene_tibble_as
+
+# also add annotations of our own
+gene_tibble_as2 <- gene_tibble_as %>% mutate(gene = str_c("HUMAN-", gene))
+gene_tibble_as2
+```
+
+## various conversions in R - BioMart
+BioMart can be used outside of R too: http://www.ensembl.org/biomart/martview
+
+We will be using `biomaRt`
+
+```{r biomart, message = FALSE, warning = FALSE}
+# BiocManager::install("biomaRt", version = "3.8")
+library(biomaRt)
+
+# biomaRt links to many useful datasets
+listDatasets(useMart("ENSEMBL_MART_ENSEMBL", host = "www.ensembl.org")) %>% as_tibble() # hundreds of organisms
+
+listAttributes(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% as_tibble() # thousands of rows/attributes
+
+listFilters(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% as_tibble() # ways to filter the data
+```
+
+common usage 1: id to gene symbol conversion
+
+```{r biomartid, message = FALSE, warning = FALSE}
+# gene id to gene symbol conversion
+human_mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+ensg_sym <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"), 
+                 filters = "ensembl_gene_id", 
+                 mart = human_mart, 
+                 values = ensg_tibble$gene) %>% as_tibble() # with . version #, can't find matches
+ensg_sym
+
+ensg_sym <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"), 
+                 filters = "ensembl_gene_id", 
+                 mart = human_mart, 
+                 values = ensg_tibble2$gene) %>% as_tibble()
+ensg_sym
+```
+
+common usage 2: functional GO term annotation
+
+```{r lookgo, message = FALSE, warning = FALSE}
+listAttributes(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% 
+  as_tibble() %>% 
+  filter(str_detect(description, "GO")) # look at attributes related to GO 
+```
+
+```{r getgo, message = FALSE, warning = FALSE}
+drerio_mart <- useMart("ensembl", dataset = "drerio_gene_ensembl")
+
+loc <- system.file("extdata", "genes_drerio.csv", package = 'pbda')
+genes_drerio <- read_csv(loc)
+genes_drerio
+
+genesGO <- getBM(attributes = c("zfin_id_symbol", "go_id", "name_1006", "namespace_1003"), 
+                 filters = c("zfin_id_symbol", "with_go"), 
+                 mart = drerio_mart, 
+                 values = list(genes_drerio$gene, TRUE)) %>% as_tibble()
+genesGO
+
+# join GO dataframe with original RNA-seq/scRNA-seq data if needed
+genes_drerio_joinedGO <- left_join(genes_drerio, genesGO, 
+                                   by = c("gene" = "zfin_id_symbol"))
+genes_drerio_joinedGO
+
+# or, get all genes with GO term of interest
+genesGO_filtered <- getBM(attributes = c("zfin_id_symbol"), 
+                  filters = c("zfin_id_symbol", "go"), 
+                  mart = drerio_mart, 
+                  values = list(genes_drerio$gene, c("GO:0003677")))
+genesGO_filtered
+```
+
+common usage 3: ortholog conversion between species
+
+```{r biomartpara, message = FALSE, warning = FALSE}
+# example of zebrafish to human gene symbol conversion
+genes_human <- getLDS(attributes = c("hgnc_symbol"), 
+                      filters = "hgnc_symbol", 
+                      mart = human_mart, 
+                      attributesL = c("zfin_id_symbol"), 
+                      martL = drerio_mart, 
+                      uniqueRows=T, 
+                      values = genes_drerio$gene) %>% as_tibble()
+genes_human
+```
+## Exercise 2
+1. Delete one argument from code above used to generate `genesGO_filtered` to obtain a list of all genes with GO id of "GO:0003677".
+
+2. Take a look at `genesGO`. How would you add GO-CC back into the brauer_gene_exp?
+
+## Additional resources/reading
+More sophisticated analysis than simply gene lists:
+Find enriched sequence elements in promoters, UTRs, etc. See https://bedtools.readthedocs.io/en/latest/, http://meme-suite.org/, etc
+
+WGCNA: weighted correlation network analysis
+
+SCENIC: infer gene regulatory networks and cell types from single-cell RNA-seq data
+
+
+
+
+
