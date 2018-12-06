@@ -41,16 +41,14 @@ The small number of differentially expressed genes in question 1 is unexpected i
 
 # Question 3
 
-There are two reasonable ways to deal with the problem identified in question 2. One involves subsetting the counts matrix and colData as in the pseudo-code below...
+There are two reasonable ways to deal with the problem identified in question 2. One involves dropping samples from the DESeq object as in the pseudo-code below...
 ``` r
-drug_resistant2_counts_fixed <- drug_resistant2_counts[,-c(?,?)]
-drug_resistant2_coldata_fixed <- drug_resistant2_coldata[-c(?,?),]
+dds <- dds[,-c(?,?)]
 ```
 ...and the other requires only editing the colData...
 ``` r
-drug_resistant2_coldata_fixed <- drug_resistant2_coldata
-drug_resistant2_coldata_fixed$drug[?] <- "parent"
-drug_resistant2_coldata_fixed$drug[?] <- "resistant"
+colData(dds)$drug[?] <- "parent"
+colData(dds)$drug[?] <- "resistant"
 ```
 Use the approach that you think is most appropriate and generate a new, corrected DESeqDataSet. Justify your choice briefly in the interpretation. Calculate differential gene expression and report the new number of genes differentially expressed between the parent and resistant group.
 
