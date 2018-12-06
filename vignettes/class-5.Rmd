@@ -15,7 +15,10 @@ knitr::opts_chunk$set(
 ```
 
 ```{r load, message = FALSE, warning = FALSE}
-# devtools::install_github('idpt7810/practical-data-analysis') run this before class
+# run before class:
+# devtools::install_github('idpt7810/practical-data-analysis')
+# BiocManager::install("biomaRt", version = "3.8")
+
 library(pbda)
 library(tidyverse)
 ```
@@ -23,7 +26,7 @@ library(tidyverse)
 ## Did experiment, ran through analysis pipeline, what now?
 Handle gene lists
 
-Try to connect prior knowledge to the results
+Try to connect prior knowledge to the results (GO terms, or something like `yeast_prot_prop`)
 
 Recall some basic R and dataframe manipulation commands
 
@@ -73,7 +76,6 @@ DAVID https://david.ncifcrf.gov/
 
 ```{r david, message = FALSE, warning = FALSE}
 # save output and load in R
-# for macs: curl -o david.txt -k https://david.ncifcrf.gov/data/download/chart_F3B3023831201544032516222.txt
 loc <- system.file("extdata", "david.txt", package = 'pbda')
 david <- read_tsv(loc)
 # View(david)
@@ -105,33 +107,66 @@ fgsea: http://bioconductor.org/packages/release/bioc/html/fgsea.html
 ## Sometimes transformation of names is needed - `stringr` package, part of tidyverse
 Depending on the transcriptome and analysis options used in RNA-seq/scRNA-seq, the list of names can be messy.
 
-For instance, trimming of gene/transcript version.
-
 ```{r stringr, message = FALSE, warning = FALSE}
 loc <- system.file("extdata", "ensg_tibble.csv", package = 'pbda')
 ensg_tibble <- read_csv(loc)
 ensg_tibble
+```
 
+`str_replace`: find and replace
+(run `?str_replace` for documentation)
+
+```{r str_replace, message = FALSE, warning = FALSE}
+ensg_tibble_rm <- ensg_tibble %>% mutate(gene = str_replace(gene, pattern = "ENSG", replacement = ""))
+ensg_tibble_rm
+
+# trimming of gene/transcript version
 ensg_tibble2 <- ensg_tibble %>% mutate(gene = str_replace(gene, pattern = "\\..*", replacement = "")) # regular expressions are useful and worth the time to learn, see ?base::regex
 ensg_tibble2
+```
 
-# some other simple and useful functions
+`str_to_lower` and `str_to_upper`: for changing cases
+
+```{r str_to, message = FALSE, warning = FALSE}
 gene_tibble_l <- gene_tibble %>% mutate(gene = str_to_lower(gene))
 gene_tibble_l
 
 gene_tibble_u <- gene_tibble_l %>% mutate(gene = str_to_upper(gene))
 gene_tibble_u # note that this is not ideal for most biology situations, see below for better way
+```
 
+`str_length`: get length of strings
+
+```{r str_length, message = FALSE, warning = FALSE}
 gene_tibble3 <- gene_tibble %>% mutate(len = str_length(gene))
 gene_tibble3
+```
 
+`str_detect`: spits out `TRUE` or `FALSE`
+
+```{r str_detect, message = FALSE, warning = FALSE}
 # "-AS" denotes antisense genes, we can find all those
 gene_tibble_as <- gene_tibble %>% filter(str_detect(gene, "-AS"))
 gene_tibble_as
+```
 
+`str_c`: concatenate strings
+
+```{r str_c, message = FALSE, warning = FALSE}
 # also add annotations of our own
 gene_tibble_as2 <- gene_tibble_as %>% mutate(gene = str_c("HUMAN-", gene))
 gene_tibble_as2
+```
+
+`str_sub`: extract substrings
+
+```{r str_sub, message = FALSE, warning = FALSE}
+# to remove annotations
+gene_tibble_as3 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 2, 4)) # from gene name, "HUMAN-ELOVL2-AS1", the string 2-4 is "UMA"
+gene_tibble_as3
+
+gene_tibble_as4 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 7, -5)) # extract just the gene name from "HUMAN-ELOVL2-AS1"
+gene_tibble_as4
 ```
 
 ## various conversions in R - BioMart
@@ -140,7 +175,6 @@ BioMart can be used outside of R too: http://www.ensembl.org/biomart/martview
 We will be using `biomaRt`
 
 ```{r biomart, message = FALSE, warning = FALSE}
-# BiocManager::install("biomaRt", version = "3.8")
 library(biomaRt)
 
 # biomaRt links to many useful datasets
@@ -156,17 +190,18 @@ common usage 1: id to gene symbol conversion
 ```{r biomartid, message = FALSE, warning = FALSE}
 # gene id to gene symbol conversion
 human_mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
-ensg_sym <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"), 
-                 filters = "ensembl_gene_id", 
-                 mart = human_mart, 
-                 values = ensg_tibble$gene) %>% as_tibble() # with . version #, can't find matches
-ensg_sym
 
-ensg_sym <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"), 
-                 filters = "ensembl_gene_id", 
+ensg_sym2 <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"), # columns you want back
+                 filters = "ensembl_gene_id",                       # type of info you are providing
+                 mart = human_mart,                                 # dataset of certain species
+                 values = ensg_tibble2$gene) %>% as_tibble()        # values of the filter
+ensg_sym2
+
+ensg_sym <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"),
+                 filters = "ensembl_gene_id",
                  mart = human_mart, 
-                 values = ensg_tibble2$gene) %>% as_tibble()
-ensg_sym
+                 values = ensg_tibble$gene) %>% as_tibble() 
+ensg_sym # with . version #, can't find matches
 ```
 
 common usage 2: functional GO term annotation
@@ -185,17 +220,18 @@ genes_drerio <- read_csv(loc)
 genes_drerio
 
 genesGO <- getBM(attributes = c("zfin_id_symbol", "go_id", "name_1006", "namespace_1003"), 
-                 filters = c("zfin_id_symbol", "with_go"), 
+                 filters = "zfin_id_symbol", 
                  mart = drerio_mart, 
-                 values = list(genes_drerio$gene, TRUE)) %>% as_tibble()
+                 values = genes_drerio$gene, TRUE) %>% as_tibble()
 genesGO
+genesGO <- genesGO %>% filter(go_id != "") # note that there are lines with empty go terms, remember to remove those
 
 # join GO dataframe with original RNA-seq/scRNA-seq data if needed
 genes_drerio_joinedGO <- left_join(genes_drerio, genesGO, 
                                    by = c("gene" = "zfin_id_symbol"))
 genes_drerio_joinedGO
 
-# or, get all genes with GO term of interest
+# or, get all genes with GO term of interest, by providing multiple filters
 genesGO_filtered <- getBM(attributes = c("zfin_id_symbol"), 
                   filters = c("zfin_id_symbol", "go"), 
                   mart = drerio_mart, 
@@ -207,7 +243,7 @@ common usage 3: ortholog conversion between species
 
 ```{r biomartpara, message = FALSE, warning = FALSE}
 # example of zebrafish to human gene symbol conversion
-genes_human <- getLDS(attributes = c("hgnc_symbol"), 
+genes_human <- getLDS(attributes = c("hgnc_symbol"),
                       filters = "hgnc_symbol", 
                       mart = human_mart, 
                       attributesL = c("zfin_id_symbol"), 
@@ -216,10 +252,11 @@ genes_human <- getLDS(attributes = c("hgnc_symbol"),
                       values = genes_drerio$gene) %>% as_tibble()
 genes_human
 ```
-## Exercise 2
+
+## Exercise
 1. Delete one argument from code above used to generate `genesGO_filtered` to obtain a list of all genes with GO id of "GO:0003677".
 
-2. Take a look at `genesGO`. How would you add GO-CC back into the brauer_gene_exp?
+2. Take a look at `genesGO`. Describe in pseudo-code, how you could add GO-CC back into the brauer_gene_exp.
 
 ## Additional resources/reading
 More sophisticated analysis than simply gene lists:
