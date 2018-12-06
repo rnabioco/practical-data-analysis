@@ -34,6 +34,8 @@ navbar:
         href: articles/class-3.html
       - text: "Class 4: RNA-seq Analysis"
         href: articles/class-4.html
+      - text: "Class 5: Gene List Handling"
+        href: articles/class-5.html
       - text: "--------"
       - text: "Assignment Submission and Grading Rubric"
         href: articles/assignments.html
