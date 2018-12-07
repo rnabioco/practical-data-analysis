@@ -30,7 +30,7 @@ library(cowplot)
 ## Did experiment, ran through analysis pipeline, what now?
 Handle gene lists
 
-Try to connect prior knowledge to the results (GO terms, or something like `yeast_prot_prop`)
+Try to connect prior knowledge to the results (genes you study, GO terms, or something like `yeast_prot_prop`)
 
 Using some basic R and tibble manipulation commands
 
@@ -120,10 +120,12 @@ david_log <- david %>%
 david_log %>% select(Term, minus_log10)
 
 ggplot(david_log, aes(x = reorder(Term, minus_log10), y = minus_log10)) + #reorder Term by minus_log10
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity") + # otherwise ggplot tries to count
   xlab("KEGG pathway") +
   coord_flip() +
   theme(axis.text.y = element_text(size = 7))
+
+#reorder(david_log$Term,david_log$minus_log10)
 ```
 
 other options:
@@ -159,7 +161,7 @@ ensg_tibble_rm <- ensg_tibble %>% mutate(gene = str_replace(gene,
 ensg_tibble_rm
 
 # trimming of gene/transcript version
-ensg_tibble2 <- ensg_tibble %>% mutate(gene = str_replace(gene, 
+ensg_tibble2 <- ensg_tibble %>% mutate(gene_new = str_replace(gene, 
                                                           pattern = "\\..*", # . and everything after
                                                           replacement = "")) # empty string
 # regular expressions are useful and worth the time to learn, see ?base::regex
@@ -209,7 +211,9 @@ gene_tibble_as2
 `str_sub`: extract substrings
 
 ```{r str_sub, message = FALSE, warning = FALSE}
-gene_tibble_as3 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 2, 4)) # from gene name, "HUMAN-ELOVL2-AS1", 2-4 characters are "UMA"
+str_sub("HUMAN-ELOVL2-AS1", 2, 4)
+
+gene_tibble_as3 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 2, 4))
 
 gene_tibble_as3
 
@@ -298,7 +302,7 @@ common usage 3: ortholog conversion between species
 human_mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 drerio_mart <- useMart("ensembl", dataset = "drerio_gene_ensembl")
 
-genes_human <- getLDS(attributes = c("hgnc_symbol"), # "linked"
+genes_human <- getLDS(attributes = c("hgnc_symbol"), # "linked datasets"
                       filters = "hgnc_symbol", 
                       mart = human_mart, 
                       attributesL = c("zfin_id_symbol"), 
@@ -320,3 +324,5 @@ Find enriched sequence elements in promoters, UTRs, etc. See https://bedtools.re
 WGCNA: weighted correlation network analysis
 
 SCENIC: infer gene regulatory networks and cell types from single-cell RNA-seq data
+
+Come to RBI office hours (Thursday 1-2:30)!
