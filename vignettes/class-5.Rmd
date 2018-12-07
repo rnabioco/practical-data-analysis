@@ -1,7 +1,7 @@
 ---
 title: "Class 5: Working with gene lists"
 author: "Rui Fu"
-date: "`r Sys.Date()`"
+date: "2018-12-07"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Class-5}
@@ -24,6 +24,7 @@ knitr::opts_chunk$set(
 
 library(pbda)
 library(tidyverse)
+library(cowplot)
 ```
 
 ## Did experiment, ran through analysis pipeline, what now?
@@ -31,7 +32,7 @@ Handle gene lists
 
 Try to connect prior knowledge to the results (GO terms, or something like `yeast_prot_prop`)
 
-Recall some basic R and dataframe manipulation commands
+Using some basic R and tibble manipulation commands
 
 ## Retrieve gene lists from RNA-seq or scRNA-seq
 Recall how data is saved in objects
@@ -39,15 +40,16 @@ Recall how data is saved in objects
 Or whatever file you already saved containing lists of gene names
 
 ```{r getlist, message = FALSE, warning = FALSE}
-# from DEseq output, get a tibble back
+# from DESeq2 output, get a tibble back
+# res <- results(dds)
+# saveRDS(res, "res_class4.rds") # save any object from environment for next time
 loc <- system.file("extdata", "res_class4.rds", package = 'pbda')
 res <- readRDS(loc) # loading a DESeq2 object automatically loads DESeq2
 
-class(res)
+head(res) # basically a dataframe
 
-head(res)
-
-res_tibble <- as.data.frame(res) %>%
+res_tibble <- res %>%
+  as.data.frame() %>% 
   tibble::rownames_to_column(var = "gene") %>%
   as.tibble()
 
@@ -55,11 +57,18 @@ res_tibble
 
 # res_tibble contains calculations for all genes, pick out "interesting" genes
 gene_tibble <- res_tibble %>% 
-  filter(!is.na(padj) & padj <= 0.01) %>% # p <= 0.05 is common, but can be lowered, sometimes even 0.1 is acceptable
+  filter(!is.na(padj)) %>% # NA values from padj are from tossing low expressing genes
+  filter(padj <= 0.01) %>% # padj <= 0.05 is common, or 0.01, sometimes even 0.1 is acceptable
   filter(log2FoldChange >= 1 | log2FoldChange <= -1) %>%
   arrange(desc(log2FoldChange))
 
 gene_tibble
+
+# get top 10 down-regulated genes
+gene_tibble_down10 <- gene_tibble %>%
+  filter(log2FoldChange < 0) %>% 
+  arrange(log2FoldChange) %>% 
+  dplyr::slice(1:10) 
 
 # get a vector of gene names
 gene_vector <- gene_tibble$gene
@@ -67,10 +76,11 @@ gene_vector <- gene_tibble %>% pull(gene) # at least 5 more ways to do this
 ```
 
 ```{r getlist2, message = FALSE, warning = FALSE}
+write_csv(gene_tibble, "gene_tibble.csv")
+
 # or load already saved file on disk
 loc <- system.file("extdata", "gene_tibble.csv", package = 'pbda')
 gene_tibble2 <- read_csv(loc) # reads out as tibble
-write_csv(gene_tibble, "gene_tibble.csv")
 
 # or write as txt file, without col name
 write_csv(gene_tibble %>% select(gene), "gene_tibble.txt", col_names = FALSE) # write from tibble
@@ -80,23 +90,40 @@ write_lines(gene_vector, "gene_tibble_v.txt") # write for vector
 ## Feed gene lists to other software outside of R, get enrichment score back
 DAVID https://david.ncifcrf.gov/
 
-```{r david, message = FALSE, warning = FALSE, fig.height=5, fig.width=6}
+1. upload or paste list
+
+2. select "official gene symbol" as the identifier
+
+3. choose "gene list" as list type
+
+4. submit
+
+5. choose the appropriate organism
+
+6. click "chart" on the desired annotation
+
+7. download as file
+
+```{r david, message = FALSE, warning = FALSE, fig.height=5, fig.width=8}
 # save output and load in R
 loc <- system.file("extdata", "david.txt", package = 'pbda')
-david <- read_tsv(loc)
+david <- read_tsv(loc) # output was tab-delimited instead of comma
 
 david
 
-# do whatever you want, for instance plot fold change of all genes in row 1
-g1 <- david$Genes[1]
-g1_split <- str_split(g1, ", ")[[1]]
-library(cowplot)
-ggplot(gene_tibble %>% filter(gene %in% g1_split), 
-       aes(x = gene, y = log2FoldChange, fill = -log10(padj))) +
+# do whatever you want, for instance plot -log10 of top 20 entries
+david_log <- david %>% 
+  mutate(minus_log10 = -log10(Benjamini)) %>% # Benjamini is one false discovery rate method
+  arrange(desc(minus_log10)) %>% 
+  dplyr::slice(1:20)
+
+david_log %>% select(Term, minus_log10)
+
+ggplot(david_log, aes(x = reorder(Term, minus_log10), y = minus_log10)) + #reorder Term by minus_log10
   geom_bar(stat = "identity") +
-  labs(x = david$Term[1]) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  scale_fill_gradient2(low = "white", high = "black")
+  xlab("KEGG pathway") +
+  coord_flip() +
+  theme(axis.text.y = element_text(size = 7))
 ```
 
 other options:
@@ -118,47 +145,53 @@ Depending on the transcriptome and analysis options used in RNA-seq/scRNA-seq, t
 loc <- system.file("extdata", "ensg_tibble.csv", package = 'pbda')
 ensg_tibble <- read_csv(loc)
 
-ensg_tibble
+ensg_tibble # those version numbers are often not recognized by software
 ```
 
 `str_replace`: find and replace
 (run `?str_replace` for documentation)
 
 ```{r str_replace, message = FALSE, warning = FALSE}
-ensg_tibble_rm <- ensg_tibble %>% mutate(gene = str_replace(gene, pattern = "ENSG", replacement = ""))
+ensg_tibble_rm <- ensg_tibble %>% mutate(gene = str_replace(gene, 
+                                                            pattern = "ENSG",
+                                                            replacement = "#"))
 
 ensg_tibble_rm
 
 # trimming of gene/transcript version
-ensg_tibble2 <- ensg_tibble %>% mutate(gene = str_replace(gene, pattern = "\\..*", replacement = "")) # regular expressions are useful and worth the time to learn, see ?base::regex
+ensg_tibble2 <- ensg_tibble %>% mutate(gene = str_replace(gene, 
+                                                          pattern = "\\..*", # . and everything after
+                                                          replacement = "")) # empty string
+# regular expressions are useful and worth the time to learn, see ?base::regex
 
 ensg_tibble2
+
+# `separate` works too, if you want to keep the info
+ensg_tibble3 <- ensg_tibble %>% separate(gene, into = c("gene", "version"), sep = "\\.")
 ```
 
-`str_to_lower` and `str_to_upper`: for changing cases
+```{r str_replace2, message = FALSE, warning = FALSE, fig.height=5, fig.width=8}
+# revisit the DAVID output plot, clean up "Term" column
+david_log2 <- david_log %>% mutate(Term = str_replace(Term, 
+                                                      pattern = ".*:", # every before and including :
+                                                      replacement = ""))
 
-```{r str_to, message = FALSE, warning = FALSE}
-gene_tibble_l <- gene_tibble %>% mutate(gene = str_to_lower(gene))
-
-gene_tibble_l
-
-gene_tibble_u <- gene_tibble_l %>% mutate(gene = str_to_upper(gene))
-
-gene_tibble_u # note that this is not ideal for most biology situations, see below for better way
-```
-
-`str_length`: get length of strings
-
-```{r str_length, message = FALSE, warning = FALSE}
-gene_tibble3 <- gene_tibble %>% mutate(len = str_length(gene))
-
-gene_tibble3
+ggplot(david_log2, aes(x = reorder(Term, minus_log10), y = minus_log10)) +
+  geom_bar(stat = "identity") +
+  xlab("KEGG pathway") +
+  coord_flip() +
+  theme(axis.text.y = element_text(size = 7))
+# to save plot
+ggsave("david.png", plot = last_plot(), dpi = 300)
 ```
 
 `str_detect`: spits out `TRUE` or `FALSE`
 
 ```{r str_detect, message = FALSE, warning = FALSE}
 # "-AS" denotes antisense genes, we can find all those
+str_detect(gene_tibble$gene, "-AS")[1:50]
+
+# use in `filter`
 gene_tibble_as <- gene_tibble %>% filter(str_detect(gene, "-AS"))
 
 gene_tibble_as
@@ -176,11 +209,11 @@ gene_tibble_as2
 `str_sub`: extract substrings
 
 ```{r str_sub, message = FALSE, warning = FALSE}
-# to remove annotations
-gene_tibble_as3 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 2, 4)) # from gene name, "HUMAN-ELOVL2-AS1", the string 2-4 is "UMA"
+gene_tibble_as3 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 2, 4)) # from gene name, "HUMAN-ELOVL2-AS1", 2-4 characters are "UMA"
 
 gene_tibble_as3
 
+# to remove annotations of fixed length
 gene_tibble_as4 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 7, -5)) # extract just the gene name from "HUMAN-ELOVL2-AS1"
 
 gene_tibble_as4
@@ -193,8 +226,7 @@ We will be using `biomaRt`
 
 ```{r biomart, message = FALSE, warning = FALSE}
 library(biomaRt)
-
-# biomaRt links to many useful datasets
+# biomaRt contains many useful datasets
 listDatasets(useMart("ENSEMBL_MART_ENSEMBL", host = "www.ensembl.org")) %>% as_tibble() # hundreds of organisms
 
 listAttributes(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% as_tibble() # thousands of rows/attributes
@@ -205,8 +237,7 @@ listFilters(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% as_tibble
 common usage 1: id to gene symbol conversion
 
 ```{r biomartid, message = FALSE, warning = FALSE}
-# gene id to gene symbol conversion
-human_mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+human_mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl") # assign the dataset to use
 
 ensg_sym2 <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"), # columns you want back
                  filters = "ensembl_gene_id",                       # type of info you are providing
@@ -215,12 +246,7 @@ ensg_sym2 <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"), # columns y
 
 ensg_sym2
 
-ensg_sym <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"),
-                 filters = "ensembl_gene_id",
-                 mart = human_mart, 
-                 values = ensg_tibble$gene) %>% as_tibble() 
-
-ensg_sym # with . version #, can't find matches
+# try running this with ensg_tibble (version # intact), can't find matches
 ```
 
 common usage 2: functional GO term annotation
@@ -245,6 +271,7 @@ genesGO <- getBM(attributes = c("zfin_id_symbol", "go_id", "name_1006", "namespa
                  values = genes_drerio$gene, TRUE) %>% as_tibble()
 
 genesGO
+
 genesGO <- genesGO %>% filter(go_id != "") # note that there are lines with empty go terms, remember to remove those
 
 # join GO dataframe with original RNA-seq/scRNA-seq data if needed
@@ -252,7 +279,9 @@ genes_drerio_joinedGO <- left_join(genes_drerio, genesGO,
                                    by = c("gene" = "zfin_id_symbol"))
 
 genes_drerio_joinedGO
+```
 
+```{r getgo2}
 # or, get all genes with GO term of interest, by providing multiple filters
 genesGO_filtered <- getBM(attributes = c("zfin_id_symbol"), 
                   filters = c("zfin_id_symbol", "go"), 
@@ -266,12 +295,14 @@ common usage 3: ortholog conversion between species
 
 ```{r biomartpara, message = FALSE, warning = FALSE}
 # example of zebrafish to human gene symbol conversion
-genes_human <- getLDS(attributes = c("hgnc_symbol"),
+human_mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+drerio_mart <- useMart("ensembl", dataset = "drerio_gene_ensembl")
+
+genes_human <- getLDS(attributes = c("hgnc_symbol"), # "linked"
                       filters = "hgnc_symbol", 
                       mart = human_mart, 
                       attributesL = c("zfin_id_symbol"), 
                       martL = drerio_mart, 
-                      uniqueRows=T, 
                       values = genes_drerio$gene) %>% as_tibble()
 
 genes_human
@@ -289,5 +320,3 @@ Find enriched sequence elements in promoters, UTRs, etc. See https://bedtools.re
 WGCNA: weighted correlation network analysis
 
 SCENIC: infer gene regulatory networks and cell types from single-cell RNA-seq data
-
-
