@@ -1,7 +1,7 @@
 ---
 title: "Problem Set 3"
 author: "Your Name Here"
-date: "12/13/2017"
+date: "12/7/2018"
 output:
   html_document:
     code_folding: hide
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Overview
 
-Here is a [link](https://raw.githubusercontent.com/rnabioco/eda/master/vignettes/exercises-5.Rmd) to the text of these exercises.
+Here is a [link](https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/vignettes/problem-set-3.Rmd) to the text of these exercises.
 
 # Question 1
 
