@@ -71,3 +71,17 @@ In addition to the problem corrected in question 3, the PCA plot in question 2 r
 ```
 
 ## Interpretation
+
+# Question 5
+
+From the results obtained from Q4, pull out a reasonable gene list, select one of the Gene Ontology terms (BP, CC, or MF), and plot the top 10 enriched GO terms on -log10(Benjamini). [DO NOT include any of the code below, just email rui.fu@ucdenver.edu your saved png file.]
+
+Make some interpretation, relating back to the RNA-seq experiment design.
+
+## Strategy
+
+```{r q5}
+
+```
+
+## Interpretation
