@@ -7,5 +7,4 @@ if [ "$TRAVIS_OS_NAME" != "osx" ]; then #
   cd "hdf5-$HDF5_VERSION"
   ./configure --prefix=/usr/local
   sudo make install
-  cd ../seurat
 fi

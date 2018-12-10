@@ -1,3 +1,4 @@
+^travis_setup\.sh$
 ^appveyor\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
