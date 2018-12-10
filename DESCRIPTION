@@ -35,7 +35,9 @@ Imports:
     RColorBrewer,
     DESeq2,
     ComplexHeatmap,
-    biomaRt
+    biomaRt,
+    Seurat,
+    Matrix
 biocViews:
     DESeq2,
     ComplexHeatmap,
