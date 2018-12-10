@@ -32,7 +32,6 @@ on_failure:
 environment:
   global:
     USE_RTOOLS: true 
-    WARNINGS_ARE_ERRORS: 0
     _R_CHECK_FORCE_SUGGESTS_: false
     
 artifacts:
