@@ -229,7 +229,7 @@ pbmc.markers <- FindAllMarkers(object = pbmc,
 
 pbmc.markers %>%
   group_by(cluster) %>%
-  top_n(2, avg_diff)
+  top_n(2, avg_logFC)
 
 ```
 
