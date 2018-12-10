@@ -32,7 +32,8 @@ on_failure:
 environment:
   global:
     USE_RTOOLS: true 
-
+    _R_CHECK_FORCE_SUGGESTS_: false
+    
 artifacts:
   - path: '*.Rcheck\**\*.log'
     name: Logs

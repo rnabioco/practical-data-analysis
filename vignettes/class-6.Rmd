@@ -140,11 +140,11 @@ length(x = pbmc@var.genes)
 
 Single cell data sets contain various types of 'uninteresting' variation. These can include technical noise, batch effects and confounding biological variation (such as cell cycle stage). We can regress these signals out of the analysis using ` ScaleData`.
 
-```{r regress, eval=FALSE}
+```{r regress}
 pbmc <- ScaleData(object = pbmc,
                   vars.to.regress = c("nUMI", "percent.mito"))
 ```
-```{r echo=F}
+```{r echo=F, eval = F}
 pbmc <- readRDS("/Users/austingillen/source/eda/regressed_seurat.rds")
 ```
 ## Performing dimensionality reduction and clustering: PCA
@@ -229,7 +229,7 @@ pbmc.markers <- FindAllMarkers(object = pbmc,
 
 pbmc.markers %>%
   group_by(cluster) %>%
-  top_n(2, avg_diff)
+  top_n(2, avg_logFC)
 
 ```
 
