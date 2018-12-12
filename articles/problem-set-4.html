@@ -179,7 +179,14 @@
 <h1 class="hasAnchor">
 <a href="#question-4" class="anchor"></a>Question 4</h1>
 <p>Included in the package is a matrix called <code>tx_rates</code> containing transcription rates for ~7000 genes. Transcription rates were measured every 15 minutes for 3 hours after exposure of dendritic cells to LPS, which activates innate immunity responses. The processed data was obtained from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE56977">GEO</a></p>
-<p>For this exercise perform the following steps: 1) Exclude genes that have rates of 0 across all samples 2) Log transform the data (add a pseudocount of 1 to avoid Infinite values) 3) Normalize the data to the 0 hour time point 4) run kmeans clustering on the log transformed and normalized matrix. Use k = between 5 and 10 clusters. 5) Make a heatmap with rows split based on the clusters identified in step 4. Use the code below to generate a color palette. Discuss any interesting patterns in your clusters in the interpretation.</p>
+<p>For this exercise perform the following steps:</p>
+<ol style="list-style-type: decimal">
+<li><p>Exclude genes that have rates of 0 across all samples</p></li>
+<li><p>Log transform the data (add a pseudocount of 1 to avoid Infinite values)</p></li>
+<li><p>Normalize the data to the 0 hour time point</p></li>
+<li><p>run kmeans clustering on the log transformed and normalized matrix. Use k = between 5 and 10 clusters.</p></li>
+<li><p>Make a heatmap with rows split based on the clusters identified in step 4. Use the code below to generate a color palette. Discuss any interesting patterns in your clusters in the interpretation.</p></li>
+</ol>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">cols_to_use &lt;-<span class="st"> </span>circlize<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/circlize/topics/colorRamp2">colorRamp2</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">4</span>), </a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">                                    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"blue"</span>, <span class="st">"white"</span>, <span class="st">"red"</span>))</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"></a>
