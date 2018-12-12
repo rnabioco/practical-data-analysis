@@ -144,14 +144,14 @@
 <div id="question-2" class="section level1">
 <h1 class="hasAnchor">
 <a href="#question-2" class="anchor"></a>Question 2</h1>
-<p>Not that you’ve filtered your cells, identify variable genes using the code below (the cutoffs have been adjusted for this dataset - don’t worry about interpreting the VMR plot):</p>
+<p>Now that you’ve filtered your cells, normalize the data and identify variable genes using the code below (the cutoffs have been adjusted for this dataset - don’t worry about interpreting the VMR plot):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">tumor &lt;-<span class="st"> </span><span class="kw">FindVariableGenes</span>(tumor,</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">                          <span class="dt">mean.function =</span> ExpMean,</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">                          <span class="dt">dispersion.function =</span> LogVMR, </a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">                          <span class="dt">x.low.cutoff =</span> <span class="fl">0.025</span>,</a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">                          <span class="dt">x.high.cutoff =</span> <span class="dv">3</span>,</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">                          <span class="dt">y.cutoff =</span> <span class="dv">1</span>)</a></code></pre></div>
-<p>Next, run PCA on your <code>tumor</code> object using the variable genes you’ve just identified.</p>
+<p>Next, scale the data and run PCA on your <code>tumor</code> object using the variable genes you’ve just identified.</p>
 <p>Finally, use an elbow plot and/or PC heatmaps to select the prinicpal components to use for tSNE and clustering. Justify your choice of PCs (do they capture the full variation present in the data?).</p>
 <div id="strategy-1" class="section level2">
 <h2 class="hasAnchor">
