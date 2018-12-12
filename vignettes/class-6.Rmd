@@ -221,7 +221,7 @@ Clustering reveals seven distinct populations that are accurately separated in t
 
 Seurat provides the `FindAllMarkers` and `FindMarkers` functions for identifying differentially expressed genes in all clusters vs. all other clusters and in specific pairs of clusters, respectively.
 
-```{r, find_markers, message = F, fig.height=5, fig.width=6}
+```{r, find_markers, message = F, eval = F, fig.height=5, fig.width=6}
 pbmc.markers <- FindAllMarkers(object = pbmc,
                                only.pos = TRUE,
                                min.pct = 0.25, 
@@ -300,7 +300,7 @@ TSNEPlot(object = pbmc,
 
 PBMCs are poor examples for this analysis, but the commands are shown here to demonstrate how other, more complex variables are regressed out of these analyses.
 
-```{r, cell_cycle, message = F, eval = T}
+```{r, cell_cycle, message = F, eval = F}
 # Inspect the classifying genes
 cc.genes
 

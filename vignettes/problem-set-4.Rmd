@@ -68,3 +68,38 @@ Using the PCs selected in Question 2, run the tSNE algorithm on `tumor` and iden
 
 ## Interpretation
 
+
+# Question 4
+
+Included in the package is a matrix called `tx_rates` containing transcription rates for ~7000 genes. Transcription rates were measured every 15 minutes
+for 3 hours after exposure of dendritic cells to LPS, which activates innate immunity responses. The processed data was obtained from [GEO](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE56977)
+
+For this exercise perform the following steps:
+  1) Exclude genes that have rates of 0 across all samples
+  2) Log transform the data (add a pseudocount of 1 to avoid Infinite values)
+  3) Normalize the data to the 0 hour time point
+  4) run kmeans clustering on the log transformed and normalized matrix. Use k = between 5 and 10 clusters. 
+  5) Make a heatmap with rows split based on the clusters identified in step 4. Use the code below to generate a color palette. Discuss any interesting patterns in your clusters in the interpretation. 
+  
+```r
+cols_to_use <- circlize::colorRamp2(c(-4, 0, 4), 
+                                    c("blue", "white", "red"))
+
+# pseudocode
+Heatmap(mat, col = cols_to_use, ...
+```
+
+## Strategy
+
+```{r q4}
+
+
+```
+
+## Interpretation
+
+
+# Bonus super fun but optional exercise:
+
+  Using your tidyverse skills plot the average transcription rate for each cluster identified in Q4 using ggplot. Facet by cluster. (Hint gather and tidy the matrix, then join with the cluster assignments)
+  

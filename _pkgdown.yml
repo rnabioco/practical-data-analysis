@@ -38,6 +38,8 @@ navbar:
         href: articles/class-5.html
       - text: "Class 6: Single Cell RNA-seq"
         href: articles/class-6.html
+      - text: "Class 7: Heatmaps and Clustering"
+        href: articles/class-7.html
       - text: "--------"
       - text: "Assignment Submission and Grading Rubric"
         href: articles/assignments.html

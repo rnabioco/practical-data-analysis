@@ -8,6 +8,14 @@
 \description{
 Provides course materials for IDPT 7810, Practical Biological Data Analysis in R.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/IDPT7810/practical-data-analysis}
+  \item \url{https://idpt7810.github.io/practical-data-analysis/}
+}
+
+}
 \author{
 \strong{Maintainer}: Jay Hesselberth \email{jay.hesselberth@gmail.com} (0000-0002-6299-179X)
 
