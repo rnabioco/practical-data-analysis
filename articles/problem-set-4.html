@@ -130,7 +130,7 @@
 <a href="#question-1" class="anchor"></a>Question 1</h1>
 <p>A second 10X Genomics single cell RNA-seq dataset is included in the pbda package. This dataset is derived from a human solid tumor. Get its path using the code below:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">tumor_10x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"tumor_gene_bc_matrices"</span>, <span class="st">"hg19"</span>, <span class="dt">package =</span> <span class="st">"pbda"</span>)</a></code></pre></div>
-<p>Using the new data, create a new Seurat object named <code>tumor</code>. Next, extract the list of mitochondiral genes in the matrix, calculate the percentage of reads that are mitochondrial in each cell, and add this to a metadata slot called “percent.mito” in the <code>tumor</code> object.</p>
+<p>Using the new data, create a new Seurat object named <code>tumor</code>. Next, extract the list of mitochondrial genes in the matrix, calculate the percentage of reads that are derived from the mitochondrial genome in each cell, and add this to a metadata slot called “percent.mito” in the <code>tumor</code> object.</p>
 <p>Now, using the <code>GenePlot()</code> function, plot nUMI vs. nGene and nUMI vs. percent.mito. Based on these plots, filter the data to remove dead cells and likely doublets (using <code>FilterCells()</code>).</p>
 <div id="strategy" class="section level2">
 <h2 class="hasAnchor">
@@ -144,7 +144,7 @@
 <div id="question-2" class="section level1">
 <h1 class="hasAnchor">
 <a href="#question-2" class="anchor"></a>Question 2</h1>
-<p>Now that you’ve filtered your cells, normalize the data and identify variable genes using the code below (the cutoffs have been adjusted for this dataset - don’t worry about interpreting the VMR plot):</p>
+<p>Now that you’ve filtered your cells, normalize the data (<code>NormalizeData()</code>) then identify variable genes using the code below (the cutoffs have been adjusted for this dataset - don’t worry about interpreting the VMR plot):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">tumor &lt;-<span class="st"> </span><span class="kw">FindVariableGenes</span>(tumor,</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">                          <span class="dt">mean.function =</span> ExpMean,</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">                          <span class="dt">dispersion.function =</span> LogVMR, </a>
