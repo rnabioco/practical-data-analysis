@@ -67,3 +67,54 @@
 #' A dataset for exploring missing data.
 #'
 "missing_ex"
+
+#' Microarray data from the NCI-60 cancer cell line panel
+#'
+#' See ?ISLR::NCI60 for description of dataset.
+#' 
+#' @format matrix with 6830 rows and 64 columns containing
+#' normalized gene expression values.
+#'
+#'@source ISLR::NCI60
+#' @examples
+#' nci60
+#'
+"nci60"
+
+#' Transcription rates for ~7000 genes measured across a timecourse
+#'
+#' Mouse dendritic cells were stimulated with LPS, and timepoints were 
+#' collected every 15 minutes. Metabolic labeling pulse with 4sU was performed
+#' 10 minutes prior to collection. Total RNA and 4sU containing RNA was collected 
+#' and used to calculate transcription rates.
+#' 
+#' @format matrix with 7872 genes as rows and 13 columns containing
+#' transcription rates.
+#'
+#' @source \url{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE56977}
+#' @source \url{https://www.ncbi.nlm.nih.gov/pubmed/25497548}
+#' @examples
+#' tx_rates
+#'
+"tx_rates"
+
+
+#' single cell RNA-seq dataset of mouse embryonic development
+#'
+#' A scRNA-seq dataset of developing mouse embryos generated with Smart-Seq2
+#' @format matrix with 22431 genes as rows and 268 cells as columns containing
+#' raw read counts.
+#'
+#' @examples
+#' esc_mat
+#'
+"esc_mat"
+
+#' Example matrix to highlight clustering methods
+#'
+#' @format matrix with 4 rows and 8 columns 
+#'
+#' @examples
+#' clust_mat
+#'
+"clust_mat"
