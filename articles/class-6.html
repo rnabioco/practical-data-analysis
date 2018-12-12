@@ -67,6 +67,9 @@
     <li>
       <a href="../articles/class-6.html">Class 6: Single Cell RNA-seq</a>
     </li>
+    <li>
+      <a href="../articles/class-7.html">Class 7: Heatmaps and Clustering</a>
+    </li>
     <li class="divider">
     <li>
       <a href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
@@ -79,6 +82,9 @@
     </li>
     <li>
       <a href="../articles/problem-set-3.html">Problem Set 3</a>
+    </li>
+    <li>
+      <a href="../articles/problem-set-4.html">Problem Set 4</a>
     </li>
   </ul>
 </li>
@@ -220,7 +226,7 @@
 <a class="sourceLine" id="cb11-2" data-line-number="2">                  <span class="dt">vars.to.regress =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"nUMI"</span>, <span class="st">"percent.mito"</span>))</a>
 <a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co">#&gt; Regressing out: nUMI, percent.mito</span></a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">#&gt; Time Elapsed:  18.7438952922821 secs</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">#&gt; Time Elapsed:  17.9399490356445 secs</span></a>
 <a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; Scaling data matrix</span></a></code></pre></div>
 </div>
 <div id="performing-dimensionality-reduction-and-clustering-pca" class="section level2">
@@ -318,27 +324,7 @@
 <a class="sourceLine" id="cb18-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb18-6" data-line-number="6">pbmc.markers <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb18-7" data-line-number="7"><span class="st">  </span><span class="kw">group_by</span>(cluster) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="st">  </span><span class="kw">top_n</span>(<span class="dv">2</span>, avg_logFC)</a>
-<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="co">#&gt; # A tibble: 16 x 7</span></a>
-<a class="sourceLine" id="cb18-10" data-line-number="10"><span class="co">#&gt; # Groups:   cluster [8]</span></a>
-<a class="sourceLine" id="cb18-11" data-line-number="11"><span class="co">#&gt;        p_val avg_logFC pct.1 pct.2 p_val_adj cluster gene    </span></a>
-<a class="sourceLine" id="cb18-12" data-line-number="12"><span class="co">#&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt;   </span></a>
-<a class="sourceLine" id="cb18-13" data-line-number="13"><span class="co">#&gt;  1 1.47e-234      1.15 0.924 0.482 2.01e-230 0       LDHB    </span></a>
-<a class="sourceLine" id="cb18-14" data-line-number="14"><span class="co">#&gt;  2 3.09e-129      1.07 0.662 0.202 4.24e-125 0       IL7R    </span></a>
-<a class="sourceLine" id="cb18-15" data-line-number="15"><span class="co">#&gt;  3 0.             3.83 0.996 0.216 0.        1       S100A9  </span></a>
-<a class="sourceLine" id="cb18-16" data-line-number="16"><span class="co">#&gt;  4 0.             3.79 0.973 0.122 0.        1       S100A8  </span></a>
-<a class="sourceLine" id="cb18-17" data-line-number="17"><span class="co">#&gt;  5 0.             2.98 0.936 0.042 0.        2       CD79A   </span></a>
-<a class="sourceLine" id="cb18-18" data-line-number="18"><span class="co">#&gt;  6 1.06e-269      2.49 0.623 0.022 1.45e-265 2       TCL1A   </span></a>
-<a class="sourceLine" id="cb18-19" data-line-number="19"><span class="co">#&gt;  7 8.03e-207      2.16 0.974 0.23  1.10e-202 3       CCL5    </span></a>
-<a class="sourceLine" id="cb18-20" data-line-number="20"><span class="co">#&gt;  8 1.12e-181      2.11 0.588 0.05  1.53e-177 3       GZMK    </span></a>
-<a class="sourceLine" id="cb18-21" data-line-number="21"><span class="co">#&gt;  9 1.04e-172      2.28 0.962 0.137 1.42e-168 4       FCGR3A  </span></a>
-<a class="sourceLine" id="cb18-22" data-line-number="22"><span class="co">#&gt; 10 7.13e-123      2.15 1     0.316 9.78e-119 4       LST1    </span></a>
-<a class="sourceLine" id="cb18-23" data-line-number="23"><span class="co">#&gt; 11 9.12e-265      3.33 0.955 0.068 1.25e-260 5       GZMB    </span></a>
-<a class="sourceLine" id="cb18-24" data-line-number="24"><span class="co">#&gt; 12 6.25e-192      3.76 0.961 0.131 8.57e-188 5       GNLY    </span></a>
-<a class="sourceLine" id="cb18-25" data-line-number="25"><span class="co">#&gt; 13 2.51e-238      2.73 0.844 0.011 3.44e-234 6       FCER1A  </span></a>
-<a class="sourceLine" id="cb18-26" data-line-number="26"><span class="co">#&gt; 14 7.04e- 21      1.97 1     0.513 9.65e- 17 6       HLA-DPB1</span></a>
-<a class="sourceLine" id="cb18-27" data-line-number="27"><span class="co">#&gt; 15 7.73e-200      5.02 1     0.01  1.06e-195 7       PF4     </span></a>
-<a class="sourceLine" id="cb18-28" data-line-number="28"><span class="co">#&gt; 16 3.68e-110      5.94 1     0.024 5.05e-106 7       PPBP</span></a></code></pre></div>
+<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="st">  </span><span class="kw">top_n</span>(<span class="dv">2</span>, avg_logFC)</a></code></pre></div>
 <p>Differentially expressed genes can be visualized as violin plots:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/Seurat/topics/VlnPlot">VlnPlot</a></span>(<span class="dt">object =</span> pbmc,</a>
 <a class="sourceLine" id="cb19-2" data-line-number="2">        <span class="dt">features.plot =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"LDHB"</span>, <span class="st">"CD79A"</span>))</a></code></pre></div>
@@ -402,48 +388,15 @@
 <p>PBMCs are poor examples for this analysis, but the commands are shown here to demonstrate how other, more complex variables are regressed out of these analyses.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="co"># Inspect the classifying genes</span></a>
 <a class="sourceLine" id="cb23-2" data-line-number="2">cc.genes</a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="co">#&gt; $s.genes</span></a>
-<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="co">#&gt;  [1] "MCM5"     "PCNA"     "TYMS"     "FEN1"     "MCM2"     "MCM4"    </span></a>
-<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="co">#&gt;  [7] "RRM1"     "UNG"      "GINS2"    "MCM6"     "CDCA7"    "DTL"     </span></a>
-<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="co">#&gt; [13] "PRIM1"    "UHRF1"    "MLF1IP"   "HELLS"    "RFC2"     "RPA2"    </span></a>
-<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="co">#&gt; [19] "NASP"     "RAD51AP1" "GMNN"     "WDR76"    "SLBP"     "CCNE2"   </span></a>
-<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="co">#&gt; [25] "UBR7"     "POLD3"    "MSH2"     "ATAD2"    "RAD51"    "RRM2"    </span></a>
-<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="co">#&gt; [31] "CDC45"    "CDC6"     "EXO1"     "TIPIN"    "DSCC1"    "BLM"     </span></a>
-<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">#&gt; [37] "CASP8AP2" "USP1"     "CLSPN"    "POLA1"    "CHAF1B"   "BRIP1"   </span></a>
-<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">#&gt; [43] "E2F8"    </span></a>
-<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb23-13" data-line-number="13"><span class="co">#&gt; $g2m.genes</span></a>
-<a class="sourceLine" id="cb23-14" data-line-number="14"><span class="co">#&gt;  [1] "HMGB2"   "CDK1"    "NUSAP1"  "UBE2C"   "BIRC5"   "TPX2"    "TOP2A"  </span></a>
-<a class="sourceLine" id="cb23-15" data-line-number="15"><span class="co">#&gt;  [8] "NDC80"   "CKS2"    "NUF2"    "CKS1B"   "MKI67"   "TMPO"    "CENPF"  </span></a>
-<a class="sourceLine" id="cb23-16" data-line-number="16"><span class="co">#&gt; [15] "TACC3"   "FAM64A"  "SMC4"    "CCNB2"   "CKAP2L"  "CKAP2"   "AURKB"  </span></a>
-<a class="sourceLine" id="cb23-17" data-line-number="17"><span class="co">#&gt; [22] "BUB1"    "KIF11"   "ANP32E"  "TUBB4B"  "GTSE1"   "KIF20B"  "HJURP"  </span></a>
-<a class="sourceLine" id="cb23-18" data-line-number="18"><span class="co">#&gt; [29] "CDCA3"   "HN1"     "CDC20"   "TTK"     "CDC25C"  "KIF2C"   "RANGAP1"</span></a>
-<a class="sourceLine" id="cb23-19" data-line-number="19"><span class="co">#&gt; [36] "NCAPD2"  "DLGAP5"  "CDCA2"   "CDCA8"   "ECT2"    "KIF23"   "HMMR"   </span></a>
-<a class="sourceLine" id="cb23-20" data-line-number="20"><span class="co">#&gt; [43] "AURKA"   "PSRC1"   "ANLN"    "LBR"     "CKAP5"   "CENPE"   "CTCF"   </span></a>
-<a class="sourceLine" id="cb23-21" data-line-number="21"><span class="co">#&gt; [50] "NEK2"    "G2E3"    "GAS2L3"  "CBX5"    "CENPA"</span></a>
-<a class="sourceLine" id="cb23-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb23-23" data-line-number="23"><span class="co"># Classify the cells</span></a>
-<a class="sourceLine" id="cb23-24" data-line-number="24">pbmc &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/Seurat/topics/CellCycleScoring">CellCycleScoring</a></span>(pbmc,</a>
-<a class="sourceLine" id="cb23-25" data-line-number="25">                         <span class="dt">s.genes =</span> cc.genes<span class="op">$</span>s.genes,</a>
-<a class="sourceLine" id="cb23-26" data-line-number="26">                         <span class="dt">g2m.genes =</span> cc.genes<span class="op">$</span>g2m.genes, </a>
-<a class="sourceLine" id="cb23-27" data-line-number="27">                         <span class="dt">set.ident =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb23-28" data-line-number="28"></a>
-<a class="sourceLine" id="cb23-29" data-line-number="29"><span class="co"># view cell cycle scores and phase assignments</span></a>
-<a class="sourceLine" id="cb23-30" data-line-number="30"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="dt">x =</span> pbmc<span class="op">@</span>meta.data)</a>
-<a class="sourceLine" id="cb23-31" data-line-number="31"><span class="co">#&gt;                nGene nUMI orig.ident percent.mito res.0.6 cluster.id</span></a>
-<a class="sourceLine" id="cb23-32" data-line-number="32"><span class="co">#&gt; AAACATACAACCAC   781 2421   10x_PBMC  0.030177759       0          0</span></a>
-<a class="sourceLine" id="cb23-33" data-line-number="33"><span class="co">#&gt; AAACATTGAGCTAC  1352 4903   10x_PBMC  0.037935958       2          2</span></a>
-<a class="sourceLine" id="cb23-34" data-line-number="34"><span class="co">#&gt; AAACATTGATCAGC  1131 3149   10x_PBMC  0.008897363       0          0</span></a>
-<a class="sourceLine" id="cb23-35" data-line-number="35"><span class="co">#&gt; AAACCGTGCTTCCG   960 2639   10x_PBMC  0.017430845       1          1</span></a>
-<a class="sourceLine" id="cb23-36" data-line-number="36"><span class="co">#&gt; AAACCGTGTATGCG   522  981   10x_PBMC  0.012244898       5          5</span></a>
-<a class="sourceLine" id="cb23-37" data-line-number="37"><span class="co">#&gt; AAACGCACTGGTAC   782 2164   10x_PBMC  0.016643551       0          0</span></a>
-<a class="sourceLine" id="cb23-38" data-line-number="38"><span class="co">#&gt;                     S.Score    G2M.Score Phase       old.ident</span></a>
-<a class="sourceLine" id="cb23-39" data-line-number="39"><span class="co">#&gt; AAACATACAACCAC  0.093645459 -0.039663192     S     CD4 T cells</span></a>
-<a class="sourceLine" id="cb23-40" data-line-number="40"><span class="co">#&gt; AAACATTGAGCTAC -0.024949477 -0.049169581    G1         B cells</span></a>
-<a class="sourceLine" id="cb23-41" data-line-number="41"><span class="co">#&gt; AAACATTGATCAGC -0.008387319  0.061964023   G2M     CD4 T cells</span></a>
-<a class="sourceLine" id="cb23-42" data-line-number="42"><span class="co">#&gt; AAACCGTGCTTCCG  0.033592976  0.004171847     S CD14+ Monocytes</span></a>
-<a class="sourceLine" id="cb23-43" data-line-number="43"><span class="co">#&gt; AAACCGTGTATGCG -0.032763093  0.054265696   G2M        NK cells</span></a>
-<a class="sourceLine" id="cb23-44" data-line-number="44"><span class="co">#&gt; AAACGCACTGGTAC -0.040598328 -0.081420628    G1     CD4 T cells</span></a></code></pre></div>
+<a class="sourceLine" id="cb23-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="co"># Classify the cells</span></a>
+<a class="sourceLine" id="cb23-5" data-line-number="5">pbmc &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/Seurat/topics/CellCycleScoring">CellCycleScoring</a></span>(pbmc,</a>
+<a class="sourceLine" id="cb23-6" data-line-number="6">                         <span class="dt">s.genes =</span> cc.genes<span class="op">$</span>s.genes,</a>
+<a class="sourceLine" id="cb23-7" data-line-number="7">                         <span class="dt">g2m.genes =</span> cc.genes<span class="op">$</span>g2m.genes, </a>
+<a class="sourceLine" id="cb23-8" data-line-number="8">                         <span class="dt">set.ident =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb23-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co"># view cell cycle scores and phase assignments</span></a>
+<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="dt">x =</span> pbmc<span class="op">@</span>meta.data)</a></code></pre></div>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co"># Cell cycle stage can then be regressed out using `Scale Data`</span></a>
 <a class="sourceLine" id="cb24-2" data-line-number="2">pbmc &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/Seurat/topics/ScaleData">ScaleData</a></span>(pbmc,</a>
 <a class="sourceLine" id="cb24-3" data-line-number="3">                  <span class="dt">vars.to.regress =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"S.Score"</span>, <span class="st">"G2M.Score"</span>),</a>

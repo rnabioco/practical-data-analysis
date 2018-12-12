@@ -67,6 +67,9 @@
     <li>
       <a href="../articles/class-6.html">Class 6: Single Cell RNA-seq</a>
     </li>
+    <li>
+      <a href="../articles/class-7.html">Class 7: Heatmaps and Clustering</a>
+    </li>
     <li class="divider">
     <li>
       <a href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
@@ -79,6 +82,9 @@
     </li>
     <li>
       <a href="../articles/problem-set-3.html">Problem Set 3</a>
+    </li>
+    <li>
+      <a href="../articles/problem-set-4.html">Problem Set 4</a>
     </li>
   </ul>
 </li>
@@ -122,10 +128,10 @@
 <div id="question-1" class="section level1">
 <h1 class="hasAnchor">
 <a href="#question-1" class="anchor"></a>Question 1</h1>
-<p>A second 10X Genomics single cell dataset is included in the pbda package. This dataset is derived from a solid tumor. Get its path using the code below:</p>
+<p>A second 10X Genomics single cell RNA-seq dataset is included in the pbda package. This dataset is derived from a human solid tumor. Get its path using the code below:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">tumor_10x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"tumor_gene_bc_matrices"</span>, <span class="st">"hg19"</span>, <span class="dt">package =</span> <span class="st">"pbda"</span>)</a></code></pre></div>
-<p>Using the new data create a new Seurat object named <code>tumor</code>. Next, extract the list of mitochondiral genes in the matrix, calculate the percentage of reads that are mitochondrial in each cell, and add this to a metadata slot called “percent.mito” in the <code>tumor</code> object.</p>
-<p>Now, using the <code>GenePlot</code> function, plot nUMI vs. nGene and nUMI vs. percent.mito. Based on these plots, filter the data (using <code>FilterCells</code>) to remove dead cells and likely doublets.</p>
+<p>Using the new data, create a new Seurat object named <code>tumor</code>. Next, extract the list of mitochondiral genes in the matrix, calculate the percentage of reads that are mitochondrial in each cell, and add this to a metadata slot called “percent.mito” in the <code>tumor</code> object.</p>
+<p>Now, using the <code>GenePlot()</code> function, plot nUMI vs. nGene and nUMI vs. percent.mito. Based on these plots, filter the data to remove dead cells and likely doublets (using <code>FilterCells()</code>).</p>
 <div id="strategy" class="section level2">
 <h2 class="hasAnchor">
 <a href="#strategy" class="anchor"></a>Strategy</h2>
@@ -138,14 +144,15 @@
 <div id="question-2" class="section level1">
 <h1 class="hasAnchor">
 <a href="#question-2" class="anchor"></a>Question 2</h1>
-<p>Not that you’ve filtered your cells, identify variable genes using the code below (the cutoffs have been adjusted for this dataset):</p>
+<p>Not that you’ve filtered your cells, identify variable genes using the code below (the cutoffs have been adjusted for this dataset - don’t worry about interpreting the VMR plot):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">tumor &lt;-<span class="st"> </span><span class="kw">FindVariableGenes</span>(tumor,</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">                          <span class="dt">mean.function =</span> ExpMean,</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">                          <span class="dt">dispersion.function =</span> LogVMR, </a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">                          <span class="dt">x.low.cutoff =</span> <span class="fl">0.025</span>,</a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">                          <span class="dt">x.high.cutoff =</span> <span class="dv">3</span>,</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">                          <span class="dt">y.cutoff =</span> <span class="dv">1</span>)</a></code></pre></div>
-<p>Next, run PCA on your <code>tumor</code> object using the variable genes you’ve just identified. Finally, use an elbow plot and/or PC heatmaps to select the prinicpal components to use for tSNE and clustering. Justify your choice of PCs (do they capture the full variation present in the data?).</p>
+<p>Next, run PCA on your <code>tumor</code> object using the variable genes you’ve just identified.</p>
+<p>Finally, use an elbow plot and/or PC heatmaps to select the prinicpal components to use for tSNE and clustering. Justify your choice of PCs (do they capture the full variation present in the data?).</p>
 <div id="strategy-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#strategy-1" class="anchor"></a>Strategy</h2>
@@ -167,6 +174,30 @@
 <h2 class="hasAnchor">
 <a href="#interpretation-2" class="anchor"></a>Interpretation</h2>
 </div>
+</div>
+<div id="question-4" class="section level1">
+<h1 class="hasAnchor">
+<a href="#question-4" class="anchor"></a>Question 4</h1>
+<p>Included in the package is a matrix called <code>tx_rates</code> containing transcription rates for ~7000 genes. Transcription rates were measured every 15 minutes for 3 hours after exposure of dendritic cells to LPS, which activates innate immunity responses. The processed data was obtained from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE56977">GEO</a></p>
+<p>For this exercise perform the following steps: 1) Exclude genes that have rates of 0 across all samples 2) Log transform the data (add a pseudocount of 1 to avoid Infinite values) 3) Normalize the data to the 0 hour time point 4) run kmeans clustering on the log transformed and normalized matrix. Use k = between 5 and 10 clusters. 5) Make a heatmap with rows split based on the clusters identified in step 4. Use the code below to generate a color palette. Discuss any interesting patterns in your clusters in the interpretation.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">cols_to_use &lt;-<span class="st"> </span>circlize<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/circlize/topics/colorRamp2">colorRamp2</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">4</span>), </a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">                                    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"blue"</span>, <span class="st">"white"</span>, <span class="st">"red"</span>))</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># pseudocode</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw">Heatmap</span>(mat, <span class="dt">col =</span> cols_to_use, ...</a></code></pre></div>
+<div id="strategy-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#strategy-3" class="anchor"></a>Strategy</h2>
+</div>
+<div id="interpretation-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interpretation-3" class="anchor"></a>Interpretation</h2>
+</div>
+</div>
+<div id="bonus-super-fun-but-optional-exercise" class="section level1">
+<h1 class="hasAnchor">
+<a href="#bonus-super-fun-but-optional-exercise" class="anchor"></a>Bonus super fun but optional exercise:</h1>
+<p>Using your tidyverse skills plot the average transcription rate for each cluster identified in Q4 using ggplot. Facet by cluster. (Hint gather and tidy the matrix, then join with the cluster assignments)</p>
 </div>
   </div>
 
@@ -194,6 +225,13 @@
       <li><a href="#interpretation-2">Interpretation</a></li>
       </ul>
 </li>
+      <li>
+<a href="#question-4">Question 4</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#strategy-3">Strategy</a></li>
+      <li><a href="#interpretation-3">Interpretation</a></li>
+      </ul>
+</li>
+      <li><a href="#bonus-super-fun-but-optional-exercise">Bonus super fun but optional exercise:</a></li>
       </ul>
 </div>
       </div>
