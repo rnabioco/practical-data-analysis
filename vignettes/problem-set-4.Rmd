@@ -1,0 +1,68 @@
+---
+title: "Problem Set 4"
+author: "Your Name Here"
+date: "12/11/2018"
+output:
+  html_document:
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+
+Here is a [link](https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/vignettes/problem-set-4.Rmd) to the text of these exercises.
+
+# Question 1
+
+A second 10X Genomics single cell dataset is included in the pbda package. This dataset is derived from a solid tumor. Get its path using the code below:
+``` r
+tumor_10x <- system.file("extdata", "tumor_gene_bc_matrices", "hg19", package = "pbda")
+```
+Using the new data create a new Seurat object named `tumor`. Next, extract the list of mitochondiral genes in the matrix, calculate the percentage of reads that are mitochondrial in each cell, and add this to a metadata slot called "percent.mito" in the `tumor` object.
+
+Now, using the `GenePlot` function, plot nUMI vs. nGene and nUMI vs. percent.mito. Based on these plots, filter the data (using `FilterCells`) to remove dead cells and likely doublets.
+
+## Strategy
+
+```{r q1}
+
+```
+
+## Interpretation
+
+# Question 2
+
+Not that you've filtered your cells, identify variable genes using the code below (the cutoffs have been adjusted for this dataset):
+``` r
+tumor <- FindVariableGenes(tumor,
+                          mean.function = ExpMean,
+                          dispersion.function = LogVMR, 
+                          x.low.cutoff = 0.025,
+                          x.high.cutoff = 3,
+                          y.cutoff = 1)
+```
+Next, run PCA on your `tumor` object using the variable genes you've just identified. Finally, use an elbow plot and/or PC heatmaps to select the prinicpal components to use for tSNE and clustering. Justify your choice of PCs (do they capture the full variation present in the data?).
+
+## Strategy
+
+```{r q2}
+
+```
+
+## Interpretation
+
+# Question 3
+
+Using the PCs selected in Question 2, run the tSNE algorithm on `tumor` and identify clusters using `FindClusters()`. Plot the resulting tSNE. How many clusters are identified? Does this appear reasonable based on the structure present in the tSNE projection?
+
+## Strategy
+
+```{r q3}
+
+```
+
+## Interpretation
+
