@@ -17,13 +17,13 @@ Here is a [link](https://raw.githubusercontent.com/IDPT7810/practical-data-analy
 
 # Question 1
 
-A second 10X Genomics single cell dataset is included in the pbda package. This dataset is derived from a solid tumor. Get its path using the code below:
+A second 10X Genomics single cell RNA-seq dataset is included in the pbda package. This dataset is derived from a human solid tumor. Get its path using the code below:
 ``` r
 tumor_10x <- system.file("extdata", "tumor_gene_bc_matrices", "hg19", package = "pbda")
 ```
-Using the new data create a new Seurat object named `tumor`. Next, extract the list of mitochondiral genes in the matrix, calculate the percentage of reads that are mitochondrial in each cell, and add this to a metadata slot called "percent.mito" in the `tumor` object.
+Using the new data, create a new Seurat object named `tumor`. Next, extract the list of mitochondiral genes in the matrix, calculate the percentage of reads that are mitochondrial in each cell, and add this to a metadata slot called "percent.mito" in the `tumor` object.
 
-Now, using the `GenePlot` function, plot nUMI vs. nGene and nUMI vs. percent.mito. Based on these plots, filter the data (using `FilterCells`) to remove dead cells and likely doublets.
+Now, using the `GenePlot()` function, plot nUMI vs. nGene and nUMI vs. percent.mito. Based on these plots, filter the data to remove dead cells and likely doublets (using `FilterCells()`).
 
 ## Strategy
 
@@ -35,7 +35,7 @@ Now, using the `GenePlot` function, plot nUMI vs. nGene and nUMI vs. percent.mit
 
 # Question 2
 
-Not that you've filtered your cells, identify variable genes using the code below (the cutoffs have been adjusted for this dataset):
+Not that you've filtered your cells, identify variable genes using the code below (the cutoffs have been adjusted for this dataset - don't worry about interpreting the VMR plot):
 ``` r
 tumor <- FindVariableGenes(tumor,
                           mean.function = ExpMean,
@@ -44,7 +44,9 @@ tumor <- FindVariableGenes(tumor,
                           x.high.cutoff = 3,
                           y.cutoff = 1)
 ```
-Next, run PCA on your `tumor` object using the variable genes you've just identified. Finally, use an elbow plot and/or PC heatmaps to select the prinicpal components to use for tSNE and clustering. Justify your choice of PCs (do they capture the full variation present in the data?).
+Next, run PCA on your `tumor` object using the variable genes you've just identified.
+
+Finally, use an elbow plot and/or PC heatmaps to select the prinicpal components to use for tSNE and clustering. Justify your choice of PCs (do they capture the full variation present in the data?).
 
 ## Strategy
 
