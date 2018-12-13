@@ -417,9 +417,13 @@ Heatmap(var_mat, col = vcols, name = "log scale",
 ## Clustering
 
 Reviews: 
-  - [Avoiding common pitfalls when clustering biological data](http://stke.sciencemag.org/content/9/432/re6)
-  - [How does gene expression clustering work?](https://www.nature.com/articles/nbt1205-1499)
-  - [Heatmaps](https://www.nature.com/articles/nmeth.1902)
+
+  - [Avoiding common pitfalls when clustering biological data](http://stke.sciencemag.org/content/9/432/re6)  
+  
+  - [How does gene expression clustering work?](https://www.nature.com/articles/nbt1205-1499)  
+  
+  - [Heatmaps](https://www.nature.com/articles/nmeth.1902)  
+  
 
 Consider the following example matrix `clust_mat` which is part of the package. Data and concept from a [blog post](http://www.opiniomics.org/you-probably-dont-understand-heatmaps/) by Mick Watson.
 
@@ -441,7 +445,7 @@ Heatmap(clust_mat,
 
 Does this clustering make sense? Should I1 and I2 be grouped together? 
 
-By default hierarchical clustering is performed using euclidian distance as a distance metric. There are many distance metrics, and some are more appropriate for different data. For this data, using euclidean distance will group the highly expressed genes (`h1` and `h2`) separate from the lowly expressed (`l1`, `l2`).  However we can see that the apttern of change over time is more similar between `h1` and `l1`
+By default hierarchical clustering is performed using euclidian distance as a distance metric. There are many distance metrics, and some are more appropriate for different data. For this data, using euclidean distance will group the highly expressed genes (`h1` and `h2`) separate from the lowly expressed (`l1`, `l2`).  However we can see that the pattern of change over time is more similar between `h1` and `l1`
 
 We can see the euclidian distances between genes using `dist`. 
 
@@ -456,7 +460,7 @@ hc <- hclust(dist(clust_mat))
 plot(hc)
 ```
 
-We can change the distance metric using `clustering_distance_rows`. A correlation measure, is not sensitive to abundance, and can recover the shared patterns in the data.
+We can change the distance metric used for the Heatmap by changing the `clustering_distance_rows` argument. A correlation measure, is not sensitive to abundance, and can recover the shared patterns in the data.
 
 ```{r}
 cor(t(clust_mat))
@@ -498,7 +502,7 @@ h1 <- Heatmap(var_mat, col = vcols, name = "log scale",
 h1
 ```
 
-How do we select out indidudal clusters? How do we define clusters?
+How do we select out individual clusters? How do we define clusters?
 
 First let's generate the dendogram:
 
@@ -545,10 +549,12 @@ h1
 K-means clustering is another simple, yet powerful clustering techinuqe. It also scales to much larger datasets than hierarchical clustering. 
 
 description:
-  - [interactive  description](http://onmyphd.com/?p=k-means.clustering) 
-  - [detailed description](https://en.wikipedia.org/wiki/K-means_clustering) 
-  - [determining number of clusters](https://stackoverflow.com/questions/15376075/cluster-analysis-in-r-determine-the-optimal-number-of-clusters) 
-
+  - [interactive description](http://onmyphd.com/?p=k-means.clustering)   
+  
+  - [detailed description](https://en.wikipedia.org/wiki/K-means_clustering)   
+  
+  - [determining number of clusters](https://stackoverflow.com/questions/15376075/cluster-analysis-in-r-determine-the-optimal-number-of-clusters)   
+  
 
 Kmeans is easily implemented using `kmeans()`
 
