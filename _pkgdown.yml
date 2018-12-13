@@ -14,6 +14,9 @@ reference:
     - missing_ex
     - brauer_gene_exp
     - yeast_prot_prop
+    - nci60
+    - esc_mat
+    - clust_mat
   - title: Utilities
     contents:
     - update_pbda
