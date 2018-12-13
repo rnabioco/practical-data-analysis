@@ -630,9 +630,9 @@
 <p>Cluster assignments can be extracted using <code>$cluster</code></p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">clusters<span class="op">$</span>cluster <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>()</a>
 <a class="sourceLine" id="cb41-2" data-line-number="2"><span class="co">#&gt;        Zbed3 LOC100502936       C86187         Btg4       Alppl2 </span></a>
-<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="co">#&gt;            1            1            1            1            2 </span></a>
+<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="co">#&gt;            2            2            2            2            3 </span></a>
 <a class="sourceLine" id="cb41-4" data-line-number="4"><span class="co">#&gt;         Tcl1 </span></a>
-<a class="sourceLine" id="cb41-5" data-line-number="5"><span class="co">#&gt;            1</span></a></code></pre></div>
+<a class="sourceLine" id="cb41-5" data-line-number="5"><span class="co">#&gt;            2</span></a></code></pre></div>
 <p>To recover a reproducible kmeans classification set a seed for the random number generator</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">42</span>)</a>
 <a class="sourceLine" id="cb42-2" data-line-number="2">clusters &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/kmeans">kmeans</a></span>(var_mat, <span class="dt">centers =</span> <span class="dv">5</span>)</a>
