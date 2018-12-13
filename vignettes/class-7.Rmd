@@ -445,9 +445,9 @@ Heatmap(clust_mat,
 
 Does this clustering make sense? Should I1 and I2 be grouped together? 
 
-By default hierarchical clustering is performed using euclidian distance as a distance metric. There are many distance metrics, and some are more appropriate for different data. For this data, using euclidean distance will group the highly expressed genes (`h1` and `h2`) separate from the lowly expressed (`l1`, `l2`).  However we can see that the pattern of change over time is more similar between `h1` and `l1`
+By default hierarchical clustering is performed using euclidean distance as a distance metric. There are many distance metrics, and some are more appropriate for different data. For this data, using euclidean distance will group the highly expressed genes (`h1` and `h2`) separate from the lowly expressed (`l1`, `l2`).  However we can see that the pattern of change over time is more similar between `h1` and `l1`
 
-We can see the euclidian distances between genes using `dist`. 
+We can see the euclidean distances between genes using `dist`. 
 
 ```{r}
 dist(clust_mat)
