@@ -70,6 +70,9 @@
     <li>
       <a href="../articles/class-7.html">Class 7: Heatmaps and Clustering</a>
     </li>
+    <li>
+      <a href="../articles/class-8.html">Class 8: Exploring data with PCA</a>
+    </li>
     <li class="divider">
     <li>
       <a href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
@@ -111,7 +114,7 @@
       <h1>Class 7: Heatmaps and Clustering</h1>
                         <h4 class="author">Kent Riemondy</h4>
             
-            <h4 class="date">2018-12-12</h4>
+            <h4 class="date">2018-12-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/IDPT7810/practical-data-analysis/blob/master/vignettes/class-7.Rmd"><code>vignettes/class-7.Rmd</code></a></small>
       <div class="hidden name"><code>class-7.Rmd</code></div>
@@ -520,7 +523,12 @@
 <div id="clustering" class="section level2">
 <h2 class="hasAnchor">
 <a href="#clustering" class="anchor"></a>Clustering</h2>
-<p>Reviews: - <a href="http://stke.sciencemag.org/content/9/432/re6">Avoiding common pitfalls when clustering biological data</a> - <a href="https://www.nature.com/articles/nbt1205-1499">How does gene expression clustering work?</a> - <a href="https://www.nature.com/articles/nmeth.1902">Heatmaps</a></p>
+<p>Reviews:</p>
+<ul>
+<li><p><a href="http://stke.sciencemag.org/content/9/432/re6">Avoiding common pitfalls when clustering biological data</a></p></li>
+<li><p><a href="https://www.nature.com/articles/nbt1205-1499">How does gene expression clustering work?</a></p></li>
+<li><p><a href="https://www.nature.com/articles/nmeth.1902">Heatmaps</a></p></li>
+</ul>
 <p>Consider the following example matrix <code>clust_mat</code> which is part of the package. Data and concept from a <a href="http://www.opiniomics.org/you-probably-dont-understand-heatmaps/">blog post</a> by Mick Watson.</p>
 <p>By default many Heatmap packages perform clustering. It’s important to know what these defaults do, and when it is appropriate to use them. Consider the following toy dataset, which is clustered by row.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">clustering_example_plot</a></code></pre></div>
@@ -532,7 +540,7 @@
 <a class="sourceLine" id="cb28-4" data-line-number="4">        <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><img src="class-7_files/figure-html/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>Does this clustering make sense? Should I1 and I2 be grouped together?</p>
-<p>By default hierarchical clustering is performed using euclidian distance as a distance metric. There are many distance metrics, and some are more appropriate for different data. For this data, using euclidean distance will group the highly expressed genes (<code>h1</code> and <code>h2</code>) separate from the lowly expressed (<code>l1</code>, <code>l2</code>). However we can see that the apttern of change over time is more similar between <code>h1</code> and <code>l1</code></p>
+<p>By default hierarchical clustering is performed using euclidian distance as a distance metric. There are many distance metrics, and some are more appropriate for different data. For this data, using euclidean distance will group the highly expressed genes (<code>h1</code> and <code>h2</code>) separate from the lowly expressed (<code>l1</code>, <code>l2</code>). However we can see that the pattern of change over time is more similar between <code>h1</code> and <code>l1</code></p>
 <p>We can see the euclidian distances between genes using <code>dist</code>.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/dist">dist</a></span>(clust_mat)</a>
 <a class="sourceLine" id="cb29-2" data-line-number="2"><span class="co">#&gt;           h1        h2        l1</span></a>
@@ -543,7 +551,7 @@
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">hc &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/hclust">hclust</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/dist">dist</a></span>(clust_mat))</a>
 <a class="sourceLine" id="cb30-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(hc)</a></code></pre></div>
 <p><img src="class-7_files/figure-html/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;"></p>
-<p>We can change the distance metric using <code>clustering_distance_rows</code>. A correlation measure, is not sensitive to abundance, and can recover the shared patterns in the data.</p>
+<p>We can change the distance metric used for the Heatmap by changing the <code>clustering_distance_rows</code> argument. A correlation measure, is not sensitive to abundance, and can recover the shared patterns in the data.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor">cor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/t">t</a></span>(clust_mat))</a>
 <a class="sourceLine" id="cb31-2" data-line-number="2"><span class="co">#&gt;    h1 h2 l1 l2</span></a>
 <a class="sourceLine" id="cb31-3" data-line-number="3"><span class="co">#&gt; h1  1 -1  1 -1</span></a>
@@ -576,7 +584,7 @@
 <a class="sourceLine" id="cb34-6" data-line-number="6">        <span class="dt">row_title =</span> <span class="st">"Genes"</span>)</a>
 <a class="sourceLine" id="cb34-7" data-line-number="7">h1</a></code></pre></div>
 <p><img src="class-7_files/figure-html/unnamed-chunk-32-1.png" width="672" style="display: block; margin: auto;"></p>
-<p>How do we select out indidudal clusters? How do we define clusters?</p>
+<p>How do we select out individual clusters? How do we define clusters?</p>
 <p>First let’s generate the dendogram:</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">hc &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/hclust">hclust</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/dist">dist</a></span>(var_mat))</a>
 <a class="sourceLine" id="cb35-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(hc)</a></code></pre></div>
@@ -608,7 +616,11 @@
 <h3 class="hasAnchor">
 <a href="#k-means" class="anchor"></a>K-means</h3>
 <p>K-means clustering is another simple, yet powerful clustering techinuqe. It also scales to much larger datasets than hierarchical clustering.</p>
-<p>description: - <a href="http://onmyphd.com/?p=k-means.clustering">interactive description</a> - <a href="https://en.wikipedia.org/wiki/K-means_clustering">detailed description</a> - <a href="https://stackoverflow.com/questions/15376075/cluster-analysis-in-r-determine-the-optimal-number-of-clusters">determining number of clusters</a></p>
+<p>description: - <a href="http://onmyphd.com/?p=k-means.clustering">interactive description</a></p>
+<ul>
+<li><p><a href="https://en.wikipedia.org/wiki/K-means_clustering">detailed description</a></p></li>
+<li><p><a href="https://stackoverflow.com/questions/15376075/cluster-analysis-in-r-determine-the-optimal-number-of-clusters">determining number of clusters</a></p></li>
+</ul>
 <p>Kmeans is easily implemented using <code><a href="https://www.rdocumentation.org/packages/stats/topics/kmeans">kmeans()</a></code></p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">clusters &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/kmeans">kmeans</a></span>(var_mat, <span class="dt">centers =</span> <span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb40-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(clusters)</a>
@@ -618,7 +630,7 @@
 <p>Cluster assignments can be extracted using <code>$cluster</code></p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">clusters<span class="op">$</span>cluster <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>()</a>
 <a class="sourceLine" id="cb41-2" data-line-number="2"><span class="co">#&gt;        Zbed3 LOC100502936       C86187         Btg4       Alppl2 </span></a>
-<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="co">#&gt;            1            1            1            1            4 </span></a>
+<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="co">#&gt;            1            1            1            1            2 </span></a>
 <a class="sourceLine" id="cb41-4" data-line-number="4"><span class="co">#&gt;         Tcl1 </span></a>
 <a class="sourceLine" id="cb41-5" data-line-number="5"><span class="co">#&gt;            1</span></a></code></pre></div>
 <p>To recover a reproducible kmeans classification set a seed for the random number generator</p>
