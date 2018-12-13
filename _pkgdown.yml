@@ -40,6 +40,8 @@ navbar:
         href: articles/class-6.html
       - text: "Class 7: Heatmaps and Clustering"
         href: articles/class-7.html
+      - text: "Class 8: Exploring data with PCA"
+        href: articles/class-8.html
       - text: "--------"
       - text: "Assignment Submission and Grading Rubric"
         href: articles/assignments.html

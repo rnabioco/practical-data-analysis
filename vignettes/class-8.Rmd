@@ -1,0 +1,412 @@
+---
+title: "Class 8: Exploring data with PCA"
+author: "Kent Riemondy"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Class-8}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+library(tidyverse)
+library(ComplexHeatmap)
+library(ggrepel)
+library(pbda)
+library(cowplot)
+```
+
+
+
+```{r load, eval = F}
+#devtools::install_github("IDPT7810/practical-data-analysis")
+library(tidyverse)
+library(ComplexHeatmap)
+library(ggrepel)
+library(pbda)
+library(cowplot)
+```
+
+Goals:
+  Use PCA to identify key sources of variation in a large dataset.
+
+## PCA
+ 
+As we've learned throughout the class, you need to visualize your data to identify
+key patterns. However, high dimensional datasets are difficult to visualize in a meaningful way. For example how do you find a pattern in a large sequencing dataset with 100 samples, and 20,000 genes? 
+
+Heatmaps provide one way to visualize selectively gene sets for a relatively small number of samples, but discerning overall patterns between samples can still be difficult, even with clustering.
+
+Principle Component Analysis as you have learned is a commonly used technique to examine the structure of large datasets. 
+
+Resources:
+
+  - [PCA Explained Visually](http://setosa.io/ev/principal-component-analysis/) 
+  - [PCA formal explanation](https://en.wikipedia.org/wiki/Principal_component_analysis)
+  - [PCA informal explanation](https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues)
+
+### Background on PCA
+
+PCA takes a set of variables and generates a new set of variables. The new variables are selected to capture the maximal variance in the data. 
+
+Each variable is known as a principal component. The first principal component represents a linear combination of the original variables that captures the maximum variance in the dataset. Basically find a line through the dataset that captures the maximum variance. 
+
+The second component is also a linear combination of the original variables but is uncorrelated to the first component. 
+
+In this manner PCA generates a new set of variables that are ordered based on the variance captured in the data. It's for this reason that is so useful for exploratory analysis and dimensionality reduction. 
+
+Consider the following experiment where we measure gene expression for 2 genes in 100 samples. Because there are only 2 genes, we can visualize all of the data in a 2D scatterplot. 
+
+First, let's generate some example data. 
+
+```{r pca-intro}
+# generate some correlated variables, scale, and make tidy 
+set.seed(42)
+sim <- MASS::mvrnorm(100,
+                     c(0, 0),
+                     matrix(c(1, 0.95, 0.95, 1),
+                     2,
+                     2)) %>% 
+  scale() %>% 
+  as.data.frame() %>% 
+  rownames_to_column("id") %>% 
+  arrange(V1, V2) %>% 
+  rename(gene_1 = V1, gene_2 = V2) %>% 
+  as_tibble() %>% 
+  mutate(id = row_number())
+
+# select points to label for visualization
+max_min_points <- slice(sim, c(1:5, 95:100))
+
+# make a plot
+og_plt <- ggplot(sim, aes(gene_1, gene_2)) +
+  geom_point() +
+  geom_text_repel(data = max_min_points, 
+                  aes(label = id)) +
+  # scale y axis to same as x
+  ylim(min(sim$gene_1),
+       max(sim$gene_2))
+
+og_plt
+```
+
+Next we'll run PCA on this simulated data using the `prcomp` function.
+
+```{r}
+# run pca
+pc <- prcomp(sim[, c(2:3)], center = FALSE, scale. = FALSE)
+```
+
+`prcomp` returns an object with a few slots. The `x` slot contains the principal componenents in a matrix.  
+
+```{r}
+names(pc)
+```
+
+For ease of plotting I will define a function to make a plot. 
+```{r}
+
+# function to make a pretty labeled plot
+
+plot_labeled_pca <- function(input_data, 
+                             pca_obj){
+  
+  #tidy the pc matrix
+  pc_x <- pca_obj$x %>% 
+    as.data.frame() %>% 
+    mutate(id = input_data$id) 
+ 
+  # select points to label
+  max_min_points <- slice(pc_x, c(1:5, 95:100))
+
+  # compute variance explained
+  percent_var <- (100 * pca_obj$sdev^2 / 
+                    sum(pca_obj$sdev^2))  %>% 
+    signif(3)
+
+  #plot the data
+  pca_plt <- ggplot(pc_x, aes(PC1, PC2)) +
+    geom_point() +
+    geom_text_repel(data = max_min_points, 
+                  aes(label = id)) +
+    labs(x = str_c("PC1 ", percent_var[1], "%"),
+         y = str_c("PC2 ", percent_var[2], "%")) +
+    # make axes symmetric
+    ylim(c(min(pc_x$PC1), 
+           max(pc_x$PC1)))
+  
+  pca_plt 
+}
+```
+ 
+ If we plot out the new variables PC1 and PC2 you can see that now the data has been flattened and spread out along the PC1 axis. 
+ 
+```{r}
+pca_plt <- plot_labeled_pca(sim, pc)
+
+pca_plt
+```
+
+
+As we can see, PCA has refactored the data such that PC1 now represents a vector through the data that captures the most variance. The second PC, now represents a distinct type of variance represented as variance perpendicular to the y = x line. 
+
+
+```{r, fig.width = 7}
+plot_grid(og_plt, pca_plt)
+```
+
+
+
+Another way to demonstrate what PCA is doing is to show the information captured by each PC. 
+
+
+```{r, out.width = "700px", echo = FALSE}
+#taken from https://stats.stackexchange.com/questions/229092/how-to-reverse-pca-and-reconstruct-original-variables-from-several-principal-com?noredirect=1&lq=1
+# credit to @amoeba 
+knitr::include_graphics("img/pca.png")
+```
+
+### Example with more dimensions
+
+What if we had more dimensions that are just noise? How does this impact PCA?
+
+```{r}
+# generate a matrix of random numbers 
+# drawn from a normal dist. to simulate noise
+set.seed(20181214)
+more_genes <- matrix(rnorm(1000, mean = 0, sd = 0.25), 
+                     nrow = 100, ncol = 10)
+
+# add column names
+colnames(more_genes) <- str_c("gene_noise_",
+                              1:ncol(more_genes))
+
+# add the matrix to the simulation data_frame by column
+sim_2 <- cbind(sim, more_genes) 
+
+sim_2[1:5, 1:6]
+```
+
+There are a few base R plotting functions that are very useful for exploratory analysis. For example the `plot()` 
+function can be used to quickly generate many exploratory plots. Often I use these for interactive work, then use ggplot to make focused publication quality figures. 
+
+```{r}
+plot(sim_2$gene_1, sim_2$gene_2)
+```
+
+By default if you supply `plot` with a dataframe with only numeric values, it will plot all of the cross comparisons, which is useful in this example to quickly highlight that `gene_1` and `gene_2` are the only correlated or interesting variables. 
+
+
+```{r, fig.height = 7, fig.width = 7}
+plot(sim_2[, 2:7])
+```
+
+Now if we had 2000 dimensions (i.e. genes) we couldn't resonably investigate all of the scatterplots for each gene compared to each other gene. Even with a small real dataset with 10 genes, it's hard to identify important relationships. 
+
+Next we'll run PCA on this new data
+```{r}
+pc2 <- prcomp(sim_2[, 2:ncol(sim_2)], 
+              center = FALSE, 
+              scale. = FALSE)
+```
+
+
+```{r, fig.width = 7}
+pc2_plt <- plot_labeled_pca(sim_2, pc2) 
+
+plot_grid(og_plt, pc2_plt)
+```
+
+### How much variation is captured by each PC?
+
+The `sdev` slot contains the stdard deviation of the principal components. The square of this value is the variance explained by the PC. 
+
+```{r}
+sds <- pc2$sdev
+
+# get variance per pc
+var_per_pc <- sds^2
+
+#calculate percent variance per pc
+percent_var_per_pc <- 100 * (var_per_pc / sum(var_per_pc))
+
+#plot a vector
+plot(percent_var_per_pc)
+```
+
+As we can see most of the variation in the data is captured in the first PC. This means that if we dropped the remaining PCs from the data we would lose very little information. It is for this reason that PCA is so useful for dimensionality reduction for big datasets like single cell RNA-seq.
+
+### How to find features (genes) associated with each PC
+
+As we have learned each PC is linear combination of the features (i.e genes) in the data. How do we determine which features are most important for each PC?
+
+The `rotation` slot of the `prcomp` object contains the rotations (also known as loadings) for each PC. These loadings can be interpreted as the amount each feature contributes to a principle component. Strongly positive loadings mean that the feature is strongly positivlye correlated with the PC. Strongly negative loadings indicate that it is strongly negatively correlated. Loadings at zero indicate no contribution. 
+
+By ranking the loadings we can identify which genes impact each PC.
+
+```{r}
+
+pc2$rotation[1:5, 1:3]
+```
+
+```{r}
+# for PC1
+pc2$rotation[, 1] %>% 
+  abs(.) %>% 
+  sort(decreasing = T) %>% 
+  head()
+
+```
+
+Using this approach we can quickly identify that `gene_1` and `gene_2` are driving the variance in the data. 
+
+
+## Run PCA on a single cell dataset
+
+Step 1: First let's filter and normalize the `esc_mat` matrix. 
+
+```{r}
+# remove lowly expressed features
+filtered_mat <- esc_mat[rowSums(esc_mat > 0) > 10, ]
+
+# log normalize 
+norm_mat <- apply(filtered_mat, 2, function(x) x / sum(x))
+norm_mat <- 10000 * norm_mat
+norm_mat <- log(norm_mat + 1)
+```
+
+
+Step 2: Scale the data.
+  
+  This makes every variable equal in weight. For example if one variable ranges from -100 to 100, this variable will have more weight than one that ranges from -1 to 1. Often in most datasets scaling the variables is necessary to avoid projecting the PCA solely based on the abundance of a variable. 
+
+
+```{r}
+# scale and center each gene
+zmat <- t(scale(t(norm_mat)))
+zmat[1:5, 1:5]
+```
+
+
+
+Step 3: run PCA
+  
+```{r}
+# run PCA with genes as columns and cells as rows
+pcs <- prcomp(t(zmat), scale. = FALSE, center = FALSE)
+```
+
+
+Step 4: Examine variance explained by each PC
+
+Exercise: make a ggplot plot that plots PC versus percent variance explained
+
+
+```{r}
+variance_per_pc <- pcs$sdev^2
+
+percent_var_explained <- 100 * (variance_per_pc / sum(variance_per_pc))
+  
+plot_data <- data_frame(percent_var_explained,
+                        PC = 1:length(percent_var_explained))
+  
+ggplot(plot_data, aes(PC, percent_var_explained)) +
+    geom_point() +
+    labs(y = "Percent variance explained") +
+    # display x breaks as integers 
+    scale_x_continuous(breaks= scales::pretty_breaks()) 
+
+```
+
+Same as above but now as a function:
+
+```{r, eval = F}
+plot_var_explained <- function(pc_obj) {
+   
+  variance_per_pc <- pc_obj$sdev^2
+
+  percent_var_explained <- 100 * (variance_per_pc / sum(variance_per_pc))
+  
+  plot_data <- data_frame(percent_var_explained,
+                        PC = 1:length(percent_var_explained))
+  
+  plt <- ggplot(plot_data, aes(PC, percent_var_explained)) +
+    geom_point() +
+    labs(y = "Percent variance explained") +
+    # display x breaks as integers 
+    scale_x_continuous(breaks= scales::pretty_breaks()) 
+  
+  plt
+} 
+
+plot_var_explained(pcs)
+
+```
+
+Step 5: Plot PCs
+
+Exercise: Generate a ggplot plot that plots PC1 versus PC2 and color by developmental stage. 
+(i.e. zy, 4cell, 8cell, etc.)
+
+```{r, fig.height = 5, fig.width = 5}
+# make tidy sample info
+sample_info <- data_frame(id = colnames(zmat)) %>% 
+  mutate(cell_type = str_remove(id, "_[0-9]+"))
+
+# tidy PCA data
+pcs_tidy <- pcs$x %>% 
+  as_tibble(rownames = "id") 
+
+# join sample info with PCA
+pc_dat <- left_join(sample_info, 
+          pcs_tidy,
+          by = "id")
+
+ggplot(pc_dat, aes(PC1, PC2)) +
+  geom_point(aes(color = cell_type)) +
+  scale_color_brewer(palette = "Paired")
+```
+
+Step 6: Find genes that are associated with each PC
+
+For example we can see that PC1 separates that data along the developmental time. If we find genes with strongly positive loadings these should be genes that increase over time. 
+
+```{r}
+pcs$rotation[1:3, 1:3]
+```
+
+```{r}
+pc1_loadings <- pcs$rotation[, 1]
+
+# get top 25 most positive loadings 
+pc1_pos <- pc1_loadings %>% sort(decreasing = TRUE) %>% head(25)
+
+# get top 25 most negative loadings
+pc1_neg <- pc1_loadings %>% sort(decreasing = FALSE) %>% head(25)
+
+# combine them and get names
+pc1_important <- c(pc1_pos, pc1_neg) 
+pc1_genes <- names(pc1_important)
+```
+
+Exercise: Make a heatmap that plots the pc1_genes
+
+```{r, fig.height = 7, fig.width = 7}
+
+Heatmap(zmat[pc1_genes, ],
+        cluster_columns = FALSE,
+        show_row_names = FALSE)
+
+```
+
+## Additional exercises 
+
+1) Plot additional PCs and determine which genes are contributing to the PC. Make a heatmap. 
+
+
