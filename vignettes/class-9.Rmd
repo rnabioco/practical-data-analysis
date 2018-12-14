@@ -63,7 +63,7 @@ print("hello the date and time is currently {}".format(now))
 
 # .Rdata files
 
-When you close R you are prompted to save your workspace. This will store a `.RData` file that will contain all of the R objectss that you generated in your current session. Upon startup of a "new" session this `.Rdata` file will populate your environment with old R objects.
+When you close R you are prompted to save your workspace. This will store a `.RData` file that will contain all of the R objects that you generated in your current session. Upon startup of a "new" session this `.Rdata` file will populate your environment with old R objects.
 
 This can cause many problems, including slow startup time, conflicts between your current objects and old objects, and irreproducible analyses. 
 
@@ -105,14 +105,14 @@ read_tsv(path_to_file)
 Often files are not formatted perfectly for reading into R. Below are some common problems, and the solutions
   
   1) File has a header line that should not be read. (use the `skip` argument to skip `n` lines)
-  2) File has column names that are poorly formatted (use the `col_names = FASLE` to skip them, then name them yourself)
+  2) File has column names that are poorly formatted (use the `col_names = FALSE` to skip them, then name them yourself)
   3) A column in the data is interpreted as a number but then a character is found. (use the `col_types` argument to specify the data type for each column)
   4) The file is a mess. (Use `read_lines()` to read in each line into a character vector and convert to a tibble yourself) 
   
 Similar to the read functions there are also utilities to write to a file. 
 ```r
 write_tsv(mtcars, "mtcars.txt")
-write_tsv((mtcars, "mtcars.csv")
+write_csv(mtcars, "mtcars.csv")
 
 # supplying a .gz will compress the data
 write_tsv(mtcars, "mtcars.txt.gz")
