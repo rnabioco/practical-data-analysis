@@ -1,0 +1,271 @@
+---
+title: "Class 9: Tips, Data I/O, and Resources"
+author: "Kent Riemondy"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Class-9}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+library(tidyverse)
+```
+
+
+
+```{r load, eval = F}
+library(tidyverse)
+```
+
+# Rmarkdown 
+
+Read the [Guide to RMarkdown](https://bookdown.org/yihui/rmarkdown/) for an exhaustive description of the various formats and options for using RMarkdown documents.
+
+## caching
+
+  You can speed up knitting of your RMarkdowns by using caching to store the results from each chunk.
+  
+
+`{r, cache = TRUE}`
+
+Or set globally at top of document
+
+```r
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+## Mixing R code with other languages 
+
+In RMarkdown you can run other languages (`python`, `C++`, `C`, `shell`, `julia`, etc.) in each code chunk.
+
+
+### Shell 
+
+```{bash}
+echo hello world
+```
+
+### Python
+
+```{python}
+import datetime 
+now = datetime.datetime.now()
+print("hello the date and time is currently {}".format(now))
+```
+
+
+# .Rdata files
+
+When you close R you are prompted to save your workspace. This will store a `.RData` file that will contain all of the R objectss that you generated in your current session. Upon startup of a "new" session this `.Rdata` file will populate your environment with old R objects.
+
+This can cause many problems, including slow startup time, conflicts between your current objects and old objects, and irreproducible analyses. 
+
+I recommend never storing your `.RData`. In RStudio you can turn off this option under preferences.  
+
+
+
+# Reading and writing data
+
+## readr
+The `readr` package (part of the tidyverse) provides a suite of functions to read data into R. These functions generally are faster and have better default behavior than the base R equivalents.
+
+```r
+read_tsv()
+read_csv()
+read_delim()
+read_lines()
+```
+
+The `readr` functions take a path to the file as an argument or a URL directly. 
+```r
+# read directly from a URL
+read_tsv("https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/david.txt")
+
+# alternatively download the file, then read it into R.
+download.file("https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/david.txt", "david.txt")
+
+read_tsv("david.txt")
+```
+
+Here is example to read data stored internally from the `pbda` package.
+```{r}
+path_to_file <- system.file("extdata", "david.txt", package = "pbda")
+path_to_file
+
+read_tsv(path_to_file) 
+```
+
+Often files are not formatted perfectly for reading into R. Below are some common problems, and the solutions
+  
+  1) File has a header line that should not be read. (use the `skip` argument to skip `n` lines)
+  2) File has column names that are poorly formatted (use the `col_names = FASLE` to skip them, then name them yourself)
+  3) A column in the data is interpreted as a number but then a character is found. (use the `col_types` argument to specify the data type for each column)
+  4) The file is a mess. (Use `read_lines()` to read in each line into a character vector and convert to a tibble yourself) 
+  
+Similar to the read functions there are also utilities to write to a file. 
+```r
+write_tsv(mtcars, "mtcars.txt")
+write_tsv((mtcars, "mtcars.csv")
+
+# supplying a .gz will compress the data
+write_tsv(mtcars, "mtcars.txt.gz")
+```
+
+## base R functions are sometimes helpful
+
+They can be slow, and by default will convert any character vector into a factor, which is often not desired. Set `stringsAsFactors = FALSE` to avoid
+this behavior. 
+
+Reading:
+```r
+read.csv("your_file.csv", stringsAsFactors = FALSE)
+read.table("your_file.txt", stringsAsFactors = FALSE)
+```
+
+Writing:
+```r
+write.table(mtcars, "mtcars.txt")
+write.csv((mtcars, "mtcars.csv")
+```
+
+
+## Writing and reading binary `.rds` or `.rda` files
+
+
+Often it is useful to save a R object as a file directly. For example the seurat objects can be saved to disk as an  `.rds` file which can be directly loaded into R at a later date. These files can also be shared with others. 
+
+```r
+# save mtcars as a binary file
+saveRDS(mtcars, "mtcars.rds")
+
+# read mtcars into R as an R object called new_data
+new_data <- readRDS("mtcars.rds")
+```
+
+`.rda` files are binary files that can be read into R as prenamed objects. They can store many objects in a single file. 
+
+```r
+simple_data <- data_frame(a = 1:10)
+simple_data2 <- data_frame(x = 1:10)
+simple_data3 <- bind_cols(simple_data, simple_data2)
+
+# pass R objects to the save function
+save(simple_data, simple_data2, simple_data3, "collection_of_r_objects.rda")
+
+# in a new R session use load() to reload these objects into your environment
+load("collection_of_r_objects.rda")
+
+simple_data
+#> # A tibble: 10 x 1
+#>        a
+#>    <int>
+#>  1     1
+#>  2     2
+#>  3     3
+#>  4     4
+#>  5     5
+#>  6     6
+#>  7     7
+#>  8     8
+#>  9     9
+#> 10    10
+```
+
+## Writing and reading xlsx files in R
+
+There are two packages useful for working with excel files. 
+
+`readxl` is really good for reading xlsx files into R. 
+`openxlsx` is pretty good at writing xlsx files. 
+
+
+# Organizing Analyses
+
+Read this paper:
+ [A Quick Guide to Organizing Computational Biology Projects](https://doi.org/10.1371/journal.pcbi.1000424)
+ 
+
+Here's how I generally organize my projects. 
+
+```bash
+NEWS.md   # markdown document for tracking progress
+data      # data directory for storing raw and processed data
+dbases    # database files downloaded from other places
+docs      # publication documents and random project files
+your-project.Rproj # Make an Rproject in Rstudio for every project
+results   # store all RMarkdown here
+src       # store useful scripts here
+```
+
+In your results directory make a new directory with a proper date naming scheme for each analyses. In each directory have an RMarkdown. 
+
+```bash
+2018-12-06_dataqc
+2018-12-08_exploratory_analysis
+2018-12-10_summary_plots
+2018-12-14_publication_figures
+```
+
+
+# Git/Github 
+
+**Use it.** It's a great way to organize your projects, provide visibility, and foster reproducibility. 
+
+As a student github will give you 5 private repositories for free. However using github with public repositories is preferred if the code or results aren't sensitive.  
+
+https://education.github.com/students
+
+
+# Finding help
+
+## Hopefully not your experience
+
+![](https://imgs.xkcd.com/comics/wisdom_of_the_ancients.png)
+
+## Online resources
+
+ The [R studio community forums](https://community.rstudio.com/) are a great resource for asking quesitons about tidyverse related packages.  
+ 
+ [StackOverflow](https://stackoverflow.com/) provides user contributes questions and answers on a variety of topics. 
+ 
+ For help with bioconductor packages visit the [support page](https://support.bioconductor.org/) 
+ 
+ Find out if others are having similar issues by searching the issue on the [Github](https://github.com/) page for the package that you are using. 
+ 
+
+## General R coding resources
+
+  Hadley Wickman has written two very good (free) ebooks on using R. 
+  
+  [R for Data Science](https://r4ds.had.co.nz/)
+  
+  [Advanced R](http://adv-r.had.co.nz/)
+  
+
+## Bioinformatic resources
+
+  For general bioinformatics advice I found the following text very useful.  
+  
+  [Bioinformatics Data Skills](http://vincebuffalo.org/book/) by Vince Buffalo
+
+  For statistics related to bioinformatics this free course is excellent:  
+  
+  [PH525x series - Biomedical Data Science](http://genomicsclass.github.io/book/)
+  
+  For more detailed descriptions of single cell RNA-Seq analysis:  
+  
+  http://hemberg-lab.github.io/scRNA.seq.course/
+  
+## Lastly sometimes code is broken
+
+Go to github and search the issues to see if the problem has been reported or fixed. If not submit an issue that describes the problem. The [reprex package](https://reprex.tidyverse.org/) makes it easy to
+produce well-formatted R reproducible examples that demonstrate the problem. Often developers will be thankful for your help with making their software better. 
+
+
