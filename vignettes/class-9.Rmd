@@ -263,6 +263,10 @@ https://education.github.com/students
   
   http://hemberg-lab.github.io/scRNA.seq.course/
   
+## Offline help
+
+We (the RBI fellows) hold standing office hours from 1-2:30p on Thursdays in RC1S rm. 9101. Bring us your broken code and we'll try to sort it out. Send us an email to let us know you will be stopping by (`rbi.fellows@ucdenver.edu`).
+
 ## Lastly sometimes code is broken
 
 Go to github and search the issues to see if the problem has been reported or fixed. If not submit an issue that describes the problem. The [reprex package](https://reprex.tidyverse.org/) makes it easy to
