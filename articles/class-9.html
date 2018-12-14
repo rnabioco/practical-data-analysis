@@ -155,14 +155,14 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="im">import</span> datetime </a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">now <span class="op">=</span> datetime.datetime.now()</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="bu">print</span>(<span class="st">"hello the date and time is currently </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(now))</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; hello the date and time is currently 2018-12-14 18:37:39.552074</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; hello the date and time is currently 2018-12-14 19:11:32.615328</span></a></code></pre></div>
 </div>
 </div>
 </div>
 <div id="rdata-files" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rdata-files" class="anchor"></a>.Rdata files</h1>
-<p>When you close R you are prompted to save your workspace. This will store a <code>.RData</code> file that will contain all of the R objectss that you generated in your current session. Upon startup of a “new” session this <code>.Rdata</code> file will populate your environment with old R objects.</p>
+<p>When you close R you are prompted to save your workspace. This will store a <code>.RData</code> file that will contain all of the R objects that you generated in your current session. Upon startup of a “new” session this <code>.Rdata</code> file will populate your environment with old R objects.</p>
 <p>This can cause many problems, including slow startup time, conflicts between your current objects and old objects, and irreproducible analyses.</p>
 <p>I recommend never storing your <code>.RData</code>. In RStudio you can turn off this option under preferences.</p>
 </div>
@@ -225,13 +225,13 @@
 <p>Often files are not formatted perfectly for reading into R. Below are some common problems, and the solutions</p>
 <ol style="list-style-type: decimal">
 <li>File has a header line that should not be read. (use the <code>skip</code> argument to skip <code>n</code> lines)</li>
-<li>File has column names that are poorly formatted (use the <code>col_names = FASLE</code> to skip them, then name them yourself)</li>
+<li>File has column names that are poorly formatted (use the <code>col_names = FALSE</code> to skip them, then name them yourself)</li>
 <li>A column in the data is interpreted as a number but then a character is found. (use the <code>col_types</code> argument to specify the data type for each column)</li>
 <li>The file is a mess. (Use <code>read_lines()</code> to read in each line into a character vector and convert to a tibble yourself)</li>
 </ol>
 <p>Similar to the read functions there are also utilities to write to a file.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">write_tsv</span>(mtcars, <span class="st">"mtcars.txt"</span>)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">write_tsv</span>((mtcars, <span class="st">"mtcars.csv"</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">write_csv</span>(mtcars, <span class="st">"mtcars.csv"</span>)</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co"># supplying a .gz will compress the data</span></a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">write_tsv</span>(mtcars, <span class="st">"mtcars.txt.gz"</span>)</a></code></pre></div>
