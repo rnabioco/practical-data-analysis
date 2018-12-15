@@ -117,7 +117,7 @@
       <h1>Class 9: Tips, Data I/O, and Resources</h1>
                         <h4 class="author">Kent Riemondy</h4>
             
-            <h4 class="date">2018-12-14</h4>
+            <h4 class="date">2018-12-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/IDPT7810/practical-data-analysis/blob/master/vignettes/class-9.Rmd"><code>vignettes/class-9.Rmd</code></a></small>
       <div class="hidden name"><code>class-9.Rmd</code></div>
@@ -155,7 +155,7 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="im">import</span> datetime </a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">now <span class="op">=</span> datetime.datetime.now()</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="bu">print</span>(<span class="st">"hello the date and time is currently </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(now))</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; hello the date and time is currently 2018-12-14 19:11:32.615328</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; hello the date and time is currently 2018-12-15 15:08:23.494873</span></a></code></pre></div>
 </div>
 </div>
 </div>
@@ -262,25 +262,28 @@
 <a class="sourceLine" id="cb12-3" data-line-number="3">simple_data3 &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(simple_data, simple_data2)</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co"># pass R objects to the save function</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/save">save</a></span>(simple_data, simple_data2, simple_data3, <span class="st">"collection_of_r_objects.rda"</span>)</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co"># in a new R session use load() to reload these objects into your environment</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/load">load</a></span>(<span class="st">"collection_of_r_objects.rda"</span>)</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/save">save</a></span>(simple_data, </a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">  simple_data2, </a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">  simple_data3, </a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">  <span class="dt">file =</span> <span class="st">"collection_of_r_objects.rda"</span>)</a>
 <a class="sourceLine" id="cb12-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11">simple_data</a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt; # A tibble: 10 x 1</span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt;        a</span></a>
-<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt;    &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt;  1     1</span></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt;  2     2</span></a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt;  3     3</span></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt;  4     4</span></a>
-<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt;  5     5</span></a>
-<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">#&gt;  6     6</span></a>
-<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="co">#&gt;  7     7</span></a>
-<a class="sourceLine" id="cb12-22" data-line-number="22"><span class="co">#&gt;  8     8</span></a>
-<a class="sourceLine" id="cb12-23" data-line-number="23"><span class="co">#&gt;  9     9</span></a>
-<a class="sourceLine" id="cb12-24" data-line-number="24"><span class="co">#&gt; 10    10</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co"># in a new R session use load() to reload these objects into your environment</span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/load">load</a></span>(<span class="st">"collection_of_r_objects.rda"</span>)</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14">simple_data</a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; # A tibble: 10 x 1</span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt;        a</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt;    &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt;  1     1</span></a>
+<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt;  2     2</span></a>
+<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">#&gt;  3     3</span></a>
+<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="co">#&gt;  4     4</span></a>
+<a class="sourceLine" id="cb12-22" data-line-number="22"><span class="co">#&gt;  5     5</span></a>
+<a class="sourceLine" id="cb12-23" data-line-number="23"><span class="co">#&gt;  6     6</span></a>
+<a class="sourceLine" id="cb12-24" data-line-number="24"><span class="co">#&gt;  7     7</span></a>
+<a class="sourceLine" id="cb12-25" data-line-number="25"><span class="co">#&gt;  8     8</span></a>
+<a class="sourceLine" id="cb12-26" data-line-number="26"><span class="co">#&gt;  9     9</span></a>
+<a class="sourceLine" id="cb12-27" data-line-number="27"><span class="co">#&gt; 10    10</span></a></code></pre></div>
 </div>
 <div id="writing-and-reading-xlsx-files-in-r" class="section level2">
 <h2 class="hasAnchor">
