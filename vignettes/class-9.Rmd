@@ -157,7 +157,10 @@ simple_data2 <- data_frame(x = 1:10)
 simple_data3 <- bind_cols(simple_data, simple_data2)
 
 # pass R objects to the save function
-save(simple_data, simple_data2, simple_data3, "collection_of_r_objects.rda")
+save(simple_data, 
+  simple_data2, 
+  simple_data3, 
+  file = "collection_of_r_objects.rda")
 
 # in a new R session use load() to reload these objects into your environment
 load("collection_of_r_objects.rda")
