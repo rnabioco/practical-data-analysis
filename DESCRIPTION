@@ -7,19 +7,22 @@ Authors@R: c(
     role = c("aut", "cre"),
     comment = c(ORCID = "0000-0002-6299-179X")),
   person("Austin", "Gillen", ,
-    email = "austin.gillen@ucdenver.edu",
+    email = "austin.gillen@cuanschutz.edu",
     role = c("aut")),
   person("Kent", "Riemondy", ,
-    email = "kent.riemondy@ucdenver.edu",
+    email = "kent.riemondy@cuanschutz.edu",
     role = c("aut")),
   person("Rui", "Fu", ,
-    email = "rui.fu@ucdenver.edu",
+    email = "rui.fu@cuanschutz.edu",
+    role = c("aut")),
+  person("Ryan", "Sheridan", ,
+    email = "ryan.sheridan@cuanschutz.edu",
     role = c("aut"))
     )
 Description: Provides course materials for IDPT 7810, Practical Biological Data Analysis in R.
 License: CC0
 Depends: 
-    R (>= 3.5.1)
+    R (>= 3.6.1)
 Imports: 
     cowplot,
     dplyr,
@@ -29,15 +32,17 @@ Imports:
     ggrepel,
     stringr,
     tidyr,
+    tibble,
+    scales,
+    MASS,
     tidyverse,
     viridis,
     devtools,
     RColorBrewer,
+    datasauRus,
     DESeq2,
     ComplexHeatmap,
-    biomaRt,
-    Seurat,
-    Matrix
+    biomaRt
 biocViews:
     DESeq2,
     ComplexHeatmap,
@@ -50,7 +55,5 @@ VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/IDPT7810/practical-data-analysis, https://idpt7810.github.io/practical-data-analysis/
-Remotes: 
-    stephlocke/datasauRus
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
