@@ -9,6 +9,29 @@ bioc_packages:
   - DESeq2
   - ComplexHeatmap
   - biomaRt
+r_binary_packages:
+  - matrixStats
+  - rlang
+  - yaml
+  - utf8
+  - fansi
+  - digest
+  - lazyeval
+  - data.table
+  - dplyr
+  - readr
+  - glue
+  - stringi
+  - curl
+  - jsonlite
+  - locfit
+  - XML
+  - vctrs
+  - openssl
+  - Rcurl
+  - RSQLite
+  - git2r
+  - haven
   
 env:
   global:
