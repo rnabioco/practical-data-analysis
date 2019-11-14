@@ -42,7 +42,8 @@ Imports:
     datasauRus,
     DESeq2,
     ComplexHeatmap,
-    biomaRt
+    biomaRt,
+    reticulate
 biocViews:
     DESeq2,
     ComplexHeatmap,
