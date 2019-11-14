@@ -1,6 +1,6 @@
 Package: pbda
 Title: Practical Biological Data Analysis in R/RStudio
-Version: 0.1.0.9000
+Version: 0.2.0.9000
 Authors@R: c(
   person("Jay", "Hesselberth", ,
     email = "jay.hesselberth@gmail.com",
@@ -19,7 +19,7 @@ Authors@R: c(
 Description: Provides course materials for IDPT 7810, Practical Biological Data Analysis in R.
 License: CC0
 Depends: 
-    R (>= 3.4.1)
+    R (>= 3.5.1)
 Imports: 
     cowplot,
     dplyr,
