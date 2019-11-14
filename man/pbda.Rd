@@ -21,9 +21,10 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Austin Gillen \email{austin.gillen@ucdenver.edu}
-  \item Kent Riemondy \email{kent.riemondy@ucdenver.edu}
-  \item Rui Fu \email{rui.fu@ucdenver.edu}
+  \item Austin Gillen \email{austin.gillen@cuanschutz.edu}
+  \item Kent Riemondy \email{kent.riemondy@cuanschutz.edu}
+  \item Rui Fu \email{rui.fu@cuanschutz.edu}
+  \item Ryan Sheridan \email{ryan.sheridan@cuanschutz.edu}
 }
 
 }
