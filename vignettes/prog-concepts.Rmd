@@ -1,0 +1,257 @@
+---
+title: "Programming concepts"
+author: "Ryan Sheridan"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Class-8}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = F}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+library(tidyverse)
+library(ggrepel)
+library(pbda)
+library(cowplot)
+```
+
+## Functions
+
+### When should you write a function?
+You should write a function if you've repeated a block of code more than once or twice.
+```{r}
+# An example: you want to rescale a numeric vector so all values are between 0 and 1
+a <- rnorm(10)
+a
+
+rng <- range(a)
+(a - rng[1]) / (rng[2] - rng[1])
+
+# What if we want to repeat this on other vectors?
+b <- rnorm(10)
+b
+
+c <- rnorm(10)
+c
+
+rng <- range(b)
+new_b <- (b - rng[1]) / (rng[2] - rng[1])
+
+rng <- range(c)
+new_c <- (c - rng[1]) / (rng[2] - rng[1])
+```
+
+### Function structure
+1. Pick a name
+2. List the arguments
+3. Add code to the body
+```{r}
+# A simple function to average two numbers
+calc_mean <- function(x, y) {
+  (x + y) / 2
+}
+
+calc_mean <- function(x, y) (x + y) / 2
+
+calc_mean(2, 5)
+```
+
+### Exercise: write a function to rescale our numeric vectors
+```{r}
+rescale_nums <- function(x) {
+  x_rng <- range(x)
+  (x - x_rng[1]) / (x_rng[2] - x_rng[1])
+}
+
+rescale_nums(b)
+rescale_nums(c)
+```
+
+### The function environment
+- Code within a function is executed in an environment separate from the global environment
+- The function environment consists of objects created within the function
+- When an object is referenced within a function, R will first search the function environment
+- If an object is not found within the function environment, R then searches the global environment
+- An object within the function environment can have the same name as an object within the global environment, however when searching for an object, the function environment always takes precedence
+
+INSERT DIAGRAM
+
+Can objects present in the global environment be referenced from within a function?
+```{r}
+# Earlier we saved a numeric vector "a"
+a
+
+sum_nums <- function(x) {
+  x + a
+}
+
+sum_nums(10)
+```
+
+Can code executed within a function be used to modify an object present in the global environment?
+```{r}
+sum_nums <- function(x) {
+  a <- x + a
+  a
+}
+
+sum_nums(10)
+
+a
+```
+
+### Conditional statements
+`if` statements allow you to execute code depending on defined conditions.
+```
+if (condition) {
+  code executed when condition is TRUE
+  
+} else {
+  code executed when condition is FALSE
+}
+```
+
+R has a set of logical operators that can be used to write conditional statements
+
+Operator | Description
+:-------:|:-----------
+<        | less than
+<=       | less or equal
+\>       | greater than
+\>=      | greater or equal
+==       | equal
+!=       | not equal
+!x       | not x
+x \|\| y | x or y
+x && y   | x and y
+
+```{r}
+sum_nums <- function(x, n) {
+  x + n
+}
+
+sum_nums(a, 10)
+
+# Change operation depending on input
+sum_nums <- function(x, n) {
+  if (n < 6) {
+    x + n
+    
+  } else {
+    x - n
+  }
+}
+
+sum_nums(a, 5)
+sum_nums(a, 8)
+```
+
+### Multiple conditions
+```
+if (condition_1) {
+  executed when condition_1 is TRUE
+  
+} else if (condition_2) {
+  executed when condition_2 if TRUE
+  
+} else {
+  executed when condition_1 and condition_2 are FALSE
+}
+
+
+if (condition_1 && condition_2) {
+  executed when condition_1 and condition_2 are TRUE
+  
+} else {
+  executed when condition_1 or condition_2 are FALSE
+}
+```
+
+### Checking inputs
+When writing functions it can be useful to check input values to make sure they are valid.
+```{r}
+sum_nums <- function(x, n) {
+  x + n
+}
+
+sum_nums(a, 10)
+
+sum_nums <- function(x, n) {
+  if (!is.numeric(n)) {
+    stop("n must be numeric!")
+  }
+  
+  x + n
+}
+```
+
+### Passing arguments with dots (...)
+dots allow a function to take an arbitrary number of arguments, which can then be passed to other functions.
+```{r}
+# Lets use our rescale_nums() function as an example
+rescale_nums <- function(x) {
+  x_rng <- range(x)
+  (x - x_rng[1]) / (x_rng[2] - x_rng[1])
+}
+
+rescale_nums(a)
+
+# dots allow us to pass arguments to range() without including them in the 
+# argument list for rescale_nums()
+rescale_nums <- function(x, ...) {
+  x_rng <- range(x, ...)
+  (x - x_rng[1]) / (x_rng[2] - x_rng[1])
+}
+
+rescale_nums(a)
+
+a[1] <- NA
+
+rescale_nums(a, na.rm = T)
+```
+
+### Exercises
+```{r}
+brauer_gene_exp %>%
+  filter(systematic_name == "YNL049C") %>%
+  ggplot(aes(rate, expression, color = nutrient)) +
+  geom_point(size = 1) +
+  geom_smooth(method = "lm", se = F) +
+  facet_wrap(~nutrient) +
+  theme_cowplot()
+
+plot_gene <- function(input, gene_name, ...) {
+  input %>%
+    filter(systematic_name == gene_name) %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(...) +
+    geom_smooth(method = "lm", se = F, size = 0.5) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot()
+}
+
+brauer_gene_exp %>%
+  plot_gene(
+    gene_name = "YNL049C", 
+    size      = 3
+  )
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
