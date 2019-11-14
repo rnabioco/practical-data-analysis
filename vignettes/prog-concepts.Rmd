@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.align = "center"
+  fig.align = "left"
 )
 library(tidyverse)
 library(ggrepel)
@@ -62,7 +62,7 @@ calc_mean <- function(x, y) (x + y) / 2
 calc_mean(2, 5)
 ```
 
-### Exercise: write a function to rescale our numeric vectors
+*Write a function to rescale a numeric vector*
 ```{r}
 rescale_nums <- function(x) {
   x_rng <- range(x)
@@ -82,7 +82,7 @@ rescale_nums(c)
 
 INSERT DIAGRAM
 
-Can objects present in the global environment be referenced from within a function?
+*Can objects present in the global environment be referenced from within a function?*
 ```{r}
 # Earlier we saved a numeric vector "a"
 a
@@ -94,7 +94,7 @@ sum_nums <- function(x) {
 sum_nums(10)
 ```
 
-Can code executed within a function be used to modify an object present in the global environment?
+*Can code executed within a function be used to modify an object present in the global environment?*
 ```{r}
 sum_nums <- function(x) {
   a <- x + a
@@ -104,6 +104,55 @@ sum_nums <- function(x) {
 sum_nums(10)
 
 a
+```
+
+### A more relevant example
+Lets create a scatter plot comparing growth rate vs expression for the gene YDL104C. We can use `facet_wrap()` to create a separate plot for each nutrient.
+```{r, fig.width = 6, fig.height = 4}
+brauer_gene_exp %>%
+  filter(systematic_name == "YDL104C") %>%
+  ggplot(aes(rate, expression, color = nutrient)) +
+  geom_point(size = 1) +
+  geom_smooth(method = "lm", se = F, size = 0.5) +
+  facet_wrap(~ nutrient) +
+  theme_cowplot()
+```
+
+What if you want to create this plot for multiple genes? *Write a function the takes a data.frame and gene name as inputs and creates scatter plots for each nutrient*
+```{r, fig.width = 6, fig.height = 4}
+plot_growth <- function(input, sys_name) {
+  input %>%
+    filter(systematic_name == sys_name) %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = 1) +
+    geom_smooth(method = "lm", se = F, size = 0.5) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot()
+}
+
+plot_growth(input = brauer_gene_exp, sys_name = "YDL104C")
+```
+
+*Modify our plotting function to add the gene name as the plot title and the molecular function as a subtitle*
+```{r, fig.width = 6, fig.height = 4}
+plot_growth <- function(input, sys_name) {
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = 1) +
+    geom_smooth(method = "lm", se = F, size = 0.5) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot()
+}
+
+brauer_gene_exp %>%
+  plot_growth("YDL104C")
 ```
 
 ### Conditional statements
@@ -130,26 +179,32 @@ Operator | Description
 !x       | not x
 x \|\| y | x or y
 x && y   | x and y
+x %in% y | x is present in y
 
-```{r}
-sum_nums <- function(x, n) {
-  x + n
-}
-
-sum_nums(a, 10)
-
-# Change operation depending on input
-sum_nums <- function(x, n) {
-  if (n < 6) {
-    x + n
-    
-  } else {
-    x - n
+*Add an `if` statement to our plotting function to account for a missing gene name*
+```{r, fig.width = 6, fig.height = 4}
+plot_growth <- function(input, sys_name) {
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  if (plot_title == "") {
+    plot_title <- sys_name
   }
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = 1) +
+    geom_smooth(method = "lm", se = F, size = 0.5) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot()
 }
 
-sum_nums(a, 5)
-sum_nums(a, 8)
+brauer_gene_exp %>%
+  plot_growth("YNL095C")
 ```
 
 ### Multiple conditions
@@ -171,39 +226,86 @@ if (condition_1 && condition_2) {
 } else {
   executed when condition_1 or condition_2 are FALSE
 }
+
+
+if (condition_1 || condition_2) {
+  executed when condition_1 or condition_2 are TRUE
+  
+} else {
+  executed when condition_1 and condition_2 are FALSE
+}
 ```
 
 ### Checking inputs
-When writing functions it can be useful to check input values to make sure they are valid.
-```{r}
-sum_nums <- function(x, n) {
-  x + n
-}
-
-sum_nums(a, 10)
-
-sum_nums <- function(x, n) {
-  if (!is.numeric(n)) {
-    stop("n must be numeric!")
+When writing functions it can be useful to check input values to make sure they are valid. Lets modify our plotting function to check that `sys_name` is a string.
+```{r, fig.width = 6, fig.height = 4}
+plot_growth <- function(input, sys_name) {
+  
+  if (!is.character(sys_name)) {
+    stop("sys_name must be a string!")
   }
   
-  x + n
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  if (plot_title == "") {
+    plot_title <- sys_name
+  }
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = 1) +
+    geom_smooth(method = "lm", se = F, size = 0.5) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot()
 }
+
+brauer_gene_exp %>%
+  plot_growth("YNL095C")
+```
+
+*Modify our plotting function to check that `sys_name` is present in the input. Hint: use the `%in%` operator*
+```{r, fig.width = 6, fig.height = 4}
+plot_growth <- function(input, sys_name) {
+  
+  if (!is.character(sys_name)) {
+    stop("sys_name must be a string!")
+  }
+  
+  if (!sys_name %in% input$systematic_name) {
+    stop("sys_name not found in input data!")
+  }
+  
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  if (plot_title == "") {
+    plot_title <- sys_name
+  }
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = 1) +
+    geom_smooth(method = "lm", se = F, size = 0.5) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot()
+}
+
+brauer_gene_exp %>%
+  plot_growth("YNL095C")
 ```
 
 ### Passing arguments with dots (...)
-dots allow a function to take an arbitrary number of arguments, which can then be passed to other functions.
+dots allow a function to take an arbitrary number of arguments, which can then be passed to other functions. Lets first try this using our simple `rescale_nums()` function. 
 ```{r}
-# Lets use our rescale_nums() function as an example
-rescale_nums <- function(x) {
-  x_rng <- range(x)
-  (x - x_rng[1]) / (x_rng[2] - x_rng[1])
-}
-
-rescale_nums(a)
-
-# dots allow us to pass arguments to range() without including them in the 
-# argument list for rescale_nums()
 rescale_nums <- function(x, ...) {
   x_rng <- range(x, ...)
   (x - x_rng[1]) / (x_rng[2] - x_rng[1])
@@ -216,33 +318,45 @@ a[1] <- NA
 rescale_nums(a, na.rm = T)
 ```
 
-### Exercises
-```{r}
-brauer_gene_exp %>%
-  filter(systematic_name == "YNL049C") %>%
-  ggplot(aes(rate, expression, color = nutrient)) +
-  geom_point(size = 1) +
-  geom_smooth(method = "lm", se = F) +
-  facet_wrap(~nutrient) +
-  theme_cowplot()
-
-plot_gene <- function(input, gene_name, ...) {
-  input %>%
-    filter(systematic_name == gene_name) %>%
+*Modify our plotting function to pass arguments through dots to ggplot*
+```{r, fig.width = 6, fig.height = 4}
+plot_growth <- function(input, sys_name, ...) {
+  
+  if (!is.character(sys_name)) {
+    stop("sys_name must be a string!")
+  }
+  
+  if (!sys_name %in% input$systematic_name) {
+    stop("sys_name not found in input data!")
+  }
+  
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  if (plot_title == "") {
+    plot_title <- sys_name
+  }
+  
+  gg_data %>%
     ggplot(aes(rate, expression, color = nutrient)) +
     geom_point(...) +
     geom_smooth(method = "lm", se = F, size = 0.5) +
+    labs(title = plot_title, subtitle = plot_sub) +
     facet_wrap(~ nutrient) +
     theme_cowplot()
 }
 
 brauer_gene_exp %>%
-  plot_gene(
-    gene_name = "YNL049C", 
-    size      = 3
+  plot_growth(
+    sys_name = "YNL095C",
+    size  = 3,
+    shape = 5,
+    alpha = 0.5
   )
 ```
-
 
 
 
