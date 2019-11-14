@@ -40,6 +40,8 @@ Kent Riemondy (kent.riemondy@ucdenver.edu)
 
 Rui Fu (rui.fu@ucdenver.edu)
 
+Ryan Sheridan (ryan.sheridan@cuanschutz.edu)
+
 ## Course marks
 
 See [Grading and Assignments](https://idpt7810.github.io/practical-data-analysis/articles/assignments.html).
