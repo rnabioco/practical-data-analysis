@@ -27,6 +27,7 @@ library(cowplot)
 It's important to avoid duplication in your code. One way to limit duplication is by converting code that has to be run multiple times into a function. You should write a function if you've repeated a block of code more than once or twice.
 
 Functions have several advantages:
+
 1. They make your code easier to read
 2. It's easier to adapt your code for different requirements since you only have to modify one place
 3. They reduce the chance of mistakes from copying and pasting code
@@ -57,6 +58,8 @@ new_c <- (c - rng[1]) / (rng[2] - rng[1])
 <br>
 
 ### Function structure
+There are three main steps for writing functions:
+
 1. Pick a name
 2. List the arguments
 3. Add code to the body
@@ -547,7 +550,20 @@ plot_grid(plotlist = growth_plots)
 <br>
 
 ### Introduction to `purrr::map`
-for loops are a powerful tool to reduce code duplication, however your code can be further simplified using the `map()` functions provided in the purrr package. These `map()` functions essentially run `for (i in seq_along())` behind the scenes so you don't have to explicitly type this code out.  
+for loops are a powerful tool to reduce code duplication, however your code can be further simplified using the `map()` functions provided in the purrr package. These `map()` functions essentially run `for (i in seq_along())` behind the scenes so you don't have to explicitly type this code out.
+
+There is a function for each type of output:
+
+- `map()` makes a list
+- `map_lgl()` makes a logical vector
+- `map_int()` makes an integer vector
+- `map_dbl()` makes a double vector
+- `map_chr()` makes a character vector
+
+Each `map()` function requires two inputs: `map(.x, .f, ...)`
+
+- `.x` is a list or atomic vector
+- `.f` is a function or formula
 ```{r}
 # We previously used a for loop to create vectors with different means
 means <- c(1, 50, 20, 5, 70)
@@ -623,6 +639,84 @@ growth_plots <- pmap(plot_args, plot_growth, brauer_gene_exp)
 
 plot_grid(plotlist = growth_plots)
 ```
+
+<br>
+
+<br>
+
+## Factors
+
+### What are factors?
+Factors are useful when trying to display categorical data in a non-alphabetical order. To manipulate factors tidyverse provides the forcats package.
+```{r}
+# Imagine we have a character vector containing a few months
+x <- c("Dec", "Apr", "Jan", "Mar")
+x
+
+# Sorting this vector will arrange the months in alphabetical order, which isn't useful
+sort(x)
+
+# To sort our months based on their order in the year, we can convert to a factor
+month_levels <- c(
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+)
+
+y <- factor(x, levels = month_levels)
+y
+
+sort(y)
+```
+
+### Using forcats with ggplot2
+```{r}
+# fct_relevel
+nutrient_levels <- c(
+  "Phosphate", "Sulfate", "Uracil",
+  "Ammonia",   "Glucose", "Leucine"
+)
+
+brauer_gene_exp %>%
+  filter(systematic_name == "YOL066C") %>%
+  ggplot(aes(rate, expression, color = nutrient)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F, size = 0.5) +
+  facet_wrap(~ fct_relevel(nutrient, nutrient_levels)) +
+  theme_cowplot() +
+  theme(legend.position = "none")
+
+# fct_reorder
+brauer_gene_exp %>%
+  filter(systematic_name == "YOL066C") %>%
+  ggplot(aes(rate, expression, color = nutrient)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F, size = 0.5) +
+  facet_wrap(~ fct_reorder(nutrient, expression, max, .desc = T)) +
+  theme_cowplot() +
+  theme(legend.position = "none")
+
+
+
+
+# x <- brauer_gene_exp %>%
+#   group_by(systematic_name) %>%
+#   nest(keys = c(rate, expression)) %>%
+#   mutate(slope = map(keys, ~ {
+#     mod <- lm(.x$rate ~ .x$expression)
+#     mod$coefficients[[2]]
+#   })) %>%
+#   unnest(cols = c(keys, slope))
+# x %>%
+#   filter(systematic_name == "YOL066C") %>%
+#   ggplot(aes(rate, expression, color = nutrient)) +
+#   geom_point() +
+#   geom_smooth(method = "lm", se = F, size = 0.5) +
+#   facet_wrap(~ fct_reorder(nutrient, slope, min)) +
+#   theme_cowplot() +
+#   theme(legend.position = "none")
+```
+
+
 
 
 
