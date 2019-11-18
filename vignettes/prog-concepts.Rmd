@@ -244,7 +244,7 @@ plot_growth <- function(input, sys_name) {
 }
 
 brauer_gene_exp %>%
-  plot_growth("YDL104C")
+  plot_growth("YNL095C")
 ```
 
 <br>
@@ -471,28 +471,6 @@ out
 
 ### A more relevant example
 ```{r, fig.width = 10, fig.height = 8}
-plot_growth <- function(input, sys_name, ...) {
-  
-  gg_data <- input %>%
-    filter(systematic_name == sys_name)
-  
-  plot_title <- gg_data$name[1]
-  plot_sub <- gg_data$MF[1]
-  
-  if (plot_title == "") {
-    plot_title <- sys_name
-  }
-  
-  gg_data %>%
-    ggplot(aes(rate, expression, color = nutrient)) +
-    geom_point(...) +
-    geom_smooth(method = "lm", se = F, size = 0.5) +
-    labs(title = plot_title, subtitle = plot_sub) +
-    facet_wrap(~ nutrient) +
-    theme_cowplot() +
-    theme(legend.position = "none")
-}
-
 growth_plots <- vector("list", 4)
 
 growth_plots[[1]] <- brauer_gene_exp %>%
@@ -647,7 +625,7 @@ plot_grid(plotlist = growth_plots)
 ## Factors
 
 ### What are factors?
-Factors are useful when trying to display categorical data in a non-alphabetical order. To manipulate factors tidyverse provides the forcats package.
+Factors are useful when you want to modify how categorical data is displayed. To manipulate factors tidyverse provides the forcats package.
 ```{r}
 # Imagine we have a character vector containing a few months
 x <- c("Dec", "Apr", "Jan", "Mar")
@@ -669,7 +647,16 @@ sort(y)
 ```
 
 ### Using forcats with ggplot2
-```{r}
+The forcats package has several key functions:
+
+- `fct_relevel` to manually set factor order
+- `fct_reorder` to reorder by another variable
+- `fct_inorder` to order by appearance
+- `fct_infreq` to order by the frequency of values
+- `fct_lump` to collapse the least/most frequency values into "Other"
+
+Lets try to use some of these functions to modify our growth rate plots.
+```{r, fig.width = 6, fig.height = 4.5}
 # fct_relevel
 nutrient_levels <- c(
   "Phosphate", "Sulfate", "Uracil",
@@ -677,32 +664,58 @@ nutrient_levels <- c(
 )
 
 brauer_gene_exp %>%
-  filter(systematic_name == "YOL066C") %>%
-  ggplot(aes(rate, expression, color = nutrient)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = F, size = 0.5) +
-  facet_wrap(~ fct_relevel(nutrient, nutrient_levels)) +
-  theme_cowplot() +
-  theme(legend.position = "none")
+  mutate(nutrient = fct_relevel(nutrient, nutrient_levels)) %>%
+  plot_growth("YOL066C")
 
 # fct_reorder
 brauer_gene_exp %>%
-  filter(systematic_name == "YOL066C") %>%
-  ggplot(aes(rate, expression, color = nutrient)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = F, size = 0.5) +
-  facet_wrap(~ fct_reorder(nutrient, expression, max, .desc = T)) +
-  theme_cowplot() +
-  theme(legend.position = "none")
+  mutate(nutrient = fct_reorder(nutrient, expression, max)) %>%
+  plot_growth("YOL066C")
 
+# fct_inorder
+brauer_gene_exp %>%
+  mutate(nutrient = fct_inorder(nutrient)) %>%
+  plot_growth("YOL066C")
+```
 
+Lets try another example using `fct_lump()` and `fct_infreq()`.
+```{r, fig.width = 5, fig.height = 4.5}
+# fct_lump
+brauer_gene_exp %>%
+  select(MF, systematic_name) %>%
+  unique() %>%
+  mutate(MF = fct_lump(MF, n = 10)) %>%
+  ggplot(aes(x = "MF", fill = MF)) +
+  geom_bar(position = "fill") +
+  theme_cowplot()
 
+# fct_infreq
+brauer_gene_exp %>%
+  select(MF, systematic_name) %>%
+  unique() %>%
+  mutate(
+    MF = fct_lump(MF, n = 10),
+    MF = fct_infreq(MF)
+  ) %>%
+  ggplot(aes(x = "MF", fill = MF)) +
+  geom_bar(position = "fill") +
+  theme_cowplot()
+```
 
+```{r "EXTRAs", include = F}
+# ggplot(aes(rate, expression, color = nutrient)) +
+#   geom_point() +
+#   geom_smooth(method = "lm", se = F, size = 0.5) +
+#   theme_cowplot() +
+#   theme(legend.position = "none") +
+#   facet_wrap(~ nutrient)
+# MF = fct_infreq(MF)
+# MF = fct_reorder(MF, systematic_name, n_distinct)
 # x <- brauer_gene_exp %>%
 #   group_by(systematic_name) %>%
 #   nest(keys = c(rate, expression)) %>%
 #   mutate(slope = map(keys, ~ {
-#     mod <- lm(.x$rate ~ .x$expression)
+#     mod <- lm(.x$expression ~ .x$rate)
 #     mod$coefficients[[2]]
 #   })) %>%
 #   unnest(cols = c(keys, slope))
@@ -711,7 +724,7 @@ brauer_gene_exp %>%
 #   ggplot(aes(rate, expression, color = nutrient)) +
 #   geom_point() +
 #   geom_smooth(method = "lm", se = F, size = 0.5) +
-#   facet_wrap(~ fct_reorder(nutrient, slope, min)) +
+#   facet_wrap(~ fct_reorder(nutrient, slope, mean)) +
 #   theme_cowplot() +
 #   theme(legend.position = "none")
 ```
