@@ -662,18 +662,39 @@ nutrient_levels <- c(
 )
 
 brauer_gene_exp %>%
+  filter(systematic_name == "YOL066C") %>%
   mutate(nutrient = fct_relevel(nutrient, nutrient_levels)) %>%
-  plot_growth("YOL066C")
+  
+  ggplot(aes(rate, expression, color = nutrient)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", se = F, size = 0.5) +
+  facet_wrap(~ nutrient) +
+  theme_cowplot() +
+  theme(legend.position = "none")
 
 # fct_reorder
 brauer_gene_exp %>%
+  filter(systematic_name == "YOL066C") %>%
   mutate(nutrient = fct_reorder(nutrient, expression, max)) %>%
-  plot_growth("YOL066C")
+  
+  ggplot(aes(rate, expression, color = nutrient)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", se = F, size = 0.5) +
+  facet_wrap(~ nutrient) +
+  theme_cowplot() +
+  theme(legend.position = "none")
 
 # fct_inorder
 brauer_gene_exp %>%
+  filter(systematic_name == "YOL066C") %>%
   mutate(nutrient = fct_inorder(nutrient)) %>%
-  plot_growth("YOL066C")
+  
+  ggplot(aes(rate, expression, color = nutrient)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", se = F, size = 0.5) +
+  facet_wrap(~ nutrient) +
+  theme_cowplot() +
+  theme(legend.position = "none")
 ```
 
 Lets try another example using `fct_lump()` and `fct_infreq()`.
@@ -683,6 +704,7 @@ brauer_gene_exp %>%
   select(MF, systematic_name) %>%
   unique() %>%
   mutate(MF = fct_lump(MF, n = 10)) %>%
+  
   ggplot(aes(x = "MF", fill = MF)) +
   geom_bar(position = "fill") +
   theme_cowplot()
@@ -695,6 +717,7 @@ brauer_gene_exp %>%
     MF = fct_lump(MF, n = 10),
     MF = fct_infreq(MF)
   ) %>%
+  
   ggplot(aes(x = "MF", fill = MF)) +
   geom_bar(position = "fill") +
   theme_cowplot()
