@@ -136,7 +136,7 @@ Lets create a scatter plot comparing growth rate vs expression for the gene YDL1
 brauer_gene_exp %>%
   filter(systematic_name == "YDL104C") %>%           # Filter for gene of interest
   ggplot(aes(rate, expression, color = nutrient)) +  # Create scatter plot
-  geom_point(size = 1) +
+  geom_point(size = 2) +
   geom_smooth(method = "lm", se = F, size = 0.5) +   # Add best fit line
   facet_wrap(~ nutrient) +                           # Create separate plot for each nutrient
   theme_cowplot() +
@@ -151,7 +151,7 @@ plot_growth <- function(input, sys_name) {
   input %>%
     filter(systematic_name == sys_name) %>%
     ggplot(aes(rate, expression, color = nutrient)) +
-    geom_point(size = 1) +
+    geom_point(size = 2) +
     geom_smooth(method = "lm", se = F, size = 0.5) +
     facet_wrap(~ nutrient) +
     theme_cowplot() +
@@ -174,7 +174,7 @@ plot_growth <- function(input, sys_name) {
   
   gg_data %>%
     ggplot(aes(rate, expression, color = nutrient)) +
-    geom_point(size = 1) +
+    geom_point(size = 2) +
     geom_smooth(method = "lm", se = F, size = 0.5) +
     labs(title = plot_title, subtitle = plot_sub) +
     facet_wrap(~ nutrient) +
@@ -233,7 +233,7 @@ plot_growth <- function(input, sys_name) {
   
   gg_data %>%
     ggplot(aes(rate, expression, color = nutrient)) +
-    geom_point(size = 1) +
+    geom_point(size = 2) +
     geom_smooth(method = "lm", se = F, size = 0.5) +
     labs(title = plot_title, subtitle = plot_sub) +
     facet_wrap(~ nutrient) +
@@ -303,7 +303,7 @@ plot_growth <- function(input, sys_name) {
   
   gg_data %>%
     ggplot(aes(rate, expression, color = nutrient)) +
-    geom_point(size = 1) +
+    geom_point(size = 2) +
     geom_smooth(method = "lm", se = F, size = 0.5) +
     labs(title = plot_title, subtitle = plot_sub) +
     facet_wrap(~ nutrient) +
@@ -341,7 +341,7 @@ plot_growth <- function(input, sys_name) {
   
   gg_data %>%
     ggplot(aes(rate, expression, color = nutrient)) +
-    geom_point(size = 1) +
+    geom_point(size = 2) +
     geom_smooth(method = "lm", se = F, size = 0.5) +
     labs(title = plot_title, subtitle = plot_sub) +
     facet_wrap(~ nutrient) +
