@@ -2,11 +2,11 @@
 title: "Programming concepts"
 author: "Ryan Sheridan"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Class-8}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+# output: rmarkdown::html_vignette
+# vignette: >
+#  %\VignetteIndexEntry{Class-8}
+#  %\VignetteEngine{knitr::rmarkdown}
+#  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = F}
@@ -33,17 +33,17 @@ Functions have several advantages:
 3. It's easier to adapt your code for different requirements since you only have to modify one place
 ```{r}
 # An example: you want to rescale a numeric vector so all values are between 0 and 1
-a <- rnorm(10)
+a <- rnorm(n = 10)
 a
 
 rng <- range(a)
 (a - rng[1]) / (rng[2] - rng[1])
 
 # What if we want to repeat this on other vectors?
-b <- rnorm(10)
+b <- rnorm(n = 10)
 b
 
-c <- rnorm(10)
+c <- rnorm(n = 10)
 c
 
 rng <- range(b)
@@ -444,20 +444,18 @@ out
 # A slightly more complicated example
 out <- vector("list", 5)
 
-out[[1]] <- rnorm(10, 1)
-out[[2]] <- rnorm(10, 50)
-out[[3]] <- rnorm(10, 20)
-out[[4]] <- rnorm(10, 5)
-out[[5]] <- rnorm(10, 70)
-
-out
+out[[1]] <- rnorm(n = 10, mean = 1)
+out[[2]] <- rnorm(n = 10, mean = 50)
+out[[3]] <- rnorm(n = 10, mean = 20)
+out[[4]] <- rnorm(n = 10, mean = 5)
+out[[5]] <- rnorm(n = 10, mean = 70)
 
 # Use a for loop to reduce code duplication
 means <- c(1, 50, 20, 5, 70)
 out <- vector("list", length(means))
 
 for (i in seq_along(means)) {
-  out[[i]] <- rnorm(10, means[[i]])
+  out[[i]] <- rnorm(n = 10, mean = means[[i]])
 }
 
 out
@@ -546,19 +544,16 @@ means <- c(1, 50, 20, 5, 70)
 out <- vector("list", length(means))
 
 for (i in seq_along(means)) {
-  out[[i]] <- rnorm(10, means[[i]])
+  out[[i]] <- rnorm(n = 10, mean = means[[i]])
 }
 
-out
-
 # Using map() we can further simplify this code
-out <- map(means, function(x) rnorm(10, x))
-out
+out <- map(means, function(x) rnorm(n = 10, mean = x))
 
-out <- map(means, ~ rnorm(10, .x))
-out
+out <- map(means, ~ rnorm(n = 10, mean = .x))
 
 out <- map(means, rnorm, n = 10)
+
 out
 ```
 
@@ -644,6 +639,10 @@ y
 sort(y)
 ```
 
+<br>
+
+<br>
+
 ### Using forcats with ggplot2
 The forcats package has several key functions:
 
@@ -653,6 +652,8 @@ The forcats package has several key functions:
 - `fct_infreq` to order by the frequency of values
 - `fct_lump` to collapse the least/most frequency values into "Other"
 
+<br>
+
 Lets try to use some of these functions to modify our growth rate plots.
 ```{r, fig.width = 6, fig.height = 4.5}
 # fct_relevel
@@ -661,8 +662,10 @@ nutrient_levels <- c(
   "Ammonia",   "Glucose", "Leucine"
 )
 
-brauer_gene_exp %>%
-  filter(systematic_name == "YOL066C") %>%
+gg_data <- brauer_gene_exp %>%
+  filter(systematic_name == "YOL066C")
+
+gg_data %>%
   mutate(nutrient = fct_relevel(nutrient, nutrient_levels)) %>%
   
   ggplot(aes(rate, expression, color = nutrient)) +
@@ -673,8 +676,7 @@ brauer_gene_exp %>%
   theme(legend.position = "none")
 
 # fct_reorder
-brauer_gene_exp %>%
-  filter(systematic_name == "YOL066C") %>%
+gg_data %>%
   mutate(nutrient = fct_reorder(nutrient, expression, max)) %>%
   
   ggplot(aes(rate, expression, color = nutrient)) +
@@ -685,8 +687,7 @@ brauer_gene_exp %>%
   theme(legend.position = "none")
 
 # fct_inorder
-brauer_gene_exp %>%
-  filter(systematic_name == "YOL066C") %>%
+gg_data %>%
   mutate(nutrient = fct_inorder(nutrient)) %>%
   
   ggplot(aes(rate, expression, color = nutrient)) +
@@ -697,12 +698,16 @@ brauer_gene_exp %>%
   theme(legend.position = "none")
 ```
 
+<br>
+
 Lets try another example using `fct_lump()` and `fct_infreq()`.
 ```{r, fig.width = 5, fig.height = 4.5}
-# fct_lump
-brauer_gene_exp %>%
+gg_data <- brauer_gene_exp %>%
   select(MF, systematic_name) %>%
-  unique() %>%
+  unique()
+
+# fct_lump
+gg_data %>%
   mutate(MF = fct_lump(MF, n = 10)) %>%
   
   ggplot(aes(x = "MF", fill = MF)) +
@@ -710,9 +715,7 @@ brauer_gene_exp %>%
   theme_cowplot()
 
 # fct_infreq
-brauer_gene_exp %>%
-  select(MF, systematic_name) %>%
-  unique() %>%
+gg_data %>%
   mutate(
     MF = fct_lump(MF, n = 10),
     MF = fct_infreq(MF)
@@ -722,6 +725,10 @@ brauer_gene_exp %>%
   geom_bar(position = "fill") +
   theme_cowplot()
 ```
+
+<br>
+
+*ADD SOME EXERCISES*
 
 ```{r "EXTRAs", include = F}
 # ggplot(aes(rate, expression, color = nutrient)) +
