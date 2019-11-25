@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Class 3: Exploring a biological data set • pbda</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Class 3: Exploring a biological data set">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pbda</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -55,50 +56,17 @@
     <li>
       <a href="../articles/class-2.html">Class 2: Analyzing qPCR data</a>
     </li>
-    <li>
-      <a href="../articles/class-3.html">Class 3: Exploring a biological data set</a>
-    </li>
-    <li>
-      <a href="../articles/class-4.html">Class 4: RNA-seq Analysis</a>
-    </li>
-    <li>
-      <a href="../articles/class-5.html">Class 5: Gene List Handling</a>
-    </li>
-    <li>
-      <a href="../articles/class-6.html">Class 6: Single Cell RNA-seq</a>
-    </li>
-    <li>
-      <a href="../articles/class-7.html">Class 7: Heatmaps and Clustering</a>
-    </li>
-    <li>
-      <a href="../articles/class-8.html">Class 8: Exploring data with PCA</a>
-    </li>
-    <li>
-      <a href="../articles/class-9.html">Class 9: Tips, Data I/O, and Resources</a>
-    </li>
     <li class="divider">
     <li>
       <a href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-1.html">Problem Set 1</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-2.html">Problem Set 2</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-3.html">Problem Set 3</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-4.html">Problem Set 4</a>
     </li>
   </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/IDPT7810/practical-data-analysis">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/rnabioco/practical-data-analysis">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -111,31 +79,32 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Class 3: Exploring a biological data set</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2018-12-15</h4>
+            <h4 class="date">2019-11-25</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/IDPT7810/practical-data-analysis/blob/master/vignettes/class-3.Rmd"><code>vignettes/class-3.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rnabioco/practical-data-analysis/blob/master/vignettes/class-3.Rmd"><code>vignettes/class-3.Rmd</code></a></small>
       <div class="hidden name"><code>class-3.Rmd</code></div>
 
     </div>
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#&gt; ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#&gt; ✔ ggplot2 3.1.0     ✔ purrr   0.2.5</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; ✔ tibble  1.4.2     ✔ dplyr   0.7.8</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; ✔ tidyr   0.8.2     ✔ stringr 1.3.1</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; ✔ readr   1.3.0     ✔ forcats 0.3.0</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">#&gt; ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──</span></a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#&gt; ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#&gt; ✔ ggplot2 3.2.1     ✔ purrr   0.3.3</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; ✔ tibble  2.1.3     ✔ dplyr   0.8.3</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; ✔ tidyr   1.0.0     ✔ stringr 1.4.0</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; ✔ readr   1.3.1     ✔ forcats 0.4.0</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></a>
 <a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></a>
 <a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(pbda)</a></code></pre></div>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pbda)</a></code></pre></div>
 <div id="exploring-a-biological-data-set" class="section level1">
 <h1 class="hasAnchor">
 <a href="#exploring-a-biological-data-set" class="anchor"></a>Exploring a Biological Data Set</h1>
@@ -167,15 +136,15 @@
 <a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt;  8     1     1 a          1     NA</span></a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt;  9     1     2 b         NA     NA</span></a>
 <a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; 10     1     2 c         NA     NA</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; # ... with 20 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; # … with 20 more rows</span></a></code></pre></div>
 </div>
 <div id="filter-with-is-na" class="section level3">
 <h3 class="hasAnchor">
-<a href="#filter-with-is-na" class="anchor"></a><code>filter</code> with <code><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na()</a></code>
+<a href="#filter-with-is-na" class="anchor"></a><code>filter</code> with <code>is.na()</code>
 </h3>
-<p>You can identify variables with <code>NA</code> values by combining <code><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter()</a></code> and <code><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na()</a></code>.</p>
+<p>You can identify variables with <code>NA</code> values by combining <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> and <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># find rows where name is NA</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(name))</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(name))</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; # A tibble: 5 x 5</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt;   group    id name  value1 value2</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;int&gt;</span></a>
@@ -186,7 +155,7 @@
 <a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; 5     4     3 &lt;NA&gt;      NA     NA</span></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co"># find rows where id is *not* NA</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(id))</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(id))</a>
 <a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; # A tibble: 25 x 5</span></a>
 <a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt;    group    id name  value1 value2</span></a>
 <a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;int&gt;</span></a>
@@ -200,14 +169,14 @@
 <a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt;  8     1     2 b         NA     NA</span></a>
 <a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt;  9     1     2 c         NA     NA</span></a>
 <a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt; 10     1     3 &lt;NA&gt;      NA     NA</span></a>
-<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt; # ... with 15 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt; # … with 15 more rows</span></a></code></pre></div>
 </div>
 <div id="na-omit" class="section level3">
 <h3 class="hasAnchor">
-<a href="#na-omit" class="anchor"></a><code><a href="https://www.rdocumentation.org/packages/stats/topics/na.fail">na.omit()</a></code>
+<a href="#na-omit" class="anchor"></a><code>na.omit()</code>
 </h3>
-<p>You can remove <strong>all</strong> rows containing <code>NA</code> values with <code><a href="https://www.rdocumentation.org/packages/stats/topics/na.fail">na.omit()</a></code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/na.fail">na.omit</a></span>()</a>
+<p>You can remove <strong>all</strong> rows containing <code>NA</code> values with <code><a href="https://rdrr.io/r/stats/na.fail.html">na.omit()</a></code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">missing_ex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span>()</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; # A tibble: 1 x 5</span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;   group    id name  value1 value2</span></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;int&gt;</span></a>
@@ -218,15 +187,15 @@
 <a href="#computing-with-na-values" class="anchor"></a>Computing with <code>NA</code> values</h3>
 <p>Exclude <code>NA</code> values from operations with <code>na.rm = TRUE</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">missing_ex<span class="op">$</span>value1</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  [1] NA NA NA NA NA NA NA  1 NA NA NA NA NA NA  2 NA NA NA NA NA NA NA  3</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [24] NA NA NA NA NA NA  4</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  [1] NA NA NA NA NA NA NA  1 NA NA NA NA NA NA  2 NA NA NA NA NA NA NA  3 NA NA</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [26] NA NA NA NA  4</span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># if NAs are present, the result is NA</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(missing_ex<span class="op">$</span>value1)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(missing_ex<span class="op">$</span>value1)</a>
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; [1] NA</span></a>
 <a class="sourceLine" id="cb5-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co"># solution: drop NAs from the calculation</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(missing_ex<span class="op">$</span>value1, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(missing_ex<span class="op">$</span>value1, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; [1] 10</span></a></code></pre></div>
 </div>
 <div id="exercises" class="section level3">
@@ -251,7 +220,7 @@
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(systematic_name, rate, expression) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(rate, <span class="kw">desc</span>(expression))</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; # A tibble: 10 x 3</span></a>
 <a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt;    systematic_name  rate expression</span></a>
 <a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;    &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;</span></a>
@@ -266,7 +235,7 @@
 <a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt;  9 YIL166C          0.05       6.5 </span></a>
 <a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">#&gt; 10 YBR093C          0.05       6.48</span></a>
 <a class="sourceLine" id="cb6-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb6-20" data-line-number="20">sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">tail</a></span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb6-20" data-line-number="20">sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(<span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co">#&gt; # A tibble: 10 x 3</span></a>
 <a class="sourceLine" id="cb6-22" data-line-number="22"><span class="co">#&gt;    systematic_name  rate expression</span></a>
 <a class="sourceLine" id="cb6-23" data-line-number="23"><span class="co">#&gt;    &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;</span></a>
@@ -280,64 +249,64 @@
 <a class="sourceLine" id="cb6-31" data-line-number="31"><span class="co">#&gt;  8 YJR095W           0.3      -5.14</span></a>
 <a class="sourceLine" id="cb6-32" data-line-number="32"><span class="co">#&gt;  9 YKL217W           0.3      -5.44</span></a>
 <a class="sourceLine" id="cb6-33" data-line-number="33"><span class="co">#&gt; 10 YMR303C           0.3      -6.04</span></a></code></pre></div>
-<p>You can also use the <code><a href="https://www.rdocumentation.org/packages/utils/topics/View">View()</a></code> function to examine the data in a spreadsheet-like viewer.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/View">View</a></span>()</a></code></pre></div>
+<p>You can also use the <code><a href="https://rdrr.io/r/utils/View.html">View()</a></code> function to examine the data in a spreadsheet-like viewer.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">sorted <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/View.html">View</a></span>()</a></code></pre></div>
 </div>
 <div id="sampling-rows" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sampling-rows" class="anchor"></a>Sampling rows</h3>
-<p>Use <code>sample_n()</code> and <code>sample_frac()</code> to randomly select rows from a large data set. Get a reproducible sample using <code><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed()</a></code></p>
+<p>Use <code>sample_n()</code> and <code>sample_frac()</code> to randomly select rows from a large data set. Get a reproducible sample using <code><a href="https://rdrr.io/r/base/Random.html">set.seed()</a></code></p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">brauer_gene_exp</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; # A tibble: 198,430 x 7</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;    name  BP         MF           systematic_name nutrient  rate expression</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;      &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt;  1 SFB2  ER to Gol… molecular f… YNL049C         Glucose   0.05      -0.24</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt;  2 ""    biologica… molecular f… YNL095C         Glucose   0.05       0.28</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt;  3 QRI7  proteolys… metalloendo… YDL104C         Glucose   0.05      -0.02</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;  4 CFT2  mRNA poly… RNA binding  YLR115W         Glucose   0.05      -0.33</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;  5 SSO2  vesicle f… t-SNARE act… YMR183C         Glucose   0.05       0.05</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;  6 PSP2  biologica… molecular f… YML017W         Glucose   0.05      -0.69</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt;  7 RIB2  riboflavi… pseudouridy… YOL066C         Glucose   0.05      -0.55</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt;  8 VMA13 vacuolar … hydrogen-tr… YPR036W         Glucose   0.05      -0.75</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt;  9 EDC3  deadenyly… molecular f… YEL015W         Glucose   0.05      -0.24</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; 10 VPS5  protein r… protein tra… YOR069W         Glucose   0.05      -0.16</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; # ... with 198,420 more rows</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;    name  BP           MF               systematic_name nutrient  rate expression</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;            &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;      &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt;  1 SFB2  ER to Golgi… molecular funct… YNL049C         Glucose   0.05      -0.24</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt;  2 ""    biological … molecular funct… YNL095C         Glucose   0.05       0.28</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt;  3 QRI7  proteolysis… metalloendopept… YDL104C         Glucose   0.05      -0.02</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;  4 CFT2  mRNA polyad… RNA binding      YLR115W         Glucose   0.05      -0.33</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;  5 SSO2  vesicle fus… t-SNARE activity YMR183C         Glucose   0.05       0.05</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;  6 PSP2  biological … molecular funct… YML017W         Glucose   0.05      -0.69</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt;  7 RIB2  riboflavin … pseudouridylate… YOL066C         Glucose   0.05      -0.55</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt;  8 VMA13 vacuolar ac… hydrogen-transp… YPR036W         Glucose   0.05      -0.75</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt;  9 EDC3  deadenylyla… molecular funct… YEL015W         Glucose   0.05      -0.24</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; 10 VPS5  protein ret… protein transpo… YOR069W         Glucose   0.05      -0.16</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; # … with 198,420 more rows</span></a>
 <a class="sourceLine" id="cb8-16" data-line-number="16"></a>
 <a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co"># sample 1e5 rows</span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1234</span>)</a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">1234</span>)</a>
 <a class="sourceLine" id="cb8-19" data-line-number="19">brauer_gene_exp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="fl">1e3</span>)</a>
 <a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; # A tibble: 1,000 x 7</span></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt;    name  BP          MF          systematic_name nutrient  rate expression</span></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;      &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt;  1 HIS3  histidine … imidazoleg… YOR202W         Glucose   0.25      -0.25</span></a>
-<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt;  2 ""    biological… molecular … YPL199C         Sulfate   0.25       0.1 </span></a>
-<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt;  3 PDH1  propionate… molecular … YPR002W         Sulfate   0.2       -1.64</span></a>
-<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt;  4 RMD6  biological… molecular … YEL072W         Sulfate   0.25       1.53</span></a>
-<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt;  5 ""    biological… molecular … YLR356W         Uracil    0.1        0.26</span></a>
-<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt;  6 HEM13 heme biosy… coproporph… YDR044W         Sulfate   0.3       -0.24</span></a>
-<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt;  7 ALD6  acetate bi… aldehyde d… YPL061W         Glucose   0.05       1.42</span></a>
-<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt;  8 URB1  rRNA proce… molecular … YKL014C         Ammonia   0.15      -0.12</span></a>
-<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">#&gt;  9 SIP1  protein am… AMP-activa… YDR422C         Sulfate   0.3        0.16</span></a>
-<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">#&gt; 10 HOT13 mitochondr… molecular … YKL084W         Sulfate   0.05      -0.09</span></a>
-<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">#&gt; # ... with 990 more rows</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt;    name   BP               MF          systematic_name nutrient  rate expression</span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;      &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt;  1 OST4   protein amino a… protein bi… YDL232W         Sulfate   0.1        0.11</span></a>
+<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt;  2 ""     biological proc… molecular … YHR003C         Ammonia   0.1       -0.2 </span></a>
+<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt;  3 FRE2   iron ion transp… ferric-che… YKL220C         Leucine   0.15       0.95</span></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt;  4 ""     transport        transporte… YOR071C         Ammonia   0.05      -0.76</span></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt;  5 COS111 signal transduc… molecular … YBR203W         Sulfate   0.25      -0.81</span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt;  6 ""     ""               ""          YBL077W         Sulfate   0.2        0.48</span></a>
+<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt;  7 ""     biological proc… protein ty… YGR203W         Phospha…  0.2       -1.85</span></a>
+<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt;  8 CWP2   cell wall organ… structural… YKL096W-A       Phospha…  0.15       0.56</span></a>
+<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">#&gt;  9 COX5B  mitochondrial e… cytochrome… YIL111W         Phospha…  0.2        2.42</span></a>
+<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">#&gt; 10 ""     ""               ""          YJL009W         Ammonia   0.25       0.09</span></a>
+<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">#&gt; # … with 990 more rows</span></a>
 <a class="sourceLine" id="cb8-34" data-line-number="34"></a>
 <a class="sourceLine" id="cb8-35" data-line-number="35"><span class="co"># sample 10% of the rows</span></a>
-<a class="sourceLine" id="cb8-36" data-line-number="36"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1234</span>)</a>
+<a class="sourceLine" id="cb8-36" data-line-number="36"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">1234</span>)</a>
 <a class="sourceLine" id="cb8-37" data-line-number="37">brauer_gene_exp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_frac</span>(<span class="fl">0.1</span>)</a>
 <a class="sourceLine" id="cb8-38" data-line-number="38"><span class="co">#&gt; # A tibble: 19,843 x 7</span></a>
-<a class="sourceLine" id="cb8-39" data-line-number="39"><span class="co">#&gt;    name  BP          MF          systematic_name nutrient  rate expression</span></a>
-<a class="sourceLine" id="cb8-40" data-line-number="40"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;      &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb8-41" data-line-number="41"><span class="co">#&gt;  1 HIS3  histidine … imidazoleg… YOR202W         Glucose   0.25      -0.25</span></a>
-<a class="sourceLine" id="cb8-42" data-line-number="42"><span class="co">#&gt;  2 ""    biological… molecular … YPL199C         Sulfate   0.25       0.1 </span></a>
-<a class="sourceLine" id="cb8-43" data-line-number="43"><span class="co">#&gt;  3 PDH1  propionate… molecular … YPR002W         Sulfate   0.2       -1.64</span></a>
-<a class="sourceLine" id="cb8-44" data-line-number="44"><span class="co">#&gt;  4 RMD6  biological… molecular … YEL072W         Sulfate   0.25       1.53</span></a>
-<a class="sourceLine" id="cb8-45" data-line-number="45"><span class="co">#&gt;  5 ""    biological… molecular … YLR356W         Uracil    0.1        0.26</span></a>
-<a class="sourceLine" id="cb8-46" data-line-number="46"><span class="co">#&gt;  6 HEM13 heme biosy… coproporph… YDR044W         Sulfate   0.3       -0.24</span></a>
-<a class="sourceLine" id="cb8-47" data-line-number="47"><span class="co">#&gt;  7 ALD6  acetate bi… aldehyde d… YPL061W         Glucose   0.05       1.42</span></a>
-<a class="sourceLine" id="cb8-48" data-line-number="48"><span class="co">#&gt;  8 URB1  rRNA proce… molecular … YKL014C         Ammonia   0.15      -0.12</span></a>
-<a class="sourceLine" id="cb8-49" data-line-number="49"><span class="co">#&gt;  9 SIP1  protein am… AMP-activa… YDR422C         Sulfate   0.3        0.16</span></a>
-<a class="sourceLine" id="cb8-50" data-line-number="50"><span class="co">#&gt; 10 HOT13 mitochondr… molecular … YKL084W         Sulfate   0.05      -0.09</span></a>
-<a class="sourceLine" id="cb8-51" data-line-number="51"><span class="co">#&gt; # ... with 19,833 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-39" data-line-number="39"><span class="co">#&gt;    name   BP               MF          systematic_name nutrient  rate expression</span></a>
+<a class="sourceLine" id="cb8-40" data-line-number="40"><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;      &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb8-41" data-line-number="41"><span class="co">#&gt;  1 OST4   protein amino a… protein bi… YDL232W         Sulfate   0.1        0.11</span></a>
+<a class="sourceLine" id="cb8-42" data-line-number="42"><span class="co">#&gt;  2 ""     biological proc… molecular … YHR003C         Ammonia   0.1       -0.2 </span></a>
+<a class="sourceLine" id="cb8-43" data-line-number="43"><span class="co">#&gt;  3 FRE2   iron ion transp… ferric-che… YKL220C         Leucine   0.15       0.95</span></a>
+<a class="sourceLine" id="cb8-44" data-line-number="44"><span class="co">#&gt;  4 ""     transport        transporte… YOR071C         Ammonia   0.05      -0.76</span></a>
+<a class="sourceLine" id="cb8-45" data-line-number="45"><span class="co">#&gt;  5 COS111 signal transduc… molecular … YBR203W         Sulfate   0.25      -0.81</span></a>
+<a class="sourceLine" id="cb8-46" data-line-number="46"><span class="co">#&gt;  6 ""     ""               ""          YBL077W         Sulfate   0.2        0.48</span></a>
+<a class="sourceLine" id="cb8-47" data-line-number="47"><span class="co">#&gt;  7 ""     biological proc… protein ty… YGR203W         Phospha…  0.2       -1.85</span></a>
+<a class="sourceLine" id="cb8-48" data-line-number="48"><span class="co">#&gt;  8 CWP2   cell wall organ… structural… YKL096W-A       Phospha…  0.15       0.56</span></a>
+<a class="sourceLine" id="cb8-49" data-line-number="49"><span class="co">#&gt;  9 COX5B  mitochondrial e… cytochrome… YIL111W         Phospha…  0.2        2.42</span></a>
+<a class="sourceLine" id="cb8-50" data-line-number="50"><span class="co">#&gt; 10 ""     ""               ""          YJL009W         Ammonia   0.25       0.09</span></a>
+<a class="sourceLine" id="cb8-51" data-line-number="51"><span class="co">#&gt; # … with 19,833 more rows</span></a></code></pre></div>
 </div>
 <div id="joining-tables" class="section level3">
 <h3 class="hasAnchor">
@@ -353,7 +322,7 @@
 <a class="sourceLine" id="cb9-2" data-line-number="2">gene_mw &lt;-<span class="st"> </span>yeast_prot_prop <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(ORF, Mw)</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># Find rows from gene_exp_rate with a match in gene_mw and return all variables</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="kw">left_join</span>(gene_exp_rate, gene_mw, <span class="dt">by =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"systematic_name"</span> =<span class="st"> "ORF"</span>))</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="kw">left_join</span>(gene_exp_rate, gene_mw, <span class="dt">by =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"systematic_name"</span> =<span class="st"> "ORF"</span>))</a>
 <a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt; # A tibble: 198,430 x 4</span></a>
 <a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt;    systematic_name  rate expression     Mw</span></a>
 <a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;    &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;</span></a>
@@ -367,10 +336,10 @@
 <a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt;  8 YPR036W          0.05      -0.75 54409.</span></a>
 <a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">#&gt;  9 YEL015W          0.05      -0.24 61336.</span></a>
 <a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt; 10 YOR069W          0.05      -0.16 76460.</span></a>
-<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">#&gt; # ... with 198,420 more rows</span></a>
+<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">#&gt; # … with 198,420 more rows</span></a>
 <a class="sourceLine" id="cb9-20" data-line-number="20"></a>
 <a class="sourceLine" id="cb9-21" data-line-number="21"><span class="co"># Find rows from gene_exp_rate with a match in gene_mw and return only the gene_exp_rate variables</span></a>
-<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="kw">semi_join</span>(gene_exp_rate, gene_mw, <span class="dt">by =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"systematic_name"</span> =<span class="st"> "ORF"</span>))</a>
+<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="kw">semi_join</span>(gene_exp_rate, gene_mw, <span class="dt">by =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"systematic_name"</span> =<span class="st"> "ORF"</span>))</a>
 <a class="sourceLine" id="cb9-23" data-line-number="23"><span class="co">#&gt; # A tibble: 197,543 x 3</span></a>
 <a class="sourceLine" id="cb9-24" data-line-number="24"><span class="co">#&gt;    systematic_name  rate expression</span></a>
 <a class="sourceLine" id="cb9-25" data-line-number="25"><span class="co">#&gt;    &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;</span></a>
@@ -384,10 +353,10 @@
 <a class="sourceLine" id="cb9-33" data-line-number="33"><span class="co">#&gt;  8 YPR036W          0.05      -0.75</span></a>
 <a class="sourceLine" id="cb9-34" data-line-number="34"><span class="co">#&gt;  9 YEL015W          0.05      -0.24</span></a>
 <a class="sourceLine" id="cb9-35" data-line-number="35"><span class="co">#&gt; 10 YOR069W          0.05      -0.16</span></a>
-<a class="sourceLine" id="cb9-36" data-line-number="36"><span class="co">#&gt; # ... with 197,533 more rows</span></a>
+<a class="sourceLine" id="cb9-36" data-line-number="36"><span class="co">#&gt; # … with 197,533 more rows</span></a>
 <a class="sourceLine" id="cb9-37" data-line-number="37"></a>
 <a class="sourceLine" id="cb9-38" data-line-number="38"><span class="co"># Find rows from gene_exp_rate *without* a match in gene_mw</span></a>
-<a class="sourceLine" id="cb9-39" data-line-number="39"><span class="kw">anti_join</span>(gene_exp_rate, gene_mw, <span class="dt">by =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"systematic_name"</span> =<span class="st"> "ORF"</span>))</a>
+<a class="sourceLine" id="cb9-39" data-line-number="39"><span class="kw">anti_join</span>(gene_exp_rate, gene_mw, <span class="dt">by =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"systematic_name"</span> =<span class="st"> "ORF"</span>))</a>
 <a class="sourceLine" id="cb9-40" data-line-number="40"><span class="co">#&gt; # A tibble: 887 x 3</span></a>
 <a class="sourceLine" id="cb9-41" data-line-number="41"><span class="co">#&gt;    systematic_name  rate expression</span></a>
 <a class="sourceLine" id="cb9-42" data-line-number="42"><span class="co">#&gt;    &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;</span></a>
@@ -401,7 +370,7 @@
 <a class="sourceLine" id="cb9-50" data-line-number="50"><span class="co">#&gt;  8 YJL018W          0.05       0.03</span></a>
 <a class="sourceLine" id="cb9-51" data-line-number="51"><span class="co">#&gt;  9 YFL057C          0.05       0.23</span></a>
 <a class="sourceLine" id="cb9-52" data-line-number="52"><span class="co">#&gt; 10 YFL056C          0.05       0.32</span></a>
-<a class="sourceLine" id="cb9-53" data-line-number="53"><span class="co">#&gt; # ... with 877 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-53" data-line-number="53"><span class="co">#&gt; # … with 877 more rows</span></a></code></pre></div>
 </div>
 <div id="exercises-1" class="section level3">
 <h3 class="hasAnchor">
@@ -417,24 +386,26 @@
 <a href="#relationships-between-variables" class="anchor"></a>Relationships between variables</h2>
 <p>We’ll use the <code>brauer_gene_exp</code> data set to illustrate how you can use summary statistics to capture relationships between many variables.</p>
 <p>This plot illustrates the relationship between gene expression and growth rate for the Grr1/YJR090C gene under glucose limitation.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(cowplot)</a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(cowplot)</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt; Attaching package: 'cowplot'</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; The following object is masked from 'package:ggplot2':</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;     ggsave</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">exp_data &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(nutrient <span class="op">==</span><span class="st"> "Glucose"</span> <span class="op">&amp;</span><span class="st"> </span>systematic_name <span class="op">==</span><span class="st"> "YJR090C"</span>)</a>
-<a class="sourceLine" id="cb10-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb10-11" data-line-number="11">exp_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rate, <span class="dt">y =</span> expression)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">'lm'</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Gene expression vs. growth rate for Grr3 under glucose limitation"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt; ********************************************************</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; Note: As of version 1.0.0, cowplot does not change the</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt;   default ggplot2 theme anymore. To recover the previous</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;   behavior, execute:</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;   theme_set(theme_cowplot())</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; ********************************************************</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">exp_data &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(nutrient <span class="op">==</span><span class="st"> "Glucose"</span> <span class="op">&amp;</span><span class="st"> </span>systematic_name <span class="op">==</span><span class="st"> "YJR090C"</span>)</a>
+<a class="sourceLine" id="cb10-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb10-13" data-line-number="13">exp_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rate, <span class="dt">y =</span> expression)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">'lm'</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Gene expression vs. growth rate for Grr3 under glucose limitation"</span>)</a></code></pre></div>
 <p><img src="class-3_files/figure-html/brauer_plot-1.png" width="700" style="display: block; margin: auto;"></p>
-<p>You can also use <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code> to model this relationship.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(expression <span class="op">~</span><span class="st"> </span>rate, exp_data)</a>
+<p>You can also use <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> to model this relationship.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(expression <span class="op">~</span><span class="st"> </span>rate, exp_data)</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co">#&gt; Call:</span></a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co">#&gt; lm(formula = expression ~ rate, data = exp_data)</span></a>
@@ -442,10 +413,10 @@
 <a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; Coefficients:</span></a>
 <a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt; (Intercept)         rate  </span></a>
 <a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt;      0.1600      -0.8857</span></a></code></pre></div>
-<p>The results of many statistical operations (<code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code>, <code><a href="https://www.rdocumentation.org/packages/stats/topics/t.test">t.test()</a></code>, <code><a href="https://www.rdocumentation.org/packages/stats/topics/cor.test">cor.test()</a></code>) are not tidy and relevant parameters are not easily assessible. The <code>broom</code> package provides a function called <code><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">tidy()</a></code> that tidies the results of these operations.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(broom)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">fit &lt;-<span class="st"> </span>exp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(expression <span class="op">~</span><span class="st"> </span>rate, <span class="dt">data =</span> .)</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">tidy</a></span>(fit)</a>
+<p>The results of many statistical operations (<code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>, <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code>, <code><a href="https://rdrr.io/r/stats/cor.test.html">cor.test()</a></code>) are not tidy and relevant parameters are not easily assessible. The <code>broom</code> package provides a function called <code><a href="https://rdrr.io/pkg/broom/man/reexports.html">tidy()</a></code> that tidies the results of these operations.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(broom)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">fit &lt;-<span class="st"> </span>exp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(expression <span class="op">~</span><span class="st"> </span>rate, <span class="dt">data =</span> .)</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/pkg/broom/man/reexports.html">tidy</a></span>(fit)</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; # A tibble: 2 x 5</span></a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt;   term        estimate std.error statistic  p.value</span></a>
 <a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span></a>
@@ -461,16 +432,16 @@
 <a class="sourceLine" id="cb13-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(systematic_name, nutrient) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-5" data-line-number="5"><span class="st">  </span><span class="kw">nest</span>() <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-6" data-line-number="6"><span class="st">  </span><span class="co"># remove `head` to generate the full data set</span></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb13-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb13-9" data-line-number="9">    <span class="dt">model =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">tidy</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(rate <span class="op">~</span><span class="st"> </span>expression, <span class="dt">data =</span> .x)))</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">    <span class="dt">model =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/broom/man/reexports.html">tidy</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(rate <span class="op">~</span><span class="st"> </span>expression, <span class="dt">data =</span> .x)))</a>
 <a class="sourceLine" id="cb13-10" data-line-number="10">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-11" data-line-number="11"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>data)</a></code></pre></div>
 <p>Plot the expression / rate relationship for the top-ten most significant genes. Color lines by nutrient.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">topten &lt;-<span class="st"> </span>models <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(p.value) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="dv">10</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="dv">10</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(systematic_name)</a>
 <a class="sourceLine" id="cb14-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb14-7" data-line-number="7">topten_exp &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">semi_join</span>(topten)</a>
@@ -487,6 +458,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -505,17 +477,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
-  <p>Developed by <a href="https://hesselberthlab.org">Jay Hesselberth</a>, Austin Gillen, Kent Riemondy, Rui Fu.</p>
+  <p>Developed by <a href="https://hesselberthlab.org">Jay Hesselberth</a>, Austin Gillen, Kent Riemondy, Rui Fu, Ryan Sheridan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

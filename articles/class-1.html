@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Class 1: Course Overview | Data Import and Tidying • pbda</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Class 1: Course Overview | Data Import and Tidying">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pbda</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -55,50 +56,17 @@
     <li>
       <a href="../articles/class-2.html">Class 2: Analyzing qPCR data</a>
     </li>
-    <li>
-      <a href="../articles/class-3.html">Class 3: Exploring a biological data set</a>
-    </li>
-    <li>
-      <a href="../articles/class-4.html">Class 4: RNA-seq Analysis</a>
-    </li>
-    <li>
-      <a href="../articles/class-5.html">Class 5: Gene List Handling</a>
-    </li>
-    <li>
-      <a href="../articles/class-6.html">Class 6: Single Cell RNA-seq</a>
-    </li>
-    <li>
-      <a href="../articles/class-7.html">Class 7: Heatmaps and Clustering</a>
-    </li>
-    <li>
-      <a href="../articles/class-8.html">Class 8: Exploring data with PCA</a>
-    </li>
-    <li>
-      <a href="../articles/class-9.html">Class 9: Tips, Data I/O, and Resources</a>
-    </li>
     <li class="divider">
     <li>
       <a href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-1.html">Problem Set 1</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-2.html">Problem Set 2</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-3.html">Problem Set 3</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-4.html">Problem Set 4</a>
     </li>
   </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/IDPT7810/practical-data-analysis">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/rnabioco/practical-data-analysis">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -111,15 +79,16 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Class 1: Course Overview | Data Import and Tidying</h1>
                         <h4 class="author">Jay Hesselberth</h4>
             
-            <h4 class="date">2018-12-15</h4>
+            <h4 class="date">2019-11-25</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/IDPT7810/practical-data-analysis/blob/master/vignettes/class-1.Rmd"><code>vignettes/class-1.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rnabioco/practical-data-analysis/blob/master/vignettes/class-1.Rmd"><code>vignettes/class-1.Rmd</code></a></small>
       <div class="hidden name"><code>class-1.Rmd</code></div>
 
     </div>
@@ -142,7 +111,7 @@
 <!-- We'll cover the basic steps of data import and analysis within RStudio and will highlight some features of the software as we go. -->
 <p><strong>The class has its own R package, so you should begin by loading it into your session.</strong> You will need to reinstall the package when we make updates.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># devtools::install_github('idpt7810/practical-data-analysis')</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(pbda)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pbda)</a></code></pre></div>
 </div>
 <div id="environment" class="section level1">
 <h1 class="hasAnchor">
@@ -157,7 +126,7 @@
 <h1 class="hasAnchor">
 <a href="#read-functions" class="anchor"></a><code>read</code> functions</h1>
 <p>Alternatively you can use functions in <code>readr</code> and <code>readxl</code> to load data on the console or within an RMarkdown report. All of the functions have <code>read_*</code> prefixes.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(readr)</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(readr)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span>(<span class="kw"><a href="https://readr.tidyverse.org/reference/readr_example.html">readr_example</a></span>(<span class="st">"mtcars.csv"</span>))</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; Parsed with column specification:</span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; cols(</span></a>
@@ -186,9 +155,9 @@
 <a class="sourceLine" id="cb2-27" data-line-number="27"><span class="co">#&gt;  8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2</span></a>
 <a class="sourceLine" id="cb2-28" data-line-number="28"><span class="co">#&gt;  9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2</span></a>
 <a class="sourceLine" id="cb2-29" data-line-number="29"><span class="co">#&gt; 10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4</span></a>
-<a class="sourceLine" id="cb2-30" data-line-number="30"><span class="co">#&gt; # ... with 22 more rows</span></a>
+<a class="sourceLine" id="cb2-30" data-line-number="30"><span class="co">#&gt; # … with 22 more rows</span></a>
 <a class="sourceLine" id="cb2-31" data-line-number="31"></a>
-<a class="sourceLine" id="cb2-32" data-line-number="32"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(readxl)</a>
+<a class="sourceLine" id="cb2-32" data-line-number="32"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(readxl)</a>
 <a class="sourceLine" id="cb2-33" data-line-number="33"><span class="kw"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="kw"><a href="https://readxl.tidyverse.org/reference/readxl_example.html">readxl_example</a></span>(<span class="st">"datasets.xlsx"</span>))</a>
 <a class="sourceLine" id="cb2-34" data-line-number="34"><span class="co">#&gt; # A tibble: 150 x 5</span></a>
 <a class="sourceLine" id="cb2-35" data-line-number="35"><span class="co">#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></a>
@@ -203,20 +172,20 @@
 <a class="sourceLine" id="cb2-44" data-line-number="44"><span class="co">#&gt;  8          5           3.4          1.5         0.2 setosa </span></a>
 <a class="sourceLine" id="cb2-45" data-line-number="45"><span class="co">#&gt;  9          4.4         2.9          1.4         0.2 setosa </span></a>
 <a class="sourceLine" id="cb2-46" data-line-number="46"><span class="co">#&gt; 10          4.9         3.1          1.5         0.1 setosa </span></a>
-<a class="sourceLine" id="cb2-47" data-line-number="47"><span class="co">#&gt; # ... with 140 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-47" data-line-number="47"><span class="co">#&gt; # … with 140 more rows</span></a></code></pre></div>
 <p>You can also explore your environment with the “Global Environment” button.</p>
 </div>
 <div id="console" class="section level1">
 <h1 class="hasAnchor">
 <a href="#console" class="anchor"></a>Console</h1>
 <p>The Console panel enables interactive analysis.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; ✔ ggplot2 3.1.0     ✔ purrr   0.2.5</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; ✔ tibble  1.4.2     ✔ dplyr   0.7.8</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; ✔ tidyr   0.8.2     ✔ stringr 1.3.1</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; ✔ ggplot2 3.1.0     ✔ forcats 0.3.0</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──</span></a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; ✔ ggplot2 3.2.1     ✔ dplyr   0.8.3</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; ✔ tibble  2.1.3     ✔ stringr 1.4.0</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; ✔ tidyr   1.0.0     ✔ forcats 0.4.0</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; ✔ purrr   0.3.3</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></a></code></pre></div>
 <p>This one invocation loads several libraries including <code>dplyr</code> and <code>ggplot2</code>.</p>
@@ -225,8 +194,8 @@
 <h1 class="hasAnchor">
 <a href="#viewer" class="anchor"></a>Viewer</h1>
 <p>The <code>tidyverse</code> contains <code>ggplot2</code>, which you covered in your pre-requisites. Let’s make a simple plot in RStudio. Note that the plot appears in the “Plots” panel. From there, you can Zoom, Export to a file, or Publish on RPubs.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(mtcars, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg, <span class="dt">color =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(cyl))) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(mtcars, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg, <span class="dt">color =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(cyl))) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>()</a></code></pre></div>
 <p><img src="class-1_files/figure-html/plot-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div id="editor" class="section level1">
@@ -276,7 +245,7 @@
 <a href="#the-tibble" class="anchor"></a>The <code>tibble</code>
 </h1>
 <p>A <code>tibble</code> is similar to a <code>data.frame</code> with some important differences. A <code>tibble</code> provides a quick overview of your data including its structure (rows and columns) and column types. Use <code>as_tibble()</code> to convert a <code>data.frame</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(iris)</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; 1          5.1         3.5          1.4         0.2  setosa</span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; 2          4.9         3.0          1.4         0.2  setosa</span></a>
@@ -285,7 +254,7 @@
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; 5          5.0         3.6          1.4         0.2  setosa</span></a>
 <a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; 6          5.4         3.9          1.7         0.4  setosa</span></a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="kw">as_tibble</span>(iris)</a>
 <a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; # A tibble: 150 x 5</span></a>
 <a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></a>
@@ -300,7 +269,7 @@
 <a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">#&gt;  8          5           3.4          1.5         0.2 setosa </span></a>
 <a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">#&gt;  9          4.4         2.9          1.4         0.2 setosa </span></a>
 <a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">#&gt; 10          4.9         3.1          1.5         0.1 setosa </span></a>
-<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">#&gt; # ... with 140 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">#&gt; # … with 140 more rows</span></a></code></pre></div>
 </div>
 <div id="the-tidyr-package" class="section level1">
 <h1 class="hasAnchor">
@@ -312,23 +281,23 @@
 <a href="#gather-and-spread" class="anchor"></a><code>gather</code> and <code>spread</code>
 </h1>
 <p>These are the workhorse functions in <code>tidyr</code>. Use <code>gather</code> when variables are in columns and you want them in tidy format.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(pbda)</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pbda)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># column names in "wide" format are variables</span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">mtcars_tbl</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; # A tibble: 32 x 12</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;    name    mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt;  1 Mazd…  21       6  160    110  3.9   2.62  16.5     0     1     4     4</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;  2 Mazd…  21       6  160    110  3.9   2.88  17.0     0     1     4     4</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;  3 Dats…  22.8     4  108     93  3.85  2.32  18.6     1     1     4     1</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  4 Horn…  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  5 Horn…  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt;  6 Vali…  18.1     6  225    105  2.76  3.46  20.2     1     0     3     1</span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt;  7 Dust…  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt;  8 Merc…  24.4     4  147.    62  3.69  3.19  20       1     0     4     2</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt;  9 Merc…  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2</span></a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; 10 Merc…  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4</span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt; # ... with 22 more rows</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;    name          mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt;    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt;  1 Mazda RX4    21       6  160    110  3.9   2.62  16.5     0     1     4     4</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;  2 Mazda RX4 …  21       6  160    110  3.9   2.88  17.0     0     1     4     4</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;  3 Datsun 710   22.8     4  108     93  3.85  2.32  18.6     1     1     4     1</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  4 Hornet 4 D…  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  5 Hornet Spo…  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt;  6 Valiant      18.1     6  225    105  2.76  3.46  20.2     1     0     3     1</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt;  7 Duster 360   14.3     8  360    245  3.21  3.57  15.8     0     0     3     4</span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt;  8 Merc 240D    24.4     4  147.    62  3.69  3.19  20       1     0     4     2</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt;  9 Merc 230     22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; 10 Merc 280     19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4</span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt; # … with 22 more rows</span></a>
 <a class="sourceLine" id="cb6-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co"># gather variables and observations into `key` and `value` columns - so-called "long" format</span></a>
 <a class="sourceLine" id="cb6-20" data-line-number="20">xx &lt;-<span class="st"> </span>mtcars_tbl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(key, value, <span class="op">-</span>name)</a>
@@ -346,30 +315,30 @@
 <a class="sourceLine" id="cb6-32" data-line-number="32"><span class="co">#&gt;  8 Merc 240D         mpg    24.4</span></a>
 <a class="sourceLine" id="cb6-33" data-line-number="33"><span class="co">#&gt;  9 Merc 230          mpg    22.8</span></a>
 <a class="sourceLine" id="cb6-34" data-line-number="34"><span class="co">#&gt; 10 Merc 280          mpg    19.2</span></a>
-<a class="sourceLine" id="cb6-35" data-line-number="35"><span class="co">#&gt; # ... with 342 more rows</span></a>
+<a class="sourceLine" id="cb6-35" data-line-number="35"><span class="co">#&gt; # … with 342 more rows</span></a>
 <a class="sourceLine" id="cb6-36" data-line-number="36"></a>
 <a class="sourceLine" id="cb6-37" data-line-number="37"><span class="co"># and convert back to "wide" format</span></a>
 <a class="sourceLine" id="cb6-38" data-line-number="38">xx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(key, value)</a>
 <a class="sourceLine" id="cb6-39" data-line-number="39"><span class="co">#&gt; # A tibble: 32 x 12</span></a>
-<a class="sourceLine" id="cb6-40" data-line-number="40"><span class="co">#&gt;    name     am  carb   cyl  disp  drat  gear    hp   mpg  qsec    vs    wt</span></a>
-<a class="sourceLine" id="cb6-41" data-line-number="41"><span class="co">#&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb6-42" data-line-number="42"><span class="co">#&gt;  1 AMC …     0     2     8 304    3.15     3   150  15.2  17.3     0  3.44</span></a>
-<a class="sourceLine" id="cb6-43" data-line-number="43"><span class="co">#&gt;  2 Cadi…     0     4     8 472    2.93     3   205  10.4  18.0     0  5.25</span></a>
-<a class="sourceLine" id="cb6-44" data-line-number="44"><span class="co">#&gt;  3 Cama…     0     4     8 350    3.73     3   245  13.3  15.4     0  3.84</span></a>
-<a class="sourceLine" id="cb6-45" data-line-number="45"><span class="co">#&gt;  4 Chry…     0     4     8 440    3.23     3   230  14.7  17.4     0  5.34</span></a>
-<a class="sourceLine" id="cb6-46" data-line-number="46"><span class="co">#&gt;  5 Dats…     1     1     4 108    3.85     4    93  22.8  18.6     1  2.32</span></a>
-<a class="sourceLine" id="cb6-47" data-line-number="47"><span class="co">#&gt;  6 Dodg…     0     2     8 318    2.76     3   150  15.5  16.9     0  3.52</span></a>
-<a class="sourceLine" id="cb6-48" data-line-number="48"><span class="co">#&gt;  7 Dust…     0     4     8 360    3.21     3   245  14.3  15.8     0  3.57</span></a>
-<a class="sourceLine" id="cb6-49" data-line-number="49"><span class="co">#&gt;  8 Ferr…     1     6     6 145    3.62     5   175  19.7  15.5     0  2.77</span></a>
-<a class="sourceLine" id="cb6-50" data-line-number="50"><span class="co">#&gt;  9 Fiat…     1     1     4  78.7  4.08     4    66  32.4  19.5     1  2.2 </span></a>
-<a class="sourceLine" id="cb6-51" data-line-number="51"><span class="co">#&gt; 10 Fiat…     1     1     4  79    4.08     4    66  27.3  18.9     1  1.94</span></a>
-<a class="sourceLine" id="cb6-52" data-line-number="52"><span class="co">#&gt; # ... with 22 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-40" data-line-number="40"><span class="co">#&gt;    name           am  carb   cyl  disp  drat  gear    hp   mpg  qsec    vs    wt</span></a>
+<a class="sourceLine" id="cb6-41" data-line-number="41"><span class="co">#&gt;    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb6-42" data-line-number="42"><span class="co">#&gt;  1 AMC Javelin     0     2     8 304    3.15     3   150  15.2  17.3     0  3.44</span></a>
+<a class="sourceLine" id="cb6-43" data-line-number="43"><span class="co">#&gt;  2 Cadillac F…     0     4     8 472    2.93     3   205  10.4  18.0     0  5.25</span></a>
+<a class="sourceLine" id="cb6-44" data-line-number="44"><span class="co">#&gt;  3 Camaro Z28      0     4     8 350    3.73     3   245  13.3  15.4     0  3.84</span></a>
+<a class="sourceLine" id="cb6-45" data-line-number="45"><span class="co">#&gt;  4 Chrysler I…     0     4     8 440    3.23     3   230  14.7  17.4     0  5.34</span></a>
+<a class="sourceLine" id="cb6-46" data-line-number="46"><span class="co">#&gt;  5 Datsun 710      1     1     4 108    3.85     4    93  22.8  18.6     1  2.32</span></a>
+<a class="sourceLine" id="cb6-47" data-line-number="47"><span class="co">#&gt;  6 Dodge Chal…     0     2     8 318    2.76     3   150  15.5  16.9     0  3.52</span></a>
+<a class="sourceLine" id="cb6-48" data-line-number="48"><span class="co">#&gt;  7 Duster 360      0     4     8 360    3.21     3   245  14.3  15.8     0  3.57</span></a>
+<a class="sourceLine" id="cb6-49" data-line-number="49"><span class="co">#&gt;  8 Ferrari Di…     1     6     6 145    3.62     5   175  19.7  15.5     0  2.77</span></a>
+<a class="sourceLine" id="cb6-50" data-line-number="50"><span class="co">#&gt;  9 Fiat 128        1     1     4  78.7  4.08     4    66  32.4  19.5     1  2.2 </span></a>
+<a class="sourceLine" id="cb6-51" data-line-number="51"><span class="co">#&gt; 10 Fiat X1-9       1     1     4  79    4.08     4    66  27.3  18.9     1  1.94</span></a>
+<a class="sourceLine" id="cb6-52" data-line-number="52"><span class="co">#&gt; # … with 22 more rows</span></a></code></pre></div>
 </div>
 <div id="long-format" class="section level1">
 <h1 class="hasAnchor">
 <a href="#long-format" class="anchor"></a>Long format</h1>
 <p>Each form has its advantages. For example, long format makes it easy to calculate summaries:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">xx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(key) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(value))</a>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">xx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(key) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw"><a href="https://rdrr.io/r/stats/median.html">median</a></span>(value))</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; # A tibble: 11 x 2</span></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;    key   `median(value)`</span></a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;           &lt;dbl&gt;</span></a>
@@ -389,12 +358,12 @@
 <h1 class="hasAnchor">
 <a href="#wide-format" class="anchor"></a>Wide format</h1>
 <p>And wide format is useful for plotting.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggrepel)</a>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggrepel)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">42</span>)</a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(mtcars_tbl) <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(hp, mpg, <span class="dt">size =</span> <span class="dv">5</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggrepel/topics/geom_text_repel">geom_label_repel</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(hp, mpg, <span class="dt">fill =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(cyl), <span class="dt">label =</span> name))</a></code></pre></div>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_label_repel</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(hp, mpg, <span class="dt">fill =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(cyl), <span class="dt">label =</span> name))</a></code></pre></div>
 <p><img src="class-1_files/figure-html/plot_label-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div id="exercise" class="section level1">
@@ -408,7 +377,7 @@
 </h1>
 <p><code>separate</code> takes a column containing multiple variables on input and returns multiple columns, each with a new variable. For example, a column with year/month/day information can be separated into invidual columns.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">ys &lt;-<span class="st"> </span><span class="dv">1999</span><span class="op">:</span><span class="dv">2002</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">ms &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'Jan'</span>, <span class="st">'Feb'</span>, <span class="st">'Mar'</span>)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">ms &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Jan'</span>, <span class="st">'Feb'</span>, <span class="st">'Mar'</span>)</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3">ds &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
 <a class="sourceLine" id="cb9-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb9-5" data-line-number="5">dates &lt;-<span class="st"> </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/expand.html">crossing</a></span>(ys, ms, ds) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unite</span>(date, ys<span class="op">:</span>ds, <span class="dt">sep =</span> <span class="st">'-'</span>)</a></code></pre></div>
@@ -431,10 +400,10 @@
 <a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co">#&gt;  8 1999-Feb-8 </span></a>
 <a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co">#&gt;  9 1999-Feb-9 </span></a>
 <a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co">#&gt; 10 1999-Feb-10</span></a>
-<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">#&gt; # ... with 110 more rows</span></a>
+<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">#&gt; # … with 110 more rows</span></a>
 <a class="sourceLine" id="cb10-16" data-line-number="16"></a>
 <a class="sourceLine" id="cb10-17" data-line-number="17"><span class="co"># separate is the inverse of unite</span></a>
-<a class="sourceLine" id="cb10-18" data-line-number="18">dates <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(date, <span class="dt">into =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'year'</span>, <span class="st">'month'</span>, <span class="st">'day'</span>), <span class="dt">sep =</span> <span class="st">'-'</span>)</a>
+<a class="sourceLine" id="cb10-18" data-line-number="18">dates <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(date, <span class="dt">into =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'year'</span>, <span class="st">'month'</span>, <span class="st">'day'</span>), <span class="dt">sep =</span> <span class="st">'-'</span>)</a>
 <a class="sourceLine" id="cb10-19" data-line-number="19"><span class="co">#&gt; # A tibble: 120 x 3</span></a>
 <a class="sourceLine" id="cb10-20" data-line-number="20"><span class="co">#&gt;    year  month day  </span></a>
 <a class="sourceLine" id="cb10-21" data-line-number="21"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span></a>
@@ -448,7 +417,7 @@
 <a class="sourceLine" id="cb10-29" data-line-number="29"><span class="co">#&gt;  8 1999  Feb   8    </span></a>
 <a class="sourceLine" id="cb10-30" data-line-number="30"><span class="co">#&gt;  9 1999  Feb   9    </span></a>
 <a class="sourceLine" id="cb10-31" data-line-number="31"><span class="co">#&gt; 10 1999  Feb   10   </span></a>
-<a class="sourceLine" id="cb10-32" data-line-number="32"><span class="co">#&gt; # ... with 110 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb10-32" data-line-number="32"><span class="co">#&gt; # … with 110 more rows</span></a></code></pre></div>
 <p>The <code>sep</code> argument can take:</p>
 <ul>
 <li>a character (split <code>rep_value</code> using <code>sep = '_'</code> into <code>rep</code> and <code>value</code>)</li>
@@ -461,10 +430,10 @@
 <a href="#crossing-and-complete" class="anchor"></a><code>crossing</code> and <code>complete</code>
 </h1>
 <p><code>crossing</code> is useful for generating combinations of variables in tibble format. For example, use <code>crossing</code> to generate combinations of experimental varaibles including sample names, gene names, reaction conditions, and replicates.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">genotype &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'wt'</span>, <span class="st">'mut'</span>)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">gene &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'IFN'</span>, <span class="st">'ACTIN'</span>)</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">time &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="dv">24</span>, <span class="dv">48</span>)</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">rt &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'+'</span>, <span class="st">'-'</span>) <span class="co"># reverse transcriptase added?</span></a>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">genotype &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'wt'</span>, <span class="st">'mut'</span>)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">gene &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'IFN'</span>, <span class="st">'ACTIN'</span>)</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">time &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="dv">24</span>, <span class="dv">48</span>)</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">rt &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'+'</span>, <span class="st">'-'</span>) <span class="co"># reverse transcriptase added?</span></a>
 <a class="sourceLine" id="cb11-5" data-line-number="5">rep &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span></a>
 <a class="sourceLine" id="cb11-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb11-7" data-line-number="7">samples &lt;-<span class="st"> </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/expand.html">crossing</a></span>(genotype, gene, time, rep, rt)</a>
@@ -483,7 +452,7 @@
 <a class="sourceLine" id="cb11-20" data-line-number="20"><span class="co">#&gt;  8 mut      ACTIN    12     1 +    </span></a>
 <a class="sourceLine" id="cb11-21" data-line-number="21"><span class="co">#&gt;  9 mut      ACTIN    12     2 -    </span></a>
 <a class="sourceLine" id="cb11-22" data-line-number="22"><span class="co">#&gt; 10 mut      ACTIN    12     2 +    </span></a>
-<a class="sourceLine" id="cb11-23" data-line-number="23"><span class="co">#&gt; # ... with 86 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb11-23" data-line-number="23"><span class="co">#&gt; # … with 86 more rows</span></a></code></pre></div>
 </div>
 <div id="data-in-the-96-well-plate-format-" class="section level1">
 <h1 class="hasAnchor">
@@ -502,17 +471,17 @@
 <pre><code>#&gt; # A tibble: 24 x 2
 #&gt;    sample.name value
 #&gt;    &lt;chr&gt;       &lt;int&gt;
-#&gt;  1 MT-t0-1        81
-#&gt;  2 MT-t0-2        35
-#&gt;  3 MT-t0-3        89
-#&gt;  4 MT-t24-1       32
-#&gt;  5 MT-t24-2       24
-#&gt;  6 MT-t24-3       62
+#&gt;  1 MT-t0-1        71
+#&gt;  2 MT-t0-2        77
+#&gt;  3 MT-t0-3        51
+#&gt;  4 MT-t24-1       88
+#&gt;  5 MT-t24-2       50
+#&gt;  6 MT-t24-3       90
 #&gt;  7 MT-t4-1        67
-#&gt;  8 MT-t4-2        14
-#&gt;  9 MT-t4-3        49
-#&gt; 10 MT-t8-1        94
-#&gt; # ... with 14 more rows</code></pre>
+#&gt;  8 MT-t4-2         9
+#&gt;  9 MT-t4-3        84
+#&gt; 10 MT-t8-1        29
+#&gt; # … with 14 more rows</code></pre>
 </div>
 <div id="extracting-sample-names" class="section level1">
 <h1 class="hasAnchor">
@@ -521,7 +490,7 @@
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">sample_info &lt;-<span class="st"> </span>samples <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span>(</a>
 <a class="sourceLine" id="cb13-3" data-line-number="3">    sample.name,</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">    <span class="dt">into =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'sample'</span>, <span class="st">'hour'</span>, <span class="st">'rep'</span>),</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">    <span class="dt">into =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'sample'</span>, <span class="st">'hour'</span>, <span class="st">'rep'</span>),</a>
 <a class="sourceLine" id="cb13-5" data-line-number="5">    <span class="dt">sep =</span> <span class="st">"-"</span></a>
 <a class="sourceLine" id="cb13-6" data-line-number="6">  )</a>
 <a class="sourceLine" id="cb13-7" data-line-number="7"></a>
@@ -529,82 +498,80 @@
 <a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">#&gt; # A tibble: 24 x 4</span></a>
 <a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt;    sample hour  rep   value</span></a>
 <a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">#&gt;  1 MT     t0    1        81</span></a>
-<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">#&gt;  2 MT     t0    2        35</span></a>
-<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">#&gt;  3 MT     t0    3        89</span></a>
-<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt;  4 MT     t24   1        32</span></a>
-<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">#&gt;  5 MT     t24   2        24</span></a>
-<a class="sourceLine" id="cb13-17" data-line-number="17"><span class="co">#&gt;  6 MT     t24   3        62</span></a>
+<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">#&gt;  1 MT     t0    1        71</span></a>
+<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">#&gt;  2 MT     t0    2        77</span></a>
+<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">#&gt;  3 MT     t0    3        51</span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt;  4 MT     t24   1        88</span></a>
+<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">#&gt;  5 MT     t24   2        50</span></a>
+<a class="sourceLine" id="cb13-17" data-line-number="17"><span class="co">#&gt;  6 MT     t24   3        90</span></a>
 <a class="sourceLine" id="cb13-18" data-line-number="18"><span class="co">#&gt;  7 MT     t4    1        67</span></a>
-<a class="sourceLine" id="cb13-19" data-line-number="19"><span class="co">#&gt;  8 MT     t4    2        14</span></a>
-<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="co">#&gt;  9 MT     t4    3        49</span></a>
-<a class="sourceLine" id="cb13-21" data-line-number="21"><span class="co">#&gt; 10 MT     t8    1        94</span></a>
-<a class="sourceLine" id="cb13-22" data-line-number="22"><span class="co">#&gt; # ... with 14 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb13-19" data-line-number="19"><span class="co">#&gt;  8 MT     t4    2         9</span></a>
+<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="co">#&gt;  9 MT     t4    3        84</span></a>
+<a class="sourceLine" id="cb13-21" data-line-number="21"><span class="co">#&gt; 10 MT     t8    1        29</span></a>
+<a class="sourceLine" id="cb13-22" data-line-number="22"><span class="co">#&gt; # … with 14 more rows</span></a></code></pre></div>
 </div>
 <div id="data-manipulation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#data-manipulation" class="anchor"></a>Data manipulation</h1>
 <p>Now we can use <code>dplyr</code> and <code>tidyr</code> functions to manipulate the data.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># calculate summary statistics</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample, hour) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(value))</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample, hour) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(value))</a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt; # A tibble: 8 x 3</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; # Groups:   sample [?]</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; # Groups:   sample [2]</span></a>
 <a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt;   sample hour  `mean(value)`</span></a>
 <a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt;         &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt; 1 MT     t0             68.3</span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; 2 MT     t24            39.3</span></a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; 3 MT     t4             43.3</span></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; 4 MT     t8             51.3</span></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt; 5 WT     t0             52.7</span></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; 6 WT     t24            76.3</span></a>
-<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt; 7 WT     t4             55  </span></a>
-<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt; 8 WT     t8             42.3</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt; 1 MT     t0             66.3</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; 2 MT     t24            76  </span></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; 3 MT     t4             53.3</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; 4 MT     t8             57.3</span></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt; 5 WT     t0             28  </span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; 6 WT     t24            69.7</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt; 7 WT     t4             51  </span></a>
+<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt; 8 WT     t8             35.7</span></a>
 <a class="sourceLine" id="cb14-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co"># subtract a background value. N.B.: rearranging the table makes this calculation easy.</span></a>
 <a class="sourceLine" id="cb14-17" data-line-number="17">sample_info <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(hour, value) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">t24_norm =</span> t24 <span class="op">-</span><span class="st"> </span>t0)</a>
 <a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">#&gt; # A tibble: 6 x 7</span></a>
 <a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">#&gt;   sample rep      t0   t24    t4    t8 t24_norm</span></a>
 <a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="co">#&gt; 1 MT     1        81    32    67    94      -49</span></a>
-<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="co">#&gt; 2 MT     2        35    24    14    27      -11</span></a>
-<a class="sourceLine" id="cb14-23" data-line-number="23"><span class="co">#&gt; 3 MT     3        89    62    49    33      -27</span></a>
-<a class="sourceLine" id="cb14-24" data-line-number="24"><span class="co">#&gt; 4 WT     1        97    79     3    72      -18</span></a>
-<a class="sourceLine" id="cb14-25" data-line-number="25"><span class="co">#&gt; 5 WT     2        45    80    97    12       35</span></a>
-<a class="sourceLine" id="cb14-26" data-line-number="26"><span class="co">#&gt; 6 WT     3        16    70    65    43       54</span></a></code></pre></div>
+<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="co">#&gt; 1 MT     1        71    88    67    29       17</span></a>
+<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="co">#&gt; 2 MT     2        77    50     9    78      -27</span></a>
+<a class="sourceLine" id="cb14-23" data-line-number="23"><span class="co">#&gt; 3 MT     3        51    90    84    65       39</span></a>
+<a class="sourceLine" id="cb14-24" data-line-number="24"><span class="co">#&gt; 4 WT     1        53    66    60    22       13</span></a>
+<a class="sourceLine" id="cb14-25" data-line-number="25"><span class="co">#&gt; 5 WT     2         7    82    57    32       75</span></a>
+<a class="sourceLine" id="cb14-26" data-line-number="26"><span class="co">#&gt; 6 WT     3        24    61    36    53       37</span></a></code></pre></div>
 </div>
 <div id="qpcr-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#qpcr-data" class="anchor"></a>qPCR data</h1>
 <p>The class library provides two related tibbles that describe a simulated qPCR experiment called <code>qpcr_names</code> and <code>qpcr_data</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(pbda)</a>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pbda)</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb15-3" data-line-number="3">qpcr_names</a>
 <a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt; # A tibble: 8 x 13</span></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt;   row   `1`    `2`   `3`   `4`   `5`   `6`   `7`   `8`   `9`   `10`  `11` </span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span></a>
-<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt; 1 A     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_0… wt_1… wt_2… wt_2…</span></a>
-<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt; 2 B     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_0… wt_1… wt_2… wt_2…</span></a>
-<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt; 3 C     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_0… wt_1… wt_2… wt_2…</span></a>
-<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">#&gt; 4 D     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_0… wt_1… wt_2… wt_2…</span></a>
-<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt; 5 E     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_1… wt_1… wt_2… wt_4…</span></a>
-<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; 6 F     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_1… wt_1… wt_2… wt_4…</span></a>
-<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; 7 G     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_1… wt_1… wt_2… wt_4…</span></a>
-<a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt; 8 H     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_1… wt_1… wt_2… wt_4…</span></a>
-<a class="sourceLine" id="cb15-15" data-line-number="15"><span class="co">#&gt; # ... with 1 more variable: `12` &lt;chr&gt;</span></a>
-<a class="sourceLine" id="cb15-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb15-17" data-line-number="17">qpcr_data</a>
-<a class="sourceLine" id="cb15-18" data-line-number="18"><span class="co">#&gt; # A tibble: 8 x 13</span></a>
-<a class="sourceLine" id="cb15-19" data-line-number="19"><span class="co">#&gt;   row     `1`   `2`   `3`   `4`   `5`   `6`   `7`   `8`   `9`  `10`  `11`</span></a>
-<a class="sourceLine" id="cb15-20" data-line-number="20"><span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb15-21" data-line-number="21"><span class="co">#&gt; 1 A       2.6  10.5   9.2  20    146.  83.6   2.4  10.5  10.4  19    146.</span></a>
-<a class="sourceLine" id="cb15-22" data-line-number="22"><span class="co">#&gt; 2 B       0     0     0     0      0    0     0     0     0     0      0 </span></a>
-<a class="sourceLine" id="cb15-23" data-line-number="23"><span class="co">#&gt; 3 C       1.6  16.5  79.5  20    146. 680.    1.2  12    78    19.2  144 </span></a>
-<a class="sourceLine" id="cb15-24" data-line-number="24"><span class="co">#&gt; 4 D       0     0     0     0      0    0     0     0     0     0      0 </span></a>
-<a class="sourceLine" id="cb15-25" data-line-number="25"><span class="co">#&gt; 5 E       2.8  11    79.5  19.8  105  663     2     9    69    19.8   71 </span></a>
-<a class="sourceLine" id="cb15-26" data-line-number="26"><span class="co">#&gt; 6 F       0     0     0     0      0    0     0     0     0     0      0 </span></a>
-<a class="sourceLine" id="cb15-27" data-line-number="27"><span class="co">#&gt; 7 G      12     9.8  78   144    116  774    22.5  11    73.5 146.   118.</span></a>
-<a class="sourceLine" id="cb15-28" data-line-number="28"><span class="co">#&gt; 8 H       0     0     0     0      0    0     0     0     0     0      0 </span></a>
-<a class="sourceLine" id="cb15-29" data-line-number="29"><span class="co">#&gt; # ... with 1 more variable: `12` &lt;dbl&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt;   row   `1`    `2`   `3`   `4`   `5`   `6`   `7`   `8`   `9`   `10`  `11`  `12` </span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt; 1 A     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_0… wt_1… wt_2… wt_2… wt_4…</span></a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt; 2 B     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_0… wt_1… wt_2… wt_2… wt_4…</span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt; 3 C     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_0… wt_1… wt_2… wt_2… wt_4…</span></a>
+<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">#&gt; 4 D     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_0… wt_1… wt_2… wt_2… wt_4…</span></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt; 5 E     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_1… wt_1… wt_2… wt_4… wt_4…</span></a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; 6 F     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_1… wt_1… wt_2… wt_4… wt_4…</span></a>
+<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; 7 G     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_1… wt_1… wt_2… wt_4… wt_4…</span></a>
+<a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt; 8 H     mut_0… mut_… mut_… mut_… mut_… mut_… wt_0… wt_1… wt_1… wt_2… wt_4… wt_4…</span></a>
+<a class="sourceLine" id="cb15-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb15-16" data-line-number="16">qpcr_data</a>
+<a class="sourceLine" id="cb15-17" data-line-number="17"><span class="co">#&gt; # A tibble: 8 x 13</span></a>
+<a class="sourceLine" id="cb15-18" data-line-number="18"><span class="co">#&gt;   row     `1`   `2`   `3`   `4`   `5`   `6`   `7`   `8`   `9`  `10`  `11`  `12`</span></a>
+<a class="sourceLine" id="cb15-19" data-line-number="19"><span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb15-20" data-line-number="20"><span class="co">#&gt; 1 A       2.6  10.5   9.2  20    146.  83.6   2.4  10.5  10.4  19    146.  113 </span></a>
+<a class="sourceLine" id="cb15-21" data-line-number="21"><span class="co">#&gt; 2 B       0     0     0     0      0    0     0     0     0     0      0     0 </span></a>
+<a class="sourceLine" id="cb15-22" data-line-number="22"><span class="co">#&gt; 3 C       1.6  16.5  79.5  20    146. 680.    1.2  12    78    19.2  144   730.</span></a>
+<a class="sourceLine" id="cb15-23" data-line-number="23"><span class="co">#&gt; 4 D       0     0     0     0      0    0     0     0     0     0      0     0 </span></a>
+<a class="sourceLine" id="cb15-24" data-line-number="24"><span class="co">#&gt; 5 E       2.8  11    79.5  19.8  105  663     2     9    69    19.8   71   716.</span></a>
+<a class="sourceLine" id="cb15-25" data-line-number="25"><span class="co">#&gt; 6 F       0     0     0     0      0    0     0     0     0     0      0     0 </span></a>
+<a class="sourceLine" id="cb15-26" data-line-number="26"><span class="co">#&gt; 7 G      12     9.8  78   144    116  774    22.5  11    73.5 146.   118.  892.</span></a>
+<a class="sourceLine" id="cb15-27" data-line-number="27"><span class="co">#&gt; 8 H       0     0     0     0      0    0     0     0     0     0      0     0</span></a></code></pre></div>
 <p>We will use tidying concepts to prepare this data for efficient analysis and visualization.</p>
 </div>
 <div id="qpcr-data-tidying" class="section level1">
@@ -626,7 +593,7 @@
 #&gt;  8 H     1       0  
 #&gt;  9 A     2      10.5
 #&gt; 10 B     2       0  
-#&gt; # ... with 86 more rows</code></pre>
+#&gt; # … with 86 more rows</code></pre>
 </div>
 <div id="sample-names-1" class="section level1">
 <h1 class="hasAnchor">
@@ -647,7 +614,7 @@
 #&gt;  8 H     1     mut    0     IFN   -     1    
 #&gt;  9 A     2     mut    0     IFN   +     2    
 #&gt; 10 B     2     mut    0     IFN   -     2    
-#&gt; # ... with 86 more rows</code></pre>
+#&gt; # … with 86 more rows</code></pre>
 </div>
 <div id="data-joining" class="section level1">
 <h1 class="hasAnchor">
@@ -669,7 +636,7 @@
 #&gt;  8 H     1     mut    0     IFN   -     1       0  
 #&gt;  9 A     2     mut    0     IFN   +     2      10.5
 #&gt; 10 B     2     mut    0     IFN   -     2       0  
-#&gt; # ... with 86 more rows</code></pre>
+#&gt; # … with 86 more rows</code></pre>
 </div>
 <div id="statistical-summary" class="section level1">
 <h1 class="hasAnchor">
@@ -678,11 +645,11 @@
 <li>Calculate summary statistics for each gene, cell and time point across replicates.</li>
 </ul>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">qpcr_tidy <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(rt <span class="op">==</span><span class="st"> "+"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(rt <span class="op">==</span><span class="st"> "+"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(sample, gene, time) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_exp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(exp), <span class="dt">var_exp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor">var</a></span>(exp))</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_exp =</span> <span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(exp), <span class="dt">var_exp =</span> <span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(exp))</a>
 <a class="sourceLine" id="cb19-5" data-line-number="5"><span class="co">#&gt; # A tibble: 16 x 5</span></a>
-<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="co">#&gt; # Groups:   sample, gene [?]</span></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="co">#&gt; # Groups:   sample, gene [4]</span></a>
 <a class="sourceLine" id="cb19-7" data-line-number="7"><span class="co">#&gt;    sample gene  time  mean_exp   var_exp</span></a>
 <a class="sourceLine" id="cb19-8" data-line-number="8"><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></a>
 <a class="sourceLine" id="cb19-9" data-line-number="9"><span class="co">#&gt;  1 mut    ACTIN 0         2.33    0.413 </span></a>
@@ -731,9 +698,9 @@
 #&gt;  8 Merc 240D         mpg    24.4
 #&gt;  9 Merc 230          mpg    22.8
 #&gt; 10 Merc 280          mpg    19.2
-#&gt; # ... with 342 more rows</code></pre>
+#&gt; # … with 342 more rows</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li><p>For each car in the tidy <code>mtcars</code> data set, calculate the mean (<code><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean()</a></code>) and variance (<code><a href="https://www.rdocumentation.org/packages/stats/topics/cor">var()</a></code>) for each variable. Try using <code>summarize()</code>, and <code>summarize_at()</code> or <code>summarize_all()</code>.</p></li>
+<li><p>For each car in the tidy <code>mtcars</code> data set, calculate the mean (<code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>) and variance (<code><a href="https://rdrr.io/r/stats/cor.html">var()</a></code>) for each variable. Try using <code>summarize()</code>, and <code>summarize_at()</code> or <code>summarize_all()</code>.</p></li>
 <li><p>Plot <code>mpg</code> vs <code>cyl</code> for the <code>mtcars</code> data set. Which format should you use? The original data set, or the tidied one? Why?</p></li>
 <li><p>Using the provided <code>qpcr</code> data, plot the changes in gene expression over time. Use colors to represent genotypes and facets for the different genes. If that’s too easy, add error bars (<code><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_errorbar()</a></code>) and connect each point with a line (<code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code>).</p></li>
 </ol>
@@ -774,6 +741,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -816,17 +784,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
-  <p>Developed by <a href="https://hesselberthlab.org">Jay Hesselberth</a>, Austin Gillen, Kent Riemondy, Rui Fu.</p>
+  <p>Developed by <a href="https://hesselberthlab.org">Jay Hesselberth</a>, Austin Gillen, Kent Riemondy, Rui Fu, Ryan Sheridan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

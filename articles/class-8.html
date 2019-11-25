@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Class 8: Exploring data with PCA • pbda</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Class 8: Exploring data with PCA">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pbda</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -55,50 +56,17 @@
     <li>
       <a href="../articles/class-2.html">Class 2: Analyzing qPCR data</a>
     </li>
-    <li>
-      <a href="../articles/class-3.html">Class 3: Exploring a biological data set</a>
-    </li>
-    <li>
-      <a href="../articles/class-4.html">Class 4: RNA-seq Analysis</a>
-    </li>
-    <li>
-      <a href="../articles/class-5.html">Class 5: Gene List Handling</a>
-    </li>
-    <li>
-      <a href="../articles/class-6.html">Class 6: Single Cell RNA-seq</a>
-    </li>
-    <li>
-      <a href="../articles/class-7.html">Class 7: Heatmaps and Clustering</a>
-    </li>
-    <li>
-      <a href="../articles/class-8.html">Class 8: Exploring data with PCA</a>
-    </li>
-    <li>
-      <a href="../articles/class-9.html">Class 9: Tips, Data I/O, and Resources</a>
-    </li>
     <li class="divider">
     <li>
       <a href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-1.html">Problem Set 1</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-2.html">Problem Set 2</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-3.html">Problem Set 3</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-4.html">Problem Set 4</a>
     </li>
   </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/IDPT7810/practical-data-analysis">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/rnabioco/practical-data-analysis">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -111,15 +79,16 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Class 8: Exploring data with PCA</h1>
                         <h4 class="author">Kent Riemondy</h4>
             
-            <h4 class="date">2018-12-15</h4>
+            <h4 class="date">2019-11-25</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/IDPT7810/practical-data-analysis/blob/master/vignettes/class-8.Rmd"><code>vignettes/class-8.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rnabioco/practical-data-analysis/blob/master/vignettes/class-8.Rmd"><code>vignettes/class-8.Rmd</code></a></small>
       <div class="hidden name"><code>class-8.Rmd</code></div>
 
     </div>
@@ -127,11 +96,11 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#devtools::install_github("IDPT7810/practical-data-analysis")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ComplexHeatmap)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggrepel)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(pbda)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(cowplot)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ComplexHeatmap)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggrepel)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pbda)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(cowplot)</a></code></pre></div>
 <p>Goals: Use PCA to identify key sources of variation in a large dataset.</p>
 <div id="pca" class="section level2">
 <h2 class="hasAnchor">
@@ -155,14 +124,14 @@
 <p>Consider the following experiment where we measure gene expression for 2 genes in 100 samples. Because there are only 2 genes, we can visualize all of the data in a 2D scatterplot.</p>
 <p>First, let’s generate some example data.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># generate some correlated variables, scale, and make tidy </span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">sim &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/MASS/topics/mvrnorm">mvrnorm</a></span>(<span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">                     <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">                     <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="fl">0.95</span>, <span class="fl">0.95</span>, <span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">sim &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">mvrnorm</a></span>(<span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                     <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">                     <span class="kw"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="fl">0.95</span>, <span class="fl">0.95</span>, <span class="dv">1</span>),</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">                     <span class="dv">2</span>,</a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">                     <span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="st">"id"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"><span class="st">  </span><span class="kw">arrange</span>(V1, V2) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">gene_1 =</span> V1, <span class="dt">gene_2 =</span> V2) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -170,24 +139,24 @@
 <a class="sourceLine" id="cb2-14" data-line-number="14"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="kw">row_number</span>())</a>
 <a class="sourceLine" id="cb2-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co"># select points to label for visualization</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">max_min_points &lt;-<span class="st"> </span><span class="kw">slice</span>(sim, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">95</span><span class="op">:</span><span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">max_min_points &lt;-<span class="st"> </span><span class="kw">slice</span>(sim, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">95</span><span class="op">:</span><span class="dv">100</span>))</a>
 <a class="sourceLine" id="cb2-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co"># make a plot</span></a>
 <a class="sourceLine" id="cb2-20" data-line-number="20">og_plt &lt;-<span class="st"> </span><span class="kw">ggplot</span>(sim, <span class="kw">aes</span>(gene_<span class="dv">1</span>, gene_<span class="dv">2</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-21" data-line-number="21"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggrepel/topics/geom_text_repel">geom_text_repel</a></span>(<span class="dt">data =</span> max_min_points, </a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_text_repel</a></span>(<span class="dt">data =</span> max_min_points, </a>
 <a class="sourceLine" id="cb2-23" data-line-number="23">                  <span class="kw">aes</span>(<span class="dt">label =</span> id)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-24" data-line-number="24"><span class="st">  </span><span class="co"># scale y axis to same as x</span></a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot.window">ylim</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">min</a></span>(sim<span class="op">$</span>gene_<span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb2-26" data-line-number="26">       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">max</a></span>(sim<span class="op">$</span>gene_<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/graphics/plot.window.html">ylim</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(sim<span class="op">$</span>gene_<span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">       <span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(sim<span class="op">$</span>gene_<span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb2-27" data-line-number="27"></a>
 <a class="sourceLine" id="cb2-28" data-line-number="28">og_plt</a></code></pre></div>
 <p><img src="class-8_files/figure-html/pca-intro-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>Next we’ll run PCA on this simulated data using the <code>prcomp</code> function.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># run pca</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">pc &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/prcomp">prcomp</a></span>(sim[, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>)], <span class="dt">center =</span> <span class="ot">FALSE</span>, <span class="dt">scale. =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb3-2" data-line-number="2">pc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/prcomp.html">prcomp</a></span>(sim[, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>)], <span class="dt">center =</span> <span class="ot">FALSE</span>, <span class="dt">scale. =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><code>prcomp</code> returns an object with a few slots. The <code>x</code> slot contains the principal componenents in a matrix.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(pc)</a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(pc)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; [1] "sdev"     "rotation" "center"   "scale"    "x"</span></a></code></pre></div>
 <p>For ease of plotting I will define a function to make a plot.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
@@ -198,27 +167,27 @@
 <a class="sourceLine" id="cb5-6" data-line-number="6">  </a>
 <a class="sourceLine" id="cb5-7" data-line-number="7">  <span class="co">#tidy the pc matrix</span></a>
 <a class="sourceLine" id="cb5-8" data-line-number="8">  pc_x &lt;-<span class="st"> </span>pca_obj<span class="op">$</span>x <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-10" data-line-number="10"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">id =</span> input_data<span class="op">$</span>id) </a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"> </a>
 <a class="sourceLine" id="cb5-12" data-line-number="12">  <span class="co"># select points to label</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">  max_min_points &lt;-<span class="st"> </span><span class="kw">slice</span>(pc_x, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">95</span><span class="op">:</span><span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">  max_min_points &lt;-<span class="st"> </span><span class="kw">slice</span>(pc_x, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">95</span><span class="op">:</span><span class="dv">100</span>))</a>
 <a class="sourceLine" id="cb5-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb5-15" data-line-number="15">  <span class="co"># compute variance explained</span></a>
 <a class="sourceLine" id="cb5-16" data-line-number="16">  percent_var &lt;-<span class="st"> </span>(<span class="dv">100</span> <span class="op">*</span><span class="st"> </span>pca_obj<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="st">                    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(pca_obj<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span>))  <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">signif</a></span>(<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="st">                    </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(pca_obj<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span>))  <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/Round.html">signif</a></span>(<span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb5-19" data-line-number="19"></a>
 <a class="sourceLine" id="cb5-20" data-line-number="20">  <span class="co">#plot the data</span></a>
 <a class="sourceLine" id="cb5-21" data-line-number="21">  pca_plt &lt;-<span class="st"> </span><span class="kw">ggplot</span>(pc_x, <span class="kw">aes</span>(PC1, PC2)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb5-22" data-line-number="22"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggrepel/topics/geom_text_repel">geom_text_repel</a></span>(<span class="dt">data =</span> max_min_points, </a>
+<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_text_repel</a></span>(<span class="dt">data =</span> max_min_points, </a>
 <a class="sourceLine" id="cb5-24" data-line-number="24">                  <span class="kw">aes</span>(<span class="dt">label =</span> id)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb5-25" data-line-number="25"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">str_c</span>(<span class="st">"PC1 "</span>, percent_var[<span class="dv">1</span>], <span class="st">"%"</span>),</a>
 <a class="sourceLine" id="cb5-26" data-line-number="26">         <span class="dt">y =</span> <span class="kw">str_c</span>(<span class="st">"PC2 "</span>, percent_var[<span class="dv">2</span>], <span class="st">"%"</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb5-27" data-line-number="27"><span class="st">    </span><span class="co"># make axes symmetric</span></a>
-<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot.window">ylim</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">min</a></span>(pc_x<span class="op">$</span>PC1), </a>
-<a class="sourceLine" id="cb5-29" data-line-number="29">           <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">max</a></span>(pc_x<span class="op">$</span>PC1)))</a>
+<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/graphics/plot.window.html">ylim</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(pc_x<span class="op">$</span>PC1), </a>
+<a class="sourceLine" id="cb5-29" data-line-number="29">           <span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(pc_x<span class="op">$</span>PC1)))</a>
 <a class="sourceLine" id="cb5-30" data-line-number="30">  </a>
 <a class="sourceLine" id="cb5-31" data-line-number="31">  pca_plt </a>
 <a class="sourceLine" id="cb5-32" data-line-number="32">}</a></code></pre></div>
@@ -228,7 +197,7 @@
 <a class="sourceLine" id="cb6-3" data-line-number="3">pca_plt</a></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-4-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>As we can see, PCA has refactored the data such that PC1 now represents a vector through the data that captures the most variance. The second PC, now represents a distinct type of variance represented as variance perpendicular to the y = x line.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/cowplot/topics/plot_grid">plot_grid</a></span>(og_plt, pca_plt)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/plot_grid.html">plot_grid</a></span>(og_plt, pca_plt)</a></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>Another way to demonstrate what PCA is doing is to show the information captured by each PC.</p>
 <p><img src="img/pca.png" width="700px" style="display: block; margin: auto;"></p>
@@ -239,16 +208,16 @@
 <p>What if we had more dimensions that are just noise? How does this impact PCA?</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># generate a matrix of random numbers </span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co"># drawn from a normal dist. to simulate noise</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">20181214</span>)</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">more_genes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="fl">0.25</span>), </a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">20181214</span>)</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">more_genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="fl">0.25</span>), </a>
 <a class="sourceLine" id="cb8-5" data-line-number="5">                     <span class="dt">nrow =</span> <span class="dv">100</span>, <span class="dt">ncol =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb8-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co"># add column names</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(more_genes) &lt;-<span class="st"> </span><span class="kw">str_c</span>(<span class="st">"gene_noise_"</span>,</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">                              <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(more_genes))</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(more_genes) &lt;-<span class="st"> </span><span class="kw">str_c</span>(<span class="st">"gene_noise_"</span>,</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">                              <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(more_genes))</a>
 <a class="sourceLine" id="cb8-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co"># add the matrix to the simulation data_frame by column</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">sim_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(sim, more_genes) </a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">sim_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(sim, more_genes) </a>
 <a class="sourceLine" id="cb8-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb8-14" data-line-number="14">sim_<span class="dv">2</span>[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>]</a>
 <a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt;   id    gene_1    gene_2 gene_noise_1 gene_noise_2 gene_noise_3</span></a>
@@ -257,20 +226,20 @@
 <a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; 3  3 -2.278693 -2.375272  0.131539067  -0.42624492   0.28643147</span></a>
 <a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; 4  4 -2.167279 -2.535480  0.098178061  -0.20509451  -0.06692551</span></a>
 <a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; 5  5 -1.528019 -1.310610  0.007170167   0.04159706   0.03533156</span></a></code></pre></div>
-<p>There are a few base R plotting functions that are very useful for exploratory analysis. For example the <code><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot()</a></code> function can be used to quickly generate many exploratory plots. Often I use these for interactive work, then use ggplot to make focused publication quality figures.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(sim_<span class="dv">2</span><span class="op">$</span>gene_<span class="dv">1</span>, sim_<span class="dv">2</span><span class="op">$</span>gene_<span class="dv">2</span>)</a></code></pre></div>
+<p>There are a few base R plotting functions that are very useful for exploratory analysis. For example the <code><a href="https://rdrr.io/r/graphics/plot.html">plot()</a></code> function can be used to quickly generate many exploratory plots. Often I use these for interactive work, then use ggplot to make focused publication quality figures.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(sim_<span class="dv">2</span><span class="op">$</span>gene_<span class="dv">1</span>, sim_<span class="dv">2</span><span class="op">$</span>gene_<span class="dv">2</span>)</a></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-8-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>By default if you supply <code>plot</code> with a dataframe with only numeric values, it will plot all of the cross comparisons, which is useful in this example to quickly highlight that <code>gene_1</code> and <code>gene_2</code> are the only correlated or interesting variables.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(sim_<span class="dv">2</span>[, <span class="dv">2</span><span class="op">:</span><span class="dv">7</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(sim_<span class="dv">2</span>[, <span class="dv">2</span><span class="op">:</span><span class="dv">7</span>])</a></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>Now if we had 2000 dimensions (i.e. genes) we couldn’t resonably investigate all of the scatterplots for each gene compared to each other gene. Even with a small real dataset with 10 genes, it’s hard to identify important relationships.</p>
 <p>Next we’ll run PCA on this new data</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">pc2 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/prcomp">prcomp</a></span>(sim_<span class="dv">2</span>[, <span class="dv">2</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(sim_<span class="dv">2</span>)], </a>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">pc2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/prcomp.html">prcomp</a></span>(sim_<span class="dv">2</span>[, <span class="dv">2</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(sim_<span class="dv">2</span>)], </a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">              <span class="dt">center =</span> <span class="ot">FALSE</span>, </a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">              <span class="dt">scale. =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">pc2_plt &lt;-<span class="st"> </span><span class="kw">plot_labeled_pca</span>(sim_<span class="dv">2</span>, pc2) </a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/cowplot/topics/plot_grid">plot_grid</a></span>(og_plt, pc2_plt)</a></code></pre></div>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/plot_grid.html">plot_grid</a></span>(og_plt, pc2_plt)</a></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div id="how-much-variation-is-captured-by-each-pc" class="section level3">
@@ -283,10 +252,10 @@
 <a class="sourceLine" id="cb13-4" data-line-number="4">var_per_pc &lt;-<span class="st"> </span>sds<span class="op">^</span><span class="dv">2</span></a>
 <a class="sourceLine" id="cb13-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">#calculate percent variance per pc</span></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7">percent_var_per_pc &lt;-<span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span>(var_per_pc <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(var_per_pc))</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">percent_var_per_pc &lt;-<span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span>(var_per_pc <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(var_per_pc))</a>
 <a class="sourceLine" id="cb13-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">#plot a vector</span></a>
-<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(percent_var_per_pc)</a></code></pre></div>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(percent_var_per_pc)</a></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-12-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>As we can see most of the variation in the data is captured in the first PC. This means that if we dropped the remaining PCs from the data we would lose very little information. It is for this reason that PCA is so useful for dimensionality reduction for big datasets like single cell RNA-seq.</p>
 </div>
@@ -306,13 +275,11 @@
 <a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; gene_noise_3 -0.01430381 -0.11483800 -0.03152142</span></a></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># for PC1</span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2">pc2<span class="op">$</span>rotation[, <span class="dv">1</span>] <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/MathFun">abs</a></span>(.) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(<span class="dt">decreasing =</span> T) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>()</a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt;       gene_2       gene_1 gene_noise_8 gene_noise_2 gene_noise_7 </span></a>
-<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt;   0.70534623   0.70530630   0.03689937   0.03192790   0.02680149 </span></a>
-<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt; gene_noise_5 </span></a>
-<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt;   0.02463783</span></a></code></pre></div>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(.) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(<span class="dt">decreasing =</span> T) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt;       gene_2       gene_1 gene_noise_8 gene_noise_2 gene_noise_7 gene_noise_5 </span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt;   0.70534623   0.70530630   0.03689937   0.03192790   0.02680149   0.02463783</span></a></code></pre></div>
 <p>Using this approach we can quickly identify that <code>gene_1</code> and <code>gene_2</code> are driving the variance in the data.</p>
 </div>
 </div>
@@ -321,16 +288,16 @@
 <a href="#run-pca-on-a-single-cell-dataset" class="anchor"></a>Run PCA on a single cell dataset</h2>
 <p>Step 1: First let’s filter and normalize the <code>esc_mat</code> matrix.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># remove lowly expressed features</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">filtered_mat &lt;-<span class="st"> </span>esc_mat[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colSums">rowSums</a></span>(esc_mat <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>, ]</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">filtered_mat &lt;-<span class="st"> </span>esc_mat[<span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(esc_mat <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>, ]</a>
 <a class="sourceLine" id="cb16-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co"># log normalize </span></a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">norm_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/apply">apply</a></span>(filtered_mat, <span class="dv">2</span>, <span class="cf">function</span>(x) x <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(x))</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">norm_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(filtered_mat, <span class="dv">2</span>, <span class="cf">function</span>(x) x <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(x))</a>
 <a class="sourceLine" id="cb16-6" data-line-number="6">norm_mat &lt;-<span class="st"> </span><span class="dv">10000</span> <span class="op">*</span><span class="st"> </span>norm_mat</a>
-<a class="sourceLine" id="cb16-7" data-line-number="7">norm_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log</a></span>(norm_mat <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb16-7" data-line-number="7">norm_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(norm_mat <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
 <p>Step 2: Scale the data.</p>
 <p>This makes every variable equal in weight. For example if one variable ranges from -100 to 100, this variable will have more weight than one that ranges from -1 to 1. Often in most datasets scaling the variables is necessary to avoid projecting the PCA solely based on the abundance of a variable.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># scale and center each gene</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">zmat &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/t">t</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/t">t</a></span>(norm_mat)))</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">zmat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(norm_mat)))</a>
 <a class="sourceLine" id="cb17-3" data-line-number="3">zmat[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
 <a class="sourceLine" id="cb17-4" data-line-number="4"><span class="co">#&gt;              zy_1       zy_2        zy_3       zy_4 early2cell_1</span></a>
 <a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co">#&gt; Hvcn1   1.5675998  1.3011428  1.34704246  1.3081374    1.5248277</span></a>
@@ -340,37 +307,39 @@
 <a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">#&gt; Mrpl15 -1.4480821 -1.4230329 -1.44808206 -1.4063108   -1.4480821</span></a></code></pre></div>
 <p>Step 3: run PCA</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># run PCA with genes as columns and cells as rows</span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">pcs &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/prcomp">prcomp</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/t">t</a></span>(zmat), <span class="dt">scale. =</span> <span class="ot">FALSE</span>, <span class="dt">center =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb18-2" data-line-number="2">pcs &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/prcomp.html">prcomp</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(zmat), <span class="dt">scale. =</span> <span class="ot">FALSE</span>, <span class="dt">center =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>Step 4: Examine variance explained by each PC</p>
 <p>Exercise: make a ggplot plot that plots PC versus percent variance explained</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">variance_per_pc &lt;-<span class="st"> </span>pcs<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span></a>
 <a class="sourceLine" id="cb19-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">percent_var_explained &lt;-<span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span>(variance_per_pc <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(variance_per_pc))</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">percent_var_explained &lt;-<span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span>(variance_per_pc <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(variance_per_pc))</a>
 <a class="sourceLine" id="cb19-4" data-line-number="4">  </a>
 <a class="sourceLine" id="cb19-5" data-line-number="5">plot_data &lt;-<span class="st"> </span><span class="kw">data_frame</span>(percent_var_explained,</a>
-<a class="sourceLine" id="cb19-6" data-line-number="6">                        <span class="dt">PC =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(percent_var_explained))</a>
-<a class="sourceLine" id="cb19-7" data-line-number="7">  </a>
-<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="kw">ggplot</span>(plot_data, <span class="kw">aes</span>(PC, percent_var_explained)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb19-10" data-line-number="10"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">"Percent variance explained"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb19-11" data-line-number="11"><span class="st">    </span><span class="co"># display x breaks as integers </span></a>
-<a class="sourceLine" id="cb19-12" data-line-number="12"><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span> scales<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/scales/topics/pretty_breaks">pretty_breaks</a></span>()) </a></code></pre></div>
+<a class="sourceLine" id="cb19-6" data-line-number="6">                        <span class="dt">PC =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(percent_var_explained))</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="co">#&gt; Warning: `data_frame()` is deprecated, use `tibble()`.</span></a>
+<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="co">#&gt; This warning is displayed once per session.</span></a>
+<a class="sourceLine" id="cb19-9" data-line-number="9">  </a>
+<a class="sourceLine" id="cb19-10" data-line-number="10"><span class="kw">ggplot</span>(plot_data, <span class="kw">aes</span>(PC, percent_var_explained)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-11" data-line-number="11"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-12" data-line-number="12"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">"Percent variance explained"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-13" data-line-number="13"><span class="st">    </span><span class="co"># display x breaks as integers </span></a>
+<a class="sourceLine" id="cb19-14" data-line-number="14"><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span> scales<span class="op">::</span><span class="kw"><a href="https://scales.r-lib.org//reference/breaks_pretty.html">pretty_breaks</a></span>()) </a></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-18-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>Same as above but now as a function:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">plot_var_explained &lt;-<span class="st"> </span><span class="cf">function</span>(pc_obj) {</a>
 <a class="sourceLine" id="cb20-2" data-line-number="2">   </a>
 <a class="sourceLine" id="cb20-3" data-line-number="3">  variance_per_pc &lt;-<span class="st"> </span>pc_obj<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span></a>
 <a class="sourceLine" id="cb20-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb20-5" data-line-number="5">  percent_var_explained &lt;-<span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span>(variance_per_pc <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(variance_per_pc))</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">  percent_var_explained &lt;-<span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span>(variance_per_pc <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(variance_per_pc))</a>
 <a class="sourceLine" id="cb20-6" data-line-number="6">  </a>
 <a class="sourceLine" id="cb20-7" data-line-number="7">  plot_data &lt;-<span class="st"> </span><span class="kw">data_frame</span>(percent_var_explained,</a>
-<a class="sourceLine" id="cb20-8" data-line-number="8">                        <span class="dt">PC =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(percent_var_explained))</a>
+<a class="sourceLine" id="cb20-8" data-line-number="8">                        <span class="dt">PC =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(percent_var_explained))</a>
 <a class="sourceLine" id="cb20-9" data-line-number="9">  </a>
 <a class="sourceLine" id="cb20-10" data-line-number="10">  plt &lt;-<span class="st"> </span><span class="kw">ggplot</span>(plot_data, <span class="kw">aes</span>(PC, percent_var_explained)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb20-11" data-line-number="11"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb20-12" data-line-number="12"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">"Percent variance explained"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb20-13" data-line-number="13"><span class="st">    </span><span class="co"># display x breaks as integers </span></a>
-<a class="sourceLine" id="cb20-14" data-line-number="14"><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span> scales<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/scales/topics/pretty_breaks">pretty_breaks</a></span>()) </a>
+<a class="sourceLine" id="cb20-14" data-line-number="14"><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span> scales<span class="op">::</span><span class="kw"><a href="https://scales.r-lib.org//reference/breaks_pretty.html">pretty_breaks</a></span>()) </a>
 <a class="sourceLine" id="cb20-15" data-line-number="15">  </a>
 <a class="sourceLine" id="cb20-16" data-line-number="16">  plt</a>
 <a class="sourceLine" id="cb20-17" data-line-number="17">} </a>
@@ -379,7 +348,7 @@
 <p>Step 5: Plot PCs</p>
 <p>Exercise: Generate a ggplot plot that plots PC1 versus PC2 and color by developmental stage. (i.e. zy, 4cell, 8cell, etc.)</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co"># make tidy sample info</span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">sample_info &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">id =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(zmat)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">sample_info &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">id =</span> <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(zmat)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb21-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cell_type =</span> <span class="kw">str_remove</span>(id, <span class="st">"_[0-9]+"</span>))</a>
 <a class="sourceLine" id="cb21-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb21-5" data-line-number="5"><span class="co"># tidy PCA data</span></a>
@@ -405,17 +374,17 @@
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">pc1_loadings &lt;-<span class="st"> </span>pcs<span class="op">$</span>rotation[, <span class="dv">1</span>]</a>
 <a class="sourceLine" id="cb23-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb23-3" data-line-number="3"><span class="co"># get top 25 most positive loadings </span></a>
-<a class="sourceLine" id="cb23-4" data-line-number="4">pc1_pos &lt;-<span class="st"> </span>pc1_loadings <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="dv">25</span>)</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">pc1_pos &lt;-<span class="st"> </span>pc1_loadings <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="dv">25</span>)</a>
 <a class="sourceLine" id="cb23-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb23-6" data-line-number="6"><span class="co"># get top 25 most negative loadings</span></a>
-<a class="sourceLine" id="cb23-7" data-line-number="7">pc1_neg &lt;-<span class="st"> </span>pc1_loadings <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(<span class="dt">decreasing =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="dv">25</span>)</a>
+<a class="sourceLine" id="cb23-7" data-line-number="7">pc1_neg &lt;-<span class="st"> </span>pc1_loadings <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(<span class="dt">decreasing =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="dv">25</span>)</a>
 <a class="sourceLine" id="cb23-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb23-9" data-line-number="9"><span class="co"># combine them and get names</span></a>
-<a class="sourceLine" id="cb23-10" data-line-number="10">pc1_important &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(pc1_pos, pc1_neg) </a>
-<a class="sourceLine" id="cb23-11" data-line-number="11">pc1_genes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(pc1_important)</a></code></pre></div>
+<a class="sourceLine" id="cb23-10" data-line-number="10">pc1_important &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(pc1_pos, pc1_neg) </a>
+<a class="sourceLine" id="cb23-11" data-line-number="11">pc1_genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(pc1_important)</a></code></pre></div>
 <p>Exercise: Make a heatmap that plots the pc1_genes</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/ComplexHeatmap/topics/Heatmap">Heatmap</a></span>(zmat[pc1_genes, ],</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html">Heatmap</a></span>(zmat[pc1_genes, ],</a>
 <a class="sourceLine" id="cb24-3" data-line-number="3">        <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb24-4" data-line-number="4">        <span class="dt">show_row_names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;"></p>
@@ -430,6 +399,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -444,17 +414,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
-  <p>Developed by <a href="https://hesselberthlab.org">Jay Hesselberth</a>, Austin Gillen, Kent Riemondy, Rui Fu.</p>
+  <p>Developed by <a href="https://hesselberthlab.org">Jay Hesselberth</a>, Austin Gillen, Kent Riemondy, Rui Fu, Ryan Sheridan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

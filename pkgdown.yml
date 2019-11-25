@@ -1,5 +1,5 @@
 pandoc: '2.2'
-pkgdown: 1.3.0
+pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
   assignments: assignments.html
@@ -8,7 +8,6 @@ articles:
   class-3: class-3.html
   class-4: class-4.html
   class-5: class-5.html
-  class-6: class-6.html
   class-7: class-7.html
   class-8: class-8.html
   class-9: class-9.html

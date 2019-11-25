@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Class 9: Tips, Data I/O, and Resources • pbda</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Class 9: Tips, Data I/O, and Resources">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pbda</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -55,50 +56,17 @@
     <li>
       <a href="../articles/class-2.html">Class 2: Analyzing qPCR data</a>
     </li>
-    <li>
-      <a href="../articles/class-3.html">Class 3: Exploring a biological data set</a>
-    </li>
-    <li>
-      <a href="../articles/class-4.html">Class 4: RNA-seq Analysis</a>
-    </li>
-    <li>
-      <a href="../articles/class-5.html">Class 5: Gene List Handling</a>
-    </li>
-    <li>
-      <a href="../articles/class-6.html">Class 6: Single Cell RNA-seq</a>
-    </li>
-    <li>
-      <a href="../articles/class-7.html">Class 7: Heatmaps and Clustering</a>
-    </li>
-    <li>
-      <a href="../articles/class-8.html">Class 8: Exploring data with PCA</a>
-    </li>
-    <li>
-      <a href="../articles/class-9.html">Class 9: Tips, Data I/O, and Resources</a>
-    </li>
     <li class="divider">
     <li>
       <a href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-1.html">Problem Set 1</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-2.html">Problem Set 2</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-3.html">Problem Set 3</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-4.html">Problem Set 4</a>
     </li>
   </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/IDPT7810/practical-data-analysis">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/rnabioco/practical-data-analysis">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -111,22 +79,23 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Class 9: Tips, Data I/O, and Resources</h1>
                         <h4 class="author">Kent Riemondy</h4>
             
-            <h4 class="date">2018-12-15</h4>
+            <h4 class="date">2019-11-25</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/IDPT7810/practical-data-analysis/blob/master/vignettes/class-9.Rmd"><code>vignettes/class-9.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rnabioco/practical-data-analysis/blob/master/vignettes/class-9.Rmd"><code>vignettes/class-9.Rmd</code></a></small>
       <div class="hidden name"><code>class-9.Rmd</code></div>
 
     </div>
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a></code></pre></div>
 <div id="rmarkdown" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rmarkdown" class="anchor"></a>Rmarkdown</h1>
@@ -155,7 +124,7 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="im">import</span> datetime </a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">now <span class="op">=</span> datetime.datetime.now()</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="bu">print</span>(<span class="st">"hello the date and time is currently </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(now))</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; hello the date and time is currently 2018-12-15 15:08:23.494873</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; hello the date and time is currently 2019-11-25 16:05:57.461095</span></a></code></pre></div>
 </div>
 </div>
 </div>
@@ -182,11 +151,11 @@
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">read_tsv</span>(<span class="st">"https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/david.txt"</span>)</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># alternatively download the file, then read it into R.</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/download.file">download.file</a></span>(<span class="st">"https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/david.txt"</span>, <span class="st">"david.txt"</span>)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span>(<span class="st">"https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/david.txt"</span>, <span class="st">"david.txt"</span>)</a>
 <a class="sourceLine" id="cb6-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw">read_tsv</span>(<span class="st">"david.txt"</span>)</a></code></pre></div>
 <p>Here is example to read data stored internally from the <code>pbda</code> package.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">path_to_file &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"david.txt"</span>, <span class="dt">package =</span> <span class="st">"pbda"</span>)</a>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">path_to_file &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"david.txt"</span>, <span class="dt">package =</span> <span class="st">"pbda"</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">path_to_file</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt; [1] "/home/travis/R/Library/pbda/extdata/david.txt"</span></a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"></a>
@@ -220,7 +189,7 @@
 <a class="sourceLine" id="cb7-32" data-line-number="32"><span class="co">#&gt;  8 KEGG_PA… hsa0…    14 0.00496 5.90e-4 UGT1…          717         46</span></a>
 <a class="sourceLine" id="cb7-33" data-line-number="33"><span class="co">#&gt;  9 KEGG_PA… hsa0…    22 0.00779 6.09e-4 PRKC…          717         95</span></a>
 <a class="sourceLine" id="cb7-34" data-line-number="34"><span class="co">#&gt; 10 KEGG_PA… hsa0…    11 0.00390 1.40e-3 UGT1…          717         33</span></a>
-<a class="sourceLine" id="cb7-35" data-line-number="35"><span class="co">#&gt; # ... with 60 more rows, and 5 more variables: `Pop Total` &lt;dbl&gt;, `Fold</span></a>
+<a class="sourceLine" id="cb7-35" data-line-number="35"><span class="co">#&gt; # … with 60 more rows, and 5 more variables: `Pop Total` &lt;dbl&gt;, `Fold</span></a>
 <a class="sourceLine" id="cb7-36" data-line-number="36"><span class="co">#&gt; #   Enrichment` &lt;dbl&gt;, Bonferroni &lt;dbl&gt;, Benjamini &lt;dbl&gt;, FDR &lt;dbl&gt;</span></a></code></pre></div>
 <p>Often files are not formatted perfectly for reading into R. Below are some common problems, and the solutions</p>
 <ol style="list-style-type: decimal">
@@ -241,34 +210,34 @@
 <a href="#base-r-functions-are-sometimes-helpful" class="anchor"></a>base R functions are sometimes helpful</h2>
 <p>They can be slow, and by default will convert any character vector into a factor, which is often not desired. Set <code>stringsAsFactors = FALSE</code> to avoid this behavior.</p>
 <p>Reading:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"your_file.csv"</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.table</a></span>(<span class="st">"your_file.txt"</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(<span class="st">"your_file.csv"</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span>(<span class="st">"your_file.txt"</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>Writing:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/write.table">write.table</a></span>(mtcars, <span class="st">"mtcars.txt"</span>)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/write.table">write.csv</a></span>((mtcars, <span class="st">"mtcars.csv"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span>(mtcars, <span class="st">"mtcars.txt"</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span>((mtcars, <span class="st">"mtcars.csv"</span>)</a></code></pre></div>
 </div>
 <div id="writing-and-reading-binary--rds-or--rda-files" class="section level2">
 <h2 class="hasAnchor">
 <a href="#writing-and-reading-binary--rds-or--rda-files" class="anchor"></a>Writing and reading binary <code>.rds</code> or <code>.rda</code> files</h2>
 <p>Often it is useful to save a R object as a file directly. For example the seurat objects can be saved to disk as an <code>.rds</code> file which can be directly loaded into R at a later date. These files can also be shared with others.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># save mtcars as a binary file</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">saveRDS</a></span>(mtcars, <span class="st">"mtcars.rds"</span>)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(mtcars, <span class="st">"mtcars.rds"</span>)</a>
 <a class="sourceLine" id="cb11-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co"># read mtcars into R as an R object called new_data</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">new_data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="st">"mtcars.rds"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb11-5" data-line-number="5">new_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"mtcars.rds"</span>)</a></code></pre></div>
 <p><code>.rda</code> files are binary files that can be read into R as prenamed objects. They can store many objects in a single file.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">simple_data &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">a =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2">simple_data2 &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">simple_data3 &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(simple_data, simple_data2)</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co"># pass R objects to the save function</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/save">save</a></span>(simple_data, </a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/save.html">save</a></span>(simple_data, </a>
 <a class="sourceLine" id="cb12-7" data-line-number="7">  simple_data2, </a>
 <a class="sourceLine" id="cb12-8" data-line-number="8">  simple_data3, </a>
 <a class="sourceLine" id="cb12-9" data-line-number="9">  <span class="dt">file =</span> <span class="st">"collection_of_r_objects.rda"</span>)</a>
 <a class="sourceLine" id="cb12-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co"># in a new R session use load() to reload these objects into your environment</span></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/load">load</a></span>(<span class="st">"collection_of_r_objects.rda"</span>)</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="kw"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="st">"collection_of_r_objects.rda"</span>)</a>
 <a class="sourceLine" id="cb12-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb12-14" data-line-number="14">simple_data</a>
 <a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; # A tibble: 10 x 1</span></a>
@@ -364,6 +333,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -402,17 +372,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
-  <p>Developed by <a href="https://hesselberthlab.org">Jay Hesselberth</a>, Austin Gillen, Kent Riemondy, Rui Fu.</p>
+  <p>Developed by <a href="https://hesselberthlab.org">Jay Hesselberth</a>, Austin Gillen, Kent Riemondy, Rui Fu, Ryan Sheridan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

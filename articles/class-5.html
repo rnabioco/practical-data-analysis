@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Class 5: Working with gene lists • pbda</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Class 5: Working with gene lists">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pbda</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -55,50 +56,17 @@
     <li>
       <a href="../articles/class-2.html">Class 2: Analyzing qPCR data</a>
     </li>
-    <li>
-      <a href="../articles/class-3.html">Class 3: Exploring a biological data set</a>
-    </li>
-    <li>
-      <a href="../articles/class-4.html">Class 4: RNA-seq Analysis</a>
-    </li>
-    <li>
-      <a href="../articles/class-5.html">Class 5: Gene List Handling</a>
-    </li>
-    <li>
-      <a href="../articles/class-6.html">Class 6: Single Cell RNA-seq</a>
-    </li>
-    <li>
-      <a href="../articles/class-7.html">Class 7: Heatmaps and Clustering</a>
-    </li>
-    <li>
-      <a href="../articles/class-8.html">Class 8: Exploring data with PCA</a>
-    </li>
-    <li>
-      <a href="../articles/class-9.html">Class 9: Tips, Data I/O, and Resources</a>
-    </li>
     <li class="divider">
     <li>
       <a href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-1.html">Problem Set 1</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-2.html">Problem Set 2</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-3.html">Problem Set 3</a>
-    </li>
-    <li>
-      <a href="../articles/problem-set-4.html">Problem Set 4</a>
     </li>
   </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/IDPT7810/practical-data-analysis">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/rnabioco/practical-data-analysis">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -111,6 +79,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -119,7 +88,7 @@
             
             <h4 class="date">2018-12-07</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/IDPT7810/practical-data-analysis/blob/master/vignettes/class-5.Rmd"><code>vignettes/class-5.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rnabioco/practical-data-analysis/blob/master/vignettes/class-5.Rmd"><code>vignettes/class-5.Rmd</code></a></small>
       <div class="hidden name"><code>class-5.Rmd</code></div>
 
     </div>
@@ -130,9 +99,9 @@
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># devtools::install_github('idpt7810/practical-data-analysis')</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"># BiocManager::install("biomaRt", version = "3.8")</span></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(pbda)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(cowplot)</a></code></pre></div>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pbda)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(cowplot)</a></code></pre></div>
 <div id="did-experiment-ran-through-analysis-pipeline-what-now" class="section level2">
 <h2 class="hasAnchor">
 <a href="#did-experiment-ran-through-analysis-pipeline-what-now" class="anchor"></a>Did experiment, ran through analysis pipeline, what now?</h2>
@@ -148,10 +117,10 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># from DESeq2 output, get a tibble back</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># res &lt;- results(dds)</span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># saveRDS(res, "res_class4.rds") # save any object from environment for next time</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">loc &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"res_class4.rds"</span>, <span class="dt">package =</span> <span class="st">'pbda'</span>)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">res &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(loc) <span class="co"># loading a DESeq2 object automatically loads DESeq2</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">loc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"res_class4.rds"</span>, <span class="dt">package =</span> <span class="st">'pbda'</span>)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">res &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(loc) <span class="co"># loading a DESeq2 object automatically loads DESeq2</span></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(res) <span class="co"># basically a dataframe</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(res) <span class="co"># basically a dataframe</span></a>
 <a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; log2 fold change (MLE): drug none vs A </span></a>
 <a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; Wald test p-value: drug none vs A </span></a>
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; DataFrame with 6 rows and 6 columns</span></a>
@@ -173,31 +142,31 @@
 <a class="sourceLine" id="cb2-26" data-line-number="26"><span class="co">#&gt; LOC102723897  -1.74674189799929   0.0806821191329157    0.181200019774001</span></a>
 <a class="sourceLine" id="cb2-27" data-line-number="27"></a>
 <a class="sourceLine" id="cb2-28" data-line-number="28">res_tibble &lt;-<span class="st"> </span>res <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-29" data-line-number="29"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-30" data-line-number="30"><span class="st">  </span>tibble<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/tibble/topics/rownames">rownames_to_column</a></span>(<span class="dt">var =</span> <span class="st">"gene"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-29" data-line-number="29"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-30" data-line-number="30"><span class="st">  </span>tibble<span class="op">::</span><span class="kw"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span>(<span class="dt">var =</span> <span class="st">"gene"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-31" data-line-number="31"><span class="st">  </span><span class="kw">as.tibble</span>()</a>
 <a class="sourceLine" id="cb2-32" data-line-number="32"></a>
 <a class="sourceLine" id="cb2-33" data-line-number="33">res_tibble</a>
 <a class="sourceLine" id="cb2-34" data-line-number="34"><span class="co">#&gt; # A tibble: 21,178 x 7</span></a>
-<a class="sourceLine" id="cb2-35" data-line-number="35"><span class="co">#&gt;    gene        baseMean log2FoldChange lfcSE   stat     pvalue        padj</span></a>
-<a class="sourceLine" id="cb2-36" data-line-number="36"><span class="co">#&gt;    &lt;chr&gt;          &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb2-37" data-line-number="37"><span class="co">#&gt;  1 WASH7P        10.0           -0.121 0.697 -0.174    8.62e-1     9.23e-1</span></a>
-<a class="sourceLine" id="cb2-38" data-line-number="38"><span class="co">#&gt;  2 MIR6859-1      1.71          -0.497 1.51  -0.329    7.42e-1     8.44e-1</span></a>
-<a class="sourceLine" id="cb2-39" data-line-number="39"><span class="co">#&gt;  3 LOC1019275…    0.238         -1.61  4.37  -0.369    7.12e-1    NA      </span></a>
-<a class="sourceLine" id="cb2-40" data-line-number="40"><span class="co">#&gt;  4 LOC729737    165.            -1.57  0.264 -5.93     3.00e-9     5.67e-8</span></a>
-<a class="sourceLine" id="cb2-41" data-line-number="41"><span class="co">#&gt;  5 LOC1009964…    0.456         -1.58  2.98  -0.529    5.97e-1    NA      </span></a>
-<a class="sourceLine" id="cb2-42" data-line-number="42"><span class="co">#&gt;  6 LOC1027238…  140.            -0.374 0.214 -1.75     8.07e-2     1.81e-1</span></a>
-<a class="sourceLine" id="cb2-43" data-line-number="43"><span class="co">#&gt;  7 LOC1019291…    0.451         -1.58  3.00  -0.525    5.99e-1    NA      </span></a>
-<a class="sourceLine" id="cb2-44" data-line-number="44"><span class="co">#&gt;  8 RP4-669L17…    1.62          -1.13  1.41  -0.801    4.23e-1     5.94e-1</span></a>
-<a class="sourceLine" id="cb2-45" data-line-number="45"><span class="co">#&gt;  9 LOC1001348…    8.57           0.328 0.723  0.454    6.50e-1     7.80e-1</span></a>
-<a class="sourceLine" id="cb2-46" data-line-number="46"><span class="co">#&gt; 10 MIR6723        0.616         -0.736 3.22  -0.229    8.19e-1    NA      </span></a>
-<a class="sourceLine" id="cb2-47" data-line-number="47"><span class="co">#&gt; # ... with 21,168 more rows</span></a>
+<a class="sourceLine" id="cb2-35" data-line-number="35"><span class="co">#&gt;    gene          baseMean log2FoldChange lfcSE   stat        pvalue         padj</span></a>
+<a class="sourceLine" id="cb2-36" data-line-number="36"><span class="co">#&gt;    &lt;chr&gt;            &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb2-37" data-line-number="37"><span class="co">#&gt;  1 WASH7P          10.0           -0.121 0.697 -0.174 0.862              9.23e-1</span></a>
+<a class="sourceLine" id="cb2-38" data-line-number="38"><span class="co">#&gt;  2 MIR6859-1        1.71          -0.497 1.51  -0.329 0.742              8.44e-1</span></a>
+<a class="sourceLine" id="cb2-39" data-line-number="39"><span class="co">#&gt;  3 LOC101927589     0.238         -1.61  4.37  -0.369 0.712             NA      </span></a>
+<a class="sourceLine" id="cb2-40" data-line-number="40"><span class="co">#&gt;  4 LOC729737      165.            -1.57  0.264 -5.93  0.00000000300      5.67e-8</span></a>
+<a class="sourceLine" id="cb2-41" data-line-number="41"><span class="co">#&gt;  5 LOC100996442     0.456         -1.58  2.98  -0.529 0.597             NA      </span></a>
+<a class="sourceLine" id="cb2-42" data-line-number="42"><span class="co">#&gt;  6 LOC102723897   140.            -0.374 0.214 -1.75  0.0807             1.81e-1</span></a>
+<a class="sourceLine" id="cb2-43" data-line-number="43"><span class="co">#&gt;  7 LOC101929192     0.451         -1.58  3.00  -0.525 0.599             NA      </span></a>
+<a class="sourceLine" id="cb2-44" data-line-number="44"><span class="co">#&gt;  8 RP4-669L17.10    1.62          -1.13  1.41  -0.801 0.423              5.94e-1</span></a>
+<a class="sourceLine" id="cb2-45" data-line-number="45"><span class="co">#&gt;  9 LOC100134822     8.57           0.328 0.723  0.454 0.650              7.80e-1</span></a>
+<a class="sourceLine" id="cb2-46" data-line-number="46"><span class="co">#&gt; 10 MIR6723          0.616         -0.736 3.22  -0.229 0.819             NA      </span></a>
+<a class="sourceLine" id="cb2-47" data-line-number="47"><span class="co">#&gt; # … with 21,168 more rows</span></a>
 <a class="sourceLine" id="cb2-48" data-line-number="48"></a>
 <a class="sourceLine" id="cb2-49" data-line-number="49"><span class="co"># res_tibble contains calculations for all genes, pick out "interesting" genes</span></a>
 <a class="sourceLine" id="cb2-50" data-line-number="50">gene_tibble &lt;-<span class="st"> </span>res_tibble <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-51" data-line-number="51"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(padj)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># NA values from padj are from tossing low expressing genes</span></a>
-<a class="sourceLine" id="cb2-52" data-line-number="52"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(padj <span class="op">&lt;=</span><span class="st"> </span><span class="fl">0.01</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># padj &lt;= 0.05 is common, or 0.01, sometimes even 0.1 is acceptable</span></a>
-<a class="sourceLine" id="cb2-53" data-line-number="53"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(log2FoldChange <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>log2FoldChange <span class="op">&lt;=</span><span class="st"> </span><span class="dv">-1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-51" data-line-number="51"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(padj)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># NA values from padj are from tossing low expressing genes</span></a>
+<a class="sourceLine" id="cb2-52" data-line-number="52"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(padj <span class="op">&lt;=</span><span class="st"> </span><span class="fl">0.01</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># padj &lt;= 0.05 is common, or 0.01, sometimes even 0.1 is acceptable</span></a>
+<a class="sourceLine" id="cb2-53" data-line-number="53"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(log2FoldChange <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>log2FoldChange <span class="op">&lt;=</span><span class="st"> </span><span class="dv">-1</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-54" data-line-number="54"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(log2FoldChange))</a>
 <a class="sourceLine" id="cb2-55" data-line-number="55"></a>
 <a class="sourceLine" id="cb2-56" data-line-number="56">gene_tibble</a>
@@ -214,13 +183,13 @@
 <a class="sourceLine" id="cb2-67" data-line-number="67"><span class="co">#&gt;  8 CYP2B7P        1839.            8.58 0.336 25.5  1.94e-143 8.47e-140</span></a>
 <a class="sourceLine" id="cb2-68" data-line-number="68"><span class="co">#&gt;  9 CTAG2           153.            8.31 0.675 12.3  7.76e- 35 2.46e- 32</span></a>
 <a class="sourceLine" id="cb2-69" data-line-number="69"><span class="co">#&gt; 10 TMLHE           188.            8.25 1.05   7.88 3.34e- 15 1.62e- 13</span></a>
-<a class="sourceLine" id="cb2-70" data-line-number="70"><span class="co">#&gt; # ... with 1,898 more rows</span></a>
+<a class="sourceLine" id="cb2-70" data-line-number="70"><span class="co">#&gt; # … with 1,898 more rows</span></a>
 <a class="sourceLine" id="cb2-71" data-line-number="71"></a>
 <a class="sourceLine" id="cb2-72" data-line-number="72"><span class="co"># get top 10 down-regulated genes</span></a>
 <a class="sourceLine" id="cb2-73" data-line-number="73">gene_tibble_down10 &lt;-<span class="st"> </span>gene_tibble <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-74" data-line-number="74"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(log2FoldChange <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-74" data-line-number="74"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(log2FoldChange <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-75" data-line-number="75"><span class="st">  </span><span class="kw">arrange</span>(log2FoldChange) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-76" data-line-number="76"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) </a>
+<a class="sourceLine" id="cb2-76" data-line-number="76"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) </a>
 <a class="sourceLine" id="cb2-77" data-line-number="77"></a>
 <a class="sourceLine" id="cb2-78" data-line-number="78"><span class="co"># get a vector of gene names</span></a>
 <a class="sourceLine" id="cb2-79" data-line-number="79">gene_vector &lt;-<span class="st"> </span>gene_tibble<span class="op">$</span>gene</a>
@@ -228,7 +197,7 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">write_csv</span>(gene_tibble, <span class="st">"gene_tibble.csv"</span>)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># or load already saved file on disk</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">loc &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"gene_tibble.csv"</span>, <span class="dt">package =</span> <span class="st">'pbda'</span>)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">loc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"gene_tibble.csv"</span>, <span class="dt">package =</span> <span class="st">'pbda'</span>)</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">gene_tibble2 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(loc) <span class="co"># reads out as tibble</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co"># or write as txt file, without col name</span></a>
@@ -249,7 +218,7 @@
 <li><p>download as file</p></li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># save output and load in R</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">loc &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"david.txt"</span>, <span class="dt">package =</span> <span class="st">'pbda'</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">loc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"david.txt"</span>, <span class="dt">package =</span> <span class="st">'pbda'</span>)</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">david &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(loc) <span class="co"># output was tab-delimited instead of comma</span></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">david</a>
@@ -266,14 +235,14 @@
 <a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt;  8 KEGG_PA… hsa0…    14 0.00496 5.90e-4 UGT1…          717         46</span></a>
 <a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt;  9 KEGG_PA… hsa0…    22 0.00779 6.09e-4 PRKC…          717         95</span></a>
 <a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; 10 KEGG_PA… hsa0…    11 0.00390 1.40e-3 UGT1…          717         33</span></a>
-<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; # ... with 60 more rows, and 5 more variables: `Pop Total` &lt;dbl&gt;, `Fold</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; # … with 60 more rows, and 5 more variables: `Pop Total` &lt;dbl&gt;, `Fold</span></a>
 <a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; #   Enrichment` &lt;dbl&gt;, Bonferroni &lt;dbl&gt;, Benjamini &lt;dbl&gt;, FDR &lt;dbl&gt;</span></a>
 <a class="sourceLine" id="cb4-21" data-line-number="21"></a>
 <a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co"># do whatever you want, for instance plot -log10 of top 20 entries</span></a>
 <a class="sourceLine" id="cb4-23" data-line-number="23">david_log &lt;-<span class="st"> </span>david <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">minus_log10 =</span> <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(Benjamini)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Benjamini is one false discovery rate method</span></a>
+<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">minus_log10 =</span> <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(Benjamini)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Benjamini is one false discovery rate method</span></a>
 <a class="sourceLine" id="cb4-25" data-line-number="25"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(minus_log10)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>)</a>
 <a class="sourceLine" id="cb4-27" data-line-number="27"></a>
 <a class="sourceLine" id="cb4-28" data-line-number="28">david_log <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Term, minus_log10)</a>
 <a class="sourceLine" id="cb4-29" data-line-number="29"><span class="co">#&gt; # A tibble: 20 x 2</span></a>
@@ -300,7 +269,7 @@
 <a class="sourceLine" id="cb4-50" data-line-number="50"><span class="co">#&gt; 19 hsa04024:cAMP signaling pathway                              1.20</span></a>
 <a class="sourceLine" id="cb4-51" data-line-number="51"><span class="co">#&gt; 20 hsa04915:Estrogen signaling pathway                          1.17</span></a>
 <a class="sourceLine" id="cb4-52" data-line-number="52"></a>
-<a class="sourceLine" id="cb4-53" data-line-number="53"><span class="kw">ggplot</span>(david_log, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/reorder.factor">reorder</a></span>(Term, minus_log10), <span class="dt">y =</span> minus_log10)) <span class="op">+</span><span class="st"> </span><span class="co">#reorder Term by minus_log10</span></a>
+<a class="sourceLine" id="cb4-53" data-line-number="53"><span class="kw">ggplot</span>(david_log, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span>(Term, minus_log10), <span class="dt">y =</span> minus_log10)) <span class="op">+</span><span class="st"> </span><span class="co">#reorder Term by minus_log10</span></a>
 <a class="sourceLine" id="cb4-54" data-line-number="54"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span><span class="st"> </span><span class="co"># otherwise ggplot tries to count</span></a>
 <a class="sourceLine" id="cb4-55" data-line-number="55"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"KEGG pathway"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb4-56" data-line-number="56"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
@@ -319,7 +288,7 @@
 <h2 class="hasAnchor">
 <a href="#sometimes-transformation-of-names-is-needed---stringr-package-part-of-tidyverse" class="anchor"></a>Sometimes transformation of names is needed - <code>stringr</code> package, part of tidyverse</h2>
 <p>Depending on the transcriptome and analysis options used in RNA-seq/scRNA-seq, the list of names can be messy.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">loc &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"ensg_tibble.csv"</span>, <span class="dt">package =</span> <span class="st">'pbda'</span>)</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">loc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"ensg_tibble.csv"</span>, <span class="dt">package =</span> <span class="st">'pbda'</span>)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">ensg_tibble &lt;-<span class="st"> </span><span class="kw">read_csv</span>(loc)</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4">ensg_tibble <span class="co"># those version numbers are often not recognized by software</span></a>
@@ -363,31 +332,31 @@
 <a class="sourceLine" id="cb7-29" data-line-number="29"><span class="co">#&gt; 5 ENSG00000229435.2 0.05   ENSG00000229435</span></a>
 <a class="sourceLine" id="cb7-30" data-line-number="30"></a>
 <a class="sourceLine" id="cb7-31" data-line-number="31"><span class="co"># `separate` works too, if you want to keep the info</span></a>
-<a class="sourceLine" id="cb7-32" data-line-number="32">ensg_tibble3 &lt;-<span class="st"> </span>ensg_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(gene, <span class="dt">into =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"gene"</span>, <span class="st">"version"</span>), <span class="dt">sep =</span> <span class="st">"</span><span class="ch">\\</span><span class="st">."</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb7-32" data-line-number="32">ensg_tibble3 &lt;-<span class="st"> </span>ensg_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(gene, <span class="dt">into =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gene"</span>, <span class="st">"version"</span>), <span class="dt">sep =</span> <span class="st">"</span><span class="ch">\\</span><span class="st">."</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># revisit the DAVID output plot, clean up "Term" column</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">david_log2 &lt;-<span class="st"> </span>david_log <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Term =</span> <span class="kw">str_replace</span>(Term, </a>
 <a class="sourceLine" id="cb8-3" data-line-number="3">                                                      <span class="dt">pattern =</span> <span class="st">".*:"</span>, <span class="co"># every before and including :</span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4">                                                      <span class="dt">replacement =</span> <span class="st">""</span>))</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="kw">ggplot</span>(david_log2, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/reorder.factor">reorder</a></span>(Term, minus_log10), <span class="dt">y =</span> minus_log10)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="kw">ggplot</span>(david_log2, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span>(Term, minus_log10), <span class="dt">y =</span> minus_log10)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"KEGG pathway"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-10" data-line-number="10"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</a></code></pre></div>
 <p><img src="class-5_files/figure-html/str_replace2-1.png" width="768" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># to save plot</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/cowplot/topics/ggsave">ggsave</a></span>(<span class="st">"david.png"</span>, <span class="dt">plot =</span> <span class="kw">last_plot</span>(), <span class="dt">dpi =</span> <span class="dv">300</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw">ggsave</span>(<span class="st">"david.png"</span>, <span class="dt">plot =</span> <span class="kw">last_plot</span>(), <span class="dt">dpi =</span> <span class="dv">300</span>)</a></code></pre></div>
 <p><code>str_detect</code>: spits out <code>TRUE</code> or <code>FALSE</code></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># "-AS" denotes antisense genes, we can find all those</span></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">str_detect</span>(gene_tibble<span class="op">$</span>gene, <span class="st">"-AS"</span>)[<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>]</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt;  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; [12] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; [23] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt; [34] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt; [45] FALSE FALSE FALSE FALSE FALSE FALSE</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt;  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; [25] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt; [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt; [49] FALSE FALSE</span></a>
 <a class="sourceLine" id="cb10-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co"># use in `filter`</span></a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">gene_tibble_as &lt;-<span class="st"> </span>gene_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="kw">str_detect</span>(gene, <span class="st">"-AS"</span>))</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">gene_tibble_as &lt;-<span class="st"> </span>gene_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">str_detect</span>(gene, <span class="st">"-AS"</span>))</a>
 <a class="sourceLine" id="cb10-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb10-12" data-line-number="12">gene_tibble_as</a>
 <a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co">#&gt; # A tibble: 23 x 7</span></a>
@@ -403,7 +372,7 @@
 <a class="sourceLine" id="cb10-23" data-line-number="23"><span class="co">#&gt;  8 DPP10-AS1    115.             1.20 0.254  4.71 2.42e- 6 2.58e- 5</span></a>
 <a class="sourceLine" id="cb10-24" data-line-number="24"><span class="co">#&gt;  9 CCNT2-AS1     43.7            1.18 0.319  3.70 2.14e- 4 1.37e- 3</span></a>
 <a class="sourceLine" id="cb10-25" data-line-number="25"><span class="co">#&gt; 10 DHRS4-AS1    694.             1.13 0.170  6.65 2.98e-11 7.79e-10</span></a>
-<a class="sourceLine" id="cb10-26" data-line-number="26"><span class="co">#&gt; # ... with 13 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb10-26" data-line-number="26"><span class="co">#&gt; # … with 13 more rows</span></a></code></pre></div>
 <p><code>str_c</code>: concatenate strings</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># also add annotations of our own</span></a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">gene_tibble_as2 &lt;-<span class="st"> </span>gene_tibble_as <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">gene =</span> <span class="kw">str_c</span>(<span class="st">"HUMAN-"</span>, gene))</a>
@@ -422,7 +391,7 @@
 <a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;  8 HUMAN-DPP10-AS1    115.             1.20 0.254  4.71 2.42e- 6 2.58e- 5</span></a>
 <a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt;  9 HUMAN-CCNT2-AS1     43.7            1.18 0.319  3.70 2.14e- 4 1.37e- 3</span></a>
 <a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt; 10 HUMAN-DHRS4-AS1    694.             1.13 0.170  6.65 2.98e-11 7.79e-10</span></a>
-<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt; # ... with 13 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt; # … with 13 more rows</span></a></code></pre></div>
 <p><code>str_sub</code>: extract substrings</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">str_sub</span>(<span class="st">"HUMAN-ELOVL2-AS1"</span>, <span class="dv">2</span>, <span class="dv">4</span>)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; [1] "UMA"</span></a>
@@ -443,7 +412,7 @@
 <a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt;  8 UMA     115.             1.20 0.254  4.71 2.42e- 6 2.58e- 5</span></a>
 <a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt;  9 UMA      43.7            1.18 0.319  3.70 2.14e- 4 1.37e- 3</span></a>
 <a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt; 10 UMA     694.             1.13 0.170  6.65 2.98e-11 7.79e-10</span></a>
-<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">#&gt; # ... with 13 more rows</span></a>
+<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">#&gt; # … with 13 more rows</span></a>
 <a class="sourceLine" id="cb12-21" data-line-number="21"></a>
 <a class="sourceLine" id="cb12-22" data-line-number="22"><span class="co"># to remove annotations of fixed length</span></a>
 <a class="sourceLine" id="cb12-23" data-line-number="23">gene_tibble_as4 &lt;-<span class="st"> </span>gene_tibble_as2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">gene =</span> <span class="kw">str_sub</span>(gene, <span class="dv">7</span>, <span class="dv">-5</span>)) <span class="co"># extract just the gene name from "HUMAN-ELOVL2-AS1"</span></a>
@@ -462,33 +431,33 @@
 <a class="sourceLine" id="cb12-36" data-line-number="36"><span class="co">#&gt;  8 DPP10    115.             1.20 0.254  4.71 2.42e- 6 2.58e- 5</span></a>
 <a class="sourceLine" id="cb12-37" data-line-number="37"><span class="co">#&gt;  9 CCNT2     43.7            1.18 0.319  3.70 2.14e- 4 1.37e- 3</span></a>
 <a class="sourceLine" id="cb12-38" data-line-number="38"><span class="co">#&gt; 10 DHRS4    694.             1.13 0.170  6.65 2.98e-11 7.79e-10</span></a>
-<a class="sourceLine" id="cb12-39" data-line-number="39"><span class="co">#&gt; # ... with 13 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-39" data-line-number="39"><span class="co">#&gt; # … with 13 more rows</span></a></code></pre></div>
 </div>
 <div id="various-conversions-in-r---biomart" class="section level2">
 <h2 class="hasAnchor">
 <a href="#various-conversions-in-r---biomart" class="anchor"></a>Various conversions in R - BioMart</h2>
 <p>BioMart can be used outside of R too: <a href="http://www.ensembl.org/biomart/martview" class="uri">http://www.ensembl.org/biomart/martview</a></p>
 <p>We will be using <code>biomaRt</code></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(biomaRt)</a>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(biomaRt)</a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co"># biomaRt contains many useful datasets</span></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/listDatasets">listDatasets</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ENSEMBL_MART_ENSEMBL"</span>, <span class="dt">host =</span> <span class="st">"www.ensembl.org"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() <span class="co"># hundreds of organisms</span></a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="co">#&gt; # A tibble: 138 x 3</span></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="co">#&gt;    dataset               description                     version          </span></a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">#&gt;    &lt;I(chr)&gt;              &lt;I(chr)&gt;                        &lt;I(chr)&gt;         </span></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="co">#&gt;  1 acalliptera_gene_ens… Eastern happy genes (fAstCal1.… fAstCal1.2       </span></a>
-<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">#&gt;  2 acarolinensis_gene_e… Anole lizard genes (AnoCar2.0)  AnoCar2.0        </span></a>
-<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">#&gt;  3 acitrinellus_gene_en… Midas cichlid genes (Midas_v5)  Midas_v5         </span></a>
-<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt;  4 amelanoleuca_gene_en… Panda genes (ailMel1)           ailMel1          </span></a>
-<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">#&gt;  5 amexicanus_gene_ense… Cave fish genes (Astyanax_mexi… Astyanax_mexican…</span></a>
-<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">#&gt;  6 anancymaae_gene_ense… Ma's night monkey genes (Anan_… Anan_2.0         </span></a>
-<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">#&gt;  7 aocellaris_gene_ense… Clown anemonefish genes (AmpOc… AmpOce1.0        </span></a>
-<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">#&gt;  8 apercula_gene_ensembl Orange clownfish genes (Nemo_v… Nemo_v1          </span></a>
-<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt;  9 aplatyrhynchos_gene_… Duck genes (BGI_duck_1.0)       BGI_duck_1.0     </span></a>
-<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">#&gt; 10 apolyacanthus_gene_e… Spiny chromis genes (ASM210954… ASM210954v1      </span></a>
-<a class="sourceLine" id="cb13-17" data-line-number="17"><span class="co">#&gt; # ... with 128 more rows</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/listDatasets.html">listDatasets</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/useMart.html">useMart</a></span>(<span class="st">"ENSEMBL_MART_ENSEMBL"</span>, <span class="dt">host =</span> <span class="st">"www.ensembl.org"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() <span class="co"># hundreds of organisms</span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="co">#&gt; # A tibble: 212 x 3</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="co">#&gt;    dataset                description                         version           </span></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">#&gt;    &lt;I&lt;chr&gt;&gt;               &lt;I&lt;chr&gt;&gt;                            &lt;I&lt;chr&gt;&gt;          </span></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="co">#&gt;  1 abrachyrhynchus_gene_… Pink-footed goose genes (ASM259213… ASM259213v1       </span></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">#&gt;  2 acalliptera_gene_ense… Eastern happy genes (fAstCal1.2)    fAstCal1.2        </span></a>
+<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">#&gt;  3 acarolinensis_gene_en… Anole lizard genes (AnoCar2.0)      AnoCar2.0         </span></a>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt;  4 acitrinellus_gene_ens… Midas cichlid genes (Midas_v5)      Midas_v5          </span></a>
+<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">#&gt;  5 ahaastii_gene_ensembl  Great spotted kiwi genes (aptHaa1)  aptHaa1           </span></a>
+<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">#&gt;  6 amelanoleuca_gene_ens… Panda genes (ailMel1)               ailMel1           </span></a>
+<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">#&gt;  7 amexicanus_gene_ensem… Mexican tetra genes (Astyanax_mexi… Astyanax_mexicanu…</span></a>
+<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">#&gt;  8 ampachon_gene_ensembl  Pachon cavefish genes (Astyanax_me… Astyanax_mexicanu…</span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt;  9 anancymaae_gene_ensem… Ma's night monkey genes (Anan_2.0)  Anan_2.0          </span></a>
+<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">#&gt; 10 aocellaris_gene_ensem… Clown anemonefish genes (AmpOce1.0) AmpOce1.0         </span></a>
+<a class="sourceLine" id="cb13-17" data-line-number="17"><span class="co">#&gt; # … with 202 more rows</span></a>
 <a class="sourceLine" id="cb13-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb13-19" data-line-number="19"><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/listAttributes">listAttributes</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ensembl"</span>, <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() <span class="co"># thousands of rows/attributes</span></a>
-<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="co">#&gt; # A tibble: 2,579 x 3</span></a>
+<a class="sourceLine" id="cb13-19" data-line-number="19"><span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/listAttributes.html">listAttributes</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/useMart.html">useMart</a></span>(<span class="st">"ensembl"</span>, <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() <span class="co"># thousands of rows/attributes</span></a>
+<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="co">#&gt; # A tibble: 3,607 x 3</span></a>
 <a class="sourceLine" id="cb13-21" data-line-number="21"><span class="co">#&gt;    name                          description                  page        </span></a>
 <a class="sourceLine" id="cb13-22" data-line-number="22"><span class="co">#&gt;    &lt;chr&gt;                         &lt;chr&gt;                        &lt;chr&gt;       </span></a>
 <a class="sourceLine" id="cb13-23" data-line-number="23"><span class="co">#&gt;  1 ensembl_gene_id               Gene stable ID               feature_page</span></a>
@@ -501,10 +470,10 @@
 <a class="sourceLine" id="cb13-30" data-line-number="30"><span class="co">#&gt;  8 description                   Gene description             feature_page</span></a>
 <a class="sourceLine" id="cb13-31" data-line-number="31"><span class="co">#&gt;  9 chromosome_name               Chromosome/scaffold name     feature_page</span></a>
 <a class="sourceLine" id="cb13-32" data-line-number="32"><span class="co">#&gt; 10 start_position                Gene start (bp)              feature_page</span></a>
-<a class="sourceLine" id="cb13-33" data-line-number="33"><span class="co">#&gt; # ... with 2,569 more rows</span></a>
+<a class="sourceLine" id="cb13-33" data-line-number="33"><span class="co">#&gt; # … with 3,597 more rows</span></a>
 <a class="sourceLine" id="cb13-34" data-line-number="34"></a>
-<a class="sourceLine" id="cb13-35" data-line-number="35"><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/listFilters">listFilters</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ensembl"</span>, <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() <span class="co"># ways to filter the data</span></a>
-<a class="sourceLine" id="cb13-36" data-line-number="36"><span class="co">#&gt; # A tibble: 373 x 2</span></a>
+<a class="sourceLine" id="cb13-35" data-line-number="35"><span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/listFilters.html">listFilters</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/useMart.html">useMart</a></span>(<span class="st">"ensembl"</span>, <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() <span class="co"># ways to filter the data</span></a>
+<a class="sourceLine" id="cb13-36" data-line-number="36"><span class="co">#&gt; # A tibble: 446 x 2</span></a>
 <a class="sourceLine" id="cb13-37" data-line-number="37"><span class="co">#&gt;    name               description                           </span></a>
 <a class="sourceLine" id="cb13-38" data-line-number="38"><span class="co">#&gt;    &lt;chr&gt;              &lt;chr&gt;                                 </span></a>
 <a class="sourceLine" id="cb13-39" data-line-number="39"><span class="co">#&gt;  1 chromosome_name    Chromosome/scaffold name              </span></a>
@@ -517,24 +486,24 @@
 <a class="sourceLine" id="cb13-46" data-line-number="46"><span class="co">#&gt;  8 encode_region      Encode region                         </span></a>
 <a class="sourceLine" id="cb13-47" data-line-number="47"><span class="co">#&gt;  9 strand             Strand                                </span></a>
 <a class="sourceLine" id="cb13-48" data-line-number="48"><span class="co">#&gt; 10 chromosomal_region e.g. 1:100:10000:-1, 1:100000:200000:1</span></a>
-<a class="sourceLine" id="cb13-49" data-line-number="49"><span class="co">#&gt; # ... with 363 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb13-49" data-line-number="49"><span class="co">#&gt; # … with 436 more rows</span></a></code></pre></div>
 <p>common usage 1: id to gene symbol conversion</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">human_mart &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ensembl"</span>, <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>) <span class="co"># assign the dataset to use</span></a>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">human_mart &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/useMart.html">useMart</a></span>(<span class="st">"ensembl"</span>, <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>) <span class="co"># assign the dataset to use</span></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">ensg_sym2 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/getBM">getBM</a></span>(<span class="dt">attributes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hgnc_symbol"</span>, <span class="st">"ensembl_gene_id"</span>), <span class="co"># columns you want back</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">ensg_sym2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/getBM.html">getBM</a></span>(<span class="dt">attributes =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"hgnc_symbol"</span>, <span class="st">"ensembl_gene_id"</span>), <span class="co"># columns you want back</span></a>
 <a class="sourceLine" id="cb14-4" data-line-number="4">                 <span class="dt">filters =</span> <span class="st">"ensembl_gene_id"</span>,                       <span class="co"># type of info you are providing</span></a>
 <a class="sourceLine" id="cb14-5" data-line-number="5">                 <span class="dt">mart =</span> human_mart,                                 <span class="co"># dataset of certain species</span></a>
 <a class="sourceLine" id="cb14-6" data-line-number="6">                 <span class="dt">values =</span> ensg_tibble2<span class="op">$</span>gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()        <span class="co"># values of the filter</span></a>
 <a class="sourceLine" id="cb14-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb14-8" data-line-number="8">ensg_sym2</a>
 <a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; # A tibble: 0 x 2</span></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; # ... with 2 variables: hgnc_symbol &lt;lgl&gt;, ensembl_gene_id &lt;lgl&gt;</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; # … with 2 variables: hgnc_symbol &lt;lgl&gt;, ensembl_gene_id &lt;lgl&gt;</span></a>
 <a class="sourceLine" id="cb14-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co"># try running this with ensg_tibble (version # intact), can't find matches</span></a></code></pre></div>
 <p>common usage 2: functional GO term annotation</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/listAttributes">listAttributes</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ensembl"</span>, <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/listAttributes.html">listAttributes</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/useMart.html">useMart</a></span>(<span class="st">"ensembl"</span>, <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="kw">str_detect</span>(description, <span class="st">"GO"</span>)) <span class="co"># look at attributes related to GO </span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">str_detect</span>(description, <span class="st">"GO"</span>)) <span class="co"># look at attributes related to GO </span></a>
 <a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt; # A tibble: 7 x 3</span></a>
 <a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt;   name                   description             page        </span></a>
 <a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt;   &lt;chr&gt;                  &lt;chr&gt;                   &lt;chr&gt;       </span></a>
@@ -545,9 +514,9 @@
 <a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt; 5 namespace_1003         GO domain               feature_page</span></a>
 <a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; 6 goslim_goa_accession   GOSlim GOA Accession(s) feature_page</span></a>
 <a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; 7 goslim_goa_description GOSlim GOA Description  feature_page</span></a></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">drerio_mart &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ensembl"</span>, <span class="dt">dataset =</span> <span class="st">"drerio_gene_ensembl"</span>)</a>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">drerio_mart &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/useMart.html">useMart</a></span>(<span class="st">"ensembl"</span>, <span class="dt">dataset =</span> <span class="st">"drerio_gene_ensembl"</span>)</a>
 <a class="sourceLine" id="cb16-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">loc &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"genes_drerio.csv"</span>, <span class="dt">package =</span> <span class="st">'pbda'</span>)</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">loc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"genes_drerio.csv"</span>, <span class="dt">package =</span> <span class="st">'pbda'</span>)</a>
 <a class="sourceLine" id="cb16-4" data-line-number="4">genes_drerio &lt;-<span class="st"> </span><span class="kw">read_csv</span>(loc)</a>
 <a class="sourceLine" id="cb16-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb16-6" data-line-number="6">genes_drerio</a>
@@ -575,83 +544,84 @@
 <a class="sourceLine" id="cb16-28" data-line-number="28"><span class="co">#&gt; 19 tbx2a      1.87e- 60</span></a>
 <a class="sourceLine" id="cb16-29" data-line-number="29"><span class="co">#&gt; 20 wu:fc21g02 4.14e- 54</span></a>
 <a class="sourceLine" id="cb16-30" data-line-number="30"></a>
-<a class="sourceLine" id="cb16-31" data-line-number="31">genesGO &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/getBM">getBM</a></span>(<span class="dt">attributes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"zfin_id_symbol"</span>, <span class="st">"go_id"</span>, <span class="st">"name_1006"</span>, <span class="st">"namespace_1003"</span>), </a>
+<a class="sourceLine" id="cb16-31" data-line-number="31">genesGO &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/getBM.html">getBM</a></span>(<span class="dt">attributes =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"zfin_id_symbol"</span>, <span class="st">"go_id"</span>, <span class="st">"name_1006"</span>, <span class="st">"namespace_1003"</span>), </a>
 <a class="sourceLine" id="cb16-32" data-line-number="32">                 <span class="dt">filters =</span> <span class="st">"zfin_id_symbol"</span>, </a>
 <a class="sourceLine" id="cb16-33" data-line-number="33">                 <span class="dt">mart =</span> drerio_mart, </a>
 <a class="sourceLine" id="cb16-34" data-line-number="34">                 <span class="dt">values =</span> genes_drerio<span class="op">$</span>gene, <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</a>
 <a class="sourceLine" id="cb16-35" data-line-number="35"></a>
 <a class="sourceLine" id="cb16-36" data-line-number="36">genesGO</a>
-<a class="sourceLine" id="cb16-37" data-line-number="37"><span class="co">#&gt; # A tibble: 135 x 4</span></a>
-<a class="sourceLine" id="cb16-38" data-line-number="38"><span class="co">#&gt;    zfin_id_symbol go_id     name_1006                     namespace_1003  </span></a>
-<a class="sourceLine" id="cb16-39" data-line-number="39"><span class="co">#&gt;    &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;                         &lt;chr&gt;           </span></a>
-<a class="sourceLine" id="cb16-40" data-line-number="40"><span class="co">#&gt;  1 tbx18          GO:00036… DNA binding                   molecular_funct…</span></a>
-<a class="sourceLine" id="cb16-41" data-line-number="41"><span class="co">#&gt;  2 tbx18          GO:00037… DNA-binding transcription fa… molecular_funct…</span></a>
-<a class="sourceLine" id="cb16-42" data-line-number="42"><span class="co">#&gt;  3 tbx18          GO:00063… regulation of transcription,… biological_proc…</span></a>
-<a class="sourceLine" id="cb16-43" data-line-number="43"><span class="co">#&gt;  4 tbx18          GO:00056… nucleus                       cellular_compon…</span></a>
-<a class="sourceLine" id="cb16-44" data-line-number="44"><span class="co">#&gt;  5 tbx2a          GO:00036… DNA binding                   molecular_funct…</span></a>
-<a class="sourceLine" id="cb16-45" data-line-number="45"><span class="co">#&gt;  6 tbx2a          GO:00037… DNA-binding transcription fa… molecular_funct…</span></a>
-<a class="sourceLine" id="cb16-46" data-line-number="46"><span class="co">#&gt;  7 tbx2a          GO:00063… regulation of transcription,… biological_proc…</span></a>
-<a class="sourceLine" id="cb16-47" data-line-number="47"><span class="co">#&gt;  8 tbx2a          GO:00056… nucleus                       cellular_compon…</span></a>
-<a class="sourceLine" id="cb16-48" data-line-number="48"><span class="co">#&gt;  9 tbx2a          GO:00055… protein binding               molecular_funct…</span></a>
-<a class="sourceLine" id="cb16-49" data-line-number="49"><span class="co">#&gt; 10 tbx2a          GO:00487… pronephros development        biological_proc…</span></a>
-<a class="sourceLine" id="cb16-50" data-line-number="50"><span class="co">#&gt; # ... with 125 more rows</span></a>
+<a class="sourceLine" id="cb16-37" data-line-number="37"><span class="co">#&gt; # A tibble: 157 x 4</span></a>
+<a class="sourceLine" id="cb16-38" data-line-number="38"><span class="co">#&gt;    zfin_id_symbol go_id    name_1006                             namespace_1003 </span></a>
+<a class="sourceLine" id="cb16-39" data-line-number="39"><span class="co">#&gt;    &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;                                 &lt;chr&gt;          </span></a>
+<a class="sourceLine" id="cb16-40" data-line-number="40"><span class="co">#&gt;  1 tbx18          GO:0006… regulation of transcription, DNA-tem… biological_pro…</span></a>
+<a class="sourceLine" id="cb16-41" data-line-number="41"><span class="co">#&gt;  2 tbx18          GO:0005… nucleus                               cellular_compo…</span></a>
+<a class="sourceLine" id="cb16-42" data-line-number="42"><span class="co">#&gt;  3 tbx18          GO:0003… DNA-binding transcription factor act… molecular_func…</span></a>
+<a class="sourceLine" id="cb16-43" data-line-number="43"><span class="co">#&gt;  4 tbx18          GO:0003… DNA binding                           molecular_func…</span></a>
+<a class="sourceLine" id="cb16-44" data-line-number="44"><span class="co">#&gt;  5 tbx18          GO:0000… RNA polymerase II regulatory region … molecular_func…</span></a>
+<a class="sourceLine" id="cb16-45" data-line-number="45"><span class="co">#&gt;  6 tbx18          GO:0001… DNA-binding transcription activator … molecular_func…</span></a>
+<a class="sourceLine" id="cb16-46" data-line-number="46"><span class="co">#&gt;  7 tbx18          GO:0000… negative regulation of transcription… biological_pro…</span></a>
+<a class="sourceLine" id="cb16-47" data-line-number="47"><span class="co">#&gt;  8 tbx18          GO:0045… positive regulation of transcription… biological_pro…</span></a>
+<a class="sourceLine" id="cb16-48" data-line-number="48"><span class="co">#&gt;  9 tbx18          GO:0001… RNA polymerase II activating transcr… molecular_func…</span></a>
+<a class="sourceLine" id="cb16-49" data-line-number="49"><span class="co">#&gt; 10 tbx18          GO:0001… somitogenesis                         biological_pro…</span></a>
+<a class="sourceLine" id="cb16-50" data-line-number="50"><span class="co">#&gt; # … with 147 more rows</span></a>
 <a class="sourceLine" id="cb16-51" data-line-number="51"></a>
-<a class="sourceLine" id="cb16-52" data-line-number="52">genesGO &lt;-<span class="st"> </span>genesGO <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(go_id <span class="op">!=</span><span class="st"> ""</span>) <span class="co"># note that there are lines with empty go terms, remember to remove those</span></a>
+<a class="sourceLine" id="cb16-52" data-line-number="52">genesGO &lt;-<span class="st"> </span>genesGO <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(go_id <span class="op">!=</span><span class="st"> ""</span>) <span class="co"># note that there are lines with empty go terms, remember to remove those</span></a>
 <a class="sourceLine" id="cb16-53" data-line-number="53"></a>
 <a class="sourceLine" id="cb16-54" data-line-number="54"><span class="co"># join GO dataframe with original RNA-seq/scRNA-seq data if needed</span></a>
 <a class="sourceLine" id="cb16-55" data-line-number="55">genes_drerio_joinedGO &lt;-<span class="st"> </span><span class="kw">left_join</span>(genes_drerio, genesGO, </a>
-<a class="sourceLine" id="cb16-56" data-line-number="56">                                   <span class="dt">by =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"gene"</span> =<span class="st"> "zfin_id_symbol"</span>))</a>
+<a class="sourceLine" id="cb16-56" data-line-number="56">                                   <span class="dt">by =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gene"</span> =<span class="st"> "zfin_id_symbol"</span>))</a>
 <a class="sourceLine" id="cb16-57" data-line-number="57"></a>
 <a class="sourceLine" id="cb16-58" data-line-number="58">genes_drerio_joinedGO</a>
-<a class="sourceLine" id="cb16-59" data-line-number="59"><span class="co">#&gt; # A tibble: 130 x 5</span></a>
-<a class="sourceLine" id="cb16-60" data-line-number="60"><span class="co">#&gt;    gene   p_val_adj go_id    name_1006                    namespace_1003  </span></a>
-<a class="sourceLine" id="cb16-61" data-line-number="61"><span class="co">#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;                        &lt;chr&gt;           </span></a>
-<a class="sourceLine" id="cb16-62" data-line-number="62"><span class="co">#&gt;  1 tbx18  1.36e-275 GO:0003… DNA binding                  molecular_funct…</span></a>
-<a class="sourceLine" id="cb16-63" data-line-number="63"><span class="co">#&gt;  2 tbx18  1.36e-275 GO:0003… DNA-binding transcription f… molecular_funct…</span></a>
-<a class="sourceLine" id="cb16-64" data-line-number="64"><span class="co">#&gt;  3 tbx18  1.36e-275 GO:0006… regulation of transcription… biological_proc…</span></a>
-<a class="sourceLine" id="cb16-65" data-line-number="65"><span class="co">#&gt;  4 tbx18  1.36e-275 GO:0005… nucleus                      cellular_compon…</span></a>
-<a class="sourceLine" id="cb16-66" data-line-number="66"><span class="co">#&gt;  5 tmsb4x 5.40e-222 GO:0003… actin monomer binding        molecular_funct…</span></a>
-<a class="sourceLine" id="cb16-67" data-line-number="67"><span class="co">#&gt;  6 tmsb4x 5.40e-222 GO:0007… actin filament organization  biological_proc…</span></a>
-<a class="sourceLine" id="cb16-68" data-line-number="68"><span class="co">#&gt;  7 tmsb4x 5.40e-222 GO:0030… regulation of cell migration biological_proc…</span></a>
-<a class="sourceLine" id="cb16-69" data-line-number="69"><span class="co">#&gt;  8 tmsb4x 5.40e-222 GO:0042… sequestering of actin monom… biological_proc…</span></a>
-<a class="sourceLine" id="cb16-70" data-line-number="70"><span class="co">#&gt;  9 tmsb4x 5.40e-222 GO:0005… cytoplasm                    cellular_compon…</span></a>
-<a class="sourceLine" id="cb16-71" data-line-number="71"><span class="co">#&gt; 10 tmsb4x 5.40e-222 GO:0001… heart looping                biological_proc…</span></a>
-<a class="sourceLine" id="cb16-72" data-line-number="72"><span class="co">#&gt; # ... with 120 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb16-59" data-line-number="59"><span class="co">#&gt; # A tibble: 153 x 5</span></a>
+<a class="sourceLine" id="cb16-60" data-line-number="60"><span class="co">#&gt;    gene  p_val_adj go_id    name_1006                            namespace_1003 </span></a>
+<a class="sourceLine" id="cb16-61" data-line-number="61"><span class="co">#&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;                                &lt;chr&gt;          </span></a>
+<a class="sourceLine" id="cb16-62" data-line-number="62"><span class="co">#&gt;  1 tbx18 1.36e-275 GO:0006… regulation of transcription, DNA-te… biological_pro…</span></a>
+<a class="sourceLine" id="cb16-63" data-line-number="63"><span class="co">#&gt;  2 tbx18 1.36e-275 GO:0005… nucleus                              cellular_compo…</span></a>
+<a class="sourceLine" id="cb16-64" data-line-number="64"><span class="co">#&gt;  3 tbx18 1.36e-275 GO:0003… DNA-binding transcription factor ac… molecular_func…</span></a>
+<a class="sourceLine" id="cb16-65" data-line-number="65"><span class="co">#&gt;  4 tbx18 1.36e-275 GO:0003… DNA binding                          molecular_func…</span></a>
+<a class="sourceLine" id="cb16-66" data-line-number="66"><span class="co">#&gt;  5 tbx18 1.36e-275 GO:0000… RNA polymerase II regulatory region… molecular_func…</span></a>
+<a class="sourceLine" id="cb16-67" data-line-number="67"><span class="co">#&gt;  6 tbx18 1.36e-275 GO:0001… DNA-binding transcription activator… molecular_func…</span></a>
+<a class="sourceLine" id="cb16-68" data-line-number="68"><span class="co">#&gt;  7 tbx18 1.36e-275 GO:0000… negative regulation of transcriptio… biological_pro…</span></a>
+<a class="sourceLine" id="cb16-69" data-line-number="69"><span class="co">#&gt;  8 tbx18 1.36e-275 GO:0045… positive regulation of transcriptio… biological_pro…</span></a>
+<a class="sourceLine" id="cb16-70" data-line-number="70"><span class="co">#&gt;  9 tbx18 1.36e-275 GO:0001… RNA polymerase II activating transc… molecular_func…</span></a>
+<a class="sourceLine" id="cb16-71" data-line-number="71"><span class="co">#&gt; 10 tbx18 1.36e-275 GO:0001… somitogenesis                        biological_pro…</span></a>
+<a class="sourceLine" id="cb16-72" data-line-number="72"><span class="co">#&gt; # … with 143 more rows</span></a></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># or, get all genes with GO term of interest, by providing multiple filters</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">genesGO_filtered &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/getBM">getBM</a></span>(<span class="dt">attributes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"zfin_id_symbol"</span>), </a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">                  <span class="dt">filters =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"zfin_id_symbol"</span>, <span class="st">"go"</span>), </a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">genesGO_filtered &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/getBM.html">getBM</a></span>(<span class="dt">attributes =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"zfin_id_symbol"</span>), </a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">                  <span class="dt">filters =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"zfin_id_symbol"</span>, <span class="st">"go"</span>), </a>
 <a class="sourceLine" id="cb17-4" data-line-number="4">                  <span class="dt">mart =</span> drerio_mart, </a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">                  <span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(genes_drerio<span class="op">$</span>gene, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"GO:0003677"</span>)))</a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb17-7" data-line-number="7">genesGO_filtered</a>
-<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">#&gt;   zfin_id_symbol</span></a>
-<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">#&gt; 1          tbx18</span></a>
-<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co">#&gt; 2          tbx2a</span></a>
-<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co">#&gt; 3     zgc:162612</span></a></code></pre></div>
+<a class="sourceLine" id="cb17-5" data-line-number="5">                  <span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(genes_drerio<span class="op">$</span>gene, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"GO:0003677"</span>)))</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">#&gt; Cache found</span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8">genesGO_filtered</a>
+<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">#&gt;   zfin_id_symbol</span></a>
+<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co">#&gt; 1          tbx18</span></a>
+<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co">#&gt; 2          tbx2a</span></a>
+<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="co">#&gt; 3     zgc:162612</span></a></code></pre></div>
 <p>common usage 3: ortholog conversion between species</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># example of zebrafish to human gene symbol conversion</span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">human_mart &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ensembl"</span>, <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>)</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">drerio_mart &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ensembl"</span>, <span class="dt">dataset =</span> <span class="st">"drerio_gene_ensembl"</span>)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">human_mart &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/useMart.html">useMart</a></span>(<span class="st">"ensembl"</span>, <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>)</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">drerio_mart &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/useMart.html">useMart</a></span>(<span class="st">"ensembl"</span>, <span class="dt">dataset =</span> <span class="st">"drerio_gene_ensembl"</span>)</a>
 <a class="sourceLine" id="cb18-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb18-5" data-line-number="5">genes_human &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/getLDS">getLDS</a></span>(<span class="dt">attributes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hgnc_symbol"</span>), <span class="co"># "linked datasets"</span></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5">genes_human &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/biomaRt/man/getLDS.html">getLDS</a></span>(<span class="dt">attributes =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"hgnc_symbol"</span>), <span class="co"># "linked datasets"</span></a>
 <a class="sourceLine" id="cb18-6" data-line-number="6">                      <span class="dt">filters =</span> <span class="st">"hgnc_symbol"</span>, </a>
 <a class="sourceLine" id="cb18-7" data-line-number="7">                      <span class="dt">mart =</span> human_mart, </a>
-<a class="sourceLine" id="cb18-8" data-line-number="8">                      <span class="dt">attributesL =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"zfin_id_symbol"</span>), </a>
+<a class="sourceLine" id="cb18-8" data-line-number="8">                      <span class="dt">attributesL =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"zfin_id_symbol"</span>), </a>
 <a class="sourceLine" id="cb18-9" data-line-number="9">                      <span class="dt">martL =</span> drerio_mart, </a>
 <a class="sourceLine" id="cb18-10" data-line-number="10">                      <span class="dt">values =</span> genes_drerio<span class="op">$</span>gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</a>
 <a class="sourceLine" id="cb18-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb18-12" data-line-number="12">genes_human</a>
 <a class="sourceLine" id="cb18-13" data-line-number="13"><span class="co">#&gt; # A tibble: 8 x 2</span></a>
-<a class="sourceLine" id="cb18-14" data-line-number="14"><span class="co">#&gt;   HGNC.symbol ZFIN.symbol</span></a>
-<a class="sourceLine" id="cb18-15" data-line-number="15"><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;      </span></a>
-<a class="sourceLine" id="cb18-16" data-line-number="16"><span class="co">#&gt; 1 XBP1        xbp1       </span></a>
-<a class="sourceLine" id="cb18-17" data-line-number="17"><span class="co">#&gt; 2 TPM3        tpm3       </span></a>
-<a class="sourceLine" id="cb18-18" data-line-number="18"><span class="co">#&gt; 3 TGFBI       tgfbi      </span></a>
-<a class="sourceLine" id="cb18-19" data-line-number="19"><span class="co">#&gt; 4 TBX18       tbx18      </span></a>
-<a class="sourceLine" id="cb18-20" data-line-number="20"><span class="co">#&gt; 5 TMEM258     tmem258    </span></a>
-<a class="sourceLine" id="cb18-21" data-line-number="21"><span class="co">#&gt; 6 YWHAZ       ywhabb     </span></a>
-<a class="sourceLine" id="cb18-22" data-line-number="22"><span class="co">#&gt; 7 YWHAZ       ywhaba     </span></a>
-<a class="sourceLine" id="cb18-23" data-line-number="23"><span class="co">#&gt; 8 TUBA1A      tuba1a</span></a></code></pre></div>
+<a class="sourceLine" id="cb18-14" data-line-number="14"><span class="co">#&gt;   HGNC.symbol ZFIN.symbol   </span></a>
+<a class="sourceLine" id="cb18-15" data-line-number="15"><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;         </span></a>
+<a class="sourceLine" id="cb18-16" data-line-number="16"><span class="co">#&gt; 1 XBP1        xbp1          </span></a>
+<a class="sourceLine" id="cb18-17" data-line-number="17"><span class="co">#&gt; 2 TPM3        tpm3          </span></a>
+<a class="sourceLine" id="cb18-18" data-line-number="18"><span class="co">#&gt; 3 TNC         tnc           </span></a>
+<a class="sourceLine" id="cb18-19" data-line-number="19"><span class="co">#&gt; 4 TBX18       tbx18         </span></a>
+<a class="sourceLine" id="cb18-20" data-line-number="20"><span class="co">#&gt; 5 TGFBI       tgfbi         </span></a>
+<a class="sourceLine" id="cb18-21" data-line-number="21"><span class="co">#&gt; 6 TMEM258     tmem258       </span></a>
+<a class="sourceLine" id="cb18-22" data-line-number="22"><span class="co">#&gt; 7 TUBA1A      tuba1a        </span></a>
+<a class="sourceLine" id="cb18-23" data-line-number="23"><span class="co">#&gt; 8 TNC         zmp:0000000846</span></a></code></pre></div>
 </div>
 <div id="exercise" class="section level2">
 <h2 class="hasAnchor">
@@ -672,6 +642,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -690,17 +661,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
-  <p>Developed by <a href="https://hesselberthlab.org">Jay Hesselberth</a>, Austin Gillen, Kent Riemondy, Rui Fu.</p>
+  <p>Developed by <a href="https://hesselberthlab.org">Jay Hesselberth</a>, Austin Gillen, Kent Riemondy, Rui Fu, Ryan Sheridan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
