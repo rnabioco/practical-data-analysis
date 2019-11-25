@@ -50,11 +50,12 @@ biocViews:
     biomaRt
 Suggests: 
     knitr,
-    rmarkdown,
     R.utils
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/rnabioco/practical-data-analysis, https://rnabioco.github.io/practical-data-analysis/
+Remotes: 
+    rstudio/rmarkdown
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
