@@ -22,7 +22,7 @@ Authors@R: c(
 Description: Provides course materials for IDPT 7810, Practical Biological Data Analysis in R.
 License: CC0
 Depends: 
-    R (>= 3.6.1)
+    R (>= 3.6.0)
 Imports: 
     cowplot,
     dplyr,
@@ -55,6 +55,6 @@ Suggests:
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/IDPT7810/practical-data-analysis, https://idpt7810.github.io/practical-data-analysis/
+URL: https://github.com/rnabioco/practical-data-analysis, https://rnabioco.github.io/practical-data-analysis/
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1

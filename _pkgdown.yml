@@ -33,28 +33,26 @@ navbar:
         href: articles/class-1.html
       - text: "Class 2: Analyzing qPCR data"
         href: articles/class-2.html
-      - text: "Class 3: Exploring a biological data set"
-        href: articles/class-3.html
-      - text: "Class 4: RNA-seq Analysis"
-        href: articles/class-4.html
-      - text: "Class 5: Gene List Handling"
-        href: articles/class-5.html
-      - text: "Class 6: Single Cell RNA-seq"
-        href: articles/class-6.html
-      - text: "Class 7: Heatmaps and Clustering"
-        href: articles/class-7.html
-      - text: "Class 8: Exploring data with PCA"
-        href: articles/class-8.html
-      - text: "Class 9: Tips, Data I/O, and Resources"
-        href: articles/class-9.html
+     # - text: "Class 3: Exploring a biological data set"
+     #   href: articles/class-3.html
+     # - text: "Class 4: RNA-seq Analysis"
+     #   href: articles/class-4.html
+     # - text: "Class 5: Gene List Handling"
+     #   href: articles/class-5.html
+     # - text: "Class 6: Single Cell RNA-seq"
+     #   href: articles/class-6.html
+     # - text: "Class 7: Heatmaps and Clustering"
+     #   href: articles/class-7.html
+     # - text: "Class 8: Exploring data with PCA"
+     #   href: articles/class-8.html
+     # - text: "Class 9: Tips, Data I/O, and Resources"
+     #   href: articles/class-9.html
       - text: "--------"
       - text: "Assignment Submission and Grading Rubric"
         href: articles/assignments.html
-      - text: "Problem Set 1"
-        href: articles/problem-set-1.html
-      - text: "Problem Set 2"
-        href: articles/problem-set-2.html
-      - text: "Problem Set 3"
-        href: articles/problem-set-3.html
-      - text: "Problem Set 4"
-        href: articles/problem-set-4.html
+     # - text: "Problem Set 1"
+     #   href: articles/problem-set-1.html
+     # - text: "Problem Set 2"
+     #   href: articles/problem-set-2.html
+     # - text: "Problem Set 3"
+     #   href: articles/problem-set-3.html

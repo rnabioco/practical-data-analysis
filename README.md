@@ -2,7 +2,7 @@
 # Practical Biological Data Analysis with R/RStudio
 
 [![Build
-Status](https://travis-ci.org/IDPT7810/practical-data-analysis.svg?branch=master)](https://travis-ci.org/IDPT7810/practical-data-analysis)
+Status](https://travis-ci.org/rnabioco/practical-data-analysis.svg?branch=master)](https://travis-ci.org/rnabioco/practical-data-analysis)
 [![Build
 status](https://ci.appveyor.com/api/projects/status/nmsmgqp6nr1898wq?svg=true)](https://ci.appveyor.com/project/kriemo/practical-data-analysis)
 
@@ -47,7 +47,7 @@ Ryan Sheridan (<ryan.sheridan@cuanschutz.edu>)
 ## Course marks
 
 See [Grading and
-Assignments](https://idpt7810.github.io/practical-data-analysis/articles/assignments.html).
+Assignments](https://rnabioco.github.io/practical-data-analysis/articles/assignments.html).
 
 ## Installation
 
@@ -55,5 +55,5 @@ You can install the course package from github with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("idpt7810/practical-data-analysis")
+devtools::install_github("rnabioco/practical-data-analysis")
 ```
