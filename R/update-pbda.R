@@ -8,6 +8,6 @@
 #' update_pbda()
 #' }
 #' @export
-update_pbda <- function(repo = "IDPT7810/practical-data-analysis", ...){
+update_pbda <- function(repo = "rnabioco/practical-data-analysis", ...){
   devtools::install_github(repo, ...)
 }
