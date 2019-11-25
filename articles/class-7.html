@@ -597,7 +597,7 @@
 <p>Cluster assignments can be extracted using <code>$cluster</code></p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">clusters<span class="op">$</span>cluster <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a>
 <a class="sourceLine" id="cb41-2" data-line-number="2"><span class="co">#&gt;        Zbed3 LOC100502936       C86187         Btg4       Alppl2         Tcl1 </span></a>
-<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="co">#&gt;            4            5            4            4            3            4</span></a></code></pre></div>
+<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="co">#&gt;            3            2            3            3            5            3</span></a></code></pre></div>
 <p>To recover a reproducible kmeans classification set a seed for the random number generator</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">42</span>)</a>
 <a class="sourceLine" id="cb42-2" data-line-number="2">clusters &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/kmeans.html">kmeans</a></span>(var_mat, <span class="dt">centers =</span> <span class="dv">5</span>)</a>
