@@ -250,7 +250,7 @@ brauer_gene_exp %>%
 <br>
 
 ### Multiple conditions
-```
+```{r, eval = F}
 if (condition_1) {
   executed when condition_1 is TRUE
   
