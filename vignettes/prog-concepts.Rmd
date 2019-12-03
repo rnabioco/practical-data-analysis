@@ -15,9 +15,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.align = "left"
 )
-library(tidyverse)
-library(ggrepel)
 library(pbda)
+library(tidyverse)
 library(cowplot)
 ```
 
