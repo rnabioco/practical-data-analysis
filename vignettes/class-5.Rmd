@@ -6,7 +6,6 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Class-5}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
@@ -43,6 +42,9 @@ library(dplyr)
 class(0L)
 class(0.0)
 class("0")
+
+is.numeric(0L)
+is.integer(0L)
 ```
 
 ### coerce to other classes
@@ -249,7 +251,14 @@ From `cc.genes`, how many markers are shared for both S phase and G2/M?
 ```{r, list_prac}
 ```
 
-## 5. S3/S4, more complex objects, similar to lists but accessed with @. See RNAseq class.
+### list practice question 2 - 
+Are ggplot objects list?
+```{r, list_prac2}
+library(ggplot2)
+g <- ggplot(mtcars, aes(x = hp, y = mpg, color = factor(cyl))) + geom_point()
+```
+
+## 5. S3/S4, more complex objects, similar to lists but accessed with $ and @. See RNAseq class.
 
 ## 6. factors, grouping variables the data
 ### plotting use case
