@@ -4,7 +4,7 @@ author: "Rui Fu"
 date: "2018-12-07"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Class-5}
+  %\VignetteIndexEntry{Class-5old}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
