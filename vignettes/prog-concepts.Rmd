@@ -2,6 +2,12 @@
 title: "Programming concepts"
 author: "Ryan Sheridan"
 date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: TRUE
+    toc_float: true
+    toc_depth: 2
+
 # output: rmarkdown::html_vignette
 # vignette: >
 #  %\VignetteIndexEntry{Class-8}
@@ -54,8 +60,6 @@ new_c <- (c - rng[1]) / (rng[2] - rng[1])
 
 <br>
 
----
-
 <br>
 
 ### Function structure
@@ -103,8 +107,6 @@ calc_sd <- function(x) {
 
 <br>
 
----
-
 <br>
 
 ### The function execution environment
@@ -144,8 +146,6 @@ a
 ```
 
 <br>
-
----
 
 <br>
 
@@ -208,8 +208,6 @@ brauer_gene_exp %>%
 ```
 
 <br>
-
----
 
 <br>
 
@@ -299,8 +297,6 @@ if (condition_1 || condition_2) {
 
 <br>
 
----
-
 <br>
 
 ### Checking inputs
@@ -378,8 +374,6 @@ brauer_gene_exp %>%
 
 <br>
 
----
-
 <br>
 
 ### Passing arguments with the ellipsis (...)
@@ -421,8 +415,6 @@ brauer_gene_exp %>%
 
 <br>
 
----
-
 <br>
 
 ### Saving your functions for later
@@ -432,8 +424,6 @@ source("path/to/my_functions.R")
 ```
 
 <br>
-
----
 
 <br>
 
@@ -454,7 +444,7 @@ for (i in 1:length(out)) {
 }
 
 # Lets use rnorm() to create 5 vectors with different values for 'mean'
-# One way to do this is to through copying and pasting
+# One way to do this is by copying and pasting
 out <- vector("list", 5)
 
 out[[1]] <- rnorm(n = 10, mean = 1)
@@ -486,8 +476,6 @@ for (i in seq_along(lens)) {
 ```
 
 <br>
-
----
 
 <br>
 
@@ -551,8 +539,6 @@ plot_grid(plotlist = growth_plots)
 
 <br>
 
----
-
 <br>
 
 ### Introduction to `purrr::map`
@@ -571,7 +557,7 @@ Each `map()` function requires two inputs: `map(.x, .f, ...)`
 - `.x` is a list or atomic vector
 - `.f` is a function or formula
 ```{r}
-# We previously used a for loop to create vectors with different means
+# We previously used a for loop to create vectors with different values for mean
 vals <- c(1, 50, 20, 5, 70)
 out <- vector("list", length(vals))
 
@@ -580,9 +566,19 @@ for (i in seq_along(vals)) {
 }
 
 # Using map() we can further simplify this code
-# Each element of the vector is passed to the first available argument
-out <- map(vals, ~ rnorm(n = 10, mean = .x))
+# .x indicates where each element of the vector should be inserted
+out <- map(
+  .x = vals,
+  .f = ~ rnorm(n = 10, mean = .x)
+)
 
+# You can use brackets to include a multi-line code block
+out <- map(vals, ~ {
+  rnorm(n = 10, mean = .x)
+})
+
+# map() allows for very readable code
+# Each element of the vector is passed to the first available argument
 out <- map(vals, rnorm, n = 10)
 ```
 
@@ -610,8 +606,6 @@ plot_grid(plotlist = growth_plots)
 
 <br>
 
----
-
 <br>
 
 ### Mapping over multiple arguments
@@ -633,7 +627,7 @@ plot_grid(plotlist = growth_plots)
 
 <br>
 
-*Use `map2()` to create plots for 4 different genes, each with a different line size*
+*Use `map2()` to create plots for 4 different genes, each with a different point size*
 ```{r, fig.width = 10, fig.height = 8}
 genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
 sizes <- c(1, 2, 3, 4)
@@ -653,25 +647,51 @@ plot_grid(plotlist = growth_plots)
 
 `pmap` can be used to map over any number of arguments.
 ```{r, fig.width = 10, fig.height = 8}
-plot_args <- list(
-  sys_name = c("YDL104C", "YOR069W", "YLR115W", "YPR036W"),
-  size = c(2, 3, 4, 5),
-  shape = c(1, 2, 3, 4)
+
+# Create a list of input vectors
+genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
+sizes <- c(2, 3, 4, 5)
+shapes <- c(1, 2, 3, 4)
+
+plot_args <- list(genes, sizes, shapes)
+
+# Run use argument list with pmap
+growth_plots <- pmap(
+  .l = plot_args,
+  .f = ~ {
+    plot_expr(
+      input = brauer_gene_exp,
+      sys_name = ..1,
+      size     = ..2,
+      shape    = ..3
+    )
+  }
 )
 
-growth_plots <- pmap(plot_args, plot_expr, brauer_gene_exp)
+plot_grid(plotlist = growth_plots)
+
+# A simpler way
+plot_args <- list(
+  sys_name = c("YDL104C", "YOR069W", "YLR115W", "YPR036W"),
+  size     = c(2, 3, 4, 5),
+  shape    = c(1, 2, 3, 4)
+)
+
+growth_plots <- pmap(
+  .l = plot_args, 
+  .f = plot_expr, 
+  input = brauer_gene_exp
+)
 
 plot_grid(plotlist = growth_plots)
 ```
 
 <br>
 
----
-
 <br>
 
 ## More exercises
-*Write a function that has two arguments (data, systematic_name) and creates the following plot*
+(@) Write a function that has two arguments (data, systematic_name) and creates the following plot
 ```{r, echo = F}
 plot_expr_2 <- function(input, sys_name) {
   
@@ -699,7 +719,9 @@ plot_expr_2(
 
 <br>
 
-*Add an argument to hide the figure legend*
+<br>
+
+(@) Add an argument to hide the figure legend
 ```{r, echo = F}
 plot_expr_3 <- function(input, sys_name, hide_legend = F) {
   
@@ -725,7 +747,7 @@ plot_expr_3 <- function(input, sys_name, hide_legend = F) {
 }
 ```
 
-```{r, fig.width = 6, fig.height = 4}
+```{r, fig.width = 6, fig.height = 3.5}
 plot_expr_3(
   input = brauer_gene_exp,
   sys_name = "YDL104C",
@@ -735,13 +757,15 @@ plot_expr_3(
 
 <br>
 
-*Use your function with `map()` to create a figure containing plots for four genes*
+<br>
+
+(@) Use your function with `map()` to create a figure containing plots for four genes
 ```{r, fig.width = 10, fig.height = 6.5, echo = F}
 sys_names <- c("YNL049C", "YNL095C", "YDL104C", "YLR115W")
 
 expr_plots <- map(
   .x = sys_names, 
-  .f = plot_expr_2, 
+  .f = plot_expr_3, 
   input = brauer_gene_exp
 )
 
@@ -750,183 +774,252 @@ plot_grid(plotlist = expr_plots)
 
 <br>
 
-*Modify your function to take a vector of systematic_names to create the following plot*
+<br>
+
+(@) Modify your function so the points are red if the mean expression is >-0.1
 ```{r, echo = F}
-plot_expr_3 <- function(input, sys_name) {
+plot_expr_4 <- function(input, sys_name, hide_legend = F) {
   
-  input %>%
-    filter(systematic_name %in% sys_name) %>%
-    ggplot(aes(rate, expression, color = nutrient)) + 
-    geom_point() + 
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  res <- gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
     geom_smooth(method = "lm", se = F) +
-    facet_wrap(~ systematic_name) +
+    geom_point() +
+    labs(title = plot_title, subtitle = plot_sub) +
     theme_cowplot()
+  
+  if (hide_legend) {
+    res <- res +
+      theme(legend.position = "none")
+  }
+  
+  mean_exp <- mean(gg_data$expression)
+  
+  if (mean_exp > -0.1) {
+    res <- res +
+      geom_point(color = "red")
+  }
+  
+  res
+}
+```
+
+```{r, fig.width = 6, fig.height = 3.5}
+plot_expr_4(
+  input = brauer_gene_exp,
+  sys_name = "YNL049C"
+)
+```
+
+<br>
+
+<br>
+
+(@) Add arguments that let the user set the mean expression cutoff and the point color when the mean is greater than the cutoff
+```{r, echo = F}
+plot_expr_5 <- function(input, sys_name, hide_legend = F, exp_cutoff = -0.1, 
+                        exp_color = "red") {
+  
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  res <- gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_smooth(method = "lm", se = F) +
+    geom_point() +
+    labs(title = plot_title, subtitle = plot_sub) +
+    theme_cowplot()
+  
+  if (hide_legend) {
+    res <- res +
+      theme(legend.position = "none")
+  }
+  
+  mean_exp <- mean(gg_data$expression)
+  
+  if (mean_exp > exp_cutoff) {
+    res <- res +
+      geom_point(color = exp_color)
+  }
+  
+  res
+}
+```
+
+```{r, fig.width = 6, fig.height = 3.5}
+plot_expr_5(
+  input = brauer_gene_exp,
+  sys_name = "YNL049C",
+  exp_cutoff = -0.1,
+  exp_color = "blue"
+)
+```
+
+<br>
+
+<br>
+
+(@) Modify your function so each rate is represented by a different point shape (and hide the legend for shape)
+```{r, echo = F}
+plot_expr_6 <- function(input, sys_name, hide_legend = F, 
+                        exp_cutoff = -0.1, exp_color = "red") {
+  
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  res <- gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_smooth(method = "lm", se = F) +
+    geom_point(aes(shape = as.character(rate)), show.legend = F) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    theme_cowplot()
+  
+  if (hide_legend) {
+    res <- res +
+      theme(legend.position = "none")
+  }
+  
+  mean_exp <- mean(gg_data$expression)
+  
+  if (mean_exp > exp_cutoff) {
+    res <- res +
+      geom_point(aes(shape = as.character(rate)), color = exp_color, show.legend = F)
+  }
+  
+  res
+}
+```
+
+```{r, fig.width = 10, fig.height = 3.5}
+p_1 <- plot_expr_6(
+  input = brauer_gene_exp,
+  sys_name = "YNL049C",
+  exp_cutoff = 10,
+  hide_legend = T
+)
+
+p_2 <- plot_expr_6(
+  input = brauer_gene_exp,
+  sys_name = "YNL049C",
+  exp_cutoff = -0.1,
+  exp_color = "blue"
+)
+
+plot_grid(
+  p_1, p_2, 
+  nrow = 1, 
+  rel_widths = c(0.44, 0.56)
+)
+```
+
+<br>
+
+<br>
+
+(@) Use the ellipsis to pass arguments directly to `theme()`
+```{r, echo = F}
+plot_expr_7 <- function(input, sys_name, hide_legend = F, exp_cutoff = -0.1, 
+                        exp_color = "red", ...) {
+  
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  res <- gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_smooth(method = "lm", se = F) +
+    geom_point(aes(shape = as.character(rate)), show.legend = F) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    theme_cowplot() +
+    theme(...)
+  
+  if (hide_legend) {
+    res <- res +
+      theme(legend.position = "none")
+  }
+  
+  mean_exp <- mean(gg_data$expression)
+  
+  if (mean_exp > exp_cutoff) {
+    res <- res +
+      geom_point(aes(shape = as.character(rate)), color = exp_color, show.legend = F)
+  }
+  
+  res
+}
+```
+
+```{r, fig.width = 6, fig.height = 3.5}
+plot_expr_7(
+  input        = brauer_gene_exp,
+  sys_name     = "YNL049C",
+  exp_cutoff   = -0.1,
+  axis.title.x = element_blank(),
+  axis.text.y  = element_text(size = 20),
+  plot.title   = element_text(face = "italic")
+)
+```
+
+<br>
+
+<br>
+
+(@) Modify your function to take a vector of systematic_names to create the following plot
+```{r, echo = F}
+plot_expr_8 <- function(input, sys_name, hide_legend = F, exp_cutoff = -0.1, 
+                        exp_color = "red", ...) {
+  
+  gg_data <- input %>%
+    filter(systematic_name %in% sys_name)
+  
+  res <- gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_smooth(method = "lm", se = F) +
+    geom_point(aes(shape = as.character(rate)), show.legend = F) +
+    facet_wrap(~ systematic_name) +
+    theme_cowplot() +
+    theme(...)
+  
+  if (hide_legend) {
+    res <- res +
+      theme(legend.position = "none")
+  }
+  
+  mean_exp <- mean(gg_data$expression)
+  
+  if (mean_exp > exp_cutoff) {
+    res <- res +
+      geom_point(aes(shape = as.character(rate)), color = exp_color, show.legend = F)
+  }
+  
+  res
 }
 ```
 
 ```{r, fig.width = 10, fig.height = 6.5}
 name_vec <- c("YNL049C", "YNL095C", "YDL104C", "YLR115W")
 
-plot_expr_3(
-  input = brauer_gene_exp,
-  sys_name = name_vec
+plot_expr_8(
+  input        = brauer_gene_exp,
+  sys_name     = name_vec,
+  exp_cutoff   = -0.1,
+  axis.title.x = element_blank(),
+  axis.text.y  = element_text(size = 20),
+  plot.title   = element_text(face = "italic")
 )
 ```
-
-<br>
-
----
-
-<br>
-
-## Factors
-
-### What are factors?
-Factors are useful when you want to modify how categorical data is displayed. To manipulate factors tidyverse provides the forcats package.
-```{r}
-# Imagine we have a character vector containing a few months
-x <- c("Dec", "Apr", "Jan", "Mar")
-x
-
-# Sorting this vector will arrange the months in alphabetical order, which isn't useful
-sort(x)
-
-# To sort our months based on their order in the year, we can convert to a factor
-month_levels <- c(
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-)
-
-y <- factor(x, levels = month_levels)
-y
-
-sort(y)
-```
-
-<br>
-
----
-
-<br>
-
-### Using forcats with ggplot2
-The forcats package has several key functions:
-
-- `fct_relevel` to manually set factor order
-- `fct_reorder` to reorder by another variable
-- `fct_inorder` to order by appearance
-- `fct_infreq` to order by the frequency of values
-- `fct_lump` to collapse the least/most frequency values into "Other"
-
-<br>
-
-Lets try to use some of these functions to modify our growth rate plots.
-```{r, fig.width = 6, fig.height = 4.5}
-# fct_relevel
-nutrient_levels <- c(
-  "Phosphate", "Sulfate", "Uracil",
-  "Ammonia",   "Glucose", "Leucine"
-)
-
-gg_data <- brauer_gene_exp %>%
-  filter(systematic_name == "YOL066C")
-
-gg_data %>%
-  mutate(nutrient = fct_relevel(nutrient, nutrient_levels)) %>%
-  
-  ggplot(aes(rate, expression, color = nutrient)) +
-  geom_point(size = 3) +
-  geom_smooth(method = "lm", se = F, size = 0.5) +
-  facet_wrap(~ nutrient) +
-  theme_cowplot() +
-  theme(legend.position = "none")
-
-# fct_reorder
-gg_data %>%
-  mutate(nutrient = fct_reorder(nutrient, expression, max)) %>%
-  
-  ggplot(aes(rate, expression, color = nutrient)) +
-  geom_point(size = 3) +
-  geom_smooth(method = "lm", se = F, size = 0.5) +
-  facet_wrap(~ nutrient) +
-  theme_cowplot() +
-  theme(legend.position = "none")
-
-# fct_inorder
-gg_data %>%
-  mutate(nutrient = fct_inorder(nutrient)) %>%
-  
-  ggplot(aes(rate, expression, color = nutrient)) +
-  geom_point(size = 3) +
-  geom_smooth(method = "lm", se = F, size = 0.5) +
-  facet_wrap(~ nutrient) +
-  theme_cowplot() +
-  theme(legend.position = "none")
-```
-
-<br>
-
-Lets try another example using `fct_lump()` and `fct_infreq()`.
-```{r, fig.width = 5, fig.height = 4.5}
-gg_data <- brauer_gene_exp %>%
-  select(MF, systematic_name) %>%
-  unique()
-
-# fct_lump
-gg_data %>%
-  mutate(MF = fct_lump(MF, n = 10)) %>%
-  
-  ggplot(aes(x = "MF", fill = MF)) +
-  geom_bar(position = "fill") +
-  theme_cowplot()
-
-# fct_infreq
-gg_data %>%
-  mutate(
-    MF = fct_lump(MF, n = 10),
-    MF = fct_infreq(MF)
-  ) %>%
-  
-  ggplot(aes(x = "MF", fill = MF)) +
-  geom_bar(position = "fill") +
-  theme_cowplot()
-```
-
-<br>
-
-*ADD SOME EXERCISES*
-
-```{r "EXTRAs", include = F}
-# ggplot(aes(rate, expression, color = nutrient)) +
-#   geom_point() +
-#   geom_smooth(method = "lm", se = F, size = 0.5) +
-#   theme_cowplot() +
-#   theme(legend.position = "none") +
-#   facet_wrap(~ nutrient)
-# MF = fct_infreq(MF)
-# MF = fct_reorder(MF, systematic_name, n_distinct)
-# x <- brauer_gene_exp %>%
-#   group_by(systematic_name) %>%
-#   nest(keys = c(rate, expression)) %>%
-#   mutate(slope = map(keys, ~ {
-#     mod <- lm(.x$expression ~ .x$rate)
-#     mod$coefficients[[2]]
-#   })) %>%
-#   unnest(cols = c(keys, slope))
-# x %>%
-#   filter(systematic_name == "YOL066C") %>%
-#   ggplot(aes(rate, expression, color = nutrient)) +
-#   geom_point() +
-#   geom_smooth(method = "lm", se = F, size = 0.5) +
-#   facet_wrap(~ fct_reorder(nutrient, slope, mean)) +
-#   theme_cowplot() +
-#   theme(legend.position = "none")
-```
-
-
-
-
-
-
 
 
