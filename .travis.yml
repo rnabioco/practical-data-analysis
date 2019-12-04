@@ -46,7 +46,7 @@ before_install:
   - chmod +x travis_setup.sh
   - ./travis_setup.sh
   
-before_deploy: Rscript -e 'install.packages("pkgdown")'
+before_deploy: Rscript -e 'remotes::install_github("r-lib/pkgdown")'
 
 deploy:
   provider: script
