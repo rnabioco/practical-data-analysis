@@ -22,12 +22,22 @@ knitr::opts_chunk$set(
 
 ```{r}
 #devtools::install_github("rnabioco/practical-data-analysis")
-pbda::update_pbda()
+#pbda::update_pbda() # probably say no to updating other packages
 library(pbda)
 library(dplyr)
 ```
 
-# data types
+## Classes to come:
+
+1. basic programming concepts (functions, conditional statements, for loops, etc)
+
+2. RNAseq
+
+3. gene lists, GO term enrichment
+
+4. other tips and tricks
+
+# atom (single value) data types
 
 1. character
 
@@ -43,7 +53,7 @@ class(0L)
 class(0.0)
 class("0")
 
-is.numeric(0L)
+is.numeric(0L) # test for certain type/class
 is.integer(0L)
 ```
 
@@ -65,6 +75,9 @@ object.size(as.numeric(1:1000)) # integer saves space
 ```{r, type3}
 as.integer(1.8) # note that as.integer isn't rounding
 round(1.8)
+
+as.integer(-1.8) # be very careful
+round(-1.8)
 ```
 
 ### numbers to logical
@@ -87,7 +100,7 @@ v1[2] # access element by index
 v1[c(3, 1)] # use index to change order
 v1[c(TRUE, TRUE, FALSE)] # use logical vector as index
 
-v2 <- c(5, 10, 0)
+v2 <- c(5, 10, 0) # pretend that v2 contains expression values for v1, they can be filtered like this:
 v2 >= 2 # result is logical vector
 v1[v2 >= 2]
 ```
@@ -107,6 +120,10 @@ as.character(v2) %>% class()
 ```{r, vector3}
 unique(c(1, 2, 3, 2))
 
+sort(c(2, 4, 3))
+sort(c("geneB", "geneA", "geneC"))
+sort(c("geneB", "geneA", "geneC"), decreasing = TRUE)
+
 intersect(c(1, 2, 3), c(2, 3, 4))
 
 setdiff(c(1, 2, 3), c(2, 3, 4))
@@ -123,6 +140,8 @@ class(mtcars)
 mtcars_tbl <- as_tibble(mtcars, rownames = "name") # tibble usually drops rownames
 mtcars_tbl # only prints first 10 by default
 class(mtcars_tbl) # still a data.frame, but more
+class(mtcars_tbl) == "data.frame" # programming without considering potentially different result structure is dangerous
+is.data.frame(mtcars_tbl)  
 ```
 
 ### exploring data.frame
@@ -203,11 +222,12 @@ colSums(mtcars_mat)
 colMeans(mtcars_mat)
 
 mtcars_mat - 5 # -5 on every numeric value
-mtcars_mat - mtcars_mat[, 1] # each element in the same row is subtracted by the corresponding vector element
+mtcars_mat * c(1, 0, -1) # vector recycling, note sequence
+mtcars_mat - mtcars_mat[, 1] # each element in the same row is subtracted by the corresponding vector element, ie normalize by the 1st column
 ```
 
 ### matrix practice question -
-How would you center the data (subtract the mean for each variable)? 
+How would you center the data (subtract the mean for each variable/column)? 
 ```{r, matrix_prac}
 #hint: start with 
 mtcars_mat_t <- t(mtcars_mat)
@@ -287,12 +307,15 @@ ggplot(months_tbl_factor, aes(x = month, y = labmeetings)) +
 ```{r, io_readr}
 library(readr) 
 path <- system.file("extdata", "gene_tibble.csv", package = 'pbda') # data included in package
+# call `less` from the terminal, paste in path as well
 gene_tbl <- read_csv(path)
 write_csv(gene_tbl, "gene_tbl.csv")
 write_csv(gene_tbl, "gene_tbl.csv.gz") # will auto zip if indicated
+getwd() # saved here if full path is not given
 
 path2 <- system.file("extdata", "hg19_genes.bed.gz", package = 'pbda') # will auto unzip
 bed_tbl <- read_tsv(path2) # use col_names = FALSE or give vector of names
+# use the terminal and zless to look at it briefly
 
 david_tbl <- read_tsv("https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/david.txt") # link directly
 
@@ -313,6 +336,22 @@ write.csv(mtcars, "mtcars2.txt")
 r1 <- read_csv("mtcars2.txt") 
 r2 <- read.csv("mtcars2.txt") # note the different default column name assignment
 r3 <- read.csv("mtcars2.txt", row.names = 1) # gets back row names
+```
+
+### readr practice question -
+look at this variant call format, read with readr.
+rename column names to c("chromosome", "position", "variantID", "ref_allele", "alt_allele", "quality", "filter", "info")
+count number of variants at each reported position, sort by descending order
+```{r, readr_prac}
+# download.file("https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/clinvar_2000.vcf",
+#              "clinvar_2000.vcf")
+```
+
+## readxl for xlsx files
+```{r, readxl}
+library(readxl)
+read_excel(readxl_example("datasets.xlsx"))
+?read_excel
 ```
 
 ## saving objects as .rdata (.rda is the same)
