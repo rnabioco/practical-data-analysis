@@ -2,7 +2,6 @@
 title: "Assignments and Grading"
 author: "Jay Hesselberth"
 date: "`r Sys.Date()`"
-output: html_document
 ---
 
 ```{r setup, include = FALSE}
