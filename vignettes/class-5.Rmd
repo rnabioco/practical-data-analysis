@@ -1,7 +1,7 @@
 ---
-title: "Class 5: Working with gene lists"
+title: "Class 5: Basic R data types and structures"
 author: "Rui Fu"
-date: "2018-12-07"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Class-5}
@@ -9,320 +9,319 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE, message = FALSE, warning = FALSE, echo = TRUE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  message = FALSE,
+  warning = FALSE,
   comment = "#>",
   fig.align = "center"
 )
 ```
 
-```{r load, message = FALSE, warning = FALSE}
-# run before class:
-# devtools::install_github('idpt7810/practical-data-analysis')
-# BiocManager::install("biomaRt", version = "3.8")
+## Before we get started: update pbda
 
+```{r}
+#devtools::install_github("rnabioco/practical-data-analysis")
+pbda::update_pbda()
 library(pbda)
-library(tidyverse)
-library(cowplot)
+library(dplyr)
 ```
 
-## Did experiment, ran through analysis pipeline, what now?
-Handle gene lists
+# data types
 
-Try to connect prior knowledge to the results (genes you study, GO terms, or something like `yeast_prot_prop`)
+1. character
 
-Using some basic R and tibble manipulation commands
+2. integer
 
-## Retrieve gene lists from RNA-seq or scRNA-seq
-Recall how data is saved in objects
+3. numeric
 
-Or whatever file you already saved containing lists of gene names
+4. logical
 
-```{r getlist, message = FALSE, warning = FALSE}
-# from DESeq2 output, get a tibble back
-# res <- results(dds)
-# saveRDS(res, "res_class4.rds") # save any object from environment for next time
-loc <- system.file("extdata", "res_class4.rds", package = 'pbda')
-res <- readRDS(loc) # loading a DESeq2 object automatically loads DESeq2
-
-head(res) # basically a dataframe
-
-res_tibble <- res %>%
-  as.data.frame() %>% 
-  tibble::rownames_to_column(var = "gene") %>%
-  as.tibble()
-
-res_tibble
-
-# res_tibble contains calculations for all genes, pick out "interesting" genes
-gene_tibble <- res_tibble %>% 
-  filter(!is.na(padj)) %>% # NA values from padj are from tossing low expressing genes
-  filter(padj <= 0.01) %>% # padj <= 0.05 is common, or 0.01, sometimes even 0.1 is acceptable
-  filter(log2FoldChange >= 1 | log2FoldChange <= -1) %>%
-  arrange(desc(log2FoldChange))
-
-gene_tibble
-
-# get top 10 down-regulated genes
-gene_tibble_down10 <- gene_tibble %>%
-  filter(log2FoldChange < 0) %>% 
-  arrange(log2FoldChange) %>% 
-  dplyr::slice(1:10) 
-
-# get a vector of gene names
-gene_vector <- gene_tibble$gene
-gene_vector <- gene_tibble %>% pull(gene) # at least 5 more ways to do this
+### look at classes
+```{r}
+class(0L)
+class(0.0)
+class("0")
 ```
 
-```{r getlist2, message = FALSE, warning = FALSE}
-write_csv(gene_tibble, "gene_tibble.csv")
-
-# or load already saved file on disk
-loc <- system.file("extdata", "gene_tibble.csv", package = 'pbda')
-gene_tibble2 <- read_csv(loc) # reads out as tibble
-
-# or write as txt file, without col name
-write_csv(gene_tibble %>% select(gene), "gene_tibble.txt", col_names = FALSE) # write from tibble
-write_lines(gene_vector, "gene_tibble_v.txt") # write for vector
+### coerce to other classes
+```{r, type1}
+class(as.character(0))
+class(as.numeric("0"))
 ```
 
-## Feed gene lists to other software outside of R, get enrichment score back
-DAVID https://david.ncifcrf.gov/
-
-1. upload or paste list
-
-2. select "official gene symbol" as the identifier
-
-3. choose "gene list" as list type
-
-4. submit
-
-5. choose the appropriate organism
-
-6. click "chart" on the desired annotation
-
-7. download as file
-
-```{r david, message = FALSE, warning = FALSE, fig.height=5, fig.width=8}
-# save output and load in R
-loc <- system.file("extdata", "david.txt", package = 'pbda')
-david <- read_tsv(loc) # output was tab-delimited instead of comma
-
-david
-
-# do whatever you want, for instance plot -log10 of top 20 entries
-david_log <- david %>% 
-  mutate(minus_log10 = -log10(Benjamini)) %>% # Benjamini is one false discovery rate method
-  arrange(desc(minus_log10)) %>% 
-  dplyr::slice(1:20)
-
-david_log %>% select(Term, minus_log10)
-
-ggplot(david_log, aes(x = reorder(Term, minus_log10), y = minus_log10)) + #reorder Term by minus_log10
-  geom_bar(stat = "identity") + # otherwise ggplot tries to count
-  xlab("KEGG pathway") +
-  coord_flip() +
-  theme(axis.text.y = element_text(size = 7))
-
-#reorder(david_log$Term,david_log$minus_log10)
+### integer vs numeric
+```{r, type2}
+1:5
+class(1:5)
+object.size(1:1000)
+object.size(as.numeric(1:1000)) # integer saves space
 ```
 
-other options:
-
-Panther http://www.geneontology.org/page/go-enrichment-analysis
-
-GSEA (requires ranked list, for instance by fold-change, and requires full list of genes instead of just "significant") http://software.broadinstitute.org/gsea/index.jsp
-
-or, GO and GSEA right in R (will require additional packages):
-
-topGO: https://bioconductor.org/packages/release/bioc/html/topGO.html
-
-fgsea: http://bioconductor.org/packages/release/bioc/html/fgsea.html
-
-## Sometimes transformation of names is needed - `stringr` package, part of tidyverse
-Depending on the transcriptome and analysis options used in RNA-seq/scRNA-seq, the list of names can be messy.
-
-```{r stringr, message = FALSE, warning = FALSE}
-loc <- system.file("extdata", "ensg_tibble.csv", package = 'pbda')
-ensg_tibble <- read_csv(loc)
-
-ensg_tibble # those version numbers are often not recognized by software
+### be careful with integer coercion
+```{r, type3}
+as.integer(1.8) # note that as.integer isn't rounding
+round(1.8)
 ```
 
-`str_replace`: find and replace
-(run `?str_replace` for documentation)
-
-```{r str_replace, message = FALSE, warning = FALSE}
-ensg_tibble_rm <- ensg_tibble %>% mutate(gene = str_replace(gene, 
-                                                            pattern = "ENSG",
-                                                            replacement = "#"))
-
-ensg_tibble_rm
-
-# trimming of gene/transcript version
-ensg_tibble2 <- ensg_tibble %>% mutate(gene_new = str_replace(gene, 
-                                                          pattern = "\\..*", # . and everything after
-                                                          replacement = "")) # empty string
-# regular expressions are useful and worth the time to learn, see ?base::regex
-
-ensg_tibble2
-
-# `separate` works too, if you want to keep the info
-ensg_tibble3 <- ensg_tibble %>% separate(gene, into = c("gene", "version"), sep = "\\.")
+### numbers to logical
+```{r, type4}
+as.logical(0) # 0 == FALSE
+as.logical(0.1) # anything not 0 is TRUE
+as.logical("0.1") # can't coerce
 ```
 
-```{r str_replace2, message = FALSE, warning = FALSE, fig.height=5, fig.width=8}
-# revisit the DAVID output plot, clean up "Term" column
-david_log2 <- david_log %>% mutate(Term = str_replace(Term, 
-                                                      pattern = ".*:", # every before and including :
-                                                      replacement = ""))
+# data structures
 
-ggplot(david_log2, aes(x = reorder(Term, minus_log10), y = minus_log10)) +
-  geom_bar(stat = "identity") +
-  xlab("KEGG pathway") +
-  coord_flip() +
-  theme(axis.text.y = element_text(size = 7))
-# to save plot
-ggsave("david.png", plot = last_plot(), dpi = 300)
+## 1. atomic vector, a combination of values
+
+### indexing
+```{r, vector1}
+v1 <- c("geneA", "geneB", "geneC")
+length(v1)
+
+v1[2] # access element by index
+v1[c(3, 1)] # use index to change order
+v1[c(TRUE, TRUE, FALSE)] # use logical vector as index
+
+v2 <- c(5, 10, 0)
+v2 >= 2 # result is logical vector
+v1[v2 >= 2]
 ```
 
-`str_detect`: spits out `TRUE` or `FALSE`
+### combining and coercion
+```{r, vector2}
+c(v2, 4) # combine values
+c(4, v2) # note order
+c(v1, v2) # vectors only contain same type of data
 
-```{r str_detect, message = FALSE, warning = FALSE}
-# "-AS" denotes antisense genes, we can find all those
-str_detect(gene_tibble$gene, "-AS")[1:50]
-
-# use in `filter`
-gene_tibble_as <- gene_tibble %>% filter(str_detect(gene, "-AS"))
-
-gene_tibble_as
+class(v2)
+as.character(v2) # coercion over entire vector
+as.character(v2) %>% class()
 ```
 
-`str_c`: concatenate strings
+### useful functions
+```{r, vector3}
+unique(c(1, 2, 3, 2))
 
-```{r str_c, message = FALSE, warning = FALSE}
-# also add annotations of our own
-gene_tibble_as2 <- gene_tibble_as %>% mutate(gene = str_c("HUMAN-", gene))
+intersect(c(1, 2, 3), c(2, 3, 4))
 
-gene_tibble_as2
+setdiff(c(1, 2, 3), c(2, 3, 4))
+setdiff(c(2, 3, 4), c(1, 2, 3)) # note difference order makes
 ```
 
-`str_sub`: extract substrings
+## 2. data.frame, combination of multiple vectors
 
-```{r str_sub, message = FALSE, warning = FALSE}
-str_sub("HUMAN-ELOVL2-AS1", 2, 4)
+### df vs tbl
+```{r, df1}
+mtcars
+class(mtcars)
 
-gene_tibble_as3 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 2, 4))
-
-gene_tibble_as3
-
-# to remove annotations of fixed length
-gene_tibble_as4 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 7, -5)) # extract just the gene name from "HUMAN-ELOVL2-AS1"
-
-gene_tibble_as4
+mtcars_tbl <- as_tibble(mtcars, rownames = "name") # tibble usually drops rownames
+mtcars_tbl # only prints first 10 by default
+class(mtcars_tbl) # still a data.frame, but more
 ```
 
-## Various conversions in R - BioMart
-BioMart can be used outside of R too: http://www.ensembl.org/biomart/martview
+### exploring data.frame
+```{r, df2}
+mtcars$mpg # a vector
+mtcars[["mpg"]] # also a vector
+dim(mtcars)
+ncol(mtcars)
+nrow(mtcars)
+colnames(mtcars)
+rownames(mtcars)
 
-We will be using `biomaRt`
-
-```{r biomart, message = FALSE, warning = FALSE}
-library(biomaRt)
-# biomaRt contains many useful datasets
-listDatasets(useMart("ENSEMBL_MART_ENSEMBL", host = "www.ensembl.org")) %>% as_tibble() # hundreds of organisms
-
-listAttributes(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% as_tibble() # thousands of rows/attributes
-
-listFilters(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% as_tibble() # ways to filter the data
+mtcars_tbl_hp <- mtcars_tbl %>% select(name, hp)
+colnames(mtcars_tbl_hp)
+colnames(mtcars_tbl_hp) <- c("car", "horsepower") # assign new column names
+mtcars_tbl_hp
+colnames(mtcars_tbl_hp)[1] <- "carname"  # assign new column name by index
+mtcars_tbl_hp
 ```
 
-common usage 1: id to gene symbol conversion
-
-```{r biomartid, message = FALSE, warning = FALSE}
-human_mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl") # assign the dataset to use
-
-ensg_sym2 <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"), # columns you want back
-                 filters = "ensembl_gene_id",                       # type of info you are providing
-                 mart = human_mart,                                 # dataset of certain species
-                 values = ensg_tibble2$gene) %>% as_tibble()        # values of the filter
-
-ensg_sym2
-
-# try running this with ensg_tibble (version # intact), can't find matches
+### data.frame indexing
+```{r, df4}
+mtcars[1, 1] # value of one cell, order is row then column
+mtcars[1, ] # row to new data.frame
+mtcars[, 1] # column to vector
+mtcars[, -c(1:5)] # negative selection
+mtcars[c(1:2), "hp"] # combination of number index and names
 ```
 
-common usage 2: functional GO term annotation
+## 3. matrix, combination of multiple vectors with the same types
 
-```{r lookgo, message = FALSE, warning = FALSE}
-listAttributes(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% 
-  as_tibble() %>% 
-  filter(str_detect(description, "GO")) # look at attributes related to GO 
+### matrix vs df
+```{r, matrix1}
+mtcars_mat <- as.matrix(mtcars)
+mtcars_mat 
+mtcars_tbl_mat <- as.matrix(mtcars_tbl)
+mtcars_tbl_mat # all coerced to character
+
+object.size(mtcars)
+object.size(mtcars_mat) # smaller and faster with certain calculations
 ```
 
-```{r getgo, message = FALSE, warning = FALSE}
-drerio_mart <- useMart("ensembl", dataset = "drerio_gene_ensembl")
+### very similar function calls to df
+```{r, matrix2}
+# mtcars_mat$mpg # can't do this for matrix
+# mtcars_mat[["mpg"]] # can't do this for matrix
 
-loc <- system.file("extdata", "genes_drerio.csv", package = 'pbda')
-genes_drerio <- read_csv(loc)
+dim(mtcars_mat)
+ncol(mtcars_mat)
+nrow(mtcars_mat)
+colnames(mtcars_mat)
+rownames(mtcars_mat)
 
-genes_drerio
+length(mtcars) # number of cols
+length(mtcars_mat) # number of cells, probably want to avoid using them
 
-genesGO <- getBM(attributes = c("zfin_id_symbol", "go_id", "name_1006", "namespace_1003"), 
-                 filters = "zfin_id_symbol", 
-                 mart = drerio_mart, 
-                 values = genes_drerio$gene, TRUE) %>% as_tibble()
-
-genesGO
-
-genesGO <- genesGO %>% filter(go_id != "") # note that there are lines with empty go terms, remember to remove those
-
-# join GO dataframe with original RNA-seq/scRNA-seq data if needed
-genes_drerio_joinedGO <- left_join(genes_drerio, genesGO, 
-                                   by = c("gene" = "zfin_id_symbol"))
-
-genes_drerio_joinedGO
+colnames(mtcars_mat)[1] <- "milespergallon" # assign new column names
+mtcars_mat
 ```
 
-```{r getgo2}
-# or, get all genes with GO term of interest, by providing multiple filters
-genesGO_filtered <- getBM(attributes = c("zfin_id_symbol"), 
-                  filters = c("zfin_id_symbol", "go"), 
-                  mart = drerio_mart, 
-                  values = list(genes_drerio$gene, c("GO:0003677")))
+### matrix indexing
+```{r, matrix3}
+mtcars_mat[1, ] # row to vector, named vector
+mtcars_mat[, 1] # column to vector
+mtcars_mat[1, 1] # value of one cell
+mtcars_mat[, -c(1:5)] # negative selection
+mtcars_mat[c(1:2), "hp"] # combination of number index and names
 
-genesGO_filtered
+t(mtcars_mat)
 ```
 
-common usage 3: ortholog conversion between species
+### mathematical operations
+```{r, matrix4}
+log2(mtcars_mat)
+rowSums(mtcars_mat)
+rowMeans(mtcars_mat)
+colSums(mtcars_mat)
+colMeans(mtcars_mat)
 
-```{r biomartpara, message = FALSE, warning = FALSE}
-# example of zebrafish to human gene symbol conversion
-human_mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
-drerio_mart <- useMart("ensembl", dataset = "drerio_gene_ensembl")
-
-genes_human <- getLDS(attributes = c("hgnc_symbol"), # "linked datasets"
-                      filters = "hgnc_symbol", 
-                      mart = human_mart, 
-                      attributesL = c("zfin_id_symbol"), 
-                      martL = drerio_mart, 
-                      values = genes_drerio$gene) %>% as_tibble()
-
-genes_human
+mtcars_mat - 5 # -5 on every numeric value
+mtcars_mat - mtcars_mat[, 1] # each element in the same row is subtracted by the corresponding vector element
 ```
 
-## Exercise
-1. Delete one argument from code above used to generate `genesGO_filtered` to obtain a list of all genes with GO id of "GO:0003677".
+### matrix practice question -
+How would you center the data (subtract the mean for each variable)? 
+```{r, matrix_prac}
+#hint: start with 
+mtcars_mat_t <- t(mtcars_mat)
+```
 
-2. Take a look at `genesGO`. Describe in pseudo-code, how you could add GO-CC back into the brauer_gene_exp.
+## 4. list, collection of objects(vectors, matrices, data.frames, etc)
+### lists store all types of data
+```{r, list1}
+l1 <- list(1, 
+           c("what", "ever"), 
+           mtcars)
+l1
 
-## Additional resources/reading
-More sophisticated analysis than simply gene lists:
-Find enriched sequence elements in promoters, UTRs, etc. See https://bedtools.readthedocs.io/en/latest/, http://meme-suite.org/, etc
+l2 <- list(n = 1, 
+           c = c("what", "ever"), 
+           df = mtcars, 
+           l = l1) # with names, also can even include lists
+l2
 
-WGCNA: weighted correlation network analysis
+pbda::cc.genes # example of list
+```
 
-SCENIC: infer gene regulatory networks and cell types from single-cell RNA-seq data
+### exploring list
+```{r, list2}
+cc.genes[[1]]
+cc.genes$s.genes
 
-Come to RBI office hours (Thursday 1-2:30)!
+length(cc.genes)
+length(cc.genes[[1]])
+names(cc.genes)
+
+unlist(cc.genes) # named vector
+unlist(cc.genes, use.names = FALSE)
+
+c(cc.genes, "geneA") # combine into list
+cc.genes[[1]] <- c(cc.genes[[1]], "geneA") # combine into first list element
+```
+
+### list practice question - 
+From `cc.genes`, how many markers are shared for both S phase and G2/M?
+```{r, list_prac}
+```
+
+## 5. S3/S4, more complex objects, similar to lists but accessed with @. See RNAseq class.
+
+## 6. factors, grouping variables the data
+### plotting use case
+```{r}
+library(ggplot2)
+months_tbl <- data.frame(month = c("Jan", "Feb", "Mar"),
+                         labmeetings = c(0, 3, 9))
+ggplot(months_tbl, aes(x = month, y = labmeetings)) +
+  geom_col() +
+  cowplot::theme_cowplot() # <- ordered alphabetical, not ideal
+
+months_tbl_factor <- months_tbl %>% mutate(month = factor(month, levels = c("Jan", "Feb", "Mar")))
+months_tbl_factor$month
+ggplot(months_tbl_factor, aes(x = month, y = labmeetings)) +
+  geom_col() +
+  cowplot::theme_cowplot() # <- ordered as described by levels
+```
+
+### for other uses of factors, please visit https://forcats.tidyverse.org/
+
+# I/O, reading and writing files
+
+## readr package
+
+### faster more flexible than base R functions for large files
+```{r, io_readr}
+library(readr) 
+path <- system.file("extdata", "gene_tibble.csv", package = 'pbda') # data included in package
+gene_tbl <- read_csv(path)
+write_csv(gene_tbl, "gene_tbl.csv")
+write_csv(gene_tbl, "gene_tbl.csv.gz") # will auto zip if indicated
+
+path2 <- system.file("extdata", "hg19_genes.bed.gz", package = 'pbda') # will auto unzip
+bed_tbl <- read_tsv(path2) # use col_names = FALSE or give vector of names
+
+david_tbl <- read_tsv("https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/david.txt") # link directly
+
+write_lines(cc.genes$s.genes, "Sgenes.txt") # write vector into file, each element on a line
+
+?read_delim # worth looking through the options
+```
+
+### we recommend using readr functions, with "_", but beware of the rowname exclusion
+```{r, readr2}
+write_csv(mtcars, "mtcars.txt")
+read_csv("mtcars.txt") # row names are gone!
+
+mtcars %>% as_tibble(rownames = "rowname") # before saving, use one of these two options
+mtcars %>% tibble::rownames_to_column("rowname")
+
+write.csv(mtcars, "mtcars2.txt")
+r1 <- read_csv("mtcars2.txt") 
+r2 <- read.csv("mtcars2.txt") # note the different default column name assignment
+r3 <- read.csv("mtcars2.txt", row.names = 1) # gets back row names
+```
+
+## saving objects as .rdata (.rda is the same)
+
+rstudio asks or by default saves entire environment into .rdata file
+
+this causes slow start up and other conflicts, we recommend turning the option off
+
+but do use rdata when needed
+```{r, io_rdata}
+save(mtcars_mat, mtcars_mat_t, file = "mat.RData")
+rm(mtcars_mat, mtcars_mat_t) # a way to remove from environment
+load("mat.RData") # load them back
+```
+
+## .rds, saving one object, but allows for name reassignment
+```{r, io_rds}
+saveRDS(mtcars_mat, "mtcars_mat.rds") # default compress = TRUE
+mat2 <- readRDS("mtcars_mat.rds") 
+identical(mat2, mtcars_mat)
+```
