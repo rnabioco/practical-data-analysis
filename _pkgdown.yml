@@ -33,6 +33,8 @@ navbar:
         href: articles/class-1.html
       - text: "Class 2: Analyzing qPCR data"
         href: articles/class-2.html
+      - text: "Class 5: Basic Data Types and Structures"
+        href: articles/class-5.html
      # - text: "Class 3: Exploring a biological data set"
      #   href: articles/class-3.html
      # - text: "Class 4: RNA-seq Analysis"
