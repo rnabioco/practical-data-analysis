@@ -2,10 +2,7 @@
 title: "Assignments and Grading"
 author: "Jay Hesselberth"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Grading and Assignments}
-  %\VignetteEngine{knitr::rmarkdown}
+output: html_document
 ---
 
 ```{r setup, include = FALSE}
