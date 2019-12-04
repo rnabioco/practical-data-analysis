@@ -139,7 +139,7 @@ sum_nums <- function(x) {
 # When we run sum_nums(), will this overwrite our original vector?
 sum_nums(10)
 
-# No!
+# No! (not when using the '<-' assignment operator)
 a
 ```
 
@@ -166,7 +166,7 @@ gg_data %>%
 
 What if you want to create this plot for multiple genes? *Write a function the takes a data.frame and systematic_name as inputs and creates scatter plots for each nutrient*
 ```{r, fig.width = 6, fig.height = 4.5}
-plot_growth <- function(input, sys_name) {
+plot_expr <- function(input, sys_name = "YNL049C") {
   gg_data <- input %>%
     filter(systematic_name == sys_name)
   
@@ -177,7 +177,7 @@ plot_growth <- function(input, sys_name) {
     theme(legend.position = "none")
 }
 
-plot_growth(
+plot_expr(
   input = brauer_gene_exp, 
   sys_name = "YDL104C"
 )
@@ -187,7 +187,7 @@ plot_growth(
 
 *Modify our plotting function to add the gene name as the plot title and the molecular function (MF) as a subtitle*
 ```{r, fig.width = 6, fig.height = 4.5}
-plot_growth <- function(input, sys_name) {
+plot_expr <- function(input, sys_name) {
   gg_data <- input %>%
     filter(systematic_name == sys_name)
   
@@ -204,7 +204,7 @@ plot_growth <- function(input, sys_name) {
 }
 
 brauer_gene_exp %>%
-  plot_growth("YDL104C")
+  plot_expr("YDL104C")
 ```
 
 <br>
@@ -243,7 +243,7 @@ x %in% y | x is present in y
 
 *Add an `if` statement to our plotting function to account for a missing gene name*
 ```{r, fig.width = 6, fig.height = 4.5}
-plot_growth <- function(input, sys_name) {
+plot_expr <- function(input, sys_name) {
   gg_data <- input %>%
     filter(systematic_name == sys_name)
   
@@ -263,7 +263,7 @@ plot_growth <- function(input, sys_name) {
 }
 
 brauer_gene_exp %>%
-  plot_growth("YNL095C")
+  plot_expr("YNL095C")
 ```
 
 <br>
@@ -312,7 +312,7 @@ When writing functions it can be useful to check input values to make sure they 
 - `is.factor()`
 
 ```{r, fig.width = 6, fig.height = 4.5}
-plot_growth <- function(input, sys_name) {
+plot_expr <- function(input, sys_name) {
   
   if (!is.character(sys_name)) {
     stop("sys_name must be a string!")
@@ -337,14 +337,14 @@ plot_growth <- function(input, sys_name) {
 }
 
 brauer_gene_exp %>%
-  plot_growth("YDL104C")
+  plot_expr("YDL104C")
 ```
 
 <br>
 
 *Modify our plotting function to check that `sys_name` is present in the input. Hint: use the `%in%` operator*
 ```{r, fig.width = 6, fig.height = 4.5}
-plot_growth <- function(input, sys_name) {
+plot_expr <- function(input, sys_name) {
   
   if (!is.character(sys_name)) {
     stop("sys_name must be a string!")
@@ -373,7 +373,7 @@ plot_growth <- function(input, sys_name) {
 }
 
 brauer_gene_exp %>%
-  plot_growth("YDL104C")
+  plot_expr("YDL104C")
 ```
 
 <br>
@@ -399,34 +399,36 @@ rescale_vec(a, na.rm = T)
 
 <br>
 
-*Modify our plotting function to pass arguments through dots to ggplot*
+*Modify our plotting function to pass arguments through the ellipsis to ggplot*
 ```{r, fig.width = 6, fig.height = 4.5}
-plot_growth <- function(input, sys_name, ...) {
+plot_expr <- function(input, sys_name, ...) {
   
-  gg_data <- input %>%
-    filter(systematic_name == sys_name)
-  
-  plot_title <- gg_data$name[1]
-  plot_sub <- gg_data$MF[1]
-  
-  if (plot_title == "") {
-    plot_title <- sys_name
-  }
-  
-  gg_data %>%
-    ggplot(aes(rate, expression)) +
+  input %>%
+    filter(systematic_name == sys_name) %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
     geom_point(...) +
-    labs(title = plot_title, subtitle = plot_sub) +
     facet_wrap(~ nutrient) +
     theme(legend.position = "none")
 }
 
 brauer_gene_exp %>%
-  plot_growth(
+  plot_expr(
     sys_name = "YDL104C",
     size = 3,
     shape = 2
   )
+```
+
+<br>
+
+---
+
+<br>
+
+### Saving your functions for later
+A good way to save commonly used functions is to keep them in a separate R script. You can load your functions using the `source()` command.
+```{r, eval = F}
+source("path/to/my_functions.R")
 ```
 
 <br>
@@ -491,19 +493,39 @@ for (i in seq_along(lens)) {
 
 ### Lets try this with the Brauer gene expression data
 ```{r, fig.width = 10, fig.height = 8}
+plot_expr <- function(input, sys_name, ...) {
+  
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  if (plot_title == "") {
+    plot_title <- sys_name
+  }
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(...) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    facet_wrap(~ nutrient) +
+    theme(legend.position = "none")
+}
+
 growth_plots <- vector("list", 4)
 
 growth_plots[[1]] <- brauer_gene_exp %>%
-  plot_growth(sys_name = "YDL104C")
+  plot_expr(sys_name = "YDL104C")
 
 growth_plots[[2]] <- brauer_gene_exp %>%
-  plot_growth(sys_name = "YOR069W")
+  plot_expr(sys_name = "YOR069W")
 
 growth_plots[[3]] <- brauer_gene_exp %>%
-  plot_growth(sys_name = "YLR115W")
+  plot_expr(sys_name = "YLR115W")
 
 growth_plots[[4]] <- brauer_gene_exp %>%
-  plot_growth(sys_name = "YPR036W")
+  plot_expr(sys_name = "YPR036W")
 
 plot_grid(plotlist = growth_plots)
 ```
@@ -517,7 +539,7 @@ growth_plots <- vector("list", 4)
 
 for (i in seq_along(growth_plots)) {
   growth_plots[[i]] <- brauer_gene_exp %>%
-    plot_growth(
+    plot_expr(
       sys_name = genes[i],
       size  = 3,
       shape = 5
@@ -581,7 +603,7 @@ out <- map(lens, rnorm)
 ```{r, fig.width = 10, fig.height = 8}
 genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
 
-growth_plots <- map(genes, plot_growth, input = brauer_gene_exp)
+growth_plots <- map(genes, plot_expr, input = brauer_gene_exp)
 
 plot_grid(plotlist = growth_plots)
 ```
@@ -599,7 +621,7 @@ genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
 shapes <- c(1, 2, 3, 4)
 
 growth_plots <- map2(genes, shapes, ~ {
-  plot_growth(
+  plot_expr(
     input    = brauer_gene_exp,
     sys_name = .x,
     shape    = .y
@@ -617,7 +639,7 @@ genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
 sizes <- c(1, 2, 3, 4)
 
 growth_plots <- map2(genes, sizes, ~ {
-  plot_growth(
+  plot_expr(
     input    = brauer_gene_exp,
     sys_name = .x,
     size     = .y
@@ -637,9 +659,118 @@ plot_args <- list(
   shape = c(1, 2, 3, 4)
 )
 
-growth_plots <- pmap(plot_args, plot_growth, brauer_gene_exp)
+growth_plots <- pmap(plot_args, plot_expr, brauer_gene_exp)
 
 plot_grid(plotlist = growth_plots)
+```
+
+<br>
+
+---
+
+<br>
+
+## More exercises
+*Write a function that has two arguments (data, systematic_name) and creates the following plot*
+```{r, echo = F}
+plot_expr_2 <- function(input, sys_name) {
+  
+  gg_data <- input %>% 
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) + 
+    geom_point() + 
+    geom_smooth(method = "lm", se = F) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    theme_cowplot()
+}
+```
+
+```{r, fig.width = 6, fig.height = 4}
+plot_expr_2(
+  input = brauer_gene_exp, 
+  sys_name = "YDL104C"
+)
+```
+
+<br>
+
+*Add an argument to hide the figure legend*
+```{r, echo = F}
+plot_expr_3 <- function(input, sys_name, hide_legend = F) {
+  
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  res <- gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point() +
+    geom_smooth(method = "lm", se = F) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    theme_cowplot()
+  
+  if (hide_legend) {
+    res <- res +
+      theme(legend.position = "none")
+  }
+  
+  res
+}
+```
+
+```{r, fig.width = 6, fig.height = 4}
+plot_expr_3(
+  input = brauer_gene_exp,
+  sys_name = "YDL104C",
+  hide_legend = T
+)
+```
+
+<br>
+
+*Use your function with `map()` to create a figure containing plots for four genes*
+```{r, fig.width = 10, fig.height = 6.5, echo = F}
+sys_names <- c("YNL049C", "YNL095C", "YDL104C", "YLR115W")
+
+expr_plots <- map(
+  .x = sys_names, 
+  .f = plot_expr_2, 
+  input = brauer_gene_exp
+)
+
+plot_grid(plotlist = expr_plots)
+```
+
+<br>
+
+*Modify your function to take a vector of systematic_names to create the following plot*
+```{r, echo = F}
+plot_expr_3 <- function(input, sys_name) {
+  
+  input %>%
+    filter(systematic_name %in% sys_name) %>%
+    ggplot(aes(rate, expression, color = nutrient)) + 
+    geom_point() + 
+    geom_smooth(method = "lm", se = F) +
+    facet_wrap(~ systematic_name) +
+    theme_cowplot()
+}
+```
+
+```{r, fig.width = 10, fig.height = 6.5}
+name_vec <- c("YNL049C", "YNL095C", "YDL104C", "YLR115W")
+
+plot_expr_3(
+  input = brauer_gene_exp,
+  sys_name = name_vec
+)
 ```
 
 <br>
