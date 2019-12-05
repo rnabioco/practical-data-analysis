@@ -6,13 +6,7 @@ output:
   html_document:
     toc: TRUE
     toc_float: true
-    toc_depth: 2
-
-# output: rmarkdown::html_vignette
-# vignette: >
-#  %\VignetteIndexEntry{Class-8}
-#  %\VignetteEngine{knitr::rmarkdown}
-#  %\VignetteEncoding{UTF-8}
+    toc_depth: 3
 ---
 
 ```{r setup, include = F}
@@ -39,6 +33,11 @@ A function is essentially a block of code that you've given a name and saved for
 * They make your code easier to read
 * They reduce the chance of mistakes from repeated copying and pasting
 * They make it easier to adapt your code for different requirements
+
+Further reading
+
+* [R for Data Science]("https://r4ds.had.co.nz/") by Garrett Grolemund and Hadley Wickham
+* [Advanced R]("https://adv-r.hadley.nz/") by Hadley Wickham
 ```{r}
 # An example: you want to rescale a numeric vector so all values are between 0 and 1
 a <- rnorm(n = 10)
@@ -48,6 +47,7 @@ rng <- range(a)
 (a - rng[1]) / (rng[2] - rng[1])
 
 # What if we want to repeat this on other vectors?
+# One way is to copy and paste
 b <- rnorm(n = 10)
 c <- rnorm(n = 10)
 
@@ -56,6 +56,8 @@ new_b <- (b - rng[1]) / (rng[2] - rng[1])
 
 rng <- range(c)
 new_c <- (c - rng[1]) / (rng[2] - rng[1])
+
+# A better way is to write a function...
 ```
 
 <br>
@@ -69,9 +71,12 @@ There are three general steps for writing functions:
 2. Identify the inputs
 3. Add code to the body
 ```{r, eval = F}
+# Lets write a function to rescale a numeric vector
 rescale_vec <- function(x) {
+  
   rng <- range(x)
   (x - rng[1]) / (rng[2] - rng[1])
+
 }
 
 rescale_vec(b)
@@ -111,7 +116,7 @@ calc_sd <- function(x) {
 
 ### The function execution environment
 - When running a function an execution environment is created, which is separate from the global environment
-- The execution environment consists of objects created by the function
+- The execution environment contains objects created within the function
 - The execution environment follows the "fresh start" principle
 - When R searches for an object referenced by a function, the execution environment takes precedence
 
@@ -150,8 +155,8 @@ a
 <br>
 
 ### A more relevant example
-Lets create a scatter plot comparing growth rate vs expression for the gene YDL104C. We can use `facet_wrap()` to create a separate plot for each nutrient.
-```{r, fig.width = 6, fig.height = 4.5}
+*Using the Brauer data lets create a scatter plot comparing growth rate vs expression for the gene YDL104C. Use `facet_wrap()` to create a separate plot for each nutrient.*
+```{r, fig.width = 6, fig.height = 4.5, echo = F}
 gg_data <- brauer_gene_exp %>%
   filter(systematic_name == "YDL104C")               # Filter for gene of interest
 
@@ -164,8 +169,18 @@ gg_data %>%
 
 <br>
 
-What if you want to create this plot for multiple genes? *Write a function the takes a data.frame and systematic_name as inputs and creates scatter plots for each nutrient*
-```{r, fig.width = 6, fig.height = 4.5}
+What if you want to create this plot for other genes? *Write a function the takes a data.frame and systematic_name as inputs and creates scatter plots for each nutrient*
+```{r, eval = F}
+# Fill in the function body
+# You can include default values for your arguments
+plot_expr <- function(input, sys_name = "YNL049C") {
+  
+  ????
+  
+}
+```
+
+```{r, echo = F}
 plot_expr <- function(input, sys_name = "YNL049C") {
   gg_data <- input %>%
     filter(systematic_name == sys_name)
@@ -176,17 +191,25 @@ plot_expr <- function(input, sys_name = "YNL049C") {
     facet_wrap(~ nutrient) +
     theme(legend.position = "none")
 }
+```
 
-plot_expr(
+```{r, fig.width = 6, fig.height = 4.5}
+p <- plot_expr(
   input = brauer_gene_exp, 
   sys_name = "YDL104C"
 )
+
+# You can also use the %>% pipe with your custom functions
+p <- brauer_gene_exp %>%
+  plot_expr(sys_name = "YDL104C")
+
+p
 ```
 
 <br>
 
 *Modify our plotting function to add the gene name as the plot title and the molecular function (MF) as a subtitle*
-```{r, fig.width = 6, fig.height = 4.5}
+```{r, echo = F}
 plot_expr <- function(input, sys_name) {
   gg_data <- input %>%
     filter(systematic_name == sys_name)
@@ -202,7 +225,9 @@ plot_expr <- function(input, sys_name) {
     facet_wrap(~ nutrient) +
     theme(legend.position = "none")
 }
+```
 
+```{r, fig.width = 6, fig.height = 4.5}
 brauer_gene_exp %>%
   plot_expr("YDL104C")
 ```
@@ -240,7 +265,26 @@ x %in% y | x is present in y
 <br>
 
 *Add an `if` statement to our plotting function to account for a missing gene name*
-```{r, fig.width = 6, fig.height = 4.5}
+```{r, eval = F}
+plot_expr <- function(input, sys_name) {
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  ????
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = 2) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    facet_wrap(~ nutrient) +
+    theme(legend.position = "none")
+}
+```
+
+```{r, echo = F}
 plot_expr <- function(input, sys_name) {
   gg_data <- input %>%
     filter(systematic_name == sys_name)
@@ -259,7 +303,9 @@ plot_expr <- function(input, sys_name) {
     facet_wrap(~ nutrient) +
     theme(legend.position = "none")
 }
+```
 
+```{r, fig.width = 6, fig.height = 4.5}
 brauer_gene_exp %>%
   plot_expr("YNL095C")
 ```
@@ -268,17 +314,18 @@ brauer_gene_exp %>%
 
 Conditional statements can be linked together
 ```{r, eval = F}
+# Using 'else if'
 if (condition_1) {
   executed when condition_1 is TRUE
   
 } else if (condition_2) {
-  executed when condition_2 if TRUE
+  executed when condition_1 is FALSE and condition_2 is TRUE
   
 } else {
   executed when condition_1 and condition_2 are FALSE
 }
 
-
+# The 'and' operator
 if (condition_1 && condition_2) {
   executed when condition_1 and condition_2 are TRUE
   
@@ -286,7 +333,7 @@ if (condition_1 && condition_2) {
   executed when condition_1 or condition_2 are FALSE
 }
 
-
+# The 'or' operator
 if (condition_1 || condition_2) {
   executed when condition_1 or condition_2 are TRUE
   
@@ -338,8 +385,38 @@ brauer_gene_exp %>%
 
 <br>
 
-*Modify our plotting function to check that `sys_name` is present in the input. Hint: use the `%in%` operator*
-```{r, fig.width = 6, fig.height = 4.5}
+*Modify our plotting function to check that `sys_name` is present in the input. Hint: try the `%in%` operator*
+```{r, eval = F}
+plot_expr <- function(input, sys_name) {
+  
+  if (!is.character(sys_name)) {
+    stop("sys_name must be a string!")
+  }
+  
+  if ( ???? ) {
+    stop( ???? )
+  }
+  
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  if (plot_title == "") {
+    plot_title <- sys_name
+  }
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = 2) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    facet_wrap(~ nutrient) +
+    theme(legend.position = "none")
+}
+```
+
+```{r, echo = F}
 plot_expr <- function(input, sys_name) {
   
   if (!is.character(sys_name)) {
@@ -367,9 +444,6 @@ plot_expr <- function(input, sys_name) {
     facet_wrap(~ nutrient) +
     theme(legend.position = "none")
 }
-
-brauer_gene_exp %>%
-  plot_expr("YDL104C")
 ```
 
 <br>
@@ -377,7 +451,7 @@ brauer_gene_exp %>%
 <br>
 
 ### Passing arguments with the ellipsis (...)
-The ellipsis allows a function to take an arbitrary number of arguments, which can then be passed to other functions. Lets first try this using our simple `rescale_vec()` function. 
+The ellipsis allows a function to take an arbitrary number of arguments, which can then be passed to an inner function. This is nice when you have an inner function that has a lot of useful arguments. Lets first try this with our simple `rescale_vec()` function. 
 ```{r}
 rescale_vec <- function(x, ...) {
   x_rng <- range(x, ...)
@@ -393,10 +467,20 @@ rescale_vec(a, na.rm = T)
 
 <br>
 
-*Modify our plotting function to pass arguments through the ellipsis to ggplot*
+*Modify our plotting function so the user can change the point size, shape, and alpha*
 ```{r, fig.width = 6, fig.height = 4.5}
+# A cumbersome way
+plot_expr <- function(input, sys_name, pt_size = 2, pt_shape = 1, pt_alpha = 1) {
+  input %>%
+    filter(systematic_name == sys_name) %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = pt_size, shape = pt_shape, alpha = pt_alpha) +
+    facet_wrap(~ nutrient) +
+    theme(legend.position = "none")
+}
+
+# With the ellipsis
 plot_expr <- function(input, sys_name, ...) {
-  
   input %>%
     filter(systematic_name == sys_name) %>%
     ggplot(aes(rate, expression, color = nutrient)) +
@@ -405,12 +489,14 @@ plot_expr <- function(input, sys_name, ...) {
     theme(legend.position = "none")
 }
 
-brauer_gene_exp %>%
-  plot_expr(
-    sys_name = "YDL104C",
-    size = 3,
-    shape = 2
-  )
+# Now we can easily change the point size and shape
+plot_expr(
+  input = brauer_gene_exp,
+  sys_name = "YDL104C",
+  size = 5,
+  shape = 2,
+  alpha = 0.5
+)
 ```
 
 <br>
@@ -430,19 +516,19 @@ source("path/to/my_functions.R")
 ## Iteration
 
 ### `for` loops
-As discussed in the previous section, it is good practice to try to limit duplication in your code. One way to do this is by writing functions, another way is through iteration. `for` loops allow you to run the same code block repeatedly without copying and pasting.
+As discussed in the previous section, you should try to limit duplication in your code. One way to do this is by writing functions, another way is through iteration. `for` loops allow you to run the same code block repeatedly without copying and pasting.
 ```{r}
-for (i in 1:5) {
-  print(i)
+# When writing a for loop, think about the output, sequence, and body
+out <- vector("numeric", 5)  # 1. output
+
+for (i in 1:length(out)) {   # 2. sequence
+  
+  out[i] <- 2 * i            # 3. body
+  
 }
+```
 
-# Maybe instead of printing, we want to save these new values
-out <- vector("numeric", 5)
-
-for (i in 1:length(out)) {
-  out[i] <- 2 * i
-}
-
+```{r}
 # Lets use rnorm() to create 5 vectors with different values for 'mean'
 # One way to do this is by copying and pasting
 out <- vector("list", 5)
@@ -456,31 +542,40 @@ out[[5]] <- rnorm(n = 10, mean = 70)
 # Use a for loop to reduce code duplication
 # seq_along() is a safer way of writing 1:length(x)
 vals <- c(1, 50, 20, 5, 70)
-out <- vector("list", length(vals))
 
-for (i in seq_along(vals)) {
-  out[[i]] <- rnorm(n = 10, mean = vals[i])
+out <- vector("list", length(vals))          # 1. output
+
+for (i in seq_along(vals)) {                 # 2. sequence
+  
+  out[[i]] <- rnorm(n = 10, mean = vals[i])  # 3. body
+  
 }
 ```
 
 <br>
 
-*Write a `for` loop to create 5 vectors of different lengths*
-```{r}
-lens <- c(2, 5, 20, 15, 3)
-out <- vector("list", length(lens))
+*Write a `for` loop to create 3 vectors of different lengths*
+```{r, echo = F}
+lens <- c(5, 10, 2)
 
-for (i in seq_along(lens)) {
-  out[[i]] <- rnorm(n = lens[i])
+out <- vector("list", length(lens))  # 1. output
+
+for (i in seq_along(lens)) {         # 2. sequence
+  
+  out[[i]] <- rnorm(n = lens[i])     # 3. body
+  
 }
+
+out
 ```
 
 <br>
 
 <br>
 
-### Lets try this with the Brauer gene expression data
+### Lets try this with the Brauer data
 ```{r, fig.width = 10, fig.height = 8}
+# We want to create a supplemental figure showing the growth rate vs expression for four genes
 plot_expr <- function(input, sys_name, ...) {
   
   gg_data <- input %>%
@@ -488,10 +583,6 @@ plot_expr <- function(input, sys_name, ...) {
   
   plot_title <- gg_data$name[1]
   plot_sub <- gg_data$MF[1]
-  
-  if (plot_title == "") {
-    plot_title <- sys_name
-  }
   
   gg_data %>%
     ggplot(aes(rate, expression, color = nutrient)) +
@@ -501,47 +592,45 @@ plot_expr <- function(input, sys_name, ...) {
     theme(legend.position = "none")
 }
 
-growth_plots <- vector("list", 4)
+expr_plots <- vector("list", 4)
 
-growth_plots[[1]] <- brauer_gene_exp %>%
+expr_plots[[1]] <- brauer_gene_exp %>%
   plot_expr(sys_name = "YDL104C")
 
-growth_plots[[2]] <- brauer_gene_exp %>%
+expr_plots[[2]] <- brauer_gene_exp %>%
   plot_expr(sys_name = "YOR069W")
 
-growth_plots[[3]] <- brauer_gene_exp %>%
+expr_plots[[3]] <- brauer_gene_exp %>%
   plot_expr(sys_name = "YLR115W")
 
-growth_plots[[4]] <- brauer_gene_exp %>%
+expr_plots[[4]] <- brauer_gene_exp %>%
   plot_expr(sys_name = "YPR036W")
 
-plot_grid(plotlist = growth_plots)
+plot_grid(plotlist = expr_plots)
 ```
 
 <br>
 
-*Re-write the code from above using a for loop to generate our growth rate figure*
-```{r, fig.width = 10, fig.height = 8}
+*Re-write the code from above using a `for` loop to generate our figure*
+```{r, eval = F}
 genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
-growth_plots <- vector("list", 4)
 
-for (i in seq_along(growth_plots)) {
-  growth_plots[[i]] <- brauer_gene_exp %>%
-    plot_expr(
-      sys_name = genes[i],
-      size  = 3,
-      shape = 5
-    )
+expr_plots <- vector("list", 4)  # 1. output
+
+for ( ???? ) {                   # 2. sequence
+  
+                                 # 3. body
+
 }
 
-plot_grid(plotlist = growth_plots)
+plot_grid(plotlist = expr_plots)
 ```
 
 <br>
 
 <br>
 
-### Introduction to `purrr::map`
+### Introduction to `map()`
 `for` loops are a powerful tool to reduce code duplication, however your code can be further simplified using the `map()` functions provided in the purrr package. These `map()` functions essentially run `for (i in seq_along(x))` behind the scenes so you don't have to explicitly type this.
 
 There is a function for each type of output:
@@ -559,10 +648,13 @@ Each `map()` function requires two inputs: `map(.x, .f, ...)`
 ```{r}
 # We previously used a for loop to create vectors with different values for mean
 vals <- c(1, 50, 20, 5, 70)
-out <- vector("list", length(vals))
 
-for (i in seq_along(vals)) {
-  out[[i]] <- rnorm(n = 10, mean = vals[i])
+out <- vector("list", length(vals))          # 1. output
+
+for (i in seq_along(vals)) {                 # 2. sequence
+  
+  out[[i]] <- rnorm(n = 10, mean = vals[i])  # 3. body
+  
 }
 
 # Using map() we can further simplify this code
@@ -584,24 +676,42 @@ out <- map(vals, rnorm, n = 10)
 
 <br>
 
-*Use `rnorm()` and `map()` to create 5 vectors of different lengths*
-```{r}
-lens <- c(2, 5, 20, 15, 3)
+*Use `rnorm()` and `map()` to create 3 vectors of different lengths*
+```{r, echo = F}
+lens <- c(5, 10, 2)
 
 out <- map(lens, ~ rnorm(n = .x))
 
 out <- map(lens, rnorm)
+
+out
 ```
 
 <br>
 
 *Re-write the code from above using `map()` to generate our growth rate figure*
-```{r, fig.width = 10, fig.height = 8}
+```{r, eval = F}
 genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
 
-growth_plots <- map(genes, plot_expr, input = brauer_gene_exp)
+expr_plots <- map(
+  
+  ????
+  
+)
 
-plot_grid(plotlist = growth_plots)
+plot_grid(plotlist = expr_plots)
+```
+
+```{r, fig.width = 10, fig.height = 8, echo = F}
+genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
+
+expr_plots <- map(
+  .x = genes, 
+  .f = plot_expr, 
+  input = brauer_gene_exp
+)
+
+plot_grid(plotlist = expr_plots)
 ```
 
 <br>
@@ -614,7 +724,7 @@ If you have two vectors containing values that you want to pass to a function th
 genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
 shapes <- c(1, 2, 3, 4)
 
-growth_plots <- map2(genes, shapes, ~ {
+expr_plots <- map2(genes, shapes, ~ {
   plot_expr(
     input    = brauer_gene_exp,
     sys_name = .x,
@@ -622,17 +732,29 @@ growth_plots <- map2(genes, shapes, ~ {
   )
 })
 
-plot_grid(plotlist = growth_plots)
+plot_grid(plotlist = expr_plots)
 ```
 
 <br>
 
 *Use `map2()` to create plots for 4 different genes, each with a different point size*
-```{r, fig.width = 10, fig.height = 8}
+```{r, eval = F}
 genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
-sizes <- c(1, 2, 3, 4)
 
-growth_plots <- map2(genes, sizes, ~ {
+expr_plots <- map2(
+  
+  ????
+  
+)
+
+plot_grid(plotlist = expr_plots)
+```
+
+```{r, fig.width = 10, fig.height = 8, echo = F}
+genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
+sizes <- c(1, 2, 4, 8)
+
+expr_plots <- map2(genes, sizes, ~ {
   plot_expr(
     input    = brauer_gene_exp,
     sys_name = .x,
@@ -640,14 +762,13 @@ growth_plots <- map2(genes, sizes, ~ {
   )
 })
 
-plot_grid(plotlist = growth_plots)
+plot_grid(plotlist = expr_plots)
 ```
 
 <br>
 
 `pmap` can be used to map over any number of arguments.
 ```{r, fig.width = 10, fig.height = 8}
-
 # Create a list of input vectors
 genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
 sizes <- c(2, 3, 4, 5)
@@ -656,19 +777,14 @@ shapes <- c(1, 2, 3, 4)
 plot_args <- list(genes, sizes, shapes)
 
 # Run use argument list with pmap
-growth_plots <- pmap(
-  .l = plot_args,
-  .f = ~ {
-    plot_expr(
-      input = brauer_gene_exp,
-      sys_name = ..1,
-      size     = ..2,
-      shape    = ..3
-    )
-  }
-)
-
-plot_grid(plotlist = growth_plots)
+expr_plots <- pmap(plot_args, ~ {
+  plot_expr(
+    input = brauer_gene_exp,
+    sys_name = ..1,
+    size     = ..2,
+    shape    = ..3
+  )
+})
 
 # A simpler way
 plot_args <- list(
@@ -677,13 +793,13 @@ plot_args <- list(
   shape    = c(1, 2, 3, 4)
 )
 
-growth_plots <- pmap(
+expr_plots <- pmap(
   .l = plot_args, 
   .f = plot_expr, 
   input = brauer_gene_exp
 )
 
-plot_grid(plotlist = growth_plots)
+plot_grid(plotlist = expr_plots)
 ```
 
 <br>
