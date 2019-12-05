@@ -454,8 +454,8 @@ plot_expr <- function(input, sys_name) {
 The ellipsis allows a function to take an arbitrary number of arguments, which can then be passed to an inner function. This is nice when you have an inner function that has a lot of useful arguments. Lets first try this with our simple `rescale_vec()` function. 
 ```{r}
 rescale_vec <- function(x, ...) {
-  x_rng <- range(x, ...)
-  (x - x_rng[1]) / (x_rng[2] - x_rng[1])
+  rng <- range(x, ...)
+  (x - rng[1]) / (rng[2] - rng[1])
 }
 
 rescale_vec(a)

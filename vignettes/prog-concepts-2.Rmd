@@ -1,226 +1,287 @@
 ---
-title: "class-6"
+title: "prog-concepts"
 output: html_document
 ---
 
-## Load packages
+# Functions
+
+## Setup
 ```{r}
+
 library(pbda)
 library(tidyverse)
 library(cowplot)
 
-install.packages("cowplot")
 ```
 
 ## A simple example
 ```{r}
-a <- rnorm(n = 10)
 
+a <- rnorm(n = 10)
+a
+
+# Rescale this so all values are between 0 and 1
 (a - min(a)) / (max(a) - min(a))
 
-# What if we want to repeat this for other vectors
+rng <- range(a)
+(a - rng[1]) / (rng[2] - rng[1])
+
+
 b <- rnorm(n = 10)
 c <- rnorm(n = 10)
 
-(b - min(b)) / (max(b) - min(b))
-(c - min(c)) / (max(c) - min(c))
+
+rng <- range(b)
+new_b <- (b - rng[1]) / (rng[2] - rng[1])
+
+rng <- range(c)
+new_c <- (c - rng[1]) / (rng[2] - rng[1])
+
 ```
 
+## Function structure
 ```{r}
-# Good name
-scale_vec
-scale_nums
-rescale_nums
 
-# Bad names
-my_fav_fun
-my_great_fun
-function_1
-my_function_to_rescale_numbers
+# Good names
+#rescale_vec
 
-# Function structure
+# Bad names 
+#my_fav_fun
+#my_function_to_rescale_a_vector
+
+
+rng <- range(b)
+new_b <- (b - rng[1]) / (rng[2] - rng[1])
+
+
 rescale_vec <- function(x) {
-  (x - min(x)) / (max(x) - min(x))
-}
+  
+  rng <- range(x)
+  (x - rng[1]) / (rng[2] - rng[1]) + 1
 
-rescale_vec(x = a)
-rescale_vec(x = c(-1, 2.2, -0.34, 0.3))
+} 
+
+rescale_vec(a)
+rescale_vec(b)
+rescale_vec(c)
+
 ```
 
-## Excerises
 ```{r}
-# Function 1
-x / sum(x)
+
+# function 1
 
 calc_prop <- function(x) {
+  
   x / sum(x)
+  
 }
 
-calc_prop(c(1, 3, 2.2, 10))
-
-# Function 2
-(x + y) / z
-
+# function 2
 calc_sum_div <- function(x, y, z) {
+  
   (x + y) / z
+  
 }
 
-calc_sum_div(1, 3, 10)
 
-# Function 3
-sqrt(sum((x - mean(x))^2) / (length(x) - 1))
-
+# function 3
 calc_sd <- function(x) {
+  
   m <- mean(x)
-  l <- length(x) - 1
+  l <- length(x) -1
   v <- sum((x - m)^2) / l
   sqrt(v)
-}
-```
-
-## Brauer gene expression data
-```{r}
-brauer_gene_exp %>%
-  filter(systematic_name == "YDL104C") %>%
-  ggplot(aes(rate, expression, color = nutrient)) + 
-  geom_point() +
-  facet_wrap(~ nutrient) +
-  theme(legend.position = "none")
-
-brauer_gene_exp %>%
-  filter(systematic_name == "YNL049C") %>%
-  ggplot(aes(rate, expression, color = nutrient)) + 
-  geom_point() +
-  facet_wrap(~ nutrient) +
-  theme(legend.position = "none")
-
-brauer_gene_exp %>%
-  filter(systematic_name == "YNL049C") %>%
-  ggplot(aes(rate, expression, color = nutrient)) + 
-  geom_point() +
-  facet_wrap(~ nutrient) +
-  theme(legend.position = "none")
-
-```
-
-*Write a function to create our expression plots*
-```{r}
-plot_expr <- function(data_in, sys_name) {
-  data_in %>%
-    filter(systematic_name == sys_name) %>%
-    ggplot(aes(rate, expression, color = nutrient)) + 
-    geom_point() +
-    facet_wrap(~ nutrient) +
-    theme(legend.position = "none")
+  
 }
 
-brauer_gene_exp %>%
-  plot_expr(sys_name = "YNL049C")
 ```
 
-*Modify our plotting function to add the common name as the plot title*
-```{r, eval = F}
-plot_expr <- function(data_in, sys_name) {
-  gg_data <- data_in %>%
+## Brauer example
+```{r}
+
+plot_expr <- function(input, sys_name = "YDL104C") {
+  
+  gg_data <- input %>%
     filter(systematic_name == sys_name)
   
   plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
   
   gg_data %>%
     ggplot(aes(rate, expression, color = nutrient)) + 
-    geom_point() +
-    ggtitle(plot_title) + 
+    geom_point(size = 4) +
     facet_wrap(~ nutrient) +
-    theme(legend.position = "none")
-}
-
-brauer_gene_exp %>%
-  plot_expr(sys_name = "YNL049C")
-```
-
-## Conditional statements
-```{r}
-plot_expr <- function(data_in, sys_name) {
-  gg_data <- data_in %>%
-    filter(systematic_name == sys_name)
+    labs(title = plot_title, subtitle = plot_sub) +
+    theme(legend.position = "none") +
+    theme_cowplot()
   
-  plot_title <- gg_data$name[1]
-  
-  if (plot_title == "") {
-    plot_title <- sys_name
-  } 
-  
-  gg_data %>%
-    ggplot(aes(rate, expression, color = nutrient)) + 
-    geom_point() +
-    ggtitle(plot_title) + 
-    facet_wrap(~ nutrient) +
-    theme(legend.position = "none")
-}
-
-brauer_gene_exp %>%
-  plot_expr("YNL095C")
-```
-
-## Checking inputs for your function
-```{r}
-plot_expr <- function(data_in, sys_name) {
-  
-  if (!is.character(sys_name)) {
-    stop("sys_name must be a character string!")  
-  }
-  
-  gg_data <- data_in %>%
-    filter(systematic_name == sys_name)
-  
-  plot_title <- gg_data$name[1]
-  
-  if (plot_title == "") {
-    plot_title <- sys_name
-  }
-  
-  gg_data %>%
-    ggplot(aes(rate, expression, color = nutrient)) + 
-    geom_point() +
-    ggtitle(plot_title) + 
-    facet_wrap(~ nutrient) +
-    theme(legend.position = "none")
-}
-```
-
-## Using the ellipsis with your own functions
-```{r}
-rescale_vec <- function(x, ...) {
-  rng <- range(x, ...)
-  (x - rng[1]) / (rng[2] - rng[1])
-}
-
-rescale_vec(x = a, na.rm = F)
-```
-
-```{r}
-plot_expr <- function(data_in, sys_name, ...) {
-  
-  data_in %>%
-    filter(systematic_name == sys_name) %>%
-    
-    ggplot(aes(rate, expression)) +
-    geom_point() +
-    facet_wrap(~ nutrient) +
-    theme(legend.position = "none")
 }
 
 plot_expr(
-  data_in = brauer_gene_exp, 
-  sys_name = "YML017W"
+  input = brauer_gene_exp,
+  sys_name = "YDL104C"
+)
+
+brauer_gene_exp %>%
+  plot_expr()
+
+```
+
+## `if` statements
+```{r}
+
+x <- c("dog", "cat", "fish")
+
+if ("car" %in% x) {
+  
+  print("in x")
+  
+} else {
+  print("not in x")
+}
+
+```
+
+```{r}
+
+plot_expr <- function(input, sys_name = "YDL104C") {
+  
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  
+  if (plot_title == "") {
+    plot_title <- gg_data$systematic_name[1]
+  }
+
+  plot_sub <- gg_data$MF[1]
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) + 
+    geom_point(size = 4) +
+    facet_wrap(~ nutrient) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    theme(legend.position = "none") +
+    theme_cowplot()
+  
+}
+
+plot_expr(
+  input = brauer_gene_exp,
+  sys_name = "YNL095C"
+)
+
+```
+
+```{r}
+
+length(x)
+
+if ("car" %in% x || length(x) == 3) {
+  print("something")
+  
+} else if ("hook" %in% x) {
+  print("something else")
+  
+} else {
+  print("another thing")
+}
+
+```
+
+## Checking types
+```{r}
+
+plot_expr <- function(input, sys_name = "YDL104C") {
+  
+  if (!is.character(sys_name)) {
+    stop("sys_name is not a character string!!!!!")
+  }
+  
+  if (!sys_name %in% input$systematic_name) {
+    stop("sys_name not found in data!!!!!")
+  }
+  
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  
+  if (plot_title == "") {
+    plot_title <- gg_data$systematic_name[1]
+  }
+
+  plot_sub <- gg_data$MF[1]
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) + 
+    geom_point(size = 4) +
+    facet_wrap(~ nutrient) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    theme(legend.position = "none") +
+    theme_cowplot()
+  
+}
+
+plot_expr(
+  input = brauer_gene_exp,
+  sys_name = "YNL095Cfasdfsadfas"
+)
+
+```
+
+## Passing arguments with the ellipsis
+```{r}
+
+a[1] <- NA
+
+rescale_vec <- function(x, ...) {
+  
+  rng <- range(x, ...)
+  
+  (x - rng[1]) / (rng[2] - rng[1])
+
+}
+
+rescale_vec(x = a, na.rm = T)
+
+```
+
+*Modify our plotting function so the user can change the point size, shape, and alpha*
+```{r}
+
+plot_expr <- function(input, sys_name = "YDL104C", ...) {
+  
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) + 
+
+    geom_point() +
+  
+    facet_wrap(~ nutrient) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    theme(legend.position = "none") +
+    theme_cowplot()
+}
+
+plot_expr(
+  input = brauer_gene_exp, 
+  sys_name = "YNL049C",
+  size = 8,
+  shape = 2,
+  alpha = 0.6
 )
 ```
 
-*Move the ellipsis to a different ggplot function*
-```{r}
 
 
-```
 
 
 
