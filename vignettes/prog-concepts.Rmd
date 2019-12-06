@@ -36,8 +36,8 @@ A function is essentially a block of code that you've given a name and saved for
 
 Further reading
 
-* [R for Data Science]("https://r4ds.had.co.nz/") by Garrett Grolemund and Hadley Wickham
-* [Advanced R]("https://adv-r.hadley.nz/") by Hadley Wickham
+* [R for Data Science](https://r4ds.had.co.nz) by Garrett Grolemund and Hadley Wickham
+* [Advanced R](https://adv-r.hadley.nz) by Hadley Wickham
 ```{r}
 # An example: you want to rescale a numeric vector so all values are between 0 and 1
 a <- rnorm(n = 10)
@@ -519,35 +519,43 @@ source("path/to/my_functions.R")
 As discussed in the previous section, you should try to limit duplication in your code. One way to do this is by writing functions, another way is through iteration. `for` loops allow you to run the same code block repeatedly without copying and pasting.
 ```{r}
 # When writing a for loop, think about the output, sequence, and body
-out <- vector("numeric", 5)  # 1. output
+out <- vector("numeric", 5)  # output
 
-for (i in 1:length(out)) {   # 2. sequence
+for (i in 1:length(out)) {   # sequence
   
-  out[i] <- 2 * i            # 3. body
+  out[i] <- i * 5            # body
   
 }
+
+# It's helpful to think about what happens during each cycle of the loop
+out[1] <- 1 * 5  # i = 1
+out[2] <- 2 * 5  # i = 2
+out[3] <- 3 * 5  # i = 3
+out[4] <- 4 * 5  # i = 4
+out[5] <- 5 * 5  # i = 5
 ```
 
 ```{r}
 # Lets use rnorm() to create 5 vectors with different values for 'mean'
 # One way to do this is by copying and pasting
-out <- vector("list", 5)
+vec_in <- c(1, 50, 20, 5, 70)                # input
 
-out[[1]] <- rnorm(n = 10, mean = 1)
-out[[2]] <- rnorm(n = 10, mean = 50)
-out[[3]] <- rnorm(n = 10, mean = 20)
-out[[4]] <- rnorm(n = 10, mean = 5)
-out[[5]] <- rnorm(n = 10, mean = 70)
+out <- vector("list", length(vec_in))        # output
+
+out[[1]] <- rnorm(n = 10, mean = vec_in[1])    
+out[[2]] <- rnorm(n = 10, mean = vec_in[2])
+out[[3]] <- rnorm(n = 10, mean = vec_in[3])
+out[[4]] <- rnorm(n = 10, mean = vec_in[4])
+out[[5]] <- rnorm(n = 10, mean = vec_in[5])
 
 # Use a for loop to reduce code duplication
-# seq_along() is a safer way of writing 1:length(x)
-vals <- c(1, 50, 20, 5, 70)
+vec_in <- c(1, 50, 20, 5, 70)                  # input
 
-out <- vector("list", length(vals))          # 1. output
+out <- vector("list", length(vec_in))          # output
 
-for (i in seq_along(vals)) {                 # 2. sequence
+for (i in 1:length(vec_in)) {                  # sequence
   
-  out[[i]] <- rnorm(n = 10, mean = vals[i])  # 3. body
+  out[[i]] <- rnorm(n = 10, mean = vec_in[i])  # body
   
 }
 ```
@@ -556,17 +564,36 @@ for (i in seq_along(vals)) {                 # 2. sequence
 
 *Write a `for` loop to create 3 vectors of different lengths*
 ```{r, echo = F}
-lens <- c(5, 10, 2)
+vec_in <- c(5, 10, 2)                  # input
 
-out <- vector("list", length(lens))  # 1. output
+out <- vector("list", length(vec_in))  # output
 
-for (i in seq_along(lens)) {         # 2. sequence
+for (i in 1:length(vec_in)) {          # sequence
   
-  out[[i]] <- rnorm(n = lens[i])     # 3. body
+  out[[i]] <- rnorm(n = vec_in[i])     # body
   
 }
 
 out
+```
+
+<br>
+
+Using `seq_along(x)` instead of `1:length(x)`
+```{r}
+# seq_along() mimics 1:length() for non-empty vectors
+vec_in <- c(5, 10, 2)
+
+1:length(vec_in)
+
+seq_along(vec_in)
+
+# seq_along() correctly handles empty vectors
+emp_vec <- vector("numeric", 0)
+
+1:length(emp_vec)
+
+seq_along(emp_vec)
 ```
 
 <br>
@@ -589,41 +616,38 @@ plot_expr <- function(input, sys_name, ...) {
     geom_point(...) +
     labs(title = plot_title, subtitle = plot_sub) +
     facet_wrap(~ nutrient) +
+    theme_cowplot() +
     theme(legend.position = "none")
 }
 
-expr_plots <- vector("list", 4)
+# Lets try this with the copy-and-paste method
+vec_in <- c("YDL104C", "YLR115W", "YMR183C", "YML017W")       # input
 
-expr_plots[[1]] <- brauer_gene_exp %>%
-  plot_expr(sys_name = "YDL104C")
+out <- vector("list", length(vec_in))                         # output 
 
-expr_plots[[2]] <- brauer_gene_exp %>%
-  plot_expr(sys_name = "YOR069W")
+out[[1]] <- plot_expr(brauer_gene_exp, sys_name = vec_in[1])  
+out[[2]] <- plot_expr(brauer_gene_exp, sys_name = vec_in[2])
+out[[3]] <- plot_expr(brauer_gene_exp, sys_name = vec_in[3])
+out[[4]] <- plot_expr(brauer_gene_exp, sys_name = vec_in[4])
 
-expr_plots[[3]] <- brauer_gene_exp %>%
-  plot_expr(sys_name = "YLR115W")
-
-expr_plots[[4]] <- brauer_gene_exp %>%
-  plot_expr(sys_name = "YPR036W")
-
-plot_grid(plotlist = expr_plots)
+plot_grid(plotlist = out)
 ```
 
 <br>
 
 *Re-write the code from above using a `for` loop to generate our figure*
 ```{r, eval = F}
-genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
+vec_in <- c("YDL104C", "YLR115W", "YMR183C", "YML017W")  # input
 
-expr_plots <- vector("list", 4)  # 1. output
+out <- vector("list", length(vec_in))                    # output
 
-for ( ???? ) {                   # 2. sequence
+for ( ???? ) {                                           # sequence
   
-                                 # 3. body
+                                                         # body
 
 }
 
-plot_grid(plotlist = expr_plots)
+plot_grid(plotlist = out)
 ```
 
 <br>
@@ -647,13 +671,13 @@ Each `map()` function requires two inputs: `map(.x, .f, ...)`
 - `.f` is a function or formula
 ```{r}
 # We previously used a for loop to create vectors with different values for mean
-vals <- c(1, 50, 20, 5, 70)
+vals <- c(1, 50, 20, 5, 70)                  # input
 
-out <- vector("list", length(vals))          # 1. output
+out <- vector("list", length(vals))          # output
 
-for (i in seq_along(vals)) {                 # 2. sequence
+for (i in seq_along(vals)) {                 # sequence
   
-  out[[i]] <- rnorm(n = 10, mean = vals[i])  # 3. body
+  out[[i]] <- rnorm(n = 10, mean = vals[i])  # body
   
 }
 
@@ -666,7 +690,9 @@ out <- map(
 
 # You can use brackets to include a multi-line code block
 out <- map(vals, ~ {
+  
   rnorm(n = 10, mean = .x)
+
 })
 
 # map() allows for very readable code
@@ -776,7 +802,7 @@ shapes <- c(1, 2, 3, 4)
 
 plot_args <- list(genes, sizes, shapes)
 
-# Run use argument list with pmap
+# Use an argument list with pmap
 expr_plots <- pmap(plot_args, ~ {
   plot_expr(
     input = brauer_gene_exp,
