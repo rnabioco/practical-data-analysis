@@ -1,9 +1,10 @@
 pandoc: '2.2'
 pkgdown: 1.4.1.9000
-pkgdown_sha: 891cd8be82e2fdebe9ef3b2623687f7ac26297f8
+pkgdown_sha: 24ef1bbdec0de44fe11eb1d58b40dba961525d43
 articles:
   assignments: assignments.html
   class-1: class-1.html
+  class-12: class-12.html
   class-2: class-2.html
   class-3: class-3.html
   class-4: class-4.html
