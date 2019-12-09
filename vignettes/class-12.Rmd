@@ -1,0 +1,194 @@
+---
+title: "Class 12: Jumping into more complex R, tips, resources"
+author: "Rui Fu"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Class-12}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
+## Please fill out survey to improve future classes
+
+## Class material can be accessed at: 
+https://rnabioco.github.io/practical-data-analysis/
+
+## 1. Finding useful packages
+
+In most cases, what you need is already made into well-documented packages, and you don't have to reinvent the wheel (but sometimes you should?). Depending on where the package is curated, installation is different. Some examples below:
+
+1. `Gviz` - visualize gene model
+2. `VennDiagram` - making custom venn diagrams
+3. `emo` - inserting emojis into rmd
+
+```{r packages, eval = FALSE}
+# BiocManager::install("Gviz") # from bioconductor
+vignette("Gviz")
+
+# install.packages("eulerr") # from CRAN
+plot(eulerr::venn(list(set1 = c("geneA", "geneB", "geneC"), 
+                       set2 = c("geneC", "geneD"))))
+
+# devtools::install_github("hadley/emo") # from github
+emo::ji("smile")
+```
+
+## 2. Git - version control
+
+Advantages of using version control include: rolling back code, branched development, collaboration, etc.
+
+[Getting started](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
+
+[Interactive practice](https://learngitbranching.js.org/)
+
+this can be handled by rstudio as well
+
+```{bash git, eval = FALSE}
+ls
+git blame assignments.Rmd
+```
+
+### Put your code on GitHub
+
+As you write up code chunks and functions, documenting them on GitHub is great way to make them portable and searchable.
+
+If you have any interest in a career in data science/informatics, GitHub is also a common showcase of what (and how well/often) you can code. After some accumulation of code, definitely put your GitHub link on your CV.
+
+### Asking for help with other packages on GitHub
+
+Every package should include readme, installation instructions, and `issues` page where questions and bugs can be reported. Example: [readr github page](https://github.com/tidyverse/readr/issues) Don't be afraid to file new issues, but very often your problems are already answered in the `closed` section.
+
+## 3. other tips/best practices
+
+### code and data organization
+
+Read this paper: [A Quick Guide to Organizing Computational Biology Projects](https://doi.org/10.1371/journal.pcbi.1000424)
+
+```{bash folders, eval = FALSE}
+NEWS.md   # markdown document for tracking progress
+data      # data directory for storing raw and processed data
+dbases    # database files downloaded from other places
+docs      # publication documents and random project files
+your-project.Rproj # Make an Rproject in Rstudio for every project
+results   # store all RMarkdown here
+src       # store useful scripts here
+```
+
+### 1b. `here`, folder structure management
+
+https://github.com/jennybc/here_here
+
+```{r here, eval = FALSE}
+here::here() # always points to top-level of current project
+
+here::here("vignettes", "class-12.Rmd") # never confused about structure
+```
+
+### 2. `styler`, clean up code readability
+
+[style guide](http://adv-r.had.co.nz/Style.html)
+
+```{r styler, eval = FALSE}
+styler::style_text("
+my_fun <- function(x, 
+y, 
+z) {
+  x+
+    z
+}
+                   ")
+
+# styler::style_file
+# styler::style_dir
+```
+
+### 3. benchmarking, such as `microbenchmark` and `profvis`
+
+```{r bench, eval = FALSE}
+path_to_file <- system.file("extdata", "gene_tibble.csv", package = "pbda")
+res <- microbenchmark::microbenchmark(
+  base = read.csv(path_to_file),
+  readr = readr::read_csv(path_to_file),
+  times = 5
+)
+print(res, signif = 2)
+microbenchmark:::autoplot.microbenchmark(res)
+
+library(dplyr)
+p <- profvis::profvis({
+  path_to_file <- system.file("extdata", "gene_tibble.csv", package = "pbda")
+  c1 <- readr::read_csv(path_to_file)
+  c1 <- c1 %>%
+    filter(padj < 0.00001) %>%
+    mutate(gene = stringr::str_to_lower(gene))
+})
+p
+```
+
+
+### 4. `shiny`, interactive web app
+
+https://shiny.rstudio.com/gallery/
+
+### 5. running R script from terminal
+
+```{bash script, eval = FALSE}
+Rscript /Users/rf/teach/practical-data-analysis/R/mat.R
+```
+
+### 6. finding help online, [StackOverflow](https://stackoverflow.com/)
+
+![](https://imgs.xkcd.com/comics/wisdom_of_the_ancients.png)
+
+## Online resources
+
+ The [R studio community forums](https://community.rstudio.com/) are a great resource for asking quesitons about tidyverse related packages.  
+ 
+ [StackOverflow](https://stackoverflow.com/) provides user contributes questions and answers on a variety of topics. 
+ 
+ For help with bioconductor packages visit the [support page](https://support.bioconductor.org/) 
+ 
+ Find out if others are having similar issues by searching the issue on the [Github](https://github.com/) page for the package that you are using. 
+ 
+## General R coding resources
+
+  Hadley Wickman has written two very good (free) ebooks on using R. 
+  
+  [R for Data Science](https://r4ds.had.co.nz/)
+  
+  [Advanced R](http://adv-r.had.co.nz/)
+  
+## Bioinformatic resources
+
+  For general bioinformatics advice I found the following text very useful.  
+  
+  [Bioinformatics Data Skills](http://vincebuffalo.org/book/) by Vince Buffalo
+
+  For statistics related to bioinformatics this free course is excellent:  
+  
+  [PH525x series - Biomedical Data Science](http://genomicsclass.github.io/book/)
+  
+  For more detailed descriptions of single cell RNA-Seq analysis:  
+  
+  https://scrnaseq-course.cog.sanger.ac.uk/website/index.html
+  
+## Offline help
+
+We (the RBI fellows) hold standing office hours on Thursdays, walk-ins 1-2pm, by appointment 2-4pm, in RC1S rm. 9101. Bring us your broken code and we'll try to sort it out. Send us an email to let us know you will be stopping by (`rbi.fellows@cuanschutz.edu`).
+
+## Lastly, sometimes code is just broken
+
+A certain highly-regarded and cited scRNA-seq package drew cell type progression arrows in the wrong direction, for months before the issue was fixed!
+
+Go to github and search the issues to see if the problem has been reported or fixed. If not submit an issue that describes the problem. The [reprex package](https://reprex.tidyverse.org/) makes it easy to
+produce well-formatted R reproducible examples that demonstrate the problem. Often developers will be thankful for your help with making their software better.
