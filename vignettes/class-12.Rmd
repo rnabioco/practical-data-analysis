@@ -235,3 +235,6 @@ No one writes perfect code. A certain highly-regarded and cited scRNA-seq packag
 
 Go to GitHub and search the issues to see if the problem has been reported or fixed. If not submit an issue that describes the problem. The [reprex package](https://reprex.tidyverse.org/) makes it easy to
 produce well-formatted R reproducible examples that demonstrate the problem. Often developers will be thankful for your help with making their software better.
+
+## 8. Use R often. Don't (try not to) use Excel.
+![](https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/noexcel.png)
