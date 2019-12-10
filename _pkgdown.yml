@@ -49,6 +49,8 @@ navbar:
         href: articles/class-9.html
      # - text: "Class 9: Tips, Data I/O, and Resources"
      #   href: articles/class-9.html
+      - text: "Class 12: Jumping into more complex R, tips, resources"
+        href: articles/class-12.html
       - text: "--------"
       - text: "Assignment Submission and Grading Rubric"
         href: articles/assignments.html
