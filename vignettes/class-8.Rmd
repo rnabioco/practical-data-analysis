@@ -1,5 +1,5 @@
 ---
-title: "Class 8: Exploring data with PCA"
+title: "Class 8: Heatmaps and Clustering"
 author: "Kent Riemondy"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -16,396 +16,589 @@ knitr::opts_chunk$set(
 )
 library(tidyverse)
 library(ComplexHeatmap)
-library(ggrepel)
 library(pbda)
 library(cowplot)
 ```
 
-
-
-```{r load, eval = F}
-#devtools::install_github("IDPT7810/practical-data-analysis")
+```{r, eval = FALSE}
 library(tidyverse)
 library(ComplexHeatmap)
-library(ggrepel)
 library(pbda)
-library(cowplot)
 ```
 
 Goals:
-  Use PCA to identify key sources of variation in a large dataset.
-
-## PCA
  
-As we've learned throughout the class, you need to visualize your data to identify
-key patterns. However, high dimensional datasets are difficult to visualize in a meaningful way. For example how do you find a pattern in a large sequencing dataset with 100 samples, and 20,000 genes? 
-
-Heatmaps provide one way to visualize selectively gene sets for a relatively small number of samples, but discerning overall patterns between samples can still be difficult, even with clustering.
-
-Principle Component Analysis as you have learned is a commonly used technique to examine the structure of large datasets. 
-
-Resources:
-
-  - [PCA Explained Visually](http://setosa.io/ev/principal-component-analysis/) 
-  - [PCA formal explanation](https://en.wikipedia.org/wiki/Principal_component_analysis)
-  - [PCA informal explanation](https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues)
-
-### Background on PCA
-
-PCA takes a set of variables and generates a new set of variables. The new variables are selected to capture the maximal variance in the data. 
-
-Each variable is known as a principal component. The first principal component represents a linear combination of the original variables that captures the maximum variance in the dataset. Basically find a line through the dataset that captures the maximum variance. 
-
-The second component is also a linear combination of the original variables but is uncorrelated to the first component. 
-
-In this manner PCA generates a new set of variables that are ordered based on the variance captured in the data. It's for this reason that is so useful for exploratory analysis and dimensionality reduction. 
-
-Consider the following experiment where we measure gene expression for 2 genes in 100 samples. Because there are only 2 genes, we can visualize all of the data in a 2D scatterplot. 
-
-First, let's generate some example data. 
-
-```{r pca-intro}
-# generate some correlated variables, scale, and make tidy 
-set.seed(42)
-sim <- MASS::mvrnorm(100,
-                     c(0, 0),
-                     matrix(c(1, 0.95, 0.95, 1),
-                     2,
-                     2)) %>% 
-  scale() %>% 
-  as.data.frame() %>% 
-  rownames_to_column("id") %>% 
-  arrange(V1, V2) %>% 
-  rename(gene_1 = V1, gene_2 = V2) %>% 
-  as_tibble() %>% 
-  mutate(id = row_number())
-
-# select points to label for visualization
-max_min_points <- slice(sim, c(1:5, 95:100))
-
-# make a plot
-og_plt <- ggplot(sim, aes(gene_1, gene_2)) +
-  geom_point() +
-  geom_text_repel(data = max_min_points, 
-                  aes(label = id)) +
-  # scale y axis to same as x
-  ylim(min(sim$gene_1),
-       max(sim$gene_2))
-
-og_plt
-```
-
-Next we'll run PCA on this simulated data using the `prcomp` function.
-
-```{r}
-# run pca
-pc <- prcomp(sim[, c(2:3)], center = FALSE, scale. = FALSE)
-```
-
-`prcomp` returns an object with a few slots. The `x` slot contains the principal componenents in a matrix.  
-
-```{r}
-names(pc)
-```
-
-For ease of plotting I will define a function to make a plot. 
-```{r}
-
-# function to make a pretty labeled plot
-
-plot_labeled_pca <- function(input_data, 
-                             pca_obj){
+  1) Learn additional operations on matrices. 
   
-  #tidy the pc matrix
-  pc_x <- pca_obj$x %>% 
-    as.data.frame() %>% 
-    mutate(id = input_data$id) 
- 
-  # select points to label
-  max_min_points <- slice(pc_x, c(1:5, 95:100))
-
-  # compute variance explained
-  percent_var <- (100 * pca_obj$sdev^2 / 
-                    sum(pca_obj$sdev^2))  %>% 
-    signif(3)
-
-  #plot the data
-  pca_plt <- ggplot(pc_x, aes(PC1, PC2)) +
-    geom_point() +
-    geom_text_repel(data = max_min_points, 
-                  aes(label = id)) +
-    labs(x = str_c("PC1 ", percent_var[1], "%"),
-         y = str_c("PC2 ", percent_var[2], "%")) +
-    # make axes symmetric
-    ylim(c(min(pc_x$PC1), 
-           max(pc_x$PC1)))
+  2) Demonstrate principles to effectively visualize large datasets with heatmaps. 
   
-  pca_plt 
+  3) Use clustering algorithms to identify patterns in the data.
+  
+  4) Exploring datasets with PCA 
+
+### Dataset description
+
+For some of the exercises today we will be using a single cell RNA-seq dataset that
+is part of the `pbda` package.  The `esc_mat` matrix contains read counts 
+for each gene in each cell. The read counts are an abundance measurement for mRNAs in each cell.
+
+This dataset contains `r ncol(esc_mat)` cells from mouse embryos 
+at various stages of development ([Single-Cell RNA-Seq Reveals Dynamic, Random Monoallelic Gene Expression in Mammalian Cells](http://science.sciencemag.org/content/343/6167/193)). This dataset, as well as many
+others are available in a preprocessed form from the Hemberg lab (
+https://hemberg-lab.github.io/scRNA.seq.datasets/). Note that the number of cells has been reduced for complexity reasons. 
+
+### Apply functions per row or per column of a matrix
+
+A common task with matrices is to compute a row-wise or column-wise summary. Tidyverse verbs don't naively support operations on matrices. base R provides some useful summary functions, as well as the `matrixStats` package. 
+
+```{r}
+colSums(esc_mat) %>% head()
+rowSums(esc_mat) %>% head()
+
+summary(esc_mat[, 1:3])
+```
+
+There are a few base R plotting functions that are very useful for exploratory analysis with matrices. For example the `hist()` 
+function can be used to quickly generate a histogram from a matrix. Various clustering functions also provide a `plot()` method that can produce useful summaries. Often I use base R plots for interactive work, then use ggplot (or heatmaps) to make focused publication quality figures. 
+
+```{r, eval = FALSE}
+hist(esc_mat)
+```
+
+### Apply family of functions
+
+How would we apply an arbitrary function to operate row-wise or column-wise?
+
+In base R there is a function called `apply`. 
+
+```{r, eval = FALSE}
+?apply
+```
+
+We can use apply to calculate rowSums and colSums.
+
+```{r}
+apply(esc_mat, 1, sum) %>% head()
+apply(esc_mat, 2, sum) %>% head()
+```
+
+
+We can also define custom functions and use them in apply. (See also `lapply`, `vapply`, `sapply`, etc. for variants for operating on different data structures)
+
+```{r}
+#predefine function
+my_sum <- function(x){
+  sum(x) + 42
 }
-```
- 
- If we plot out the new variables PC1 and PC2 you can see that now the data has been flattened and spread out along the PC1 axis. 
- 
-```{r}
-pca_plt <- plot_labeled_pca(sim, pc)
 
-pca_plt
-```
+ex <- apply(esc_mat, 1, my_sum)
 
+ex[1:5]
 
-As we can see, PCA has refactored the data such that PC1 now represents a vector through the data that captures the most variance. The second PC, now represents a distinct type of variance represented as variance perpendicular to the y = x line. 
+# or use an anonymous function 
+ex2 <- apply(esc_mat, 1, function(a){
+  sum(a) + 42
+})
 
+ex2[1:5]
 
-```{r, fig.width = 7}
-plot_grid(og_plt, pca_plt)
 ```
 
+### Filtering a matrix to exclude noisy low-abundance genes
 
+Next we are going to remove genes (rows) with low values from the `esc_mat` matrix and save this smaller matrix as `filtered_mat`. 
 
-Another way to demonstrate what PCA is doing is to show the information captured by each PC. 
-
-
-```{r, out.width = "700px", echo = FALSE}
-#taken from https://stats.stackexchange.com/questions/229092/how-to-reverse-pca-and-reconstruct-original-variables-from-several-principal-com?noredirect=1&lq=1
-# credit to @amoeba 
-knitr::include_graphics("img/pca.png")
-```
-
-### Example with more dimensions
-
-What if we had more dimensions that are just noise? How does this impact PCA?
 
 ```{r}
-# generate a matrix of random numbers 
-# drawn from a normal dist. to simulate noise
-set.seed(20181214)
-more_genes <- matrix(rnorm(1000, mean = 0, sd = 0.25), 
-                     nrow = 100, ncol = 10)
+to_keep <- (rowSums(esc_mat > 0) > 10) 
 
-# add column names
-colnames(more_genes) <- str_c("gene_noise_",
-                              1:ncol(more_genes))
-
-# add the matrix to the simulation data_frame by column
-sim_2 <- cbind(sim, more_genes) 
-
-sim_2[1:5, 1:6]
+filtered_mat <- esc_mat[to_keep, ]
+nrow(filtered_mat)
+# or alternatively
 ```
 
-There are a few base R plotting functions that are very useful for exploratory analysis. For example the `plot()` 
-function can be used to quickly generate many exploratory plots. Often I use these for interactive work, then use ggplot to make focused publication quality figures. 
+or using `apply`
+```{r}
+to_keep <- apply(esc_mat, 1, function(x){
+  sum(x > 0) > 10
+})
+
+filtered_mat <- esc_mat[to_keep, ]
+
+nrow(filtered_mat)
+```
+
+
+### Normalizing data 
+
+### Exercise
+
+Normalize each the expression values for each cell. Divide each column by the total number of counts in each column, multiply by 10000, and log transform (use the `log1p` function). Save the new matrix as `norm_mat`. 
+
 
 ```{r}
-plot(sim_2$gene_1, sim_2$gene_2)
-```
-
-By default if you supply `plot` with a dataframe with only numeric values, it will plot all of the cross comparisons, which is useful in this example to quickly highlight that `gene_1` and `gene_2` are the only correlated or interesting variables. 
-
-
-```{r, fig.height = 7, fig.width = 7}
-plot(sim_2[, 2:7])
-```
-
-Now if we had 2000 dimensions (i.e. genes) we couldn't resonably investigate all of the scatterplots for each gene compared to each other gene. Even with a small real dataset with 10 genes, it's hard to identify important relationships. 
-
-Next we'll run PCA on this new data
-```{r}
-pc2 <- prcomp(sim_2[, 2:ncol(sim_2)], 
-              center = FALSE, 
-              scale. = FALSE)
-```
-
-
-```{r, fig.width = 7}
-pc2_plt <- plot_labeled_pca(sim_2, pc2) 
-
-plot_grid(og_plt, pc2_plt)
-```
-
-### How much variation is captured by each PC?
-
-The `sdev` slot contains the stdard deviation of the principal components. The square of this value is the variance explained by the PC. 
-
-```{r}
-sds <- pc2$sdev
-
-# get variance per pc
-var_per_pc <- sds^2
-
-#calculate percent variance per pc
-percent_var_per_pc <- 100 * (var_per_pc / sum(var_per_pc))
-
-#plot a vector
-plot(percent_var_per_pc)
-```
-
-As we can see most of the variation in the data is captured in the first PC. This means that if we dropped the remaining PCs from the data we would lose very little information. It is for this reason that PCA is so useful for dimensionality reduction for big datasets like single cell RNA-seq.
-
-### How to find features (genes) associated with each PC
-
-As we have learned each PC is linear combination of the features (i.e genes) in the data. How do we determine which features are most important for each PC?
-
-The `rotation` slot of the `prcomp` object contains the rotations (also known as loadings) for each PC. These loadings can be interpreted as the amount each feature contributes to a principle component. Strongly positive loadings mean that the feature is strongly positivlye correlated with the PC. Strongly negative loadings indicate that it is strongly negatively correlated. Loadings at zero indicate no contribution. 
-
-By ranking the loadings we can identify which genes impact each PC.
-
-```{r}
-
-pc2$rotation[1:5, 1:3]
-```
-
-```{r}
-# for PC1
-pc2$rotation[, 1] %>% 
-  abs(.) %>% 
-  sort(decreasing = T) %>% 
-  head()
-
-```
-
-Using this approach we can quickly identify that `gene_1` and `gene_2` are driving the variance in the data. 
-
-
-## Run PCA on a single cell dataset
-
-Step 1: First let's filter and normalize the `esc_mat` matrix. 
-
-```{r}
-# remove lowly expressed features
-filtered_mat <- esc_mat[rowSums(esc_mat > 0) > 10, ]
-
-# log normalize 
-norm_mat <- apply(filtered_mat, 2, function(x) x / sum(x))
+# normalize a matrix
+norm_mat <- apply(esc_mat, 2, function(x) x / sum(x)) 
 norm_mat <- 10000 * norm_mat
-norm_mat <- log(norm_mat + 1)
+norm_mat <- log(norm_mat + 1) # or log1p(norm_mat)
+
+
+# another approach 
+lognorm <- function(vec){
+  norm_values <- 10000 * (vec / sum(vec))
+  log(norm_values + 1)
+}
+
+norm_mat <- apply(esc_mat, 2, lognorm)
 ```
 
-
-Step 2: Scale the data.
-  
-  This makes every variable equal in weight. For example if one variable ranges from -100 to 100, this variable will have more weight than one that ranges from -1 to 1. Often in most datasets scaling the variables is necessary to avoid projecting the PCA solely based on the abundance of a variable. 
-
+### Converting matrices to data.frames and tibbles
 
 ```{r}
-# scale and center each gene
-zmat <- t(scale(t(norm_mat)))
-zmat[1:5, 1:5]
+# to data.frame
+df <- as.data.frame(esc_mat)
+
+df <- df[1:3, 1:5]
+
+# to tibble
+as_tibble(df, rownames = "gene")
+
+# or equivalently
+rownames_to_column(df, "gene") %>% 
+  as_tibble()
+
+# as one step 
+tbl_data <- esc_mat %>%
+  as.data.frame() %>% 
+  as_tibble(rownames = "gene")
+
+tbl_data[1:5, 1:5]
 ```
 
-
-
-Step 3: run PCA
-  
-```{r}
-# run PCA with genes as columns and cells as rows
-pcs <- prcomp(t(zmat), scale. = FALSE, center = FALSE)
-```
-
-
-Step 4: Examine variance explained by each PC
-
-Exercise: make a ggplot plot that plots PC versus percent variance explained
-
-
-```{r}
-variance_per_pc <- pcs$sdev^2
-
-percent_var_explained <- 100 * (variance_per_pc / sum(variance_per_pc))
-  
-plot_data <- data_frame(percent_var_explained,
-                        PC = 1:length(percent_var_explained))
-  
-ggplot(plot_data, aes(PC, percent_var_explained)) +
-    geom_point() +
-    labs(y = "Percent variance explained") +
-    # display x breaks as integers 
-    scale_x_continuous(breaks= scales::pretty_breaks()) 
-
-```
-
-Same as above but now as a function:
-
-```{r, eval = F}
-plot_var_explained <- function(pc_obj) {
-   
-  variance_per_pc <- pc_obj$sdev^2
-
-  percent_var_explained <- 100 * (variance_per_pc / sum(variance_per_pc))
-  
-  plot_data <- data_frame(percent_var_explained,
-                        PC = 1:length(percent_var_explained))
-  
-  plt <- ggplot(plot_data, aes(PC, percent_var_explained)) +
-    geom_point() +
-    labs(y = "Percent variance explained") +
-    # display x breaks as integers 
-    scale_x_continuous(breaks= scales::pretty_breaks()) 
-  
-  plt
-} 
-
-plot_var_explained(pcs)
-
-```
-
-Step 5: Plot PCs
-
-Exercise: Generate a ggplot plot that plots PC1 versus PC2 and color by developmental stage. 
-(i.e. zy, 4cell, 8cell, etc.)
-
-```{r, fig.height = 5, fig.width = 5}
-# make tidy sample info
-sample_info <- data_frame(id = colnames(zmat)) %>% 
-  mutate(cell_type = str_remove(id, "_[0-9]+"))
-
-# tidy PCA data
-pcs_tidy <- pcs$x %>% 
-  as_tibble(rownames = "id") 
-
-# join sample info with PCA
-pc_dat <- left_join(sample_info, 
-          pcs_tidy,
-          by = "id")
-
-ggplot(pc_dat, aes(PC1, PC2)) +
-  geom_point(aes(color = cell_type)) +
-  scale_color_brewer(palette = "Paired")
-```
-
-Step 6: Find genes that are associated with each PC
-
-For example we can see that PC1 separates that data along the developmental time. If we find genes with strongly positive loadings these should be genes that increase over time. 
+Converting data.frames to matrices is also easily accomplished using `as.matrix()`
 
 ```{r}
-pcs$rotation[1:3, 1:3]
+tbl_mat <- tbl_data %>% 
+  as.data.frame()
+
+rownames(tbl_mat) <- tbl_mat$gene
+tbl_mat <- tbl_mat[, -1]
+
+tbl_mat <- as.matrix(tbl_mat)
+
+tbl_mat[1:3, 1:3]
+class(tbl_mat)
+
+# in one step
+tbl_mat <- tbl_data %>% 
+  as.data.frame() %>% 
+  column_to_rownames("gene") %>% 
+  as.matrix()
+
 ```
+
+Converting vectors to tibbles is also very useful.
 
 ```{r}
-pc1_loadings <- pcs$rotation[, 1]
+# make a vector from colnames
+col_ids <- colnames(tbl_mat)
 
-# get top 25 most positive loadings 
-pc1_pos <- pc1_loadings %>% sort(decreasing = TRUE) %>% head(25)
+#build tibble directly
+tibble(sample_names = col_ids)
 
-# get top 25 most negative loadings
-pc1_neg <- pc1_loadings %>% sort(decreasing = FALSE) %>% head(25)
-
-# combine them and get names
-pc1_important <- c(pc1_pos, pc1_neg) 
-pc1_genes <- names(pc1_important)
+#additional columns can be added as long as all of the vectors are the same length
+tibble(sample_names = col_ids,
+       id = 1:72)
 ```
 
-Exercise: Make a heatmap that plots the pc1_genes
+generating data.frames 
 
-```{r, fig.height = 7, fig.width = 7}
+```{r, eval = FALSE}
+data.frame(sample_names = col_ids,
+           id = 1:72,
+           stringsAsFactors = FALSE) # very important
+```
 
-Heatmap(zmat[pc1_genes, ],
+### Exercise
+
+Tidy the `norm_mat` matrix into long format and extract out the timepoint information from the column name (e.g. `zy`, `early2cell`, etc.). Plot the expression values for each time point (`geom_violin` or `geom_boxplot`).
+
+
+```{r, fig.height=5, fig.width=7}
+tidy_mat <- norm_mat %>% 
+  as.data.frame() %>% 
+  as_tibble(rownames = "gene") %>% 
+  pivot_longer(cols = -gene, names_to = "sample")  %>%
+  separate(sample, c("timepoint", "rep"), sep = "_")
+
+ggplot(tidy_mat, aes(timepoint, value)) + 
+   geom_violin() 
+```
+
+
+## Generating Heatmaps using ComplexHeatmap
+
+How do we visualize this dataset to examine relationships between samples? Visualizing the entire matrix will be computationally expensive and
+likely completely unintepretable as it will obscure interesting patterns. Ideally we'd like to reduce the dataset to less than a few thousand genes for visualization.
+  
+How do we select which features to plot in a heatmap?   
+
+  1) Use statistics to find features that are significant based on some hypothesis (i.e. run `DESeq2` for RNA-seq).  
+  
+  2) Pick features of interest related to the hypothesis.
+  
+  3) Select features with high variance. Low variance features are probably not very interesting 
+  
+  4) Down sample the matrix to a smaller size
+  
+
+```{r}
+gene_variance <- apply(norm_mat, 1, var) %>%
+  sort(decreasing = TRUE)
+
+# top 30 most variable genes
+vargenes <- names(gene_variance)[1:30]
+
+head(vargenes)
+```
+
+
+```{r, fig.height=5, fig.width=7}
+var_mat <- norm_mat[vargenes, ]
+
+Heatmap(var_mat, 
+        name = "log scale",
+        cluster_rows = FALSE,
+        cluster_columns = FALSE)
+```
+
+Use clustering techniques to naturally order the data.
+
+```{r, fig.height=5, fig.width=7}
+var_mat <- norm_mat[vargenes, ]
+
+Heatmap(var_mat, 
+        name = "log scale",
+        cluster_rows = TRUE,
+        cluster_columns = FALSE)
+```
+
+Often visualizing gene expression abundance can obscure some patterns, as lower expression values are not as strongly represented. A common data transformation is mean-centering and scaling each gene. This is also known as a z-score. 
+
+`(x - mean(x)) / sd(x)` 
+
+By generating z-scores, the gene expression data now represents standard deviations away from the mean. A built in function in R called `scale` can generate z-scores. This is also easy to do using an apply function. 
+
+
+```{r zscores}
+?scale
+```
+
+The scale function performs scaling per **column** in a matrix. However, it is common in genomics for matrices to be represented with samples (i.e. cells) as columns and genes as rows. This is done as commonly the number of genes (i.e. features) is much greater than the number of samples, and so it is conviently (and computationally easier) to represent data in this format.  
+
+However, is this a tidy format? 
+
+Are the variables stored as rows or columns?
+
+```{r}
+var_mat[1:3, 1:3]
+
+t(var_mat) %>% .[1:3, 1:3]
+
+
+zmat <- t(scale(t(var_mat), 
+                center = TRUE, 
+                scale = TRUE)) 
+
+# confirm that columns are the same after scaling
+all(colnames(zmat) == colnames(var_mat))
+```
+
+
+```{r, fig.height=5, fig.width=7}
+Heatmap(zmat, 
+        name = "z-score",
+        cluster_rows = TRUE,
+        cluster_columns = FALSE)
+
+```
+
+Multiple heatmaps can be generated and plotted together if they 
+share genes. For example, if we wanted to compare the zscore values 
+to the log expression values. 
+
+```{r, fig.height=5, fig.width=14}
+# save each heatmap as an object
+h1 <- Heatmap(zmat, 
+        name = "z-score",
+        cluster_rows = TRUE,
+        cluster_columns = FALSE)
+
+h2 <- Heatmap(var_mat,
+        name = "log",
+        cluster_rows = TRUE,
+        cluster_columns = FALSE)
+
+# use the + operator to combine
+h1 + h2
+```
+
+Heatmaps can be saved in a variety of formats using built in r functions, `pdf`, `png`, `svg`, and `jpeg`. `ggplots` plots can be saved with `ggsave` or the cowplot wrapper `save_plot`.
+
+```{r, eval = FALSE}
+pdf("figure1.pdf") # name of plot
+  h1 + h2 # code that generates the plot
+dev.off() # saves the plot
+
+png("figure1.png") 
+  h1 + h2 
+dev.off() 
+
+svg("figure1.svg") 
+  h1 + h2 
+dev.off() 
+
+tiff("figure1.tiff") 
+  h1 + h2 
+dev.off() 
+```
+
+
+```{r, eval = FALSE}
+p <- ggplot(mtcars, aes(cyl, mpg)) +
+  geom_point()
+
+save_plot("mtcars.pdf", p)
+```
+
+### Exercises
+
+Create a heatmap containing the top 200 variables genes, using log normalized data. Consult the help menu (?Heatmap) to generate a heatmap and save it to a file. 
+
+Your heatmap should be made in the following manner:
+
+  1) cluster by row
+  2) hide the rownames
+  3) add a title to the legend
+  4) add a title to the columns
+
+What appears to be happening between the `early2cell` and `mid2cell` stages?
+
+```{r, fig.height=5, fig.width=7}
+gene_variance <- apply(norm_mat, 1, var) %>%
+  sort(decreasing = T)
+
+vargenes <- names(gene_variance)[1:200]
+
+var_mat <- norm_mat[vargenes, ]
+
+Heatmap(var_mat, 
+        name = "log scale",
+        cluster_rows = TRUE,
+        show_row_names = FALSE,
+        cluster_columns = FALSE,
+        column_title = "Samples", 
+        row_title = "Genes")
+```
+
+## Clustering
+
+Reviews: 
+
+  - [Avoiding common pitfalls when clustering biological data](http://stke.sciencemag.org/content/9/432/re6)  
+  
+  - [How does gene expression clustering work?](https://www.nature.com/articles/nbt1205-1499)  
+  
+  - [Heatmaps](https://www.nature.com/articles/nmeth.1902)  
+  - [blog post: You probably don't understand heatmaps](http://www.opiniomics.org/you-probably-dont-understand-heatmaps/) by Mick Watson.
+
+By default many Heatmap packages perform clustering to aid in identifying patterns in the data. 
+
+We can see the euclidean distances between samples using `dist`. 
+
+```{r}
+dist(t(var_mat[1:5, 1:5]))
+```
+
+The hierarchical clustering is performed by default in ComplexHeatmap using `hclust` with the output of `dist` as input. `hclust` provides a plotting method using `plot()` to visualized the results as a dendogram.
+
+```{r, fig.height=5, fig.width=7}
+hc <- hclust(dist(t(var_mat)))
+plot(hc)
+```
+
+We can change the distance metric used for the Heatmap by changing the `clustering_distance_rows` argument. A correlation measure, for example `Spearman`, is not sensitive to abundance, and can recover the shared patterns in the data.
+
+```{r}
+cor(var_mat[1:5, 1:5], method = "spearman")
+```
+
+```{r, fig.height=5, fig.width=7}
+# use pretty colors
+vcols <- viridis::viridis(256)
+
+Heatmap(var_mat, 
+        col = vcols,
+        clustering_distance_rows = "spearman",
+        cluster_rows = TRUE, 
         cluster_columns = FALSE,
         show_row_names = FALSE)
 
 ```
 
-## Additional exercises 
 
-1) Plot additional PCs and determine which genes are contributing to the PC. Make a heatmap. 
+Heatmaps are also very useful for quickly examining the similarities between samples
+
+```{r, fig.height=5, fig.width=7}
+cor_mat <- cor(var_mat, method = "pearson")
+
+Heatmap(cor_mat,
+        col = vcols)
+```
+
+
+### Extracting out clusters
+
+How do we select out individual clusters from hierachical clustering? How do we define clusters?
+
+```{r, fig.height=5, fig.width=7}
+h1 <- Heatmap(var_mat, 
+              col = vcols,
+              name = "log scale",
+        cluster_rows = TRUE,
+        show_row_names = FALSE,
+        cluster_columns = FALSE,
+        row_title = "Genes")
+h1
+```
+
+First let's generate the dendogram:
+
+```{r, fig.height=5, fig.width=7}
+hc <- hclust(dist(var_mat))
+plot(hc)
+```
+
+Next we can use `cutree()` to cut the tree into groups
+
+```{r, eval = F}
+?cutree
+```
+
+```{r, fig.height=5, fig.width=7}
+# split into 5 groups
+kclusters <- cutree(hc, k = 5)
+
+plot(hc, labels = kclusters)
+
+# split based on height of tree
+hclusters <- cutree(hc, h = 20)
+
+plot(hc, labels = hclusters)
+
+hclusters[1:5]
+```
+
+
+Now that we have assigned clusters we can replot our heatmaps split out by each cluster, using the `split` argument.
+
+
+```{r, fig.height=5, fig.width=7}
+h1 <- Heatmap(var_mat,
+              col = vcols, 
+              name = "log scale",
+              cluster_rows = TRUE,
+              show_row_names = FALSE,
+              cluster_columns = FALSE,
+              split = kclusters, 
+              row_title = "Genes")
+h1
+```
+
+### K-means
+
+K-means clustering is another simple, yet powerful clustering techinuqe. It also scales to much larger datasets than hierarchical clustering. 
+
+  - [interactive description](http://onmyphd.com/?p=k-means.clustering)   
+  
+  - [detailed description](https://en.wikipedia.org/wiki/K-means_clustering)   
+  
+  - [determining number of clusters](https://stackoverflow.com/questions/15376075/cluster-analysis-in-r-determine-the-optimal-number-of-clusters)   
+  
+
+Kmeans is easily implemented using `kmeans()`
+
+```{r}
+clusters <- kmeans(var_mat, centers = 5)
+names(clusters)
+```
+
+Cluster assignments can be extracted using `$cluster`
+
+```{r}
+clusters$cluster %>% head()
+```
+
+To recover a reproducible kmeans classification set a seed for the random number generator
+
+```{r}
+set.seed(42)
+clusters <- kmeans(var_mat, centers = 5)
+clusters$cluster %>% head()
+```
+
+### Exercise:
+
+1) Make a Heatmap split by each kmeans cluster
+
+2) Use your tidying and ggplot skills to plot the gene expression values per cluster, by timepoint.
+
+```{r fig.width = 12, fig.height = 8}
+km <- kmeans(var_mat, centers = 5)
+km_clusters <- km$cluster
+
+Heatmap(
+  var_mat, 
+  split = km_clusters,
+  show_row_names = FALSE,
+  cluster_columns = FALSE
+)
+```
+
+```{r}
+cluster_df <- tibble(
+  gene = names(km_clusters),
+  cluster = km_clusters
+)
+
+tidy_mat <- var_mat %>% 
+  as.data.frame() %>% 
+  as_tibble(rownames = "gene")
+
+plt_dat <- left_join(tidy_mat, 
+          cluster_df,
+          by = "gene")
+
+plt_dat %>% 
+  pivot_longer(cols = zy_1:lateblast_4) %>% 
+  mutate(name = str_remove(name, "_[0-9]")) %>% 
+  ggplot(aes(name, value)) +
+    geom_violin(aes(fill = name)) +
+    facet_grid(~cluster) +
+  theme_cowplot() +
+  theme(axis.text = element_blank())
+  
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
