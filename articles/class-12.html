@@ -59,6 +59,9 @@
     <li>
       <a href="../articles/class-5.html">Class 5: Basic Data Types and Structures</a>
     </li>
+    <li>
+      <a href="../articles/class-12.html">Class 12: Jumping into more complex R, tips, resources</a>
+    </li>
     <li class="divider">
     <li>
       <a href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
@@ -119,9 +122,11 @@
 <p>Or the option can be set globally at top of the document.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">cache =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
-<div id="or-save-and-load-rdsrda-files-instead-of-rerunning-resource-intensive-parts" class="section level3">
+<div id="or-save-and-load-rdsrda-files" class="section level3">
 <h3 class="hasAnchor">
-<a href="#or-save-and-load-rdsrda-files-instead-of-rerunning-resource-intensive-parts" class="anchor"></a>Or, save and load Rds/Rda files instead of rerunning resource intensive parts</h3>
+<a href="#or-save-and-load-rdsrda-files" class="anchor"></a>Or, save and load Rds/Rda files</h3>
+<p>Run once, save, and load instead of rerunning resource intensive parts</p>
+<p>If you have non-deterministic functions, such as <code>kmeans</code>, remember to <code>set.seed</code>, or save and load result objects</p>
 </div>
 </div>
 <div id="finding-useful-packages" class="section level2">
@@ -303,10 +308,10 @@
 <p>No one writes perfect code. A certain highly-regarded and cited scRNA-seq package drew cell type progression arrows in the wrong direction, for months before the issue was fixed!</p>
 <p>Go to GitHub and search the issues to see if the problem has been reported or fixed. If not submit an issue that describes the problem. The <a href="https://reprex.tidyverse.org/">reprex package</a> makes it easy to produce well-formatted R reproducible examples that demonstrate the problem. Often developers will be thankful for your help with making their software better.</p>
 </div>
-<div id="use-r-often--dont-try-not-to-use-excel-" class="section level2">
+<div id="use-r-often--dont-try-not-to-use-excel" class="section level2">
 <h2 class="hasAnchor">
-<a href="#use-r-often--dont-try-not-to-use-excel-" class="anchor"></a>8. Use R often. Don’t (try not to) use Excel.</h2>
-<p><img src="https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/noexcel.png"></p>
+<a href="#use-r-often--dont-try-not-to-use-excel" class="anchor"></a>8. Use R often. Don’t (try not to) use Excel</h2>
+<p><img src="https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/noexcel.png" style="width:50.0%"></p>
 </div>
   </div>
 
@@ -325,7 +330,7 @@
       <li><a href="#finding-help-online">5. Finding help online</a></li>
       <li><a href="#offline-help">6. Offline help</a></li>
       <li><a href="#lastly-sometimes-code-is-just-broken">7. Lastly, sometimes code is just broken</a></li>
-      <li><a href="#use-r-often--dont-try-not-to-use-excel-">8. Use R often. Don’t (try not to) use Excel.</a></li>
+      <li><a href="#use-r-often--dont-try-not-to-use-excel">8. Use R often. Don’t (try not to) use Excel</a></li>
       </ul>
 </div>
       </div>
