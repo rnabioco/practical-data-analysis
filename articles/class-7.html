@@ -117,9 +117,9 @@
     
     
 <p><br></p>
-<div id="introduction" class="section level3">
-<h3 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h3>
+<div id="introduction" class="section level2">
+<h2 class="hasAnchor">
+<a href="#introduction" class="anchor"></a>Introduction</h2>
 <p>As discussed in the previous class, you should try to limit duplication in your code. One way to do this is by writing functions, another way is through iteration. Reducing code duplication has several benefits:</p>
 <ul>
 <li>Your code easier to read</li>
@@ -133,136 +133,140 @@
 <li>
 <a href="https://adv-r.hadley.nz">Advanced R</a> by Hadley Wickham</li>
 </ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pbda)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(cowplot)</a></code></pre></div>
 <p><br></p>
 <p><br></p>
 </div>
-<div id="for-loops" class="section level3">
-<h3 class="hasAnchor">
-<a href="#for-loops" class="anchor"></a><code>for</code> loops</h3>
+<div id="for-loops" class="section level2">
+<h2 class="hasAnchor">
+<a href="#for-loops" class="anchor"></a><code>for</code> loops</h2>
 <p><code>for</code> loops allow you to run the same code block repeatedly without copying and pasting.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># When writing a for loop, think about the output, sequence, and body</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">out &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span>(<span class="st">"numeric"</span>, <span class="dv">5</span>)  <span class="co"># output</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(out)) {   <span class="co"># sequence</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">  </a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">  out[i] &lt;-<span class="st"> </span>i <span class="op">*</span><span class="st"> </span><span class="dv">5</span>            <span class="co"># body</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">  </a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">}</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"># It's helpful to think about what happens during each cycle of the loop</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">out[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">5</span>  <span class="co"># i = 1</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">out[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">5</span>  <span class="co"># i = 2</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">out[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span><span class="dv">5</span>  <span class="co"># i = 3</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">out[<span class="dv">4</span>] &lt;-<span class="st"> </span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span><span class="dv">5</span>  <span class="co"># i = 4</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">out[<span class="dv">5</span>] &lt;-<span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span><span class="dv">5</span>  <span class="co"># i = 5</span></a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Lets use rnorm() to create 5 vectors with different values for 'mean'</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># One way to do this is by copying and pasting</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">vec_in &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">20</span>, <span class="dv">5</span>, <span class="dv">70</span>)                <span class="co"># input</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">out &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span>(<span class="st">"list"</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(vec_in))        <span class="co"># output</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">out[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> vec_in[<span class="dv">1</span>])    </a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">out[[<span class="dv">2</span>]] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> vec_in[<span class="dv">2</span>])</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">out[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> vec_in[<span class="dv">3</span>])</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">out[[<span class="dv">4</span>]] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> vec_in[<span class="dv">4</span>])</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">out[[<span class="dv">5</span>]] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> vec_in[<span class="dv">5</span>])</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co"># Use a for loop to reduce code duplication</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">vec_in &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">20</span>, <span class="dv">5</span>, <span class="dv">70</span>)                  <span class="co"># input</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">out &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span>(<span class="st">"list"</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(vec_in))          <span class="co"># output</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(vec_in)) {                  <span class="co"># sequence</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">  </a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">  out[[i]] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> vec_in[i])  <span class="co"># body</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21">  </a>
-<a class="sourceLine" id="cb2-22" data-line-number="22">}</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># When writing a for loop, think about the output, sequence, and body</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">out &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span>(<span class="st">"numeric"</span>, <span class="dv">5</span>)  <span class="co"># output</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(out)) {   <span class="co"># sequence</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">  </a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">  out[i] &lt;-<span class="st"> </span>i <span class="op">*</span><span class="st"> </span><span class="dv">5</span>            <span class="co"># body</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co"># It's helpful to think about what happens during each cycle of the loop</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">out[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">5</span>  <span class="co"># i = 1</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">out[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">5</span>  <span class="co"># i = 2</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">out[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span><span class="dv">5</span>  <span class="co"># i = 3</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">out[<span class="dv">4</span>] &lt;-<span class="st"> </span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span><span class="dv">5</span>  <span class="co"># i = 4</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">out[<span class="dv">5</span>] &lt;-<span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span><span class="dv">5</span>  <span class="co"># i = 5</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Lets use rnorm() to create 5 vectors with different values for 'mean'</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># One way to do this is by copying and pasting</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">vec_in &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">20</span>, <span class="dv">5</span>, <span class="dv">70</span>)                <span class="co"># input</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">out &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span>(<span class="st">"list"</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(vec_in))        <span class="co"># output</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">out[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> vec_in[<span class="dv">1</span>])    </a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">out[[<span class="dv">2</span>]] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> vec_in[<span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">out[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> vec_in[<span class="dv">3</span>])</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">out[[<span class="dv">4</span>]] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> vec_in[<span class="dv">4</span>])</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">out[[<span class="dv">5</span>]] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> vec_in[<span class="dv">5</span>])</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co"># Use a for loop to reduce code duplication</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">vec_in &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">20</span>, <span class="dv">5</span>, <span class="dv">70</span>)                  <span class="co"># input</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">out &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span>(<span class="st">"list"</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(vec_in))          <span class="co"># output</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(vec_in)) {                  <span class="co"># sequence</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">  </a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">  out[[i]] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> vec_in[i])  <span class="co"># body</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">  </a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">}</a></code></pre></div>
 <p><br></p>
 <p><em>Write a <code>for</code> loop to create 3 vectors of different lengths</em></p>
 <pre><code>#&gt; [[1]]
-#&gt; [1]  1.5329988  0.1743757 -0.3361950  0.2780896 -0.2849070
+#&gt; [1] -0.4057548 -0.6745024 -0.1480940 -0.4092698 -2.5724227
 #&gt; 
 #&gt; [[2]]
-#&gt;  [1]  0.62741980  0.70923627 -0.25628026 -0.16888114 -0.09807222 -1.19470202
-#&gt;  [7] -1.03072850  0.91977618 -0.82771250  0.25633768
+#&gt;  [1] -0.4454368 -0.1984907  0.9551669  0.7756078  0.5509789  0.9482095
+#&gt;  [7] -1.0917559 -0.6593295 -0.4984677 -1.0529355
 #&gt; 
 #&gt; [[3]]
-#&gt; [1] -1.09037467 -0.01032224</code></pre>
+#&gt; [1] 0.02931056 0.75606290</code></pre>
 <p><br></p>
 <p>Using <code><a href="https://rdrr.io/r/base/seq.html">seq_along(x)</a></code> instead of <code>1:length(x)</code></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># seq_along() mimics 1:length() for non-empty vectors</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">vec_in &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(vec_in)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; [1] 1 2 3</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span>(vec_in)</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; [1] 1 2 3</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co"># seq_along() correctly handles empty vectors</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">emp_vec &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span>(<span class="st">"numeric"</span>, <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(emp_vec)</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; [1] 1 0</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span>(emp_vec)</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; integer(0)</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># seq_along() mimics 1:length() for non-empty vectors</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">vec_in &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(vec_in)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; [1] 1 2 3</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span>(vec_in)</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; [1] 1 2 3</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co"># seq_along() correctly handles empty vectors</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">emp_vec &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span>(<span class="st">"numeric"</span>, <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(emp_vec)</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt; [1] 1 0</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span>(emp_vec)</a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt; integer(0)</span></a></code></pre></div>
 <p><br></p>
 <p><br></p>
 </div>
-<div id="lets-try-this-with-the-brauer-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#lets-try-this-with-the-brauer-data" class="anchor"></a>Lets try this with the Brauer data</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># We want to create a supplemental figure showing the growth rate vs expression for four genes</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">plot_expr &lt;-<span class="st"> </span><span class="cf">function</span>(input, sys_name, ...) {</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">  </a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">  gg_data &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(systematic_name <span class="op">==</span><span class="st"> </span>sys_name)</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">  plot_title &lt;-<span class="st"> </span>gg_data<span class="op">$</span>name[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">  plot_sub &lt;-<span class="st"> </span>gg_data<span class="op">$</span>MF[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">  </a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">  gg_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(rate, expression, <span class="dt">color =</span> nutrient)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="st">    </span><span class="kw">geom_point</span>(...) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> plot_title, <span class="dt">subtitle =</span> plot_sub) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>nutrient) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="st">    </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"none"</span>)</a>
-<a class="sourceLine" id="cb5-17" data-line-number="17">}</a>
-<a class="sourceLine" id="cb5-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co"># Lets try this with the copy-and-paste method</span></a>
-<a class="sourceLine" id="cb5-20" data-line-number="20">vec_in &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YMR183C"</span>, <span class="st">"YML017W"</span>)       <span class="co"># input</span></a>
-<a class="sourceLine" id="cb5-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb5-22" data-line-number="22">out &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span>(<span class="st">"list"</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(vec_in))                         <span class="co"># output </span></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb5-24" data-line-number="24">out[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">plot_expr</span>(brauer_gene_exp, <span class="dt">sys_name =</span> vec_in[<span class="dv">1</span>])  </a>
-<a class="sourceLine" id="cb5-25" data-line-number="25">out[[<span class="dv">2</span>]] &lt;-<span class="st"> </span><span class="kw">plot_expr</span>(brauer_gene_exp, <span class="dt">sys_name =</span> vec_in[<span class="dv">2</span>])</a>
-<a class="sourceLine" id="cb5-26" data-line-number="26">out[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="kw">plot_expr</span>(brauer_gene_exp, <span class="dt">sys_name =</span> vec_in[<span class="dv">3</span>])</a>
-<a class="sourceLine" id="cb5-27" data-line-number="27">out[[<span class="dv">4</span>]] &lt;-<span class="st"> </span><span class="kw">plot_expr</span>(brauer_gene_exp, <span class="dt">sys_name =</span> vec_in[<span class="dv">4</span>])</a>
-<a class="sourceLine" id="cb5-28" data-line-number="28"></a>
-<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="kw">plot_grid</span>(<span class="dt">plotlist =</span> out)</a></code></pre></div>
-<p><img src="class-7_files/figure-html/unnamed-chunk-5-1.png" width="960" style="display: block; margin: auto auto auto 0;"></p>
+<div id="using-the-brauer-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#using-the-brauer-data" class="anchor"></a>Using the Brauer data</h2>
+<p>Using the Brauer gene expression data lets create a figure showing the growth rate vs expression for four genes</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># This is the function we wrote in class-6</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">plot_expr &lt;-<span class="st"> </span><span class="cf">function</span>(input, sys_name, ...) {</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">  </a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">  gg_data &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(systematic_name <span class="op">==</span><span class="st"> </span>sys_name)</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">  plot_title &lt;-<span class="st"> </span>gg_data<span class="op">$</span>name[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">  plot_sub &lt;-<span class="st"> </span>gg_data<span class="op">$</span>MF[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">  </a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">  gg_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(rate, expression, <span class="dt">color =</span> nutrient)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="st">    </span><span class="kw">geom_point</span>(...) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> plot_title, <span class="dt">subtitle =</span> plot_sub) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>nutrient) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/theme_cowplot.html">theme_cowplot</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"none"</span>)</a>
+<a class="sourceLine" id="cb6-17" data-line-number="17">}</a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co"># Lets try this with the copy-and-paste method</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20">vec_in &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YMR183C"</span>, <span class="st">"YML017W"</span>)       <span class="co"># input</span></a>
+<a class="sourceLine" id="cb6-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb6-22" data-line-number="22">out &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span>(<span class="st">"list"</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(vec_in))                         <span class="co"># output </span></a>
+<a class="sourceLine" id="cb6-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb6-24" data-line-number="24">out[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">plot_expr</span>(brauer_gene_exp, <span class="dt">sys_name =</span> vec_in[<span class="dv">1</span>])  </a>
+<a class="sourceLine" id="cb6-25" data-line-number="25">out[[<span class="dv">2</span>]] &lt;-<span class="st"> </span><span class="kw">plot_expr</span>(brauer_gene_exp, <span class="dt">sys_name =</span> vec_in[<span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb6-26" data-line-number="26">out[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="kw">plot_expr</span>(brauer_gene_exp, <span class="dt">sys_name =</span> vec_in[<span class="dv">3</span>])</a>
+<a class="sourceLine" id="cb6-27" data-line-number="27">out[[<span class="dv">4</span>]] &lt;-<span class="st"> </span><span class="kw">plot_expr</span>(brauer_gene_exp, <span class="dt">sys_name =</span> vec_in[<span class="dv">4</span>])</a>
+<a class="sourceLine" id="cb6-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb6-29" data-line-number="29"><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/plot_grid.html">plot_grid</a></span>(<span class="dt">plotlist =</span> out)</a></code></pre></div>
+<p><img src="class-7_files/figure-html/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto auto auto 0;"></p>
 <p><br></p>
 <p><em>Re-write the code from above using a <code>for</code> loop to generate our figure</em></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">vec_in &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YMR183C"</span>, <span class="st">"YML017W"</span>)  <span class="co"># input</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">out &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span>(<span class="st">"list"</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(vec_in))                    <span class="co"># output</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="cf">for</span> ( ???? ) {                                           <span class="co"># sequence</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">                                                         <span class="co"># body</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">}</a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="kw">plot_grid</span>(<span class="dt">plotlist =</span> out)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">vec_in &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YMR183C"</span>, <span class="st">"YML017W"</span>)  <span class="co"># input</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">out &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span>(<span class="st">"list"</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(vec_in))                    <span class="co"># output</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="cf">for</span> ( ???? ) {                                           <span class="co"># sequence</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">                                                         <span class="co"># body</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">}</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/plot_grid.html">plot_grid</a></span>(<span class="dt">plotlist =</span> out)</a></code></pre></div>
 <p><br></p>
 <p><br></p>
 </div>
-<div id="introduction-to-map" class="section level3">
-<h3 class="hasAnchor">
+<div id="introduction-to-map" class="section level2">
+<h2 class="hasAnchor">
 <a href="#introduction-to-map" class="anchor"></a>Introduction to <code>map()</code>
-</h3>
+</h2>
 <p><code>for</code> loops are a powerful tool to reduce code duplication, however your code can be further simplified using the <code>map()</code> functions provided in the purrr package. These <code>map()</code> functions essentially run <code>for (i in seq_along(x))</code> behind the scenes so you don’t have to explicitly type this.</p>
 <p>There is a function for each type of output:</p>
 <ul>
@@ -284,128 +288,139 @@
 <li>
 <code>.f</code> is a function or formula</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># We previously used a for loop to create vectors with different values for mean</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">vals &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">20</span>, <span class="dv">5</span>, <span class="dv">70</span>)                  <span class="co"># input</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">out &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span>(<span class="st">"list"</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(vals))          <span class="co"># output</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span>(vals)) {                 <span class="co"># sequence</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">  </a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">  out[[i]] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> vals[i])  <span class="co"># body</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">  </a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">}</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co"># Using map() we can further simplify this code</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co"># .x indicates where each element of the vector should be inserted</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">out &lt;-<span class="st"> </span><span class="kw">map</span>(</a>
-<a class="sourceLine" id="cb7-15" data-line-number="15">  <span class="dt">.x =</span> vals,</a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">  <span class="dt">.f =</span> <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> .x)</a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">)</a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co"># You can use brackets to include a multi-line code block</span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20">out &lt;-<span class="st"> </span><span class="kw">map</span>(vals, <span class="op">~</span><span class="st"> </span>{</a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">  </a>
-<a class="sourceLine" id="cb7-22" data-line-number="22">  <span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> .x)</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">})</a>
-<a class="sourceLine" id="cb7-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb7-26" data-line-number="26"><span class="co"># map() allows for very readable code</span></a>
-<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co"># Each element of the vector is passed to the first available argument</span></a>
-<a class="sourceLine" id="cb7-28" data-line-number="28">out &lt;-<span class="st"> </span><span class="kw">map</span>(vals, rnorm, <span class="dt">n =</span> <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># We previously used a for loop to create vectors with different values for mean</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">vals &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">20</span>, <span class="dv">5</span>, <span class="dv">70</span>)                  <span class="co"># input</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">out &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span>(<span class="st">"list"</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(vals))          <span class="co"># output</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span>(vals)) {                 <span class="co"># sequence</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">  out[[i]] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> vals[i])  <span class="co"># body</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">  </a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co"># Using map() we can further simplify this code</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co"># .x indicates where each element of the vector should be inserted</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">out &lt;-<span class="st"> </span><span class="kw">map</span>(</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">  <span class="dt">.x =</span> vals,</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">  <span class="dt">.f =</span> <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> .x)</a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">)</a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co"># You can use brackets to include a multi-line code block</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20">out &lt;-<span class="st"> </span><span class="kw">map</span>(vals, <span class="op">~</span><span class="st"> </span>{</a>
+<a class="sourceLine" id="cb8-21" data-line-number="21">  </a>
+<a class="sourceLine" id="cb8-22" data-line-number="22">  <span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> .x)</a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb8-24" data-line-number="24">})</a>
+<a class="sourceLine" id="cb8-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co"># map() allows for very readable code</span></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co"># Each element of the vector is passed to the first available argument</span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28">out &lt;-<span class="st"> </span><span class="kw">map</span>(vals, rnorm, <span class="dt">n =</span> <span class="dv">10</span>)</a></code></pre></div>
 <p><br></p>
 <p><em>Use <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code> and <code>map()</code> to create 3 vectors of different lengths</em></p>
 <pre><code>#&gt; [[1]]
-#&gt; [1] -0.1818831  0.1692248  0.1293196  0.8092946  0.4662372
+#&gt; [1]  0.2068064  0.6638498 -0.1988099 -0.3257463  1.4674639
 #&gt; 
 #&gt; [[2]]
-#&gt;  [1] -0.7334437  1.5104260  0.6205603  0.5734689 -0.2344113  0.4617491
-#&gt;  [7] -1.6304469  1.1860484  0.3437963 -1.1366921
+#&gt;  [1] -0.2046594 -0.3108961 -0.2164058  0.7519694 -0.5663685  2.0023858
+#&gt;  [7]  1.2957174  0.9505907 -2.3565995  0.5417138
 #&gt; 
 #&gt; [[3]]
-#&gt; [1] -0.11371819 -0.02566849</code></pre>
+#&gt; [1] -0.2069461  0.4191227</code></pre>
 <p><br></p>
 <p><em>Re-write the code from above using <code>map()</code> to generate our growth rate figure</em></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>)</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">expr_plots &lt;-<span class="st"> </span><span class="kw">map</span>(</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">  </a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">  ????</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">)</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="kw">plot_grid</span>(<span class="dt">plotlist =</span> expr_plots)</a></code></pre></div>
-<p><img src="class-7_files/figure-html/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto auto auto 0;"></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">expr_plots &lt;-<span class="st"> </span><span class="kw">map</span>(</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">  </a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">  ????</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">)</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/plot_grid.html">plot_grid</a></span>(<span class="dt">plotlist =</span> expr_plots)</a></code></pre></div>
+<p><img src="class-7_files/figure-html/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto auto auto 0;"></p>
 <p><br></p>
 <p><br></p>
 </div>
-<div id="mapping-over-multiple-arguments" class="section level3">
-<h3 class="hasAnchor">
-<a href="#mapping-over-multiple-arguments" class="anchor"></a>Mapping over multiple arguments</h3>
+<div id="mapping-over-multiple-arguments" class="section level2">
+<h2 class="hasAnchor">
+<a href="#mapping-over-multiple-arguments" class="anchor"></a>Mapping over multiple arguments</h2>
 <p>If you have two vectors containing values that you want to pass to a function this can be accomplished with <code>map2()</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">shapes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">expr_plots &lt;-<span class="st"> </span><span class="kw">map2</span>(genes, shapes, <span class="op">~</span><span class="st"> </span>{</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">  <span class="kw">plot_expr</span>(</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">    <span class="dt">input    =</span> brauer_gene_exp,</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">    <span class="dt">sys_name =</span> .x,</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">    <span class="dt">shape    =</span> .y</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">  )</a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">})</a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="kw">plot_grid</span>(<span class="dt">plotlist =</span> expr_plots)</a></code></pre></div>
-<p><img src="class-7_files/figure-html/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto auto auto 0;"></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">shapes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">expr_plots &lt;-<span class="st"> </span><span class="kw">map2</span>(genes, shapes, <span class="op">~</span><span class="st"> </span>{</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">  <span class="kw">plot_expr</span>(</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">    <span class="dt">input    =</span> brauer_gene_exp,</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">    <span class="dt">sys_name =</span> .x,</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">    <span class="dt">shape    =</span> .y</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">  )</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">})</a>
+<a class="sourceLine" id="cb11-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/plot_grid.html">plot_grid</a></span>(<span class="dt">plotlist =</span> expr_plots)</a></code></pre></div>
+<p><img src="class-7_files/figure-html/unnamed-chunk-12-1.png" width="960" style="display: block; margin: auto auto auto 0;"></p>
 <p><br></p>
 <p><em>Use <code>map2()</code> to create plots for 4 different genes, each with a different point size</em></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">expr_plots &lt;-<span class="st"> </span><span class="kw">map2</span>(</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">  </a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">  ????</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">)</a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="kw">plot_grid</span>(<span class="dt">plotlist =</span> expr_plots)</a></code></pre></div>
-<p><img src="class-7_files/figure-html/unnamed-chunk-13-1.png" width="960" style="display: block; margin: auto auto auto 0;"></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">expr_plots &lt;-<span class="st"> </span><span class="kw">map2</span>(</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">  </a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">  ????</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">)</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/plot_grid.html">plot_grid</a></span>(<span class="dt">plotlist =</span> expr_plots)</a></code></pre></div>
+<p><img src="class-7_files/figure-html/unnamed-chunk-14-1.png" width="960" style="display: block; margin: auto auto auto 0;"></p>
 <p><br></p>
 <p><code>pmap</code> can be used to map over any number of arguments.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Create a list of input vectors</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>)</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">sizes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">shapes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">plot_args &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(genes, sizes, shapes)</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co"># Use an argument list with pmap</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">expr_plots &lt;-<span class="st"> </span><span class="kw">pmap</span>(plot_args, <span class="op">~</span><span class="st"> </span>{</a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">  <span class="kw">plot_expr</span>(</a>
-<a class="sourceLine" id="cb12-11" data-line-number="11">    <span class="dt">input =</span> brauer_gene_exp,</a>
-<a class="sourceLine" id="cb12-12" data-line-number="12">    <span class="dt">sys_name =</span> ..<span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb12-13" data-line-number="13">    <span class="dt">size     =</span> ..<span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb12-14" data-line-number="14">    <span class="dt">shape    =</span> ..<span class="dv">3</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15">  )</a>
-<a class="sourceLine" id="cb12-16" data-line-number="16">})</a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co"># A simpler way</span></a>
-<a class="sourceLine" id="cb12-19" data-line-number="19">plot_args &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
-<a class="sourceLine" id="cb12-20" data-line-number="20">  <span class="dt">sys_name =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>),</a>
-<a class="sourceLine" id="cb12-21" data-line-number="21">  <span class="dt">size     =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>),</a>
-<a class="sourceLine" id="cb12-22" data-line-number="22">  <span class="dt">shape    =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb12-23" data-line-number="23">)</a>
-<a class="sourceLine" id="cb12-24" data-line-number="24"></a>
-<a class="sourceLine" id="cb12-25" data-line-number="25">expr_plots &lt;-<span class="st"> </span><span class="kw">pmap</span>(</a>
-<a class="sourceLine" id="cb12-26" data-line-number="26">  <span class="dt">.l =</span> plot_args, </a>
-<a class="sourceLine" id="cb12-27" data-line-number="27">  <span class="dt">.f =</span> plot_expr, </a>
-<a class="sourceLine" id="cb12-28" data-line-number="28">  <span class="dt">input =</span> brauer_gene_exp</a>
-<a class="sourceLine" id="cb12-29" data-line-number="29">)</a>
-<a class="sourceLine" id="cb12-30" data-line-number="30"></a>
-<a class="sourceLine" id="cb12-31" data-line-number="31"><span class="kw">plot_grid</span>(<span class="dt">plotlist =</span> expr_plots)</a></code></pre></div>
-<p><img src="class-7_files/figure-html/unnamed-chunk-14-1.png" width="960" style="display: block; margin: auto auto auto 0;"></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># Create a list of input vectors</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>)</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">sizes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">shapes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">plot_args &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(genes, sizes, shapes)</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co"># Use an argument list with pmap</span></a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">expr_plots &lt;-<span class="st"> </span><span class="kw">pmap</span>(plot_args, <span class="op">~</span><span class="st"> </span>{</a>
+<a class="sourceLine" id="cb13-10" data-line-number="10">  <span class="kw">plot_expr</span>(</a>
+<a class="sourceLine" id="cb13-11" data-line-number="11">    <span class="dt">input =</span> brauer_gene_exp,</a>
+<a class="sourceLine" id="cb13-12" data-line-number="12">    <span class="dt">sys_name =</span> ..<span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb13-13" data-line-number="13">    <span class="dt">size     =</span> ..<span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb13-14" data-line-number="14">    <span class="dt">shape    =</span> ..<span class="dv">3</span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15">  )</a>
+<a class="sourceLine" id="cb13-16" data-line-number="16">})</a>
+<a class="sourceLine" id="cb13-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb13-18" data-line-number="18"><span class="co"># A simpler way</span></a>
+<a class="sourceLine" id="cb13-19" data-line-number="19">plot_args &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
+<a class="sourceLine" id="cb13-20" data-line-number="20">  <span class="dt">sys_name =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>),</a>
+<a class="sourceLine" id="cb13-21" data-line-number="21">  <span class="dt">size     =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>),</a>
+<a class="sourceLine" id="cb13-22" data-line-number="22">  <span class="dt">shape    =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb13-23" data-line-number="23">)</a>
+<a class="sourceLine" id="cb13-24" data-line-number="24"></a>
+<a class="sourceLine" id="cb13-25" data-line-number="25">expr_plots &lt;-<span class="st"> </span><span class="kw">pmap</span>(</a>
+<a class="sourceLine" id="cb13-26" data-line-number="26">  <span class="dt">.l =</span> plot_args, </a>
+<a class="sourceLine" id="cb13-27" data-line-number="27">  <span class="dt">.f =</span> plot_expr, </a>
+<a class="sourceLine" id="cb13-28" data-line-number="28">  <span class="dt">input =</span> brauer_gene_exp</a>
+<a class="sourceLine" id="cb13-29" data-line-number="29">)</a>
+<a class="sourceLine" id="cb13-30" data-line-number="30"></a>
+<a class="sourceLine" id="cb13-31" data-line-number="31"><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/plot_grid.html">plot_grid</a></span>(<span class="dt">plotlist =</span> expr_plots)</a></code></pre></div>
+<p><img src="class-7_files/figure-html/unnamed-chunk-15-1.png" width="960" style="display: block; margin: auto auto auto 0;"></p>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#introduction">Introduction</a></li>
+      <li><a href="#for-loops"><code>for</code> loops</a></li>
+      <li><a href="#using-the-brauer-data">Using the Brauer data</a></li>
+      <li><a href="#introduction-to-map">Introduction to <code>map()</code></a></li>
+      <li><a href="#mapping-over-multiple-arguments">Mapping over multiple arguments</a></li>
+      </ul>
+</div>
       </div>
 
 </div>

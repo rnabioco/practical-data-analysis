@@ -117,9 +117,9 @@
     
     
 <p><br></p>
-<div id="what-is-a-function" class="section level3">
-<h3 class="hasAnchor">
-<a href="#what-is-a-function" class="anchor"></a>What is a function?</h3>
+<div id="what-is-a-function" class="section level2">
+<h2 class="hasAnchor">
+<a href="#what-is-a-function" class="anchor"></a>What is a function?</h2>
 <p>As an analyst you will eventually find yourself in the position of wanting to reuse a block of code. There are two general ways to do this:</p>
 <ol style="list-style-type: decimal">
 <li>copy-and-paste</li>
@@ -138,67 +138,70 @@
 <li>
 <a href="https://adv-r.hadley.nz">Advanced R</a> by Hadley Wickham</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># An example: you want to rescale a numeric vector so all values are between 0 and 1</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">a</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt;  [1]  1.64828504  1.37673587  1.18992010 -0.65914684  1.57979380 -0.22828040</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt;  [7]  0.22613217  0.02812773 -0.55364934 -0.76534122</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">rng &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/range.html">range</a></span>(a)</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">(a <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span>(rng[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt;  [1] 1.00000000 0.88749328 0.81009282 0.04399785 0.97162309 0.22251201</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt;  [7] 0.41078166 0.32874558 0.08770699 0.00000000</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co"># What if we want to repeat this on other vectors?</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co"># One way is to copy and paste</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">b &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">c &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">rng &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/range.html">range</a></span>(b)</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">new_b &lt;-<span class="st"> </span>(b <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span>(rng[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">rng &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/range.html">range</a></span>(c)</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">new_c &lt;-<span class="st"> </span>(c <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span>(rng[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co"># A better way is to write a function...</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pbda)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(cowplot)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># An example: you want to rescale a numeric vector so all values are between 0 and 1</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">a</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt;  [1] -2.3792671 -0.6720874  2.1417945  0.9168475 -1.3225652  0.5524409</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;  [7] -1.4837276 -2.3659806 -1.2886071 -0.7952967</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">rng &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/range.html">range</a></span>(a)</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">(a <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span>(rng[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;  [1] 0.000000000 0.377605930 1.000000000 0.729057672 0.233728707 0.648455665</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt;  [7] 0.198081682 0.002938804 0.241239801 0.350353648</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co"># What if we want to repeat this on other vectors?</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co"># One way is to copy and paste</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">b &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">c &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">rng &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/range.html">range</a></span>(b)</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">new_b &lt;-<span class="st"> </span>(b <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span>(rng[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">rng &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/range.html">range</a></span>(c)</a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">new_c &lt;-<span class="st"> </span>(c <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span>(rng[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co"># A better way is to write a function...</span></a></code></pre></div>
 <p><br></p>
 <p><br></p>
 </div>
-<div id="how-to-write-a-function" class="section level3">
-<h3 class="hasAnchor">
-<a href="#how-to-write-a-function" class="anchor"></a>How to write a function</h3>
+<div id="how-to-write-a-function" class="section level2">
+<h2 class="hasAnchor">
+<a href="#how-to-write-a-function" class="anchor"></a>How to write a function</h2>
 <p>There are three general steps for writing functions:</p>
 <ol style="list-style-type: decimal">
 <li>Pick a name</li>
 <li>Identify the inputs</li>
 <li>Add code to the body</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Lets write a function to rescale a numeric vector</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">rescale_vec &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  </a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">  rng &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/range.html">range</a></span>(x)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">  (x <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span>(rng[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="kw">rescale_vec</span>(b)</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw">rescale_vec</span>(c)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Lets write a function to rescale a numeric vector</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">rescale_vec &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  </a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  rng &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/range.html">range</a></span>(x)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">  (x <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span>(rng[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw">rescale_vec</span>(b)</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="kw">rescale_vec</span>(c)</a></code></pre></div>
 <p><br></p>
 <p><em>Write functions for the following bits of code</em></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># function 1</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">x <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(x)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># function 2</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">(x <span class="op">+</span><span class="st"> </span>y) <span class="op">/</span><span class="st"> </span>z</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co"># function 3</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>((x <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(x))<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(x) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># function 1</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">x <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(x)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># function 2</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">(x <span class="op">+</span><span class="st"> </span>y) <span class="op">/</span><span class="st"> </span>z</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># function 3</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>((x <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(x))<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(x) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))</a></code></pre></div>
 <p><br></p>
 <p><br></p>
 </div>
-<div id="the-function-execution-environment" class="section level3">
-<h3 class="hasAnchor">
-<a href="#the-function-execution-environment" class="anchor"></a>The function execution environment</h3>
+<div id="the-function-execution-environment" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-function-execution-environment" class="anchor"></a>The function execution environment</h2>
 <ul>
 <li>When running a function an execution environment is created, which is separate from the global environment</li>
 <li>The execution environment contains objects created within the function</li>
@@ -207,77 +210,77 @@
 </ul>
 <p><br></p>
 <p><em>Can objects present in the global environment be referenced from within a function?</em></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Earlier we saved a numeric vector "a"</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">a</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;  [1]  1.64828504  1.37673587  1.18992010 -0.65914684  1.57979380 -0.22828040</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;  [7]  0.22613217  0.02812773 -0.55364934 -0.76534122</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">sum_nums &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">  x <span class="op">+</span><span class="st"> </span>a</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">}</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co"># Yes!</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="kw">sum_nums</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  [1] 11.648285 11.376736 11.189920  9.340853 11.579794  9.771720 10.226132</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;  [8] 10.028128  9.446351  9.234659</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Earlier we saved a numeric vector "a"</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">a</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt;  [1] -2.3792671 -0.6720874  2.1417945  0.9168475 -1.3225652  0.5524409</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt;  [7] -1.4837276 -2.3659806 -1.2886071 -0.7952967</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">sum_nums &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">  x <span class="op">+</span><span class="st"> </span>a</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co"># Yes!</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="kw">sum_nums</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt;  [1]  7.620733  9.327913 12.141794 10.916848  8.677435 10.552441  8.516272</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;  [8]  7.634019  8.711393  9.204703</span></a></code></pre></div>
 <p><br></p>
 <p><em>Can code executed within a function modify an object present in the global environment?</em></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">sum_nums &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">  a &lt;-<span class="st"> </span>x <span class="op">+</span><span class="st"> </span>a</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># When we run sum_nums(), will this overwrite our original vector?</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw">sum_nums</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co"># No! (not when using the '&lt;-' assignment operator)</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">a</a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt;  [1]  1.64828504  1.37673587  1.18992010 -0.65914684  1.57979380 -0.22828040</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt;  [7]  0.22613217  0.02812773 -0.55364934 -0.76534122</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">sum_nums &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">  a &lt;-<span class="st"> </span>x <span class="op">+</span><span class="st"> </span>a</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co"># When we run sum_nums(), will this overwrite our original vector?</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="kw">sum_nums</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co"># No! (not when using the '&lt;-' assignment operator)</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">a</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  [1] -2.3792671 -0.6720874  2.1417945  0.9168475 -1.3225652  0.5524409</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  [7] -1.4837276 -2.3659806 -1.2886071 -0.7952967</span></a></code></pre></div>
 <p><br></p>
 <p><br></p>
 </div>
-<div id="a-more-relevant-example" class="section level3">
-<h3 class="hasAnchor">
-<a href="#a-more-relevant-example" class="anchor"></a>A more relevant example</h3>
-<p><em>Using the Brauer data lets create a scatter plot comparing growth rate vs expression for the gene YDL104C. Use <code>facet_wrap()</code> to create a separate plot for each nutrient.</em> <img src="class-6_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto auto auto 0;"></p>
+<div id="a-more-relevant-example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#a-more-relevant-example" class="anchor"></a>A more relevant example</h2>
+<p><em>Using the Brauer data lets create a scatter plot comparing growth rate vs expression for the gene YDL104C. Use <code>facet_wrap()</code> to create a separate plot for each nutrient.</em> <img src="class-6_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto auto auto 0;"></p>
 <p><br></p>
 <p>What if you want to create this plot for other genes? <em>Write a function the takes a data.frame and systematic_name as inputs and creates scatter plots for each nutrient</em></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Fill in the function body</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># You can include default values for your arguments</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">plot_expr &lt;-<span class="st"> </span><span class="cf">function</span>(input, <span class="dt">sys_name =</span> <span class="st">"YNL049C"</span>) {</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">  </a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">  ????</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">}</a></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">plot_expr</span>(</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">  <span class="dt">input =</span> brauer_gene_exp, </a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">  <span class="dt">sys_name =</span> <span class="st">"YDL104C"</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">)</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co"># You can also use the %&gt;% pipe with your custom functions</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">p &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="st">  </span><span class="kw">plot_expr</span>(<span class="dt">sys_name =</span> <span class="st">"YDL104C"</span>)</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">p</a></code></pre></div>
-<p><img src="class-6_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto auto auto 0;"></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Fill in the function body</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co"># You can include default values for your arguments</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">plot_expr &lt;-<span class="st"> </span><span class="cf">function</span>(input, <span class="dt">sys_name =</span> <span class="st">"YNL049C"</span>) {</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">  </a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">  ????</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">}</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">plot_expr</span>(</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">  <span class="dt">input =</span> brauer_gene_exp, </a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">  <span class="dt">sys_name =</span> <span class="st">"YDL104C"</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co"># You can also use the %&gt;% pipe with your custom functions</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">p &lt;-<span class="st"> </span>brauer_gene_exp <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw">plot_expr</span>(<span class="dt">sys_name =</span> <span class="st">"YDL104C"</span>)</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">p</a></code></pre></div>
+<p><img src="class-6_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto auto auto 0;"></p>
 <p><br></p>
 <p><em>Modify our plotting function to add the gene name as the plot title and the molecular function (MF) as a subtitle</em></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">brauer_gene_exp <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">plot_expr</span>(<span class="st">"YDL104C"</span>)</a></code></pre></div>
-<p><img src="class-6_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto auto auto 0;"></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">brauer_gene_exp <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">plot_expr</span>(<span class="st">"YDL104C"</span>)</a></code></pre></div>
+<p><img src="class-6_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto auto auto 0;"></p>
 <p><br></p>
 <p><br></p>
 </div>
-<div id="conditional-statements" class="section level3">
-<h3 class="hasAnchor">
-<a href="#conditional-statements" class="anchor"></a>Conditional statements</h3>
+<div id="conditional-statements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#conditional-statements" class="anchor"></a>Conditional statements</h2>
 <p><code>if</code> statements allow you to execute code depending on defined conditions.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="cf">if</span> (condition) {</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">  code executed when condition is <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">  </a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">  code executed when condition is <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="cf">if</span> (condition) {</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">  code executed when condition is <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">  </a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">  code executed when condition is <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">}</a></code></pre></div>
 <p>R has a set of operators that can be used to write conditional statements</p>
 <table class="table">
 <thead><tr class="header">
@@ -329,60 +332,60 @@
 </table>
 <p><br></p>
 <p><em>Add an <code>if</code> statement to our plotting function to account for a missing gene name</em></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">plot_expr &lt;-<span class="st"> </span><span class="cf">function</span>(input, sys_name) {</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">  gg_data &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(systematic_name <span class="op">==</span><span class="st"> </span>sys_name)</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">  </a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">  plot_title &lt;-<span class="st"> </span>gg_data<span class="op">$</span>name[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">  plot_sub &lt;-<span class="st"> </span>gg_data<span class="op">$</span>MF[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">  </a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">  ????</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">  </a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">  gg_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(rate, expression, <span class="dt">color =</span> nutrient)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> plot_title, <span class="dt">subtitle =</span> plot_sub) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>nutrient) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="st">    </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"none"</span>)</a>
-<a class="sourceLine" id="cb10-17" data-line-number="17">}</a></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">brauer_gene_exp <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">plot_expr</span>(<span class="st">"YNL095C"</span>)</a></code></pre></div>
-<p><img src="class-6_files/figure-html/unnamed-chunk-16-1.png" width="576" style="display: block; margin: auto auto auto 0;"></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">plot_expr &lt;-<span class="st"> </span><span class="cf">function</span>(input, sys_name) {</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">  gg_data &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(systematic_name <span class="op">==</span><span class="st"> </span>sys_name)</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">  </a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">  plot_title &lt;-<span class="st"> </span>gg_data<span class="op">$</span>name[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">  plot_sub &lt;-<span class="st"> </span>gg_data<span class="op">$</span>MF[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">  ????</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">  </a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">  gg_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(rate, expression, <span class="dt">color =</span> nutrient)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> plot_title, <span class="dt">subtitle =</span> plot_sub) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>nutrient) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/theme_cowplot.html">theme_cowplot</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"none"</span>)</a>
+<a class="sourceLine" id="cb11-17" data-line-number="17">}</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">brauer_gene_exp <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">plot_expr</span>(<span class="st">"YNL095C"</span>)</a></code></pre></div>
+<p><img src="class-6_files/figure-html/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto auto auto 0;"></p>
 <p><br></p>
 <p>Conditional statements can be linked together</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Using 'else if'</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="cf">if</span> (condition_<span class="dv">1</span>) {</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">  executed when condition_<span class="dv">1</span> is <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">  </a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">} <span class="cf">else</span> <span class="cf">if</span> (condition_<span class="dv">2</span>) {</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">  executed when condition_<span class="dv">1</span> is <span class="ot">FALSE</span> and condition_<span class="dv">2</span> is <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">  </a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">  executed when condition_<span class="dv">1</span> and condition_<span class="dv">2</span> are <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">}</a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co"># The 'and' operator</span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="cf">if</span> (condition_<span class="dv">1</span> <span class="op">&amp;&amp;</span><span class="st"> </span>condition_<span class="dv">2</span>) {</a>
-<a class="sourceLine" id="cb12-14" data-line-number="14">  executed when condition_<span class="dv">1</span> and condition_<span class="dv">2</span> are <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15">  </a>
-<a class="sourceLine" id="cb12-16" data-line-number="16">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb12-17" data-line-number="17">  executed when condition_<span class="dv">1</span> or condition_<span class="dv">2</span> are <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18">}</a>
-<a class="sourceLine" id="cb12-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co"># The 'or' operator</span></a>
-<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="cf">if</span> (condition_<span class="dv">1</span> <span class="op">||</span><span class="st"> </span>condition_<span class="dv">2</span>) {</a>
-<a class="sourceLine" id="cb12-22" data-line-number="22">  executed when condition_<span class="dv">1</span> or condition_<span class="dv">2</span> are <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb12-23" data-line-number="23">  </a>
-<a class="sourceLine" id="cb12-24" data-line-number="24">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb12-25" data-line-number="25">  executed when condition_<span class="dv">1</span> and condition_<span class="dv">2</span> are <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb12-26" data-line-number="26">}</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># Using 'else if'</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="cf">if</span> (condition_<span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">  executed when condition_<span class="dv">1</span> is <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">  </a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">} <span class="cf">else</span> <span class="cf">if</span> (condition_<span class="dv">2</span>) {</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">  executed when condition_<span class="dv">1</span> is <span class="ot">FALSE</span> and condition_<span class="dv">2</span> is <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb13-8" data-line-number="8">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">  executed when condition_<span class="dv">1</span> and condition_<span class="dv">2</span> are <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb13-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb13-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co"># The 'and' operator</span></a>
+<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="cf">if</span> (condition_<span class="dv">1</span> <span class="op">&amp;&amp;</span><span class="st"> </span>condition_<span class="dv">2</span>) {</a>
+<a class="sourceLine" id="cb13-14" data-line-number="14">  executed when condition_<span class="dv">1</span> and condition_<span class="dv">2</span> are <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15">  </a>
+<a class="sourceLine" id="cb13-16" data-line-number="16">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb13-17" data-line-number="17">  executed when condition_<span class="dv">1</span> or condition_<span class="dv">2</span> are <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb13-18" data-line-number="18">}</a>
+<a class="sourceLine" id="cb13-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="co"># The 'or' operator</span></a>
+<a class="sourceLine" id="cb13-21" data-line-number="21"><span class="cf">if</span> (condition_<span class="dv">1</span> <span class="op">||</span><span class="st"> </span>condition_<span class="dv">2</span>) {</a>
+<a class="sourceLine" id="cb13-22" data-line-number="22">  executed when condition_<span class="dv">1</span> or condition_<span class="dv">2</span> are <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb13-23" data-line-number="23">  </a>
+<a class="sourceLine" id="cb13-24" data-line-number="24">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb13-25" data-line-number="25">  executed when condition_<span class="dv">1</span> and condition_<span class="dv">2</span> are <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb13-26" data-line-number="26">}</a></code></pre></div>
 <p><br></p>
 <p><br></p>
 </div>
-<div id="checking-inputs" class="section level3">
-<h3 class="hasAnchor">
-<a href="#checking-inputs" class="anchor"></a>Checking inputs</h3>
+<div id="checking-inputs" class="section level2">
+<h2 class="hasAnchor">
+<a href="#checking-inputs" class="anchor"></a>Checking inputs</h2>
 <p>When writing functions it can be useful to check input values to make sure they are valid. Lets modify our plotting function to check that <code>sys_name</code> is a string.</p>
 <ul>
 <li><code><a href="https://rdrr.io/r/base/character.html">is.character()</a></code></li>
@@ -390,131 +393,145 @@
 <li><code><a href="https://rdrr.io/r/base/logical.html">is.logical()</a></code></li>
 <li><code><a href="https://rdrr.io/r/base/factor.html">is.factor()</a></code></li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">plot_expr &lt;-<span class="st"> </span><span class="cf">function</span>(input, sys_name) {</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">  </a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">  <span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/character.html">is.character</a></span>(sys_name)) {</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span>(<span class="st">"sys_name must be a string!"</span>)</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">  }</a>
-<a class="sourceLine" id="cb13-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb13-7" data-line-number="7">  gg_data &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(systematic_name <span class="op">==</span><span class="st"> </span>sys_name)</a>
-<a class="sourceLine" id="cb13-9" data-line-number="9">  </a>
-<a class="sourceLine" id="cb13-10" data-line-number="10">  plot_title &lt;-<span class="st"> </span>gg_data<span class="op">$</span>name[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb13-11" data-line-number="11">  plot_sub &lt;-<span class="st"> </span>gg_data<span class="op">$</span>MF[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb13-12" data-line-number="12">  </a>
-<a class="sourceLine" id="cb13-13" data-line-number="13">  <span class="cf">if</span> (plot_title <span class="op">==</span><span class="st"> ""</span>) {</a>
-<a class="sourceLine" id="cb13-14" data-line-number="14">    plot_title &lt;-<span class="st"> </span>sys_name</a>
-<a class="sourceLine" id="cb13-15" data-line-number="15">  }</a>
-<a class="sourceLine" id="cb13-16" data-line-number="16">  </a>
-<a class="sourceLine" id="cb13-17" data-line-number="17">  gg_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-18" data-line-number="18"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(rate, expression, <span class="dt">color =</span> nutrient)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb13-19" data-line-number="19"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> plot_title, <span class="dt">subtitle =</span> plot_sub) <span class="op">+</span></a>
-<a class="sourceLine" id="cb13-21" data-line-number="21"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>nutrient) <span class="op">+</span></a>
-<a class="sourceLine" id="cb13-22" data-line-number="22"><span class="st">    </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb13-23" data-line-number="23"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"none"</span>)</a>
-<a class="sourceLine" id="cb13-24" data-line-number="24">}</a>
-<a class="sourceLine" id="cb13-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb13-26" data-line-number="26">brauer_gene_exp <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-27" data-line-number="27"><span class="st">  </span><span class="kw">plot_expr</span>(<span class="st">"YDL104C"</span>)</a></code></pre></div>
-<p><img src="class-6_files/figure-html/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto auto auto 0;"></p>
-<p><br></p>
-<p><em>Modify our plotting function to check that <code>sys_name</code> is present in the input. Hint: try the <code><a href="https://rdrr.io/r/base/match.html">%in%</a></code> operator</em></p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">plot_expr &lt;-<span class="st"> </span><span class="cf">function</span>(input, sys_name) {</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">  </a>
 <a class="sourceLine" id="cb14-3" data-line-number="3">  <span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/character.html">is.character</a></span>(sys_name)) {</a>
 <a class="sourceLine" id="cb14-4" data-line-number="4">    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span>(<span class="st">"sys_name must be a string!"</span>)</a>
 <a class="sourceLine" id="cb14-5" data-line-number="5">  }</a>
 <a class="sourceLine" id="cb14-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb14-7" data-line-number="7">  <span class="cf">if</span> ( ???? ) {</a>
-<a class="sourceLine" id="cb14-8" data-line-number="8">    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span>( ???? )</a>
-<a class="sourceLine" id="cb14-9" data-line-number="9">  }</a>
-<a class="sourceLine" id="cb14-10" data-line-number="10">  </a>
-<a class="sourceLine" id="cb14-11" data-line-number="11">  gg_data &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(systematic_name <span class="op">==</span><span class="st"> </span>sys_name)</a>
-<a class="sourceLine" id="cb14-13" data-line-number="13">  </a>
-<a class="sourceLine" id="cb14-14" data-line-number="14">  plot_title &lt;-<span class="st"> </span>gg_data<span class="op">$</span>name[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb14-15" data-line-number="15">  plot_sub &lt;-<span class="st"> </span>gg_data<span class="op">$</span>MF[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">  gg_data &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(systematic_name <span class="op">==</span><span class="st"> </span>sys_name)</a>
+<a class="sourceLine" id="cb14-9" data-line-number="9">  </a>
+<a class="sourceLine" id="cb14-10" data-line-number="10">  plot_title &lt;-<span class="st"> </span>gg_data<span class="op">$</span>name[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb14-11" data-line-number="11">  plot_sub &lt;-<span class="st"> </span>gg_data<span class="op">$</span>MF[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb14-12" data-line-number="12">  </a>
+<a class="sourceLine" id="cb14-13" data-line-number="13">  <span class="cf">if</span> (plot_title <span class="op">==</span><span class="st"> ""</span>) {</a>
+<a class="sourceLine" id="cb14-14" data-line-number="14">    plot_title &lt;-<span class="st"> </span>sys_name</a>
+<a class="sourceLine" id="cb14-15" data-line-number="15">  }</a>
 <a class="sourceLine" id="cb14-16" data-line-number="16">  </a>
-<a class="sourceLine" id="cb14-17" data-line-number="17">  <span class="cf">if</span> (plot_title <span class="op">==</span><span class="st"> ""</span>) {</a>
-<a class="sourceLine" id="cb14-18" data-line-number="18">    plot_title &lt;-<span class="st"> </span>sys_name</a>
-<a class="sourceLine" id="cb14-19" data-line-number="19">  }</a>
-<a class="sourceLine" id="cb14-20" data-line-number="20">  </a>
-<a class="sourceLine" id="cb14-21" data-line-number="21">  gg_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(rate, expression, <span class="dt">color =</span> nutrient)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-23" data-line-number="23"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-24" data-line-number="24"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> plot_title, <span class="dt">subtitle =</span> plot_sub) <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-25" data-line-number="25"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>nutrient) <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-26" data-line-number="26"><span class="st">    </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-27" data-line-number="27"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"none"</span>)</a>
-<a class="sourceLine" id="cb14-28" data-line-number="28">}</a></code></pre></div>
+<a class="sourceLine" id="cb14-17" data-line-number="17">  gg_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(rate, expression, <span class="dt">color =</span> nutrient)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> plot_title, <span class="dt">subtitle =</span> plot_sub) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>nutrient) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/theme_cowplot.html">theme_cowplot</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-23" data-line-number="23"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"none"</span>)</a>
+<a class="sourceLine" id="cb14-24" data-line-number="24">}</a>
+<a class="sourceLine" id="cb14-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb14-26" data-line-number="26">brauer_gene_exp <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-27" data-line-number="27"><span class="st">  </span><span class="kw">plot_expr</span>(<span class="st">"YDL104C"</span>)</a></code></pre></div>
+<p><img src="class-6_files/figure-html/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto auto auto 0;"></p>
+<p><br></p>
+<p><em>Modify our plotting function to check that <code>sys_name</code> is present in the input. Hint: try the <code><a href="https://rdrr.io/r/base/match.html">%in%</a></code> operator</em></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">plot_expr &lt;-<span class="st"> </span><span class="cf">function</span>(input, sys_name) {</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">  </a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">  <span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/character.html">is.character</a></span>(sys_name)) {</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span>(<span class="st">"sys_name must be a string!"</span>)</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">  }</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">  <span class="cf">if</span> ( ???? ) {</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span>( ???? )</a>
+<a class="sourceLine" id="cb15-9" data-line-number="9">  }</a>
+<a class="sourceLine" id="cb15-10" data-line-number="10">  </a>
+<a class="sourceLine" id="cb15-11" data-line-number="11">  gg_data &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(systematic_name <span class="op">==</span><span class="st"> </span>sys_name)</a>
+<a class="sourceLine" id="cb15-13" data-line-number="13">  </a>
+<a class="sourceLine" id="cb15-14" data-line-number="14">  plot_title &lt;-<span class="st"> </span>gg_data<span class="op">$</span>name[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb15-15" data-line-number="15">  plot_sub &lt;-<span class="st"> </span>gg_data<span class="op">$</span>MF[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb15-16" data-line-number="16">  </a>
+<a class="sourceLine" id="cb15-17" data-line-number="17">  <span class="cf">if</span> (plot_title <span class="op">==</span><span class="st"> ""</span>) {</a>
+<a class="sourceLine" id="cb15-18" data-line-number="18">    plot_title &lt;-<span class="st"> </span>sys_name</a>
+<a class="sourceLine" id="cb15-19" data-line-number="19">  }</a>
+<a class="sourceLine" id="cb15-20" data-line-number="20">  </a>
+<a class="sourceLine" id="cb15-21" data-line-number="21">  gg_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-22" data-line-number="22"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(rate, expression, <span class="dt">color =</span> nutrient)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb15-23" data-line-number="23"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb15-24" data-line-number="24"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> plot_title, <span class="dt">subtitle =</span> plot_sub) <span class="op">+</span></a>
+<a class="sourceLine" id="cb15-25" data-line-number="25"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>nutrient) <span class="op">+</span></a>
+<a class="sourceLine" id="cb15-26" data-line-number="26"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/theme_cowplot.html">theme_cowplot</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb15-27" data-line-number="27"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"none"</span>)</a>
+<a class="sourceLine" id="cb15-28" data-line-number="28">}</a></code></pre></div>
 <p><br></p>
 <p><br></p>
 </div>
-<div id="passing-arguments-with-the-ellipsis" class="section level3">
-<h3 class="hasAnchor">
-<a href="#passing-arguments-with-the-ellipsis" class="anchor"></a>Passing arguments with the ellipsis (…)</h3>
+<div id="passing-arguments-with-the-ellipsis" class="section level2">
+<h2 class="hasAnchor">
+<a href="#passing-arguments-with-the-ellipsis" class="anchor"></a>Passing arguments with the ellipsis (…)</h2>
 <p>The ellipsis allows a function to take an arbitrary number of arguments, which can then be passed to an inner function. This is nice when you have an inner function that has a lot of useful arguments. Lets first try this with our simple <code>rescale_vec()</code> function.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">rescale_vec &lt;-<span class="st"> </span><span class="cf">function</span>(x, ...) {</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2">  rng &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/range.html">range</a></span>(x, ...)</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3">  (x <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span>(rng[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb15-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="kw">rescale_vec</span>(a)</a>
-<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt;  [1] 1.00000000 0.88749328 0.81009282 0.04399785 0.97162309 0.22251201</span></a>
-<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt;  [7] 0.41078166 0.32874558 0.08770699 0.00000000</span></a>
-<a class="sourceLine" id="cb15-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb15-10" data-line-number="10">a[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
-<a class="sourceLine" id="cb15-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="kw">rescale_vec</span>(a, <span class="dt">na.rm =</span> T)</a>
-<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt;  [1]         NA 0.91341312 0.83375213 0.04528284 1.00000000 0.22901062</span></a>
-<a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt;  [7] 0.42277881 0.33834681 0.09026853 0.00000000</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">rescale_vec &lt;-<span class="st"> </span><span class="cf">function</span>(x, ...) {</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">  rng &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/range.html">range</a></span>(x, ...)</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">  (x <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span>(rng[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="kw">rescale_vec</span>(a)</a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co">#&gt;  [1] 0.000000000 0.377605930 1.000000000 0.729057672 0.233728707 0.648455665</span></a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">#&gt;  [7] 0.198081682 0.002938804 0.241239801 0.350353648</span></a>
+<a class="sourceLine" id="cb16-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb16-10" data-line-number="10">a[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb16-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="kw">rescale_vec</span>(a, <span class="dt">na.rm =</span> T)</a>
+<a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co">#&gt;  [1]        NA 0.3757714 1.0000000 0.7282591 0.2314701 0.6474195 0.1957181</span></a>
+<a class="sourceLine" id="cb16-14" data-line-number="14"><span class="co">#&gt;  [8] 0.0000000 0.2390034 0.3484388</span></a></code></pre></div>
 <p><br></p>
 <p><em>Modify our plotting function so the user can change the point size, shape, and alpha</em></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># A cumbersome way</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">plot_expr &lt;-<span class="st"> </span><span class="cf">function</span>(input, sys_name, <span class="dt">pt_size =</span> <span class="dv">2</span>, <span class="dt">pt_shape =</span> <span class="dv">1</span>, <span class="dt">pt_alpha =</span> <span class="dv">1</span>) {</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">  input <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(systematic_name <span class="op">==</span><span class="st"> </span>sys_name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(rate, expression, <span class="dt">color =</span> nutrient)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> pt_size, <span class="dt">shape =</span> pt_shape, <span class="dt">alpha =</span> pt_alpha) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>nutrient) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="st">    </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"none"</span>)</a>
-<a class="sourceLine" id="cb16-10" data-line-number="10">}</a>
-<a class="sourceLine" id="cb16-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co"># With the ellipsis</span></a>
-<a class="sourceLine" id="cb16-13" data-line-number="13">plot_expr &lt;-<span class="st"> </span><span class="cf">function</span>(input, sys_name, ...) {</a>
-<a class="sourceLine" id="cb16-14" data-line-number="14">  input <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-15" data-line-number="15"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(systematic_name <span class="op">==</span><span class="st"> </span>sys_name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-16" data-line-number="16"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(rate, expression, <span class="dt">color =</span> nutrient)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-17" data-line-number="17"><span class="st">    </span><span class="kw">geom_point</span>(...) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-18" data-line-number="18"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>nutrient) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-19" data-line-number="19"><span class="st">    </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-20" data-line-number="20"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"none"</span>)</a>
-<a class="sourceLine" id="cb16-21" data-line-number="21">}</a>
-<a class="sourceLine" id="cb16-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb16-23" data-line-number="23"><span class="co"># Now we can easily change the point size and shape</span></a>
-<a class="sourceLine" id="cb16-24" data-line-number="24"><span class="kw">plot_expr</span>(</a>
-<a class="sourceLine" id="cb16-25" data-line-number="25">  <span class="dt">input =</span> brauer_gene_exp,</a>
-<a class="sourceLine" id="cb16-26" data-line-number="26">  <span class="dt">sys_name =</span> <span class="st">"YDL104C"</span>,</a>
-<a class="sourceLine" id="cb16-27" data-line-number="27">  <span class="dt">size =</span> <span class="dv">5</span>,</a>
-<a class="sourceLine" id="cb16-28" data-line-number="28">  <span class="dt">shape =</span> <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb16-29" data-line-number="29">  <span class="dt">alpha =</span> <span class="fl">0.75</span></a>
-<a class="sourceLine" id="cb16-30" data-line-number="30">)</a></code></pre></div>
-<p><img src="class-6_files/figure-html/unnamed-chunk-22-1.png" width="576" style="display: block; margin: auto auto auto 0;"></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># A cumbersome way</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">plot_expr &lt;-<span class="st"> </span><span class="cf">function</span>(input, sys_name, <span class="dt">pt_size =</span> <span class="dv">2</span>, <span class="dt">pt_shape =</span> <span class="dv">1</span>, <span class="dt">pt_alpha =</span> <span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">  input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(systematic_name <span class="op">==</span><span class="st"> </span>sys_name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(rate, expression, <span class="dt">color =</span> nutrient)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> pt_size, <span class="dt">shape =</span> pt_shape, <span class="dt">alpha =</span> pt_alpha) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>nutrient) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/theme_cowplot.html">theme_cowplot</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"none"</span>)</a>
+<a class="sourceLine" id="cb17-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb17-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="co"># With the ellipsis</span></a>
+<a class="sourceLine" id="cb17-13" data-line-number="13">plot_expr &lt;-<span class="st"> </span><span class="cf">function</span>(input, sys_name, ...) {</a>
+<a class="sourceLine" id="cb17-14" data-line-number="14">  input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-15" data-line-number="15"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(systematic_name <span class="op">==</span><span class="st"> </span>sys_name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-16" data-line-number="16"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(rate, expression, <span class="dt">color =</span> nutrient)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-17" data-line-number="17"><span class="st">    </span><span class="kw">geom_point</span>(...) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-18" data-line-number="18"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>nutrient) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-19" data-line-number="19"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/theme_cowplot.html">theme_cowplot</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-20" data-line-number="20"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"none"</span>)</a>
+<a class="sourceLine" id="cb17-21" data-line-number="21">}</a>
+<a class="sourceLine" id="cb17-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb17-23" data-line-number="23"><span class="co"># Now we can easily change the point size and shape</span></a>
+<a class="sourceLine" id="cb17-24" data-line-number="24"><span class="kw">plot_expr</span>(</a>
+<a class="sourceLine" id="cb17-25" data-line-number="25">  <span class="dt">input =</span> brauer_gene_exp,</a>
+<a class="sourceLine" id="cb17-26" data-line-number="26">  <span class="dt">sys_name =</span> <span class="st">"YDL104C"</span>,</a>
+<a class="sourceLine" id="cb17-27" data-line-number="27">  <span class="dt">size =</span> <span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb17-28" data-line-number="28">  <span class="dt">shape =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb17-29" data-line-number="29">  <span class="dt">alpha =</span> <span class="fl">0.75</span></a>
+<a class="sourceLine" id="cb17-30" data-line-number="30">)</a></code></pre></div>
+<p><img src="class-6_files/figure-html/unnamed-chunk-23-1.png" width="576" style="display: block; margin: auto auto auto 0;"></p>
 <p><br></p>
 <p><br></p>
 </div>
-<div id="saving-your-functions-for-later" class="section level3">
-<h3 class="hasAnchor">
-<a href="#saving-your-functions-for-later" class="anchor"></a>Saving your functions for later</h3>
+<div id="saving-your-functions-for-later" class="section level2">
+<h2 class="hasAnchor">
+<a href="#saving-your-functions-for-later" class="anchor"></a>Saving your functions for later</h2>
 <p>A good way to save commonly used functions is to keep them in a separate R script. You can load your functions using the <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> command.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span>(<span class="st">"path/to/my_functions.R"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span>(<span class="st">"path/to/my_functions.R"</span>)</a></code></pre></div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#what-is-a-function">What is a function?</a></li>
+      <li><a href="#how-to-write-a-function">How to write a function</a></li>
+      <li><a href="#the-function-execution-environment">The function execution environment</a></li>
+      <li><a href="#a-more-relevant-example">A more relevant example</a></li>
+      <li><a href="#conditional-statements">Conditional statements</a></li>
+      <li><a href="#checking-inputs">Checking inputs</a></li>
+      <li><a href="#passing-arguments-with-the-ellipsis">Passing arguments with the ellipsis (…)</a></li>
+      <li><a href="#saving-your-functions-for-later">Saving your functions for later</a></li>
+      </ul>
+</div>
       </div>
 
 </div>
