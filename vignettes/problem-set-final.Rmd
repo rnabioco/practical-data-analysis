@@ -7,6 +7,14 @@ output:
   code_folding: hide
 ---
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  eval = FALSE,
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
 # Question 1
 
 Write a function that plots rate vs expression when provided a data.frame, a systematic_name, and a nutrient. Add the common gene name as a title and the nutrient as a subtitle. Include an argument that lets the user select whether a regression line is shown.
