@@ -23,54 +23,82 @@ knitr::opts_chunk$set(
 ## Class material can be accessed at: 
 https://rnabioco.github.io/practical-data-analysis/
 
-## 1. Finding useful packages
+## 1. Speeding up Rmd knitting
+
+Read the [Guide to RMarkdown](https://bookdown.org/yihui/rmarkdown/) for an exhaustive description of the various formats and options for using RMarkdown documents.
+
+### Caching
+
+You can speed up knitting of your Rmds by using caching to store the results from each chunk. Note that if you modify the code chunk, previous caching is ignored.
+  
+For each chunk, set `{r, cache = TRUE}`
+
+Or the option can be set globally at top of the document.
+
+```r
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+### Or, save and load Rds/Rda files instead of rerunning resource intensive parts
+
+## 2. Finding useful packages
 
 In most cases, what you need is already made into well-documented packages, and you don't have to reinvent the wheel (but sometimes you should?). Depending on where the package is curated, installation is different. Some examples below:
 
 1. `Gviz` - visualize gene model
 2. `VennDiagram` - making custom venn diagrams
-3. `emo` - inserting emojis into rmd
+3. `emo` - inserting emojis into Rmd
 
 ```{r packages, eval = FALSE}
 # BiocManager::install("Gviz") # from bioconductor
 vignette("Gviz")
 
 # install.packages("eulerr") # from CRAN
-plot(eulerr::venn(list(set1 = c("geneA", "geneB", "geneC"), 
+plot(eulerr::euler(list(set1 = c("geneA", "geneB", "geneC"), 
                        set2 = c("geneC", "geneD"))))
 
 # devtools::install_github("hadley/emo") # from github
 emo::ji("smile")
 ```
 
-## 2. Git - version control
+## 3. Git - version control
 
-Advantages of using version control include: rolling back code, branched development, collaboration, etc.
+Advantages of using version control include: 
+
+1. rolling back code if needed
+
+2. branched development
+
+3. collaboration, etc
 
 [Getting started](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
 
 [Interactive practice](https://learngitbranching.js.org/)
-
-this can be handled by rstudio as well
 
 ```{bash git, eval = FALSE}
 ls
 git blame assignments.Rmd
 ```
 
+This can be handled by rstudio as well (new tab next to `Build`)
+
 ### Put your code on GitHub
 
-As you write up code chunks and functions, documenting them on GitHub is great way to make them portable and searchable.
+As you write more code chunks and functions, hosting and documenting them on GitHub is great way to make them portable and searchable. Even the free tier of GitHub accounts now has private repos.
 
 If you have any interest in a career in data science/informatics, GitHub is also a common showcase of what (and how well/often) you can code. After some accumulation of code, definitely put your GitHub link on your CV.
 
+### Example repo - [valr](https://github.com/rnabioco/valr)
+
+Refer to package examples and [guide to building packages](https://r-pkgs.org/index.html) to build your own package and website documentation.
+
 ### Asking for help with other packages on GitHub
 
-Every package should include readme, installation instructions, and `issues` page where questions and bugs can be reported. Example: [readr github page](https://github.com/tidyverse/readr/issues) Don't be afraid to file new issues, but very often your problems are already answered in the `closed` section.
+Every package should include README, installation instructions, and `issues` page where questions and bugs can be reported. Example: [readr GitHub page](https://github.com/tidyverse/readr/issues) Don't be afraid to file new issues, but very often your problems are already answered in the `closed` section.
 
-## 3. other tips/best practices
+## 4. Other tips/best practices
 
-### code and data organization
+### a. Code and data organization
 
 Read this paper: [A Quick Guide to Organizing Computational Biology Projects](https://doi.org/10.1371/journal.pcbi.1000424)
 
@@ -84,7 +112,7 @@ results   # store all RMarkdown here
 src       # store useful scripts here
 ```
 
-### 1b. `here`, folder structure management
+### a2. `here`, folder structure management
 
 https://github.com/jennybc/here_here
 
@@ -94,9 +122,9 @@ here::here() # always points to top-level of current project
 here::here("vignettes", "class-12.Rmd") # never confused about structure
 ```
 
-### 2. `styler`, clean up code readability
+### b. `styler`, clean up code readability
 
-[style guide](http://adv-r.had.co.nz/Style.html)
+Refer to this [style guide](http://adv-r.had.co.nz/Style.html) often, so you don't have to go back to make the code readable/publishable later.
 
 ```{r styler, eval = FALSE}
 styler::style_text("
@@ -108,11 +136,18 @@ z) {
 }
                    ")
 
+#> my_fun <- function(x,
+#>                    y,
+#>                    z) {
+#>   x +
+#>     z
+#> }
+
 # styler::style_file
 # styler::style_dir
 ```
 
-### 3. benchmarking, such as `microbenchmark` and `profvis`
+### c. Benchmarking, with `microbenchmark` and `profvis`
 
 ```{r bench, eval = FALSE}
 path_to_file <- system.file("extdata", "gene_tibble.csv", package = "pbda")
@@ -136,21 +171,21 @@ p
 ```
 
 
-### 4. `shiny`, interactive web app
+### d. `shiny`, interactive web app for data exploration
 
-https://shiny.rstudio.com/gallery/
+Making an interactive interface to data and plotting is easy in R. Examples and corresponding code can be found at https://shiny.rstudio.com/gallery/.
 
-### 5. running R script from terminal
+### e. Running R script from terminal
+
+Save functions in .R files to easily `source()` them later. If you have code that does not need input from beginning to end, .R files can be executed from the command line/terminal as well.
 
 ```{bash script, eval = FALSE}
 Rscript /Users/rf/teach/practical-data-analysis/R/mat.R
 ```
 
-### 6. finding help online, [StackOverflow](https://stackoverflow.com/)
+## 5. Finding help online
 
 ![](https://imgs.xkcd.com/comics/wisdom_of_the_ancients.png)
-
-## Online resources
 
  The [R studio community forums](https://community.rstudio.com/) are a great resource for asking quesitons about tidyverse related packages.  
  
@@ -160,15 +195,15 @@ Rscript /Users/rf/teach/practical-data-analysis/R/mat.R
  
  Find out if others are having similar issues by searching the issue on the [Github](https://github.com/) page for the package that you are using. 
  
-## General R coding resources
+### General R coding resources
 
-  Hadley Wickman has written two very good (free) ebooks on using R. 
+  Hadley Wickman has written very good (free) ebooks on using R. 
   
   [R for Data Science](https://r4ds.had.co.nz/)
   
   [Advanced R](http://adv-r.had.co.nz/)
   
-## Bioinformatic resources
+### Bioinformatic resources
 
   For general bioinformatics advice I found the following text very useful.  
   
@@ -182,13 +217,21 @@ Rscript /Users/rf/teach/practical-data-analysis/R/mat.R
   
   https://scrnaseq-course.cog.sanger.ac.uk/website/index.html
   
-## Offline help
+  https://satijalab.org/seurat/vignettes.html
+  
+### Cheatsheets
 
-We (the RBI fellows) hold standing office hours on Thursdays, walk-ins 1-2pm, by appointment 2-4pm, in RC1S rm. 9101. Bring us your broken code and we'll try to sort it out. Send us an email to let us know you will be stopping by (`rbi.fellows@cuanschutz.edu`).
+Common ones can be found in Rstudio `Help` -> `Cheatsheets`. More are hosted online, such as for [regular expressions](https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf).
 
-## Lastly, sometimes code is just broken
+Useful to keep your own stash too.
+  
+## 6. Offline help
 
-A certain highly-regarded and cited scRNA-seq package drew cell type progression arrows in the wrong direction, for months before the issue was fixed!
+We (the RBI fellows) hold standing office hours on Thursdays, walk-ins 1-2pm, by appointment 2-4pm, in RC1-South Room 9101. We are happy to help out with coding and RNA/DNA-related informatics questions. Send us an email to let us know you will be stopping by (`rbi.fellows@cuanschutz.edu`).
 
-Go to github and search the issues to see if the problem has been reported or fixed. If not submit an issue that describes the problem. The [reprex package](https://reprex.tidyverse.org/) makes it easy to
+## 7. Lastly, sometimes code is just broken
+
+No one writes perfect code. A certain highly-regarded and cited scRNA-seq package drew cell type progression arrows in the wrong direction, for months before the issue was fixed!
+
+Go to GitHub and search the issues to see if the problem has been reported or fixed. If not submit an issue that describes the problem. The [reprex package](https://reprex.tidyverse.org/) makes it easy to
 produce well-formatted R reproducible examples that demonstrate the problem. Often developers will be thankful for your help with making their software better.
