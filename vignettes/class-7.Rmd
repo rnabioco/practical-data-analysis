@@ -22,14 +22,22 @@ library(cowplot)
 
 <br>
 
-### Introduction to iteration
+### Introduction
 
-As discussed in the previous class, you should try to limit duplication in your code. One way to do this is by writing functions, another way is through iteration.
+As discussed in the previous class, you should try to limit duplication in your code. One way to do this is by writing functions, another way is through iteration. Reducing code duplication has several benefits:
+
+* Your code easier to read
+* You reduce the chance of mistakes from repeated copying and pasting
+* It is easier to adapt your code for different requirements
 
 Further reading
 
 * [R for Data Science](https://r4ds.had.co.nz) by Garrett Grolemund and Hadley Wickham
 * [Advanced R](https://adv-r.hadley.nz) by Hadley Wickham
+
+<br>
+
+<br>
 
 ### `for` loops
 `for` loops allow you to run the same code block repeatedly without copying and pasting.
