@@ -1,0 +1,132 @@
+---
+title: "Problem Set 2"
+author: "YOUR NAME HERE"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+  code_folding: hide
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  eval = FALSE,
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
+# Question 1
+
+Write a function that plots rate vs expression when provided a data.frame, a systematic_name, and a nutrient. Add the common gene name as a title and the nutrient as a subtitle. Include an argument that lets the user select whether a regression line is shown.
+```{r, fig.width = 6, fig.height = 3.5}
+plot_expr <- function(input, sys_name, nutri, add_lm = F) {
+
+  # Finish writing the function
+  
+}
+
+plot_expr(
+  input = brauer_gene_exp, 
+  sys_name = "YDL104C",
+  nutri = "Ammonia",
+  add_lm = T
+)
+```
+
+# Question 2
+
+Add an `if` statement to check whether the systematic_name and nutrient provided by the user are present in the input data.
+```{r, fig.width = 6, fig.height = 3.5}
+plot_expr <- function(input, sys_name, nutri, add_lm = F) {
+
+  # Finish writing the function
+  
+}
+
+plot_expr(
+  input = brauer_gene_exp, 
+  sys_name = "YDL104C",
+  nutri = "Ammonia",
+  add_lm = T
+)
+```
+
+# Question 3
+
+Add the ellipsis so the user can pass arguments directly to `theme()`.
+```{r, fig.width = 6, fig.height = 3.5}
+plot_expr <- function(input, sys_name, nutri, add_lm = F) {
+
+  # Finish writing the function
+  
+}
+
+plot_expr(
+  input = brauer_gene_exp, 
+  sys_name = "YDL104C",
+  nutri = "Ammonia",
+  add_lm = T,
+  axis.title = element_text(size = 20),
+  axis.text = element_text(face = "italic")
+)
+```
+
+# Question 4
+
+Use your function with `map()` to create a figure containing plots for four genes
+```{r, fig.width = 10, fig.height = 6.5}
+sys_names <- c("YNL049C", "YML017W", "YDL104C", "YLR115W")
+
+expr_plots <- map(
+
+  # Add the arguments for map()
+  
+)
+
+plot_grid(plotlist = expr_plots)
+```
+
+
+# Question 5
+
+Included in the package is a matrix called `tx_rates` containing transcription rates for ~7000 genes. Transcription rates were measured every 15 minutes
+for 3 hours after exposure of dendritic cells to LPS, which activates innate immunity responses. The processed data was obtained from [GEO](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE56977)
+
+For this exercise perform the following steps:  
+
+  1) Exclude genes that have rates of 0 across all samples  
+  
+  2) Log transform the data (add a pseudocount of 1 to avoid infinite values)  
+  
+  3) Normalize the data to the 0 hour time point (i.e. subtract the "rate at 0" from all of the columns ) 
+  
+  4) run kmeans clustering on the log transformed and normalized matrix. Use k = between 5 and 10 clusters.  
+  
+  5) Make a heatmap with rows split based on the clusters identified in step 4. This may take a few minutes to plot, depending on your computers resources.  Use the provided pseudo-code below to generate a color palette. Discuss any interesting patterns that you find in your clusters in the interpretation section.  
+  
+  Note that plotting the entire ~7K row matrix may take a few minutes. If you are having trouble plotting the entire matrix, then you can plot just a subset using the code below
+
+i.e
+```r
+# just use first 1000 rows
+tx_rates_smaller <- tx_rates[1:1000, ]
+  
+# or using the `sample()` function to randomly select 1000 rows
+row_index <- sample(1:nrow(tx_rates), 1000)
+
+tx_rates_smaller <- tx_rates[row_index, ]
+```
+
+## Strategy
+
+```{r q4}
+cols_to_use <- circlize::colorRamp2(c(-4, 0, 4), 
+                                    c("blue", "white", "red"))
+
+# pseudocode
+Heatmap(mat, col = cols_to_use, ...
+```
+
+## Interpretation
+
+

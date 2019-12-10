@@ -1,5 +1,5 @@
 ---
-title: "Class 9: Tips, Data I/O, and Resources"
+title: "Class 9: Exploring data with PCA"
 author: "Kent Riemondy"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -15,263 +15,426 @@ knitr::opts_chunk$set(
   fig.align = "center"
 )
 library(tidyverse)
+library(ComplexHeatmap)
+library(ggrepel)
+library(pbda)
+library(cowplot)
+theme_set(theme_cowplot())
 ```
 
 
 
 ```{r load, eval = F}
 library(tidyverse)
+library(ComplexHeatmap)
+library(ggrepel)
+library(pbda)
+library(cowplot)
+
+theme_set(theme_cowplot())
 ```
 
-# Rmarkdown 
+Goals:
+  Use PCA to identify sources of variation and summarize relationship between variables/samples in a large dataset.
 
-Read the [Guide to RMarkdown](https://bookdown.org/yihui/rmarkdown/) for an exhaustive description of the various formats and options for using RMarkdown documents.
+## PCA
+ 
+As we've learned throughout the class, you need to visualize your data to identify
+key patterns. However, high dimensional datasets are difficult to visualize in a meaningful way. For example how do you find a pattern in a large sequencing dataset with 100 samples, and 20,000 genes? 
 
-## caching
+Heatmaps provide one way to visualize selectively gene sets for a relatively small number of samples, but discerning overall patterns between samples can still be difficult, even with clustering.
 
-  You can speed up knitting of your RMarkdowns by using caching to store the results from each chunk.
-  
+Principle Component Analysis is a commonly used technique to examine the structure of large datasets. 
 
-`{r, cache = TRUE}`
+Resources:
 
-Or set globally at top of document
+  - [PCA Explained Visually](http://setosa.io/ev/principal-component-analysis/) 
+  - [PCA formal explanation](https://en.wikipedia.org/wiki/Principal_component_analysis)
+  - [PCA informal explanation](https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues)
 
-```r
-knitr::opts_chunk$set(cache = TRUE)
+### Background on PCA
+
+PCA takes a set of variables and generates a new set of variables. The new variables are selected to capture the maximal variance in the data. 
+
+Each new variable is known as a principal component. The first principal component represents a linear combination of the original variables that captures the maximum variance in the dataset. Basically find a vector through the dataset that captures the maximum variance. 
+
+The second component is also a linear combination of the original variables but is uncorrelated to the first component. 
+
+In this manner PCA generates a new set of variables that are ordered based on the variance captured in the data. It's for this reason that is so useful for exploratory analysis and dimensionality reduction. 
+
+Consider the following experiment where we measure gene expression for 2 genes in 100 samples. Because there are only 2 genes, we can visualize all of the data in a 2D scatterplot. 
+
+First, let's generate some example data. 
+
+```{r pca-intro}
+# generate some correlated variables, scale, and make tidy 
+set.seed(42)
+sim <- MASS::mvrnorm(100,
+                     c(0, 0),
+                     matrix(c(1, 0.95, 0.95, 1),
+                     2,
+                     2)) %>% 
+  scale() %>% 
+  as.data.frame() %>% 
+  rownames_to_column("id") %>% 
+  arrange(V1, V2) %>% 
+  rename(gene_1 = V1, gene_2 = V2) %>% 
+  as_tibble() %>% 
+  mutate(id = row_number())
+
+sim
 ```
 
-## Mixing R code with other languages 
 
-In RMarkdown you can run other languages (`python`, `C++`, `C`, `shell`, `julia`, etc.) in each code chunk.
+```{r, fig.width = 5, fig.height= 5}
+# select points to label for visualization
+max_min_points <- slice(sim, c(1:5, 95:100))
 
+# make a plot
+og_plt <- ggplot(sim, aes(gene_1, gene_2)) +
+  geom_point() +
+  geom_text_repel(data = max_min_points, 
+                  aes(label = id)) +
+  # scale y axis to same as x
+  ylim(min(sim$gene_1),
+       max(sim$gene_2))
 
-### Shell 
-
-```{bash}
-echo hello world
+og_plt
 ```
 
-### Python
+Next we'll run PCA on this simulated data using the `prcomp` function.
 
-```{python}
-import datetime 
-now = datetime.datetime.now()
-print("hello the date and time is currently {}".format(now))
-```
-
-
-# .Rdata files
-
-When you close R you are prompted to save your workspace. This will store a `.RData` file that will contain all of the R objects that you generated in your current session. Upon startup of a "new" session this `.Rdata` file will populate your environment with old R objects.
-
-This can cause many problems, including slow startup time, conflicts between your current objects and old objects, and irreproducible analyses. 
-
-I recommend never storing your `.RData`. In RStudio you can turn off this option under preferences.  
-
-
-
-# Reading and writing data
-
-## readr
-The `readr` package (part of the tidyverse) provides a suite of functions to read data into R. These functions generally are faster and have better default behavior than the base R equivalents.
-
-```r
-read_tsv()
-read_csv()
-read_delim()
-read_lines()
-```
-
-The `readr` functions take a path to the file as an argument or a URL directly. 
-```r
-# read directly from a URL
-read_tsv("https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/david.txt")
-
-# alternatively download the file, then read it into R.
-download.file("https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/david.txt", "david.txt")
-
-read_tsv("david.txt")
-```
-
-Here is example to read data stored internally from the `pbda` package.
 ```{r}
-path_to_file <- system.file("extdata", "david.txt", package = "pbda")
-path_to_file
-
-read_tsv(path_to_file) 
+# run pca
+pc <- prcomp(sim[, c(2:3)], 
+             center = FALSE, 
+             scale. = FALSE)
 ```
 
-Often files are not formatted perfectly for reading into R. Below are some common problems, and the solutions
+`prcomp` returns an object of class `prcomp` with a few slots. The `x` slot contains the principal components in a matrix.  
+
+```{r}
+names(pc)
+```
+
+For ease of plotting I will define a function to make a plot. 
+
+```{r}
+# function to make a pretty labeled plot
+
+plot_labeled_pca <- function(input_data, 
+                             pca_obj){
   
-  1) File has a header line that should not be read. (use the `skip` argument to skip `n` lines)
-  2) File has column names that are poorly formatted (use the `col_names = FALSE` to skip them, then name them yourself)
-  3) A column in the data is interpreted as a number but then a character is found. (use the `col_types` argument to specify the data type for each column)
-  4) The file is a mess. (Use `read_lines()` to read in each line into a character vector and convert to a tibble yourself) 
-  
-Similar to the read functions there are also utilities to write to a file. 
-```r
-write_tsv(mtcars, "mtcars.txt")
-write_csv(mtcars, "mtcars.csv")
-
-# supplying a .gz will compress the data
-write_tsv(mtcars, "mtcars.txt.gz")
-```
-
-## base R functions are sometimes helpful
-
-They can be slow, and by default will convert any character vector into a factor, which is often not desired. Set `stringsAsFactors = FALSE` to avoid
-this behavior. 
-
-Reading:
-```r
-read.csv("your_file.csv", stringsAsFactors = FALSE)
-read.table("your_file.txt", stringsAsFactors = FALSE)
-```
-
-Writing:
-```r
-write.table(mtcars, "mtcars.txt")
-write.csv((mtcars, "mtcars.csv")
-```
-
-
-## Writing and reading binary `.rds` or `.rda` files
-
-
-Often it is useful to save a R object as a file directly. For example the seurat objects can be saved to disk as an  `.rds` file which can be directly loaded into R at a later date. These files can also be shared with others. 
-
-```r
-# save mtcars as a binary file
-saveRDS(mtcars, "mtcars.rds")
-
-# read mtcars into R as an R object called new_data
-new_data <- readRDS("mtcars.rds")
-```
-
-`.rda` files are binary files that can be read into R as prenamed objects. They can store many objects in a single file. 
-
-```r
-simple_data <- data_frame(a = 1:10)
-simple_data2 <- data_frame(x = 1:10)
-simple_data3 <- bind_cols(simple_data, simple_data2)
-
-# pass R objects to the save function
-save(simple_data, 
-  simple_data2, 
-  simple_data3, 
-  file = "collection_of_r_objects.rda")
-
-# in a new R session use load() to reload these objects into your environment
-load("collection_of_r_objects.rda")
-
-simple_data
-#> # A tibble: 10 x 1
-#>        a
-#>    <int>
-#>  1     1
-#>  2     2
-#>  3     3
-#>  4     4
-#>  5     5
-#>  6     6
-#>  7     7
-#>  8     8
-#>  9     9
-#> 10    10
-```
-
-## Writing and reading xlsx files in R
-
-There are two packages useful for working with excel files. 
-
-`readxl` is really good for reading xlsx files into R. 
-`openxlsx` is pretty good at writing xlsx files. 
-
-
-# Organizing Analyses
-
-Read this paper:
- [A Quick Guide to Organizing Computational Biology Projects](https://doi.org/10.1371/journal.pcbi.1000424)
+  #tidy the pc matrix
+  pc_x <- pca_obj$x %>% 
+    as.data.frame() %>% 
+    mutate(id = input_data$id) 
  
+  # select points to label
+  max_min_points <- slice(pc_x, c(1:5, 95:100))
 
-Here's how I generally organize my projects. 
+  # compute variance explained
+  percent_var <- (100 * pca_obj$sdev^2 / 
+                    sum(pca_obj$sdev^2))  %>% 
+    signif(3)
 
-```bash
-NEWS.md   # markdown document for tracking progress
-data      # data directory for storing raw and processed data
-dbases    # database files downloaded from other places
-docs      # publication documents and random project files
-your-project.Rproj # Make an Rproject in Rstudio for every project
-results   # store all RMarkdown here
-src       # store useful scripts here
+  #plot the data
+  pca_plt <- ggplot(pc_x, aes(PC1, PC2)) +
+    geom_point() +
+    geom_text_repel(data = max_min_points, 
+                  aes(label = id)) +
+    labs(x = str_c("PC1 ", percent_var[1], "%"),
+         y = str_c("PC2 ", percent_var[2], "%")) +
+    # make axes symmetric
+    ylim(c(min(pc_x$PC1), 
+           max(pc_x$PC1)))
+  
+  pca_plt 
+}
+```
+ 
+ If we plot out the new variables PC1 and PC2 you can see that now the data has been flattened and spread out along the PC1 axis. 
+ 
+```{r, fig.width = 5, fig.height= 5}
+pca_plt <- plot_labeled_pca(sim, pc)
+
+pca_plt
 ```
 
-In your results directory make a new directory with a proper date naming scheme for each analyses. In each directory have an RMarkdown. 
 
-```bash
-2018-12-06_dataqc
-2018-12-08_exploratory_analysis
-2018-12-10_summary_plots
-2018-12-14_publication_figures
+As we can see, PCA has refactored the data such that PC1 now represents a vector through the data that captures the most variance. The second PC, now represents a distinct type of variance represented as variance perpendicular to the y = x line. 
+
+
+```{r, fig.width = 7, fig.height= 7}
+plot_grid(og_plt, pca_plt)
 ```
 
 
-# Git/Github 
-
-**Use it.** It's a great way to organize your projects, provide visibility, and foster reproducibility. 
-
-As a student github will give you 5 private repositories for free. However using github with public repositories is preferred if the code or results aren't sensitive.  
-
-https://education.github.com/students
+Another way to demonstrate what PCA is doing is to show the information captured by each PC. (see post [here](https://stats.stackexchange.com/questions/229092/how-to-reverse-pca-and-reconstruct-original-variables-from-several-principal-com?noredirect=1&lq=1))
 
 
-# Finding help
+```{r, out.width = "700px", echo = FALSE}
+# credit to @amoeba 
+knitr::include_graphics("img/pca.png")
+```
 
-## Hopefully not your experience
+### Example with more dimensions
 
-![](https://imgs.xkcd.com/comics/wisdom_of_the_ancients.png)
+What if we had more dimensions that are just noise? How does this impact PCA?
 
-## Online resources
+```{r}
+# generate a matrix of random numbers 
+# drawn from a normal dist. to simulate noise
+set.seed(20181214)
+more_genes <- matrix(rnorm(1000, 
+                           mean = 0, 
+                           sd = 0.25), 
+                     nrow = 100, 
+                     ncol = 10)
 
- The [R studio community forums](https://community.rstudio.com/) are a great resource for asking quesitons about tidyverse related packages.  
- 
- [StackOverflow](https://stackoverflow.com/) provides user contributes questions and answers on a variety of topics. 
- 
- For help with bioconductor packages visit the [support page](https://support.bioconductor.org/) 
- 
- Find out if others are having similar issues by searching the issue on the [Github](https://github.com/) page for the package that you are using. 
- 
+# add column names
+colnames(more_genes) <- str_c("gene_noise_",
+                              1:ncol(more_genes))
 
-## General R coding resources
+# add the matrix to the simulation data_frame by column
+sim_2 <- cbind(sim, more_genes) 
 
-  Hadley Wickman has written two very good (free) ebooks on using R. 
+sim_2[1:5, 1:6]
+```
+
+The `plot()` 
+function can be used to quickly generate many exploratory plots. If you pass two vectors of the same length, you will get a scatterplot.
+
+```{r, fig.width = 5, fig.height= 5}
+plot(sim_2$gene_1, sim_2$gene_2)
+```
+
+However, if you supply `plot` with a data.frame with only numeric values, it will plot all of the cross comparisons of the columns, which is useful in this example to quickly highlight that `gene_1` and `gene_2` are the only correlated or interesting variables. 
+
+
+```{r, fig.height = 7, fig.width = 7}
+plot(sim_2[, 2:7])
+```
+
+Now if we had 2000 dimensions (i.e. genes) we couldn't resonably investigate all of the scatterplots for each gene compared to each other gene. Even with a small real dataset with 10 genes, it's hard to identify important relationships. 
+
+Next we'll run PCA on this new data
+
+```{r}
+pc2 <- prcomp(sim_2[, 2:ncol(sim_2)], 
+              center = FALSE, 
+              scale. = FALSE)
+```
+
+
+```{r, fig.width = 7, fig.height= 7}
+pc2_plt <- plot_labeled_pca(sim_2, pc2) 
+
+plot_grid(og_plt, pc2_plt)
+```
+
+### How much variation is captured by each PC?
+
+The `sdev` slot contains the standard deviation of the principal components. The square of this value is the variance explained by the PC. 
+
+```{r, fig.width = 5, fig.height= 5}
+sds <- pc2$sdev
+
+# get variance per pc
+var_per_pc <- sds^2
+
+#calculate percent variance per pc
+percent_var_per_pc <- 100 * (var_per_pc / sum(var_per_pc))
+
+#plot a vector
+plot(percent_var_per_pc)
+```
+
+As we can see most of the variation in the data is captured in the first PC. This means that if we dropped the remaining PCs from the data we would lose very little information. It is for this reason that PCA is so useful for dimensionality reduction for big datasets like single cell RNA-seq.
+
+### How to find features (genes) associated with each PC
+
+As we have learned each PC is linear combination of the features (i.e genes) in the data. How do we determine which features are most important for each PC?
+
+The `rotation` slot of the `prcomp` object contains the rotations (also known as loadings) for each PC. These loadings can be interpreted as the amount each feature contributes to a principle component. Strongly positive loadings mean that the feature is strongly positivlye correlated with the PC. Strongly negative loadings indicate that it is strongly negatively correlated. Loadings at zero indicate no contribution. 
+
+By ranking the loadings we can identify which genes impact each PC.
+
+```{r}
+pc2$rotation[, 1:3]
+```
+
+```{r}
+# for PC1
+pc2$rotation[, 1] %>% 
+  sort(decreasing = TRUE) %>% 
+  head(3)
+```
+
+
+Sidebar: sorting vectors using  `order()`
+
+order return the sort order of a vector. 
+```{r}
+sort(c(2, 5, 1, 3))
+order(c(2, 5, 1, 3))
+order(c(2, 5, 1, 3), decreasing = TRUE)
+```
+
+Useful shortcut to get vector sorted on the absolute values:
+
+```{r}
+vec <- c(-10, 5, 10, -9, 0, 2, -3, 5)
+
+vec[order(abs(vec), 
+          decreasing = TRUE)]
+```
+
+```{r}
+pc1 <- pc2$rotation[, 1] 
+
+pc1[order(abs(pc1), decreasing = TRUE)] %>% 
+  head()
+
+```
+
+Using this approach we can quickly identify that `gene_1` and `gene_2` are driving the variance in the data. 
+
+
+## Run PCA on a single cell dataset
+
+### Step 1: First let's filter and normalize the `esc_mat` matrix. 
+
+```{r}
+# remove lowly expressed features (genes with non-zero values in at least 10 samples)
+filtered_mat <- esc_mat[rowSums(esc_mat > 0) > 10, ]
+
+# log normalize 
+norm_mat <- apply(filtered_mat, 2, function(x) x / sum(x))
+norm_mat <- 10000 * norm_mat
+norm_mat <- log(norm_mat + 1)
+```
+
+
+### Step 2: Scale the data.
   
-  [R for Data Science](https://r4ds.had.co.nz/)
-  
-  [Advanced R](http://adv-r.had.co.nz/)
-  
+  This makes every variable equal in weight. For example if one variable ranges from -100 to 100, this variable will have more weight than one that ranges from -1 to 1. Often in most datasets scaling the variables is necessary to avoid projecting the PCA solely based on the abundance of a variable. 
 
-## Bioinformatic resources
 
-  For general bioinformatics advice I found the following text very useful.  
-  
-  [Bioinformatics Data Skills](http://vincebuffalo.org/book/) by Vince Buffalo
+```{r}
+# scale and center each gene
+zmat <- t(scale(t(norm_mat)))
+```
 
-  For statistics related to bioinformatics this free course is excellent:  
-  
-  [PH525x series - Biomedical Data Science](http://genomicsclass.github.io/book/)
-  
-  For more detailed descriptions of single cell RNA-Seq analysis:  
-  
-  http://hemberg-lab.github.io/scRNA.seq.course/
-  
-## Offline help
 
-We (the RBI fellows) hold standing office hours from 1-2:30p on Thursdays in RC1S rm. 9101. Bring us your broken code and we'll try to sort it out. Send us an email to let us know you will be stopping by (`rbi.fellows@ucdenver.edu`).
+### Step 3: run PCA
+  
+```{r}
+# run PCA with genes as columns and cells as rows
+pc <- prcomp(t(zmat), 
+             center = FALSE, 
+             scale. = FALSE)
+```
 
-## Lastly sometimes code is broken
 
-Go to github and search the issues to see if the problem has been reported or fixed. If not submit an issue that describes the problem. The [reprex package](https://reprex.tidyverse.org/) makes it easy to
-produce well-formatted R reproducible examples that demonstrate the problem. Often developers will be thankful for your help with making their software better. 
+### Step 4: Examine variance explained by each PC
+
+Exercise: make a ggplot plot that plots PC versus percent variance explained
+
+
+```{r}
+pc_var <- pc$sdev^2
+pc_var <- 100 * (pc_var / sum(pc_var))
+
+plt_dat <- tibble(
+  var_explained = pc_var,
+  PC = 1:length(pc_var)
+)
+
+ggplot(plt_dat, aes(x = PC, 
+                    y = var_explained)) +
+  geom_point()
+```
+
+### Step 5: Plot PCs
+
+Exercise: Generate a ggplot plot that plots PC1 versus PC2 and color by developmental stage. 
+(i.e. zy, 4cell, 8cell, etc.)
+
+```{r,  fig.height = 5, fig.width = 5}
+pc_mat <- pc$x
+
+library(ggrepel)
+
+pc_mat %>% 
+  as.data.frame() %>% 
+  as_tibble(rownames = "sample") %>% 
+  ggplot(aes(PC1, PC2)) +
+    geom_point() +
+    geom_text_repel(aes(label = sample))
+
+
+pc_mat %>% 
+  as.data.frame() %>% 
+  as_tibble(rownames = "sample") %>% 
+  separate(sample, 
+           into = c("time", "rep"),
+           sep = "_") %>% 
+  ggplot(aes(PC1, PC2)) +
+    geom_point(aes(color = time)) 
+```
+
+### kmeans cluster the data 
+
+```{r}
+set.seed(42)
+km <- kmeans(pc_mat, centers = 7)
+km_clusters <- km$cluster
+
+tidy_clusters <- tibble(
+  sample = names(km_clusters),
+  cluster = km_clusters
+)
+tidy_clusters
+
+plt_dat <- pc_mat %>% 
+  as_tibble(rownames = "sample") %>% 
+  left_join(tidy_clusters, by = "sample") %>% 
+  mutate(cluster = as.character(cluster))
+
+
+ggplot(plt_dat, aes(PC1, PC2)) +
+  geom_point(aes(color = cluster))
+```
+
+### Step 6: Find genes that are associated with each PC
+
+For example we can see that PC1 separates that data along the developmental time. If we find genes with strongly positive loadings these should be genes that increase over time. 
+
+```{r }
+# find the top 25 genes that have the most positive and the most negative loadings for PC1
+
+pc1 <- pc$rotation[, 1]
+
+top25 <- sort(pc1,
+              decreasing = TRUE) %>% head(25)
+bottom25 <- sort(pc1) %>% head(25)
+
+top_genes <- c(top25, bottom25)
+```
+
+Exercise: Make a heatmap that plots the pc1_genes
+
+```{r echo = FALSE, fig.height = 7, fig.width = 7}
+
+pc1_genes <- zmat[names(top_genes), ]
+Heatmap(pc1_genes,
+        cluster_columns = FALSE)
+```
+
+## Additional exercise
+
+There is another dataset called `tx_rates` in the `pbda` package. This dataset contains transcription rates of mouse dendritic cells after exposure to LPS. Run PCA on this dataset to investigate the relationships between the different sampled time points. First remove genes (rows) with all zero values and remove rows that have zero variance (`matrixStats::rowVars`) then log transform the data prior to scaling. 
+
 
 

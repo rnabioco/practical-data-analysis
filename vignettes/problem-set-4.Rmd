@@ -80,11 +80,11 @@ For this exercise perform the following steps:
   
   2) Log transform the data (add a pseudocount of 1 to avoid Infinite values)  
   
-  3) Normalize the data to the 0 hour time point  
+  3) Normalize the data to the 0 hour time point (i.e. subtract the "rate at 0" from all of the columns ) 
   
   4) run kmeans clustering on the log transformed and normalized matrix. Use k = between 5 and 10 clusters.  
   
-  5) Make a heatmap with rows split based on the clusters identified in step 4. Use the code below to generate a color palette. Discuss any interesting patterns in your clusters in the interpretation.  
+  5) Make a heatmap with rows split based on the clusters identified in step 4. This may take a few minutes to plot, depending on your computers resources.  Use the code below to generate a color palette. Discuss any interesting patterns in your clusters in the interpretation.  
   
   
 ```r
