@@ -1,6 +1,6 @@
 ---
-title: "Class 6: Single Cell RNA-seq Analysis"
-author: "Austin Gillen"
+title: "Class 6: Writing Functions"
+author: "Ryan Sheridan"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -9,320 +9,512 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = F}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.align = "center"
+  fig.align = "left"
+)
+library(pbda)
+library(tidyverse)
+library(cowplot)
+```
+
+<br>
+
+### What is a function?
+As an analyst you will eventually find yourself in the position of wanting to reuse a block of code. There are two general ways to do this:
+
+1. copy-and-paste
+2. write a function
+
+A function is essentially a block of code that you've given a name and saved for later. Functions have several advantages:
+
+* They make your code easier to read
+* They reduce the chance of mistakes from repeated copying and pasting
+* They make it easier to adapt your code for different requirements
+
+Further reading
+
+* [R for Data Science](https://r4ds.had.co.nz) by Garrett Grolemund and Hadley Wickham
+* [Advanced R](https://adv-r.hadley.nz) by Hadley Wickham
+```{r}
+# An example: you want to rescale a numeric vector so all values are between 0 and 1
+a <- rnorm(n = 10)
+a
+
+rng <- range(a)
+(a - rng[1]) / (rng[2] - rng[1])
+
+# What if we want to repeat this on other vectors?
+# One way is to copy and paste
+b <- rnorm(n = 10)
+c <- rnorm(n = 10)
+
+rng <- range(b)
+new_b <- (b - rng[1]) / (rng[2] - rng[1])
+
+rng <- range(c)
+new_c <- (c - rng[1]) / (rng[2] - rng[1])
+
+# A better way is to write a function...
+```
+
+<br>
+
+<br>
+
+### How to write a function
+There are three general steps for writing functions:
+
+1. Pick a name
+2. Identify the inputs
+3. Add code to the body
+```{r, eval = F}
+# Lets write a function to rescale a numeric vector
+rescale_vec <- function(x) {
+  
+  rng <- range(x)
+  (x - rng[1]) / (rng[2] - rng[1])
+
+}
+
+rescale_vec(b)
+rescale_vec(c)
+```
+
+<br>
+
+*Write functions for the following bits of code*
+```{r, eval = F}
+# function 1
+x / sum(x)
+
+# function 2
+(x + y) / z
+
+# function 3
+sqrt(sum((x - mean(x))^2) / (length(x) - 1))
+```
+
+```{r, echo = F}
+calc_sd <- function(x) {
+  sqrt(sum((x - mean(x))^2) / (length(x) - 1))
+}
+
+calc_sd <- function(x) {
+  l <- length(x) - 1
+  m <- mean(x)
+  v <- sum((x - m)^2) / l
+  sqrt(v)
+}
+```
+
+<br>
+
+<br>
+
+### The function execution environment
+- When running a function an execution environment is created, which is separate from the global environment
+- The execution environment contains objects created within the function
+- The execution environment follows the "fresh start" principle
+- When R searches for an object referenced by a function, the execution environment takes precedence
+
+<br>
+
+*Can objects present in the global environment be referenced from within a function?*
+```{r}
+# Earlier we saved a numeric vector "a"
+a
+
+sum_nums <- function(x) {
+  x + a
+}
+
+# Yes!
+sum_nums(10)
+```
+
+<br>
+
+*Can code executed within a function modify an object present in the global environment?*
+```{r}
+sum_nums <- function(x) {
+  a <- x + a
+}
+
+# When we run sum_nums(), will this overwrite our original vector?
+sum_nums(10)
+
+# No! (not when using the '<-' assignment operator)
+a
+```
+
+<br>
+
+<br>
+
+### A more relevant example
+*Using the Brauer data lets create a scatter plot comparing growth rate vs expression for the gene YDL104C. Use `facet_wrap()` to create a separate plot for each nutrient.*
+```{r, fig.width = 6, fig.height = 4.5, echo = F}
+gg_data <- brauer_gene_exp %>%
+  filter(systematic_name == "YDL104C")               # Filter for gene of interest
+
+gg_data %>%
+  ggplot(aes(rate, expression, color = nutrient)) +  # Create scatter plot
+  geom_point(size = 2) +
+  facet_wrap(~ nutrient) +                           # Create separate plot for each nutrient
+  theme_cowplot() +
+  theme(legend.position = "none")
+```
+
+<br>
+
+What if you want to create this plot for other genes? *Write a function the takes a data.frame and systematic_name as inputs and creates scatter plots for each nutrient*
+```{r, eval = F}
+# Fill in the function body
+# You can include default values for your arguments
+plot_expr <- function(input, sys_name = "YNL049C") {
+  
+  ????
+  
+}
+```
+
+```{r, echo = F}
+plot_expr <- function(input, sys_name = "YNL049C") {
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = 2) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot() +
+    theme(legend.position = "none")
+}
+```
+
+```{r, fig.width = 6, fig.height = 4.5}
+p <- plot_expr(
+  input = brauer_gene_exp, 
+  sys_name = "YDL104C"
 )
 
-library(pbda)
-library(Seurat)
-library(tidyverse)
-library(Matrix)
+# You can also use the %>% pipe with your custom functions
+p <- brauer_gene_exp %>%
+  plot_expr(sys_name = "YDL104C")
+
+p
 ```
 
-# Single cell RNA-seq analysis in R with Seurat
-(Adapted from the [Seurat PBMC 3k Tutorial](http://satijalab.org/seurat/pbmc3k_tutorial.html))
+<br>
 
-- Introduce sparse matrices
-- QC considerations for scRNA-seq data sets
-- Build a seurat object, cluster cells and and calculate differential gene expression
-
-## Before we get started: Install Seurat and update pbda
-
-``` r
-install.packages("Seurat")
-install.packages("Matrix")
-
-devtools::install_github('idpt7810/practical-data-analysis')
-library(pbda)
-
-library(Seurat)
-library(tidyverse)
-library(Matrix)
+*Modify our plotting function to add the gene name as the plot title and the molecular function (MF) as a subtitle*
+```{r, echo = F}
+plot_expr <- function(input, sys_name) {
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = 2) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    ggtitle(plot_title) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot() +
+    theme(legend.position = "none")
+}
 ```
 
-## Single cell RNA-seq analysis in R starts with the same data as bulk RNA-seq: a count matrix
-
-However, for efficiency, scRNA-seq data is stored in sparse matrix objects. An example data set consisting of 2,700 peripheral blood mononuclear cells (PMBCs) is included in the eda package.
-
-```{r, sparse_matrix, eval = T}
-# load the path to the example data
-pbmc_10x <- system.file("extdata", "pbmc_gene_bc_matrices", "hg19", package = "pbda")
-
-# read the example data
-pbmc.data <- Read10X(pbmc_10x)
-
-# print the size of the sparse matrix
-object.size(x = pbmc.data) %>%
-  format(units = "auto")
-
-# print the size of the full matrix
-object.size(as.matrix(x = pbmc.data)) %>%
-  format(units = "auto")
-
+```{r, fig.width = 6, fig.height = 4.5}
+brauer_gene_exp %>%
+  plot_expr("YDL104C")
 ```
 
-## Seurat uses a custom object to store counts and data (similar to the SummarizedExperiment & DESeqDataSet)
+<br>
 
-First, we'll generate a Seurat object with the raw count data, keeping all genes that are expressed in at least 3 cells and all cells with at least 200 detectable genes.
+<br>
 
-```{r, seurat_object, eval = T}
-pbmc <- CreateSeuratObject(raw.data = pbmc.data,
-                           min.cells = 3,
-                           min.genes = 200,
-                           project = "10x_PBMC")
+### Conditional statements
+`if` statements allow you to execute code depending on defined conditions.
+```{r, eval = F}
+if (condition) {
+  code executed when condition is TRUE
+  
+} else {
+  code executed when condition is FALSE
+}
 ```
 
-## Filtering and QC for scRNA-seq
+R has a set of operators that can be used to write conditional statements
 
-scRNA-seq data sets are further filtered to remove cells with too few detectable genes, cells with clear outlier numbers of detectable genes (likely doublets) and cells with high proportions of mitochondrial RNAs (likely dead cells).
+Operator | Description
+:-------:|:-----------
+<        | less than
+<=       | less or equal
+\>       | greater than
+\>=      | greater or equal
+==       | equal
+!=       | not equal
+!x       | not x
+x \|\| y | x or y
+x && y   | x and y
+x %in% y | x is present in y
 
-```{r, filtering, eval = T, fig.height=5, fig.width=7}
-# Calculate percent of reads that are mitochondrial
-mito.genes <- grep(pattern = "^MT-",
-                   x = rownames(x = pbmc@data),
-                   value = TRUE)
+<br>
 
-percent.mito <- Matrix::colSums(pbmc@raw.data[mito.genes, ])/Matrix::colSums(pbmc@raw.data)
-
-# Add percent.mite as metadata to Seurat object
-pbmc <- AddMetaData(object = pbmc,
-                    metadata = percent.mito,
-                    col.name = "percent.mito")
-
-# Plot number of genes, number of UMIs and percent.mito
-VlnPlot(object = pbmc,
-        features.plot = c("nGene", "nUMI", "percent.mito"),
-        nCol = 3)
-
+*Add an `if` statement to our plotting function to account for a missing gene name*
+```{r, eval = F}
+plot_expr <- function(input, sys_name) {
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  ????
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = 2) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot() +
+    theme(legend.position = "none")
+}
 ```
 
-Outliers can be identified visually using the `GenePlot` function:
-
-```{r, outlier_plot, eval = T, message = F, fig.height=5, fig.width=6}
-GenePlot(object = pbmc, gene1 = "nUMI", gene2 = "percent.mito")
-GenePlot(object = pbmc, gene1 = "nUMI", gene2 = "nGene")
+```{r, echo = F}
+plot_expr <- function(input, sys_name) {
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  if (plot_title == "") {
+    plot_title <- sys_name
+  }
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = 2) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot() +
+    theme(legend.position = "none")
+}
 ```
 
-Finally, we can filter the pbmc object with `FilterCells`:
-
-```{r, filter_cells, eval = T, message = F}
-pbmc <- FilterCells(object = pbmc,
-                    subset.names = c("nGene", "percent.mito"), 
-                    low.thresholds = c(200, -Inf),
-                    high.thresholds = c(2500, 0.05))
+```{r, fig.width = 6, fig.height = 4.5}
+brauer_gene_exp %>%
+  plot_expr("YNL095C")
 ```
 
-## Normalizing the data, detecting variable genes, and removing uninteresting variation
+<br>
 
-After filtering, we need to normalize gene expression across cells with the `NormalizeData` function. This function normalizes gene expression measurements by per-cell total expression, multiplies the result by an arbitrary value (10,000 here) and log transforms the result.
+Conditional statements can be linked together
+```{r, eval = F}
+# Using 'else if'
+if (condition_1) {
+  executed when condition_1 is TRUE
+  
+} else if (condition_2) {
+  executed when condition_1 is FALSE and condition_2 is TRUE
+  
+} else {
+  executed when condition_1 and condition_2 are FALSE
+}
 
-```{r, normalize, message = F}
-pbmc <- NormalizeData(object = pbmc,
-                      normalization.method = "LogNormalize", 
-                      scale.factor = 10000)
+# The 'and' operator
+if (condition_1 && condition_2) {
+  executed when condition_1 and condition_2 are TRUE
+  
+} else {
+  executed when condition_1 or condition_2 are FALSE
+}
+
+# The 'or' operator
+if (condition_1 || condition_2) {
+  executed when condition_1 or condition_2 are TRUE
+  
+} else {
+  executed when condition_1 and condition_2 are FALSE
+}
 ```
 
-Next, we identify variable genes using a mean-dispersion plot to mark visual outliers.
+<br>
 
-```{r, pkg_data, message = F, fig.height=5, fig.width=6}
-pbmc <- FindVariableGenes(object = pbmc,
-                          mean.function = ExpMean,
-                          dispersion.function = LogVMR, 
-                          x.low.cutoff = 0.0125,
-                          x.high.cutoff = 3,
-                          y.cutoff = 0.5)
+<br>
 
-length(x = pbmc@var.genes)
+### Checking inputs
+When writing functions it can be useful to check input values to make sure they are valid. Lets modify our plotting function to check that `sys_name` is a string.
+
+- `is.character()`
+- `is.numeric()`
+- `is.logical()`
+- `is.factor()`
+
+```{r, fig.width = 6, fig.height = 4.5}
+plot_expr <- function(input, sys_name) {
+  
+  if (!is.character(sys_name)) {
+    stop("sys_name must be a string!")
+  }
+  
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  if (plot_title == "") {
+    plot_title <- sys_name
+  }
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = 2) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot() +
+    theme(legend.position = "none")
+}
+
+brauer_gene_exp %>%
+  plot_expr("YDL104C")
 ```
 
-Single cell data sets contain various types of 'uninteresting' variation. These can include technical noise, batch effects and confounding biological variation (such as cell cycle stage). We can regress these signals out of the analysis using ` ScaleData`.
+<br>
 
-```{r regress}
-pbmc <- ScaleData(object = pbmc,
-                  vars.to.regress = c("nUMI", "percent.mito"))
-```
-```{r echo=F, eval = F}
-pbmc <- readRDS("/Users/austingillen/source/eda/regressed_seurat.rds")
-```
-## Performing dimensionality reduction and clustering: PCA
-
-As in our bulk RNA-seq example, we need a way to project highly multidimensional data onto a 2D plane. PCA alone is insufficient to capture the variation in these data due to the complexity, so we'll introduce a new method: t-distributed stochastic neighbor embedding (tSNE). A useful interactive tool to help you understand tSNE can be found [here](https://distill.pub/2016/misread-tsne/). First, we'll calculate the principle components (used by the clustering and tSNE algorithms):
-
-```{r, pca, message = F}
-pbmc <- RunPCA(object = pbmc,
-               pc.genes = pbmc@var.genes,
-               do.print = TRUE,
-               pcs.print = 1:5,
-               genes.print = 5)
-```
-Next, we'll generate a PCA plot.
-
-```{r, pca_plot, message = F, fig.height=5, fig.width=6}
-PCAPlot(object = pbmc,
-        dim.1 = 1, 
-        dim.2 = 2)
-```
-
-Multiple subpopulations are clearly visible in this plot, but as we'll see later, there is even more interesting variation present in these data. However, in order to use the clustering and tSNE algorithms, we'll need to determine how many PCs comprise the 'true dimensionality' of the data set. One approach is to view a heatmap of the 500 most extreme cells for each principle component.
-
-```{r, pca_heatmap, message = F, fig.height=7, fig.width=6}
-PCHeatmap(object = pbmc,
-          pc.use = 1:12,
-          cells.use = 500,
-          do.balanced = TRUE, 
-          label.columns = FALSE,
-          use.full = FALSE)
+*Modify our plotting function to check that `sys_name` is present in the input. Hint: try the `%in%` operator*
+```{r, eval = F}
+plot_expr <- function(input, sys_name) {
+  
+  if (!is.character(sys_name)) {
+    stop("sys_name must be a string!")
+  }
+  
+  if ( ???? ) {
+    stop( ???? )
+  }
+  
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  if (plot_title == "") {
+    plot_title <- sys_name
+  }
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = 2) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot() +
+    theme(legend.position = "none")
+}
 ```
 
-Another approach is the jackstraw plot, which compares the distribution of p-values for each principle component with a uniform distribution. 'Significant' PCs show an enrichment of genes with low p-values.
-
-```r
-pbmc <- JackStraw(object = pbmc,
-                  num.replicate = 100,
-                  do.print = FALSE)
-
-JackStrawPlot(object = pbmc, PCs = 1:12)
-```
-![](img/jackstraw.png)
-
-Finally, we can generate an 'elbow plot' of the standard deviation of the principle components. The 'elbow' indicated the last significant principle component.
-
-```{r, elbow_plot, message = F, fig.height=5, fig.width=6}
-PCElbowPlot(object = pbmc)
-```
-
-Based on these plots, we conclude that the first 7-10 PCs contain sufficient variation for use downstream.
-
-## Performing dimensionality reduction and clustering: Clustering and tSNE
-
-Now that we've identified the 'true dimensionality' of the data, we can cluster the cells and project them on a tSNE plot.
-
-```{r, find_clusters, message = F, fig.height=5, fig.width=6}
-pbmc <- FindClusters(object = pbmc,
-                     reduction.type = "pca",
-                     dims.use = 1:10, 
-                     resolution = 0.6,
-                     print.output = 0,
-                     save.SNN = TRUE)
-
-pbmc <- RunTSNE(object = pbmc,
-                dims.use = 1:10,
-                do.fast = TRUE)
-
-TSNEPlot(object = pbmc)
+```{r, echo = F}
+plot_expr <- function(input, sys_name) {
+  
+  if (!is.character(sys_name)) {
+    stop("sys_name must be a string!")
+  }
+  
+  if (!sys_name %in% input$systematic_name) {
+    stop("sys_name not found in input data!")
+  }
+  
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  if (plot_title == "") {
+    plot_title <- sys_name
+  }
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = 2) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot() +
+    theme(legend.position = "none")
+}
 ```
 
-Clustering reveals seven distinct populations that are accurately separated in the tSNE projection - substantially more complexity than was captured in the PCA plot!
+<br>
 
-## Identifying marker genes (differential expression)
+<br>
 
-Seurat provides the `FindAllMarkers` and `FindMarkers` functions for identifying differentially expressed genes in all clusters vs. all other clusters and in specific pairs of clusters, respectively.
+### Passing arguments with the ellipsis (...)
+The ellipsis allows a function to take an arbitrary number of arguments, which can then be passed to an inner function. This is nice when you have an inner function that has a lot of useful arguments. Lets first try this with our simple `rescale_vec()` function. 
+```{r}
+rescale_vec <- function(x, ...) {
+  rng <- range(x, ...)
+  (x - rng[1]) / (rng[2] - rng[1])
+}
 
-```{r, find_markers, message = F, eval = F, fig.height=5, fig.width=6}
-pbmc.markers <- FindAllMarkers(object = pbmc,
-                               only.pos = TRUE,
-                               min.pct = 0.25, 
-                               thresh.use = 0.25)
+rescale_vec(a)
 
-pbmc.markers %>%
-  group_by(cluster) %>%
-  top_n(2, avg_logFC)
+a[1] <- NA
 
+rescale_vec(a, na.rm = T)
 ```
 
-Differentially expressed genes can be visualized as violin plots:
+<br>
 
-```{r, plot_genes_violin, message = F, fig.height=5, fig.width=6}
-VlnPlot(object = pbmc,
-        features.plot = c("LDHB", "CD79A"))
+*Modify our plotting function so the user can change the point size, shape, and alpha*
+```{r, fig.width = 6, fig.height = 4.5}
+# A cumbersome way
+plot_expr <- function(input, sys_name, pt_size = 2, pt_shape = 1, pt_alpha = 1) {
+  input %>%
+    filter(systematic_name == sys_name) %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(size = pt_size, shape = pt_shape, alpha = pt_alpha) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot() +
+    theme(legend.position = "none")
+}
+
+# With the ellipsis
+plot_expr <- function(input, sys_name, ...) {
+  input %>%
+    filter(systematic_name == sys_name) %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(...) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot() +
+    theme(legend.position = "none")
+}
+
+# Now we can easily change the point size and shape
+plot_expr(
+  input = brauer_gene_exp,
+  sys_name = "YDL104C",
+  size = 5,
+  shape = 2,
+  alpha = 0.75
+)
 ```
 
-Or as 'feature plots' on the tSNE projection:
+<br>
 
-```{r, plot_genes_feature, message = F, fig.height=5, fig.width=6}
-FeaturePlot(object = pbmc,
-            features.plot = c("MS4A1",
-                              "GNLY",
-                              "CD3E",
-                              "CD14", 
-                              "FCER1A",
-                              "FCGR3A",
-                              "LYZ",
-                              "PPBP",
-                              "CD8A"),
-            cols.use = c("grey", "blue"), 
-            reduction.use = "tsne")
+<br>
 
-```
-
-## Manipulating Seurat objects: renaming clusters
-
-The marker genes identified above can be used to reclassify clusters as known cell types. This provides a useful example of how metadata is handled in Seurat.
-
-```{r, rename_clusters, message = F, fig.height=5, fig.width=6}
-# Create a vector of current cluster IDs
-current.cluster.ids <- c(0, 1, 2, 3, 4, 5, 6, 7)
-
-# Create a vector of new cluster IDs (cell types)
-new.cluster.ids <- c("CD4 T cells",
-                     "CD14+ Monocytes",
-                     "B cells",
-                     "CD8 T cells", 
-                     "FCGR3A+ Monocytes",
-                     "NK cells",
-                     "Dendritic cells",
-                     "Megakaryocytes")
-
-# Save the cluster numbers as "cluster.id"
-pbmc <- StashIdent(object = pbmc, save.name = "cluster.id")
-
-# Use plyr to remap the idents from the current IDs to the new IDs
-pbmc@ident <- plyr::mapvalues(x = pbmc@ident,
-                              from = current.cluster.ids,
-                              to = new.cluster.ids)
-
-# Plot the tSNE with new cluster IDs
-TSNEPlot(object = pbmc,
-         do.label = TRUE,
-         pt.size = 0.5)
-
-# Plot the tSNE with old cluster IDs
-TSNEPlot(object = pbmc,
-         do.label = TRUE,
-         pt.size = 0.5,
-         group.by = "cluster.id")
-```
-
-## Dealing with proliferating cells
-
-PBMCs are poor examples for this analysis, but the commands are shown here to demonstrate how other, more complex variables are regressed out of these analyses.
-
-```{r, cell_cycle, message = F, eval = F}
-# Inspect the classifying genes
-cc.genes
-
-# Classify the cells
-pbmc <- CellCycleScoring(pbmc,
-                         s.genes = cc.genes$s.genes,
-                         g2m.genes = cc.genes$g2m.genes, 
-                         set.ident = TRUE)
-
-# view cell cycle scores and phase assignments
-head(x = pbmc@meta.data)
-```
-``` r
-# Cell cycle stage can then be regressed out using `Scale Data`
-pbmc <- ScaleData(pbmc,
-                  vars.to.regress = c("S.Score", "G2M.Score"),
-                  display.progress = FALSE)
-
-# Alternatively, retain cycling vs. stationary information, but regress out differences in phase
-pbmc@meta.data$CC.Difference <- pbmc@meta.data$S.Score - pbmc@meta.data$G2M.Score
-
-pbmc <- ScaleData(pbmc,
-                  vars.to.regress = "CC.Difference",
-                  display.progress = FALSE)
+### Saving your functions for later
+A good way to save commonly used functions is to keep them in a separate R script. You can load your functions using the `source()` command.
+```{r, eval = F}
+source("path/to/my_functions.R")
 ```

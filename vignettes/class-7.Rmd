@@ -1,6 +1,6 @@
 ---
-title: "Class 7: Heatmaps and Clustering"
-author: "Kent Riemondy"
+title: "Class 7: Iteration"
+author: "Ryan Sheridan"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -9,577 +9,340 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
+```{r setup, include = F}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.align = "center"
+  fig.align = "left"
 )
-library(tidyverse)
-library(ComplexHeatmap)
 library(pbda)
-```
-
-```{r reinstall, eval = F}
-devtools::install_github("IDPT7810/practical-data-analysis")
 library(tidyverse)
-library(ComplexHeatmap)
-library(pbda)
+library(cowplot)
 ```
 
-Goals:
- 
-  1) Learn additional operations on matrices. 
+<br>
+
+### Introduction to iteration
+
+As discussed in the previous class, you should try to limit duplication in your code. One way to do this is by writing functions, another way is through iteration.
+
+Further reading
+
+* [R for Data Science](https://r4ds.had.co.nz) by Garrett Grolemund and Hadley Wickham
+* [Advanced R](https://adv-r.hadley.nz) by Hadley Wickham
+
+### `for` loops
+`for` loops allow you to run the same code block repeatedly without copying and pasting.
+```{r}
+# When writing a for loop, think about the output, sequence, and body
+out <- vector("numeric", 5)  # output
+
+for (i in 1:length(out)) {   # sequence
   
-  2) Demonstrate principles to effectively visualize large datasets with heatmaps. 
+  out[i] <- i * 5            # body
   
-  3) Use clustering algorithms to identify patterns in the data.
-  
-
-## Matrix operations
-
-For some of the exercises today we will be using a single cell RNA-seq dataset that
-is part of the `pbda` package. For simplicity we will just use the raw matrix rather
-than working through a Seurat object. The `esc_mat` matrix contains raw read counts 
-for each gene in each cell. 
-
-This dataset contains `r ncol(esc_mat)` cells from mouse embryos 
-at various stages of development ([Single-Cell RNA-Seq Reveals Dynamic, Random Monoallelic Gene Expression in Mammalian Cells](http://science.sciencemag.org/content/343/6167/193)). This dataset, as well as many
-others are available in a preprocessed form from the Hemberg lab (
-https://hemberg-lab.github.io/scRNA.seq.datasets/). Note that the number of cells has been reduced for complexity reasons. 
-
-
-
-```{r}
-esc_mat[1:3, 1:3]
-```
-
-Many mathmatical operations that work on vectors also work on matrices. 
-
-```{r}
-sum(esc_mat)
-min(esc_mat)
-max(esc_mat)
-mean(esc_mat)
-median(esc_mat)
-```
-
-Logical comparisons also work. Note that the `.` is a placeholder that indicates the data being passed from the pipe. 
-
-```{r}
-is.na(esc_mat) %>% .[1:3, 1:3]
-
-# equivalently
-na_values <- is.na(esc_mat) 
-na_values[1:3, 1:3]
-
-
-(esc_mat > 0) %>% .[1:3, 1:3]
-```
-
-How many elements contain NA or zero values in the matrix? Note that `TRUE == 1` and `FALSE == 0`
-
-```{r}
-TRUE == 1 
-FALSE == 1
-
-sum(c(TRUE, FALSE, TRUE))
-
-sum(is.na(esc_mat))
-
-sum(esc_mat > 0)
-
-sum(esc_mat > 0) / length(esc_mat)
-```
-
-### Apply functions per row or per column
-
-A common task with matrices is to compute a row-wise or column-wise summary. We have already used a few functions that perform these operations.
-
-```{r}
-colSums(esc_mat) %>% head()
-rowSums(esc_mat) %>% head()
-```
-
-How would we apply an arbitrary function to operate row-wise or column-wise?
-
-In base R there is a function called `apply`. There is no tidyverse equivalent for operating on matrices at this point. 
-
-```{r}
-?apply
-```
-
-We can use apply to calculate rowSums and colSums.
-
-```{r}
-apply(esc_mat, 1, sum) %>% head()
-apply(esc_mat, 2, sum) %>% head()
-```
-
-### Exercise
-
-Remove all genes with low expression from the `esc_mat` matrix. Save this new matrix as `norm_mat`. Keep genes that have greater than 10 samples with non-zero counts. How many genes remain? 
-
-```{r}
-
-genes_to_keep <- apply(esc_mat, 1, 
-                       function(x) sum(x > 0) > 10)
-
-# same result as above
-genes_to_keep <- rowSums(esc_mat > 0) > 10
-
-filtered_mat <- esc_mat[genes_to_keep, ]
-
-nrow(filtered_mat)
-```
-
-
-If the function has multiple arguments, there are two options to supply the arguments to apply.
-
-```{r}
-#make a smaller matrix
-mat <- esc_mat[1:10, 1:5]
-
-apply(mat, 1, sum, na.rm = TRUE)
-
-apply(mat, 1, function(row) sum(row, na.rm = TRUE))
-
-# same as above
-apply(mat, 1, function(x) sum(x, na.rm = TRUE))
-
-
-# using a custom function
-max_minus_min <- function(x){
-  max(x) - min(x)
 }
 
-apply(mat, 2, max_minus_min)
+# It's helpful to think about what happens during each cycle of the loop
+out[1] <- 1 * 5  # i = 1
+out[2] <- 2 * 5  # i = 2
+out[3] <- 3 * 5  # i = 3
+out[4] <- 4 * 5  # i = 4
+out[5] <- 5 * 5  # i = 5
 ```
 
-
-
-### Exercise
-
-Normalize each the expression values for each cell. Divide each column by the total number of reads in each column, multiply by 10000, and log transform.  
-
-
 ```{r}
-# normalize a matrix
-norm_mat <- apply(esc_mat, 2, function(x) x / sum(x)) 
-norm_mat <- 10000 * norm_mat
-norm_mat <- log(norm_mat + 1) # or log1p(norm_mat)
+# Lets use rnorm() to create 5 vectors with different values for 'mean'
+# One way to do this is by copying and pasting
+vec_in <- c(1, 50, 20, 5, 70)                # input
 
+out <- vector("list", length(vec_in))        # output
 
-# another approach 
-lognorm <- function(vec){
-  norm_values <- 10000 * (vec / sum(vec))
-  log(norm_values + 1)
+out[[1]] <- rnorm(n = 10, mean = vec_in[1])    
+out[[2]] <- rnorm(n = 10, mean = vec_in[2])
+out[[3]] <- rnorm(n = 10, mean = vec_in[3])
+out[[4]] <- rnorm(n = 10, mean = vec_in[4])
+out[[5]] <- rnorm(n = 10, mean = vec_in[5])
+
+# Use a for loop to reduce code duplication
+vec_in <- c(1, 50, 20, 5, 70)                  # input
+
+out <- vector("list", length(vec_in))          # output
+
+for (i in 1:length(vec_in)) {                  # sequence
+  
+  out[[i]] <- rnorm(n = 10, mean = vec_in[i])  # body
+  
+}
+```
+
+<br>
+
+*Write a `for` loop to create 3 vectors of different lengths*
+```{r, echo = F}
+vec_in <- c(5, 10, 2)                  # input
+
+out <- vector("list", length(vec_in))  # output
+
+for (i in 1:length(vec_in)) {          # sequence
+  
+  out[[i]] <- rnorm(n = vec_in[i])     # body
+  
 }
 
-norm_mat <- apply(esc_mat, 2, lognorm)
+out
 ```
 
-### Converting matrices to data.frames and tibbles
+<br>
 
+Using `seq_along(x)` instead of `1:length(x)`
 ```{r}
-# to data.frame
-df <- as.data.frame(mat)
+# seq_along() mimics 1:length() for non-empty vectors
+vec_in <- c(5, 10, 2)
 
-df[1:3, 1:5]
+1:length(vec_in)
 
-# to tibble
-as_tibble(df, rownames = "gene")
-# or equivalently
-rownames_to_column(df, "gene") %>% as_tibble()
+seq_along(vec_in)
 
-# as one step 
+# seq_along() correctly handles empty vectors
+emp_vec <- vector("numeric", 0)
 
-tbl_data <- mat %>% as.data.frame() %>% as_tibble(rownames = "gene")
-tbl_data
+1:length(emp_vec)
+
+seq_along(emp_vec)
 ```
 
-Converting data.frames to matrices is also easily accomplished using `as.matrix()`
+<br>
 
-```{r}
+<br>
 
-tbl_mat <- tbl_data %>% 
-  as.data.frame()
-
-rownames(tbl_mat) <- tbl_mat$gene
-tbl_mat <- tbl_mat[, -1]
-
-tbl_mat <- as.matrix(tbl_mat)
-
-tbl_mat[1:3, 1:3]
-class(tbl_mat)
-
-```
-
-Converting vectors to tibbles is also very useful.
-
-```{r}
-# make a vector from colnames
-col_ids <- colnames(tbl_mat)
-
-#build tibble directly
-tibble(sample_names = col_ids)
-
-#additional columns can be added as long as all of the vectors are the same lenght
-
-tibble(sample_names = col_ids,
-       id = 1:5)
-```
-
-### Exercise
-
-Tidy the `clust_mat` matrix into long format and plot the values across time points for each gene. What do you notice about the gene expression. Which are the most similar? similar expression-levels? similar pattern?
-
-
-```{r, fig.height=5, fig.width=7}
-tidy_mat <- clust_mat %>% 
-  as.data.frame() %>% 
-  as_tibble(rownames = "gene") %>% 
-  gather(timepoint, value, -gene) %>% 
-  mutate(timepoint = str_remove(timepoint, "timepoint_"),
-         timepoint = as.numeric(timepoint))
-
-ggplot(tidy_mat, aes(x = timepoint, y = value,
-                     color = gene)) +
-  geom_point() +
-  geom_line()
-
-```
-
-```{r, echo = FALSE}
-clustering_example_plot <- ggplot(tidy_mat, aes(x = timepoint, y = value,
-                     color = gene)) +
-  geom_point() +
-  geom_line()
-
-```
-
-## Generating Heatmaps using ComplexHeatmap
-
-How do we visualize this dataset to examine relationships between samples? Visualizing the entire scRNA-seq matrix will be computationally expensive and
-likely completely unintepretable. Ideally we'd like to reduce the dataset to less than a few thousand genes for visualization.
+### Lets try this with the Brauer data
+```{r, fig.width = 10, fig.height = 8}
+# We want to create a supplemental figure showing the growth rate vs expression for four genes
+plot_expr <- function(input, sys_name, ...) {
   
-How do we select which genes to plot in a heatmap?
-  1) For bulk RNA-Seq, generally first identify differentially expressed genes and make a heatmap of these genes.  
-  2) For scRNA-seq you can use the variable genes in the dataset, 
-  or genes that are markers of defined clusters.   
-  3) Pick genes of interest related to the hypothesis.   
+  gg_data <- input %>%
+    filter(systematic_name == sys_name)
   
-```{r heatmaps, eval = F}
-?Heatmap
-??Heatmap
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$MF[1]
+  
+  gg_data %>%
+    ggplot(aes(rate, expression, color = nutrient)) +
+    geom_point(...) +
+    labs(title = plot_title, subtitle = plot_sub) +
+    facet_wrap(~ nutrient) +
+    theme_cowplot() +
+    theme(legend.position = "none")
+}
+
+# Lets try this with the copy-and-paste method
+vec_in <- c("YDL104C", "YLR115W", "YMR183C", "YML017W")       # input
+
+out <- vector("list", length(vec_in))                         # output 
+
+out[[1]] <- plot_expr(brauer_gene_exp, sys_name = vec_in[1])  
+out[[2]] <- plot_expr(brauer_gene_exp, sys_name = vec_in[2])
+out[[3]] <- plot_expr(brauer_gene_exp, sys_name = vec_in[3])
+out[[4]] <- plot_expr(brauer_gene_exp, sys_name = vec_in[4])
+
+plot_grid(plotlist = out)
 ```
 
-```{r}
-gene_variance <- apply(norm_mat, 1, var) %>%
-  sort(decreasing = T)
+<br>
 
-vargenes <- names(gene_variance)[1:30]
-
-head(vargenes)
-```
-
-Next we'll pick a color palette and generate a vector of colors to be used in the heatmap.
-
-```{r}
-vcols <- viridis::viridis(256)
-head(vcols)
-```
-
-
-```{r, fig.height=5, fig.width=7}
-var_mat <- norm_mat[vargenes, ]
-
-Heatmap(var_mat, col = vcols, name = "log scale",
-        cluster_rows = TRUE,
-        cluster_columns = FALSE)
-```
-
-Often visualizing gene expression abundance can obscure some patterns, as lower expression values are not as strongly represented. A common data transformation is mean-centering and scaling each gene. This is also known as a z-score. 
-
-`(x - mean(x)) / sd(x)` 
-
-By generating z-scores, the gene expression data now represents standard deviations away from the mean. A built in function in R called `scale` can generate z-scores. This is also easy to do using an apply function. 
-
-
-```{r zscores}
-?scale
-```
-
-The scale function performs scaling per column in a matrix. However, it is common in genomics for matricies to be represented with samples (i.e. cells) as columns and genes as rows. This is done as commonly the number of genes >> than the number of samples, and so it is conviently (and computaionally easier) to represent data in this format.  
-
-However, is this a tidy format? 
-
-Are the variables stored as rows or columns?
-
-How do we transpose rows to columns and vice-versa?
-
+*Re-write the code from above using a `for` loop to generate our figure*
 ```{r, eval = F}
-?t
+vec_in <- c("YDL104C", "YLR115W", "YMR183C", "YML017W")  # input
+
+out <- vector("list", length(vec_in))                    # output
+
+for ( ???? ) {                                           # sequence
+  
+                                                         # body
+
+}
+
+plot_grid(plotlist = out)
 ```
 
+<br>
+
+<br>
+
+### Introduction to `map()`
+`for` loops are a powerful tool to reduce code duplication, however your code can be further simplified using the `map()` functions provided in the purrr package. These `map()` functions essentially run `for (i in seq_along(x))` behind the scenes so you don't have to explicitly type this.
+
+There is a function for each type of output:
+
+- `map()` makes a list
+- `map_lgl()` makes a logical vector
+- `map_int()` makes an integer vector
+- `map_dbl()` makes a double vector
+- `map_chr()` makes a character vector
+
+Each `map()` function requires two inputs: `map(.x, .f, ...)`
+
+- `.x` is a list or atomic vector
+- `.f` is a function or formula
 ```{r}
-var_mat[1:3, 1:3]
+# We previously used a for loop to create vectors with different values for mean
+vals <- c(1, 50, 20, 5, 70)                  # input
 
-t(var_mat) %>% .[1:3, 1:3]
+out <- vector("list", length(vals))          # output
 
+for (i in seq_along(vals)) {                 # sequence
+  
+  out[[i]] <- rnorm(n = 10, mean = vals[i])  # body
+  
+}
 
-zmat <- t(scale(t(var_mat), 
-                center = TRUE, 
-                scale = TRUE)) 
+# Using map() we can further simplify this code
+# .x indicates where each element of the vector should be inserted
+out <- map(
+  .x = vals,
+  .f = ~ rnorm(n = 10, mean = .x)
+)
 
-# confirm that columns are the same after scaling
-all(colnames(zmat) == colnames(var_mat))
+# You can use brackets to include a multi-line code block
+out <- map(vals, ~ {
+  
+  rnorm(n = 10, mean = .x)
+
+})
+
+# map() allows for very readable code
+# Each element of the vector is passed to the first available argument
+out <- map(vals, rnorm, n = 10)
 ```
 
+<br>
 
-```{r, fig.height=5, fig.width=7}
-Heatmap(zmat, col = vcols,
-        name = "z-score",
-        cluster_rows = TRUE,
-        cluster_columns = FALSE)
+*Use `rnorm()` and `map()` to create 3 vectors of different lengths*
+```{r, echo = F}
+lens <- c(5, 10, 2)
 
+out <- map(lens, ~ rnorm(n = .x))
+
+out <- map(lens, rnorm)
+
+out
 ```
 
-Multiple heatmaps can be generated and plotted together if they 
-share genes. For example, if we wanted to compare the zscore values 
-to the log expression values. 
+<br>
 
-```{r, fig.height=5, fig.width=14}
-# save each heatmap as an object
-h1 <- Heatmap(zmat, col = vcols,
-        name = "z-score",
-        cluster_rows = TRUE,
-        cluster_columns = FALSE)
-
-h2 <- Heatmap(var_mat, col = vcols,
-        name = "log",
-        cluster_rows = TRUE,
-        cluster_columns = FALSE)
-
-# use the + operator to combine
-h1 + h2
-```
-
-Lastly, heatmaps can be saved in a variety of formats using built in r functions, `pdf`, `png`, `svg`, and `jpeg`. `ggplots` plots can be saved with `ggsave` or the cowplot wrapper `save_plot`.
-
+*Re-write the code from above using `map()` to generate our growth rate figure*
 ```{r, eval = F}
-pdf("figure1.pdf") # name of plot
-  h1 + h2 # code that generates the plot
-dev.off() # saves the plot
+genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
 
-png("figure1.png") 
-  h1 + h2 
-dev.off() 
-
-svg("figure1.svg") 
-  h1 + h2 
-dev.off() 
-
-tiff("figure1.tiff") 
-  h1 + h2 
-dev.off() 
-```
-
-### Exercises
-
-Create a heatmap using the top 200 variables genes, using either zscores or log normalized data. Consult the help menu to generate a heatmap and save it to a file. 
-
-Your heatmap should be made in the following manner:
-
-  1) cluster by row
-  2) hide the rownames
-  3) add a title to the legend
-  4) add a title to the columns
-
-What appears to be happening between the `early2cell` and `mid2cell` stages?
-
-```{r, fig.height=5, fig.width=7}
-gene_variance <- apply(norm_mat, 1, var) %>%
-  sort(decreasing = T)
-
-vargenes <- names(gene_variance)[1:200]
-
-var_mat <- norm_mat[vargenes, ]
-
-Heatmap(var_mat, col = vcols, name = "log scale",
-        cluster_rows = TRUE,
-        show_row_names = FALSE,
-        cluster_columns = FALSE,
-        column_title = "Samples", 
-        row_title = "Genes")
-```
-
-## Clustering
-
-Reviews: 
-
-  - [Avoiding common pitfalls when clustering biological data](http://stke.sciencemag.org/content/9/432/re6)  
+expr_plots <- map(
   
-  - [How does gene expression clustering work?](https://www.nature.com/articles/nbt1205-1499)  
+  ????
   
-  - [Heatmaps](https://www.nature.com/articles/nmeth.1902)  
-  
+)
 
-Consider the following example matrix `clust_mat` which is part of the package. Data and concept from a [blog post](http://www.opiniomics.org/you-probably-dont-understand-heatmaps/) by Mick Watson.
-
-By default many Heatmap packages perform clustering. It's important to know what these defaults do, and when it is appropriate to use them. Consider the following toy dataset, which is clustered by row.
-
-```{r}
-clustering_example_plot
+plot_grid(plotlist = expr_plots)
 ```
 
-Here is the heatmap for this data.
+```{r, fig.width = 10, fig.height = 8, echo = F}
+genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
 
-```{r, fig.height=5, fig.width=7}
-Heatmap(clust_mat, 
-        col = vcols,
-        cluster_rows = TRUE, 
-        cluster_columns = FALSE)
+expr_plots <- map(
+  .x = genes, 
+  .f = plot_expr, 
+  input = brauer_gene_exp
+)
 
+plot_grid(plotlist = expr_plots)
 ```
 
-Does this clustering make sense? Should I1 and I2 be grouped together? 
+<br>
 
-By default hierarchical clustering is performed using euclidean distance as a distance metric. There are many distance metrics, and some are more appropriate for different data. For this data, using euclidean distance will group the highly expressed genes (`h1` and `h2`) separate from the lowly expressed (`l1`, `l2`).  However we can see that the pattern of change over time is more similar between `h1` and `l1`
+<br>
 
-We can see the euclidean distances between genes using `dist`. 
+### Mapping over multiple arguments
+If you have two vectors containing values that you want to pass to a function this can be accomplished with `map2()`.
+```{r, fig.width = 10, fig.height = 8}
+genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
+shapes <- c(1, 2, 3, 4)
 
-```{r}
-dist(clust_mat)
+expr_plots <- map2(genes, shapes, ~ {
+  plot_expr(
+    input    = brauer_gene_exp,
+    sys_name = .x,
+    shape    = .y
+  )
+})
+
+plot_grid(plotlist = expr_plots)
 ```
 
-The hierarchical clustering is done by default using `dist` as input. 
+<br>
 
-```{r, fig.height=5, fig.width=7}
-hc <- hclust(dist(clust_mat))
-plot(hc)
-```
-
-We can change the distance metric used for the Heatmap by changing the `clustering_distance_rows` argument. A correlation measure, is not sensitive to abundance, and can recover the shared patterns in the data.
-
-```{r}
-cor(t(clust_mat))
-```
-
-```{r, fig.height=5, fig.width=7}
-
-Heatmap(clust_mat, col = vcols,
-        clustering_distance_rows = "pearson",
-        cluster_rows = TRUE, 
-        cluster_columns = FALSE)
-
-```
-
-Alternatively we could also generate zscores and use these to plot. 
-
-```{r, fig.height=5, fig.width=7}
-zmat <- t(scale(t(clust_mat)))
-
-Heatmap(zmat, col = vcols,
-        clustering_distance_rows = "euclidean",
-        cluster_rows = TRUE, 
-        cluster_columns = FALSE)
-
-```
-
-
-### Extracting out clusters
-
-First let's return to our heatmap of variable genes from the single cell data. 
-
-```{r, fig.height=5, fig.width=7}
-h1 <- Heatmap(var_mat, col = vcols, name = "log scale",
-        cluster_rows = TRUE,
-        show_row_names = FALSE,
-        cluster_columns = FALSE,
-        column_title = "Correlation", 
-        row_title = "Genes")
-h1
-```
-
-How do we select out individual clusters? How do we define clusters?
-
-First let's generate the dendogram:
-
-```{r, fig.height=5, fig.width=7}
-hc <- hclust(dist(var_mat))
-plot(hc)
-```
-
-Next we can use `cutree()` to cut the tree into groups
-
+*Use `map2()` to create plots for 4 different genes, each with a different point size*
 ```{r, eval = F}
-?cutree
-```
+genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
 
-```{r, fig.height=5, fig.width=7}
-# split into 5 groups
-kclusters <- cutree(hc, k = 5)
-
-plot(hc, labels = kclusters)
-
-# split based on height of tree
-hclusters <- cutree(hc, h = 20)
-
-plot(hc, labels = hclusters)
-```
-
-
-Now that we have assigned clusters we can replot our heatmaps split out by each cluster.
-
-
-```{r, fig.height=5, fig.width=7}
-h1 <- Heatmap(var_mat, col = vcols, name = "log scale",
-        cluster_rows = TRUE,
-        show_row_names = FALSE,
-        cluster_columns = FALSE,
-        split = kclusters, 
-        row_title = "Genes")
-h1
-```
-
-
-### K-means
-
-K-means clustering is another simple, yet powerful clustering techinuqe. It also scales to much larger datasets than hierarchical clustering. 
-
-description:
-  - [interactive description](http://onmyphd.com/?p=k-means.clustering)   
+expr_plots <- map2(
   
-  - [detailed description](https://en.wikipedia.org/wiki/K-means_clustering)   
+  ????
   
-  - [determining number of clusters](https://stackoverflow.com/questions/15376075/cluster-analysis-in-r-determine-the-optimal-number-of-clusters)   
-  
+)
 
-Kmeans is easily implemented using `kmeans()`
-
-```{r}
-clusters <- kmeans(var_mat, centers = 5)
-names(clusters)
+plot_grid(plotlist = expr_plots)
 ```
 
-Cluster assignments can be extracted using `$cluster`
+```{r, fig.width = 10, fig.height = 8, echo = F}
+genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
+sizes <- c(1, 2, 4, 8)
 
-```{r}
-clusters$cluster %>% head()
+expr_plots <- map2(genes, sizes, ~ {
+  plot_expr(
+    input    = brauer_gene_exp,
+    sys_name = .x,
+    size     = .y
+  )
+})
+
+plot_grid(plotlist = expr_plots)
 ```
 
-To recover a reproducible kmeans classification set a seed for the random number generator
+<br>
 
-```{r}
-set.seed(42)
-clusters <- kmeans(var_mat, centers = 5)
-clusters$cluster %>% head
+`pmap` can be used to map over any number of arguments.
+```{r, fig.width = 10, fig.height = 8}
+# Create a list of input vectors
+genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
+sizes <- c(2, 3, 4, 5)
+shapes <- c(1, 2, 3, 4)
+
+plot_args <- list(genes, sizes, shapes)
+
+# Use an argument list with pmap
+expr_plots <- pmap(plot_args, ~ {
+  plot_expr(
+    input = brauer_gene_exp,
+    sys_name = ..1,
+    size     = ..2,
+    shape    = ..3
+  )
+})
+
+# A simpler way
+plot_args <- list(
+  sys_name = c("YDL104C", "YOR069W", "YLR115W", "YPR036W"),
+  size     = c(2, 3, 4, 5),
+  shape    = c(1, 2, 3, 4)
+)
+
+expr_plots <- pmap(
+  .l = plot_args, 
+  .f = plot_expr, 
+  input = brauer_gene_exp
+)
+
+plot_grid(plotlist = expr_plots)
 ```
 
-### Exercise:
 
-1) Make a Heatmap split by each kmeans cluster
-
-2) use your tidying skills to plot the average expression per cluster.
 
