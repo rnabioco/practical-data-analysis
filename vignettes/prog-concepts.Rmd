@@ -22,6 +22,8 @@ library(tidyverse)
 library(cowplot)
 ```
 
+<br>
+
 ## Functions
 
 ### What is a function?
@@ -166,6 +168,7 @@ gg_data %>%
   ggplot(aes(rate, expression, color = nutrient)) +  # Create scatter plot
   geom_point(size = 2) +
   facet_wrap(~ nutrient) +                           # Create separate plot for each nutrient
+  theme_cowplot() +
   theme(legend.position = "none")
 ```
 
@@ -191,6 +194,7 @@ plot_expr <- function(input, sys_name = "YNL049C") {
     ggplot(aes(rate, expression, color = nutrient)) +
     geom_point(size = 2) +
     facet_wrap(~ nutrient) +
+    theme_cowplot() +
     theme(legend.position = "none")
 }
 ```
@@ -225,6 +229,7 @@ plot_expr <- function(input, sys_name) {
     labs(title = plot_title, subtitle = plot_sub) +
     ggtitle(plot_title) +
     facet_wrap(~ nutrient) +
+    theme_cowplot() +
     theme(legend.position = "none")
 }
 ```
@@ -282,6 +287,7 @@ plot_expr <- function(input, sys_name) {
     geom_point(size = 2) +
     labs(title = plot_title, subtitle = plot_sub) +
     facet_wrap(~ nutrient) +
+    theme_cowplot() +
     theme(legend.position = "none")
 }
 ```
@@ -303,6 +309,7 @@ plot_expr <- function(input, sys_name) {
     geom_point(size = 2) +
     labs(title = plot_title, subtitle = plot_sub) +
     facet_wrap(~ nutrient) +
+    theme_cowplot() +
     theme(legend.position = "none")
 }
 ```
@@ -378,6 +385,7 @@ plot_expr <- function(input, sys_name) {
     geom_point(size = 2) +
     labs(title = plot_title, subtitle = plot_sub) +
     facet_wrap(~ nutrient) +
+    theme_cowplot() +
     theme(legend.position = "none")
 }
 
@@ -414,6 +422,7 @@ plot_expr <- function(input, sys_name) {
     geom_point(size = 2) +
     labs(title = plot_title, subtitle = plot_sub) +
     facet_wrap(~ nutrient) +
+    theme_cowplot() +
     theme(legend.position = "none")
 }
 ```
@@ -444,6 +453,7 @@ plot_expr <- function(input, sys_name) {
     geom_point(size = 2) +
     labs(title = plot_title, subtitle = plot_sub) +
     facet_wrap(~ nutrient) +
+    theme_cowplot() +
     theme(legend.position = "none")
 }
 ```
@@ -478,6 +488,7 @@ plot_expr <- function(input, sys_name, pt_size = 2, pt_shape = 1, pt_alpha = 1) 
     ggplot(aes(rate, expression, color = nutrient)) +
     geom_point(size = pt_size, shape = pt_shape, alpha = pt_alpha) +
     facet_wrap(~ nutrient) +
+    theme_cowplot() +
     theme(legend.position = "none")
 }
 
@@ -488,6 +499,7 @@ plot_expr <- function(input, sys_name, ...) {
     ggplot(aes(rate, expression, color = nutrient)) +
     geom_point(...) +
     facet_wrap(~ nutrient) +
+    theme_cowplot() +
     theme(legend.position = "none")
 }
 
@@ -497,7 +509,7 @@ plot_expr(
   sys_name = "YDL104C",
   size = 5,
   shape = 2,
-  alpha = 0.5
+  alpha = 0.75
 )
 ```
 
