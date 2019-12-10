@@ -22,7 +22,7 @@ library(cowplot)
 
 <br>
 
-### Introduction
+## Introduction
 
 As discussed in the previous class, you should try to limit duplication in your code. One way to do this is by writing functions, another way is through iteration. Reducing code duplication has several benefits:
 
@@ -34,12 +34,17 @@ Further reading
 
 * [R for Data Science](https://r4ds.had.co.nz) by Garrett Grolemund and Hadley Wickham
 * [Advanced R](https://adv-r.hadley.nz) by Hadley Wickham
+```{r}
+library(pbda)
+library(tidyverse)
+library(cowplot)
+```
 
 <br>
 
 <br>
 
-### `for` loops
+## `for` loops
 `for` loops allow you to run the same code block repeatedly without copying and pasting.
 ```{r}
 # When writing a for loop, think about the output, sequence, and body
@@ -124,9 +129,11 @@ seq_along(emp_vec)
 
 <br>
 
-### Lets try this with the Brauer data
+## Using the Brauer data
+
+Using the Brauer gene expression data lets create a figure showing the growth rate vs expression for four genes
 ```{r, fig.width = 10, fig.height = 8}
-# We want to create a supplemental figure showing the growth rate vs expression for four genes
+# This is the function we wrote in class-6
 plot_expr <- function(input, sys_name, ...) {
   
   gg_data <- input %>%
@@ -178,7 +185,7 @@ plot_grid(plotlist = out)
 
 <br>
 
-### Introduction to `map()`
+## Introduction to `map()`
 `for` loops are a powerful tool to reduce code duplication, however your code can be further simplified using the `map()` functions provided in the purrr package. These `map()` functions essentially run `for (i in seq_along(x))` behind the scenes so you don't have to explicitly type this.
 
 There is a function for each type of output:
@@ -268,7 +275,7 @@ plot_grid(plotlist = expr_plots)
 
 <br>
 
-### Mapping over multiple arguments
+## Mapping over multiple arguments
 If you have two vectors containing values that you want to pass to a function this can be accomplished with `map2()`.
 ```{r, fig.width = 10, fig.height = 8}
 genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
@@ -302,7 +309,7 @@ plot_grid(plotlist = expr_plots)
 
 ```{r, fig.width = 10, fig.height = 8, echo = F}
 genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
-sizes <- c(1, 2, 4, 8)
+sizes <- c(1, 2, 4, 6)
 
 expr_plots <- map2(genes, sizes, ~ {
   plot_expr(
@@ -321,7 +328,7 @@ plot_grid(plotlist = expr_plots)
 ```{r, fig.width = 10, fig.height = 8}
 # Create a list of input vectors
 genes <- c("YDL104C", "YOR069W", "YLR115W", "YPR036W")
-sizes <- c(2, 3, 4, 5)
+sizes <- c(1, 2, 4, 6)
 shapes <- c(1, 2, 3, 4)
 
 plot_args <- list(genes, sizes, shapes)
@@ -339,7 +346,7 @@ expr_plots <- pmap(plot_args, ~ {
 # A simpler way
 plot_args <- list(
   sys_name = c("YDL104C", "YOR069W", "YLR115W", "YPR036W"),
-  size     = c(2, 3, 4, 5),
+  size     = c(2, 4, 6, 8),
   shape    = c(1, 2, 3, 4)
 )
 

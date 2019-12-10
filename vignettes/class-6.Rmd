@@ -22,7 +22,7 @@ library(cowplot)
 
 <br>
 
-### What is a function?
+## What is a function?
 As an analyst you will eventually find yourself in the position of wanting to reuse a block of code. There are two general ways to do this:
 
 1. copy-and-paste
@@ -38,6 +38,12 @@ Further reading
 
 * [R for Data Science](https://r4ds.had.co.nz) by Garrett Grolemund and Hadley Wickham
 * [Advanced R](https://adv-r.hadley.nz) by Hadley Wickham
+```{r, eval = F}
+library(pbda)
+library(tidyverse)
+library(cowplot)
+```
+
 ```{r}
 # An example: you want to rescale a numeric vector so all values are between 0 and 1
 a <- rnorm(n = 10)
@@ -64,7 +70,7 @@ new_c <- (c - rng[1]) / (rng[2] - rng[1])
 
 <br>
 
-### How to write a function
+## How to write a function
 There are three general steps for writing functions:
 
 1. Pick a name
@@ -114,7 +120,7 @@ calc_sd <- function(x) {
 
 <br>
 
-### The function execution environment
+## The function execution environment
 - When running a function an execution environment is created, which is separate from the global environment
 - The execution environment contains objects created within the function
 - The execution environment follows the "fresh start" principle
@@ -154,7 +160,7 @@ a
 
 <br>
 
-### A more relevant example
+## A more relevant example
 *Using the Brauer data lets create a scatter plot comparing growth rate vs expression for the gene YDL104C. Use `facet_wrap()` to create a separate plot for each nutrient.*
 ```{r, fig.width = 6, fig.height = 4.5, echo = F}
 gg_data <- brauer_gene_exp %>%
@@ -239,7 +245,7 @@ brauer_gene_exp %>%
 
 <br>
 
-### Conditional statements
+## Conditional statements
 `if` statements allow you to execute code depending on defined conditions.
 ```{r, eval = F}
 if (condition) {
@@ -351,7 +357,7 @@ if (condition_1 || condition_2) {
 
 <br>
 
-### Checking inputs
+## Checking inputs
 When writing functions it can be useful to check input values to make sure they are valid. Lets modify our plotting function to check that `sys_name` is a string.
 
 - `is.character()`
@@ -458,7 +464,7 @@ plot_expr <- function(input, sys_name) {
 
 <br>
 
-### Passing arguments with the ellipsis (...)
+## Passing arguments with the ellipsis (...)
 The ellipsis allows a function to take an arbitrary number of arguments, which can then be passed to an inner function. This is nice when you have an inner function that has a lot of useful arguments. Lets first try this with our simple `rescale_vec()` function. 
 ```{r}
 rescale_vec <- function(x, ...) {
@@ -513,7 +519,7 @@ plot_expr(
 
 <br>
 
-### Saving your functions for later
+## Saving your functions for later
 A good way to save commonly used functions is to keep them in a separate R script. You can load your functions using the `source()` command.
 ```{r, eval = F}
 source("path/to/my_functions.R")
