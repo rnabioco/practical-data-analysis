@@ -58,4 +58,4 @@ URL: https://github.com/rnabioco/practical-data-analysis, https://rnabioco.githu
 Remotes: 
     rstudio/rmarkdown
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2

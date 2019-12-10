@@ -4,7 +4,7 @@
 \alias{update_pbda}
 \title{Update pbda package using devtools}
 \usage{
-update_pbda(repo = "IDPT7810/practical-data-analysis", ...)
+update_pbda(repo = "rnabioco/practical-data-analysis", ...)
 }
 \arguments{
 \item{repo}{repository to update}
