@@ -7,6 +7,8 @@ output:
     toc: TRUE
     toc_float: true
     toc_depth: 3
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ```{r setup, include = F}
@@ -832,57 +834,37 @@ plot_grid(plotlist = expr_plots)
 
 <br>
 
-## More exercises
-(@) Write a function that has two arguments (data, systematic_name) and creates the following plot
+## Problem set 2
+
+### Question 1
+
+Write a function that plots rate vs expression when provided a data.frame, a systematic_name, and a nutrient. Add the common gene name as a title and the nutrient as a subtitle. Include an argument that lets the user select whether a regression line is shown.
 ```{r, echo = F}
-plot_expr_2 <- function(input, sys_name) {
-  
-  gg_data <- input %>% 
-    filter(systematic_name == sys_name)
-  
-  plot_title <- gg_data$name[1]
-  plot_sub <- gg_data$MF[1]
-  
-  gg_data %>%
-    ggplot(aes(rate, expression, color = nutrient)) + 
-    geom_point() + 
-    geom_smooth(method = "lm", se = F) +
-    labs(title = plot_title, subtitle = plot_sub) +
-    theme_cowplot()
-}
-```
-
-```{r, fig.width = 6, fig.height = 4}
-plot_expr_2(
-  input = brauer_gene_exp, 
-  sys_name = "YDL104C"
-)
-```
-
-<br>
-
-<br>
-
-(@) Add an argument to hide the figure legend
-```{r, echo = F}
-plot_expr_3 <- function(input, sys_name, hide_legend = F) {
-  
+plot_expr <- function(input, sys_name, nutri, add_lm = F) {
   gg_data <- input %>%
-    filter(systematic_name == sys_name)
+    filter(
+      systematic_name == sys_name,
+      nutrient == nutri
+    )
   
   plot_title <- gg_data$name[1]
-  plot_sub <- gg_data$MF[1]
+  plot_sub <- gg_data$nutrient[1]
   
   res <- gg_data %>%
-    ggplot(aes(rate, expression, color = nutrient)) +
-    geom_point() +
-    geom_smooth(method = "lm", se = F) +
+    ggplot(aes(rate, expression)) + 
+    geom_point(size = 3, color = "blue") + 
     labs(title = plot_title, subtitle = plot_sub) +
     theme_cowplot()
   
-  if (hide_legend) {
+  if (add_lm) {
     res <- res +
-      theme(legend.position = "none")
+      geom_smooth(
+        method = "lm", 
+        se = F, 
+        size = 0.5, 
+        linetype = 2, 
+        color = "black"
+      )
   }
   
   res
@@ -890,10 +872,11 @@ plot_expr_3 <- function(input, sys_name, hide_legend = F) {
 ```
 
 ```{r, fig.width = 6, fig.height = 3.5}
-plot_expr_3(
-  input = brauer_gene_exp,
+plot_expr(
+  input = brauer_gene_exp, 
   sys_name = "YDL104C",
-  hide_legend = T
+  nutri = "Ammonia",
+  add_lm = T
 )
 ```
 
@@ -901,267 +884,137 @@ plot_expr_3(
 
 <br>
 
-(@) Use your function with `map()` to create a figure containing plots for four genes
+### Question 2
+
+Add an `if` statement to check whether the systematic_name and nutrient provided by the user are present in the input data.
+```{r, echo = F}
+plot_expr <- function(input, sys_name, nutri, add_lm = F) {
+  
+  if (!sys_name %in% input$systematic_name || !nutri %in% input$nutrient) {
+    stop("sys_name and nutri must be present in the input data!", call. = F)
+  }
+  
+  gg_data <- input %>%
+    filter(
+      systematic_name == sys_name,
+      nutrient == nutri
+    )
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$nutrient[1]
+  
+  res <- gg_data %>%
+    ggplot(aes(rate, expression)) + 
+    geom_point(size = 3, color = "blue") + 
+    labs(title = plot_title, subtitle = plot_sub) +
+    theme_cowplot()
+  
+  if (add_lm) {
+    res <- res +
+      geom_smooth(
+        method = "lm", 
+        se = F, 
+        size = 0.5, 
+        linetype = 2, 
+        color = "black"
+      )
+  }
+  
+  res
+}
+```
+
+```{r, fig.width = 6, fig.height = 3.5, eval = F}
+plot_expr(
+  input = brauer_gene_exp,
+  sys_name = "YDL104CZZZZZZZ",
+  nutri = "Ammonia",
+  add_lm = T
+)
+```
+
+```{r, echo = F}
+print("Error: sys_name and nutri must be present in the input data!")
+```
+
+
+<br>
+
+<br>
+
+### Question 3 
+
+Add the ellipsis so the user can pass arguments directly to `theme()`.
+```{r, echo = F}
+plot_expr <- function(input, sys_name, nutri, add_lm = F, ...) {
+  
+  if (!sys_name %in% input$systematic_name || !nutri %in% input$nutrient) {
+    stop("sys_name and nutri must be present in the input data!")
+  }
+  
+  gg_data <- input %>%
+    filter(
+      systematic_name == sys_name,
+      nutrient == nutri
+    )
+  
+  plot_title <- gg_data$name[1]
+  plot_sub <- gg_data$nutrient[1]
+  
+  res <- gg_data %>%
+    ggplot(aes(rate, expression)) + 
+    geom_point(size = 3, color = "blue") + 
+    labs(title = plot_title, subtitle = plot_sub) +
+    theme_cowplot() +
+    theme(...)
+  
+  if (add_lm) {
+    res <- res +
+      geom_smooth(
+        method = "lm", 
+        se = F, 
+        size = 0.5, 
+        linetype = 2, 
+        color = "black"
+      )
+  }
+  
+  res
+}
+```
+
+```{r, fig.width = 6, fig.height = 3.5}
+plot_expr(
+  input = brauer_gene_exp,
+  sys_name = "YDL104C",
+  nutri = "Ammonia",
+  add_lm = T,
+  axis.title = element_text(size = 20),
+  axis.text = element_text(face = "italic")
+)
+```
+
+<br>
+
+<br>
+
+### Question 4
+
+Use your function with `map()` to create a figure containing plots for four genes.
 ```{r, fig.width = 10, fig.height = 6.5, echo = F}
-sys_names <- c("YNL049C", "YNL095C", "YDL104C", "YLR115W")
+sys_names <- c("YNL049C", "YML017W", "YDL104C", "YLR115W")
 
 expr_plots <- map(
   .x = sys_names, 
-  .f = plot_expr_3, 
-  input = brauer_gene_exp
+  .f = plot_expr, 
+  input = brauer_gene_exp,
+  nutri = "Ammonia",
+  add_lm = T,
+  axis.title = element_text(size = 20),
+  axis.text = element_text(face = "italic")
 )
 
 plot_grid(plotlist = expr_plots)
-```
-
-<br>
-
-<br>
-
-(@) Modify your function so the points are red if the mean expression is >-0.1
-```{r, echo = F}
-plot_expr_4 <- function(input, sys_name, hide_legend = F) {
-  
-  gg_data <- input %>%
-    filter(systematic_name == sys_name)
-  
-  plot_title <- gg_data$name[1]
-  plot_sub <- gg_data$MF[1]
-  
-  res <- gg_data %>%
-    ggplot(aes(rate, expression, color = nutrient)) +
-    geom_smooth(method = "lm", se = F) +
-    geom_point() +
-    labs(title = plot_title, subtitle = plot_sub) +
-    theme_cowplot()
-  
-  if (hide_legend) {
-    res <- res +
-      theme(legend.position = "none")
-  }
-  
-  mean_exp <- mean(gg_data$expression)
-  
-  if (mean_exp > -0.1) {
-    res <- res +
-      geom_point(color = "red")
-  }
-  
-  res
-}
-```
-
-```{r, fig.width = 6, fig.height = 3.5}
-plot_expr_4(
-  input = brauer_gene_exp,
-  sys_name = "YNL049C"
-)
-```
-
-<br>
-
-<br>
-
-(@) Add arguments that let the user set the mean expression cutoff and the point color when the mean is greater than the cutoff
-```{r, echo = F}
-plot_expr_5 <- function(input, sys_name, hide_legend = F, exp_cutoff = -0.1, 
-                        exp_color = "red") {
-  
-  gg_data <- input %>%
-    filter(systematic_name == sys_name)
-  
-  plot_title <- gg_data$name[1]
-  plot_sub <- gg_data$MF[1]
-  
-  res <- gg_data %>%
-    ggplot(aes(rate, expression, color = nutrient)) +
-    geom_smooth(method = "lm", se = F) +
-    geom_point() +
-    labs(title = plot_title, subtitle = plot_sub) +
-    theme_cowplot()
-  
-  if (hide_legend) {
-    res <- res +
-      theme(legend.position = "none")
-  }
-  
-  mean_exp <- mean(gg_data$expression)
-  
-  if (mean_exp > exp_cutoff) {
-    res <- res +
-      geom_point(color = exp_color)
-  }
-  
-  res
-}
-```
-
-```{r, fig.width = 6, fig.height = 3.5}
-plot_expr_5(
-  input = brauer_gene_exp,
-  sys_name = "YNL049C",
-  exp_cutoff = -0.1,
-  exp_color = "blue"
-)
-```
-
-<br>
-
-<br>
-
-(@) Modify your function so each rate is represented by a different point shape (and hide the legend for shape)
-```{r, echo = F}
-plot_expr_6 <- function(input, sys_name, hide_legend = F, 
-                        exp_cutoff = -0.1, exp_color = "red") {
-  
-  gg_data <- input %>%
-    filter(systematic_name == sys_name)
-  
-  plot_title <- gg_data$name[1]
-  plot_sub <- gg_data$MF[1]
-  
-  res <- gg_data %>%
-    ggplot(aes(rate, expression, color = nutrient)) +
-    geom_smooth(method = "lm", se = F) +
-    geom_point(aes(shape = as.character(rate)), show.legend = F) +
-    labs(title = plot_title, subtitle = plot_sub) +
-    theme_cowplot()
-  
-  if (hide_legend) {
-    res <- res +
-      theme(legend.position = "none")
-  }
-  
-  mean_exp <- mean(gg_data$expression)
-  
-  if (mean_exp > exp_cutoff) {
-    res <- res +
-      geom_point(aes(shape = as.character(rate)), color = exp_color, show.legend = F)
-  }
-  
-  res
-}
-```
-
-```{r, fig.width = 10, fig.height = 3.5}
-p_1 <- plot_expr_6(
-  input = brauer_gene_exp,
-  sys_name = "YNL049C",
-  exp_cutoff = 10,
-  hide_legend = T
-)
-
-p_2 <- plot_expr_6(
-  input = brauer_gene_exp,
-  sys_name = "YNL049C",
-  exp_cutoff = -0.1,
-  exp_color = "blue"
-)
-
-plot_grid(
-  p_1, p_2, 
-  nrow = 1, 
-  rel_widths = c(0.44, 0.56)
-)
-```
-
-<br>
-
-<br>
-
-(@) Use the ellipsis to pass arguments directly to `theme()`
-```{r, echo = F}
-plot_expr_7 <- function(input, sys_name, hide_legend = F, exp_cutoff = -0.1, 
-                        exp_color = "red", ...) {
-  
-  gg_data <- input %>%
-    filter(systematic_name == sys_name)
-  
-  plot_title <- gg_data$name[1]
-  plot_sub <- gg_data$MF[1]
-  
-  res <- gg_data %>%
-    ggplot(aes(rate, expression, color = nutrient)) +
-    geom_smooth(method = "lm", se = F) +
-    geom_point(aes(shape = as.character(rate)), show.legend = F) +
-    labs(title = plot_title, subtitle = plot_sub) +
-    theme_cowplot() +
-    theme(...)
-  
-  if (hide_legend) {
-    res <- res +
-      theme(legend.position = "none")
-  }
-  
-  mean_exp <- mean(gg_data$expression)
-  
-  if (mean_exp > exp_cutoff) {
-    res <- res +
-      geom_point(aes(shape = as.character(rate)), color = exp_color, show.legend = F)
-  }
-  
-  res
-}
-```
-
-```{r, fig.width = 6, fig.height = 3.5}
-plot_expr_7(
-  input        = brauer_gene_exp,
-  sys_name     = "YNL049C",
-  exp_cutoff   = -0.1,
-  axis.title.x = element_blank(),
-  axis.text.y  = element_text(size = 20),
-  plot.title   = element_text(face = "italic")
-)
-```
-
-<br>
-
-<br>
-
-(@) Modify your function to take a vector of systematic_names to create the following plot
-```{r, echo = F}
-plot_expr_8 <- function(input, sys_name, hide_legend = F, exp_cutoff = -0.1, 
-                        exp_color = "red", ...) {
-  
-  gg_data <- input %>%
-    filter(systematic_name %in% sys_name)
-  
-  res <- gg_data %>%
-    ggplot(aes(rate, expression, color = nutrient)) +
-    geom_smooth(method = "lm", se = F) +
-    geom_point(aes(shape = as.character(rate)), show.legend = F) +
-    facet_wrap(~ systematic_name) +
-    theme_cowplot() +
-    theme(...)
-  
-  if (hide_legend) {
-    res <- res +
-      theme(legend.position = "none")
-  }
-  
-  mean_exp <- mean(gg_data$expression)
-  
-  if (mean_exp > exp_cutoff) {
-    res <- res +
-      geom_point(aes(shape = as.character(rate)), color = exp_color, show.legend = F)
-  }
-  
-  res
-}
-```
-
-```{r, fig.width = 10, fig.height = 6.5}
-name_vec <- c("YNL049C", "YNL095C", "YDL104C", "YLR115W")
-
-plot_expr_8(
-  input        = brauer_gene_exp,
-  sys_name     = name_vec,
-  exp_cutoff   = -0.1,
-  axis.title.x = element_blank(),
-  axis.text.y  = element_text(size = 20),
-  plot.title   = element_text(face = "italic")
-)
 ```
 
 

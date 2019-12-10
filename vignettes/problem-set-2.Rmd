@@ -1,177 +1,76 @@
 ---
-title: "Problem Set 2"
-author: "YOUR NAME HERE"
-date: "11/30/2018"
-output:
-  html_document:
-  code_folding: hide
+title: "problem-set-2"
+output: html_document
 ---
+
+# Question 1
+
+Write a function that plots rate vs expression when provided a data.frame, a systematic_name, and a nutrient. Add the common gene name as a title and the nutrient as a subtitle. Include an argument that lets the user select whether a regression line is shown.
+```{r, fig.width = 6, fig.height = 3.5}
+plot_expr <- function(input, sys_name, nutri, add_lm = F) {
+
+  # Finish writing the function
   
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+}
+
+plot_expr(
+  input = brauer_gene_exp, 
+  sys_name = "YDL104C",
+  nutri = "Ammonia",
+  add_lm = T
+)
 ```
 
-## Analyze a qPCR experiment
+# Question 2
 
-Here is a [link](https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/vignettes/problem-set-2.Rmd) to the Rmarkdown for this assignment. Download that and update your name at the top.
+Add an `if` statement to check whether the systematic_name and nutrient provided by the user are present in the input data.
+```{r, fig.width = 6, fig.height = 3.5}
+plot_expr <- function(input, sys_name, nutri, add_lm = F) {
 
-You are investigating how the transcription factor MAGIC regulates the expression of two genes WAND and POOF. You use wild-type and mutant lines with different forms of the MAGIC gene and examine the expression of MAGIC, WAND, and POOF. The experiment is a time-course after you add an activator of MAGIC. You collect 4 time points (0, 12, 24, 48 hour) with three biological replicates.
-
-The cells have three mutant forms of MAGIC:
+  # Finish writing the function
   
-+ a hypomorphic allele (`MAGIC-hypo`) that is known to reduce its activity
-+ an siRNA-mediated knockdown of MAGIC (`MAGIC-siRNA`)
-+ a deletion of the MAGIC gene (`MAGIC-null`)
+}
 
-You collect expression data in a qPCR experiment in a 384-well plate (a common format for these experiments). The data in CSV format are available in the class package. One CSV contains expression levels and the other contains sample names coded as `cell_time_gene_rt_rep`.
-
-This code will give you the path and file names of the CSVs.
-
-```{r csv_files}
-# devtools::install_github('rnabioco/eda')
-qpcr384_data_csv <- system.file("extdata", "qpcr-data-384.csv", package = 'pbda')
-qpcr384_names_csv <- system.file("extdata", "qpcr-names-384.csv", package = 'pbda')
+plot_expr(
+  input = brauer_gene_exp, 
+  sys_name = "YDL104C",
+  nutri = "Ammonia",
+  add_lm = T
+)
 ```
 
-### Exercise 1
+# Question 3
 
-Use a function from the [`readr`](http://readr.tidyverse.org/) library--part of the tidyverse--to load the **CSV** data. You should have two new tibbles.
+Add the ellipsis so the user can pass arguments directly to `theme()`.
+```{r, fig.width = 6, fig.height = 3.5}
+plot_expr <- function(input, sys_name, nutri, add_lm = F) {
 
-```{r answer_1}
-```
-
-### Exercise 2
-
-Inspect these tibbles and make note of their resemblance to a 384 plate. Tidy these tibbles into this format:
+  # Finish writing the function
   
-```r
-# A tibble: 128 x 6
-cell  time  gene    rt   exp_mean      exp_var
-<chr> <chr> <chr> <chr>      <dbl>        <dbl>
-1 MAGIC-hypo     0 ACTIN     -   1.000000 0.000000e+00
-2 MAGIC-hypo     0 ACTIN     +   2.333333 4.133333e-01
-3 MAGIC-hypo     0 MAGIC     -   1.000000 0.000000e+00
-4 MAGIC-hypo     0 MAGIC     +  13.000000 9.750000e+00
-5 MAGIC-hypo     0  POOF     -   1.000000 0.000000e+00
-6 MAGIC-hypo     0  POOF     + 981.333333 5.717973e+05
-7 MAGIC-hypo     0  WAND     -   1.000000 0.000000e+00
-8 MAGIC-hypo     0  WAND     +   1.000000 1.900000e-01
-9 MAGIC-hypo    12 ACTIN     -   1.000000 0.000000e+00
-10 MAGIC-hypo    12 ACTIN     +  10.000000 1.600000e-01
-# ... with 118 more rows
+}
+
+plot_expr(
+  input = brauer_gene_exp, 
+  sys_name = "YDL104C",
+  nutri = "Ammonia",
+  add_lm = T,
+  axis.title = element_text(size = 20),
+  axis.text = element_text(face = "italic")
+)
 ```
 
-Note that this table does not have `row` and `col` (they have already been dropped) and that the replicates have been grouped and summarized by their mean (`exp_mean`) and variance (`exp_var`).
+# Question 4
 
-```{r answer_2}
-```
+Use your function with `map()` to create a figure containing plots for four genes
+```{r, fig.width = 10, fig.height = 6.5}
+sys_names <- c("YNL049C", "YML017W", "YDL104C", "YLR115W")
 
-### Exercise 3
+expr_plots <- map(
 
-Thare are two sets of qPCR reactions: one where reverse transcriptase was added to the RNA sample, and one where it was not. The `rt` variable reflects this by noting samples with `+` and `-`.
-
-Make two plots of the distribution of expression values for all sample values. In one plot, use `geom_histogram()` and facet by `rt`. In the other plot, change the x-axis scale using `scale_x_log10()`.
-
-What do these plots tell you about the values from the `rt == "-"` samples?
+  # Add the arguments for map()
   
-```{r answer_3}
+)
+
+plot_grid(plotlist = expr_plots)
 ```
-
-### Exercise 4
-
-Create a plot of expression versus time for each of the MAGIC cell types. At this point you can remove the `rt == "-"` controls. You will need to plot expression value on a log-scale to see differences.
-
-+ In which cell lines is the expression of `WAND` affected? In what way? Can you make a statement about this (e.g., XXX is required for YYY expression)?
-  
-+ Compare the data per-`cell` and per-`gene` by creating two separate plots by grouping (e.g., using facets) one or the other of those variables. Which of these is more useful to see differences in gene expression?
-  
-```{r answer_4}
-```
-
-### Exercise 5
-
-Normalize the expression data dividing each of the MAGIC, WAND, and POOF value by the ACTIN values. You will need to use `spread()` to rearrange the data for calculation, and then `gather()` to reformat for plotting. Re-create the plots from question 4 with this normalized data. Did your interpretation change?
-  
-```{r answer_5}
-```
-
-## Exploratory analysis of biological data
-
-Explore the `brauer_gene_exp` and `yeast_protein_prop` data sets to address **your own hypothesis**. Here is an example.
-
-### Hypothesis
-
-Sulfate limitation of yeast causes downregulation of genes containing high levels of cysteine and methionine residues.
-
-### Approach
-
-+ Calculate cysteine / methionine content for each gene using the `yeast_protein_prop` table.
-
-```{r}
-library(tidyverse)
-library(pbda)
-sulfurs <- yeast_prot_prop %>%
-  select(ORF, Cys, Met) %>%
-  group_by(ORF) %>%
-  mutate(n_sulfur = sum(Cys, Met)) %>%
-  ungroup() %>%
-  rename(systematic_name = ORF) %>%
-  select(systematic_name, n_sulfur)
-```
-
-+ Test whether gene expression and `n_sulfur` are correlated.
-
-```{r}
-library(broom)
-
-brauer_gene_exp %>%
-  select(systematic_name, nutrient, expression) %>%
-  left_join(sulfurs) %>%
-  select(-systematic_name) %>%
-  group_by(nutrient) %>%
-  nest() %>%
-  mutate(
-    cor = map(data, ~ tidy(cor.test(.$n_sulfur, .$expression)))
-    ) %>%
-  select(nutrient, cor) %>%
-  unnest() %>%
-  arrange(-estimate)
-```
-
-+ Identify genes that are repressed under sulfate starvation conditions. Use the linear modeling approach to identify genes with negative slopes.
-
-```{r}
-library(broom)
-models <- brauer_gene_exp %>%
-  select(systematic_name:expression) %>%
-  group_by(systematic_name, nutrient) %>%
-  nest() %>%
-  # head() %>% 
-  mutate(
-    model = map(data, ~ tidy(lm(expression ~ rate, data = .x)))
-  ) %>%
-  select(-data)
-
-# Now unnest and grab relevant data, i.e. genes with negative slopes
-models <- models %>%
-  unnest() %>%
-  filter(term == "rate" & estimate < 0 & !is.na(nutrient)) %>%
-  select(systematic_name, nutrient, estimate)
-```
-
-+ Cross-reference the two tables above to count the overlaps. What is a good control here? Need to ask whether the downregulation of these genes is *specific* to sulfate limitation. Are these same genes affected by limitation of other nutrients?
-
-```{r}
-combined <- left_join(sulfurs, models) %>%
-  select(-systematic_name) %>%
-  filter(!is.na(nutrient))
-
-library(cowplot)
-ggplot(combined, aes(x = n_sulfur, y = estimate)) +
-  geom_point() +
-  scale_x_log10() +
-  facet_grid(~nutrient)
-```
-
-### Interpretation
 
