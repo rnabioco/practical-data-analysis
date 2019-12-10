@@ -60,6 +60,15 @@
       <a href="../articles/class-5.html">Class 5: Basic Data Types and Structures</a>
     </li>
     <li>
+      <a href="../articles/class-5.html">Class 5: Gene List Handling</a>
+    </li>
+    <li>
+      <a href="../articles/class-8.html">Class 8: Heatmaps and Clustering</a>
+    </li>
+    <li>
+      <a href="../articles/class-9.html">Class 9: Exploring data with PCA</a>
+    </li>
+    <li>
       <a href="../articles/class-12.html">Class 12: Jumping into more complex R, tips, resources</a>
     </li>
     <li class="divider">
@@ -164,9 +173,9 @@
 <ol style="list-style-type: decimal">
 <li><p>Exclude genes that have rates of 0 across all samples</p></li>
 <li><p>Log transform the data (add a pseudocount of 1 to avoid Infinite values)</p></li>
-<li><p>Normalize the data to the 0 hour time point</p></li>
+<li><p>Normalize the data to the 0 hour time point (i.e. subtract the “rate at 0” from all of the columns )</p></li>
 <li><p>run kmeans clustering on the log transformed and normalized matrix. Use k = between 5 and 10 clusters.</p></li>
-<li><p>Make a heatmap with rows split based on the clusters identified in step 4. Use the code below to generate a color palette. Discuss any interesting patterns in your clusters in the interpretation.</p></li>
+<li><p>Make a heatmap with rows split based on the clusters identified in step 4. This may take a few minutes to plot, depending on your computers resources. Use the code below to generate a color palette. Discuss any interesting patterns in your clusters in the interpretation.</p></li>
 </ol>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">cols_to_use &lt;-<span class="st"> </span>circlize<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/circlize/man/colorRamp2.html">colorRamp2</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">4</span>), </a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">                                    <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"blue"</span>, <span class="st">"white"</span>, <span class="st">"red"</span>))</a>

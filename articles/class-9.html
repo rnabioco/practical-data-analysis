@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Class 9: Tips, Data I/O, and Resources • pbda</title>
+<title>Class 9: Exploring data with PCA • pbda</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Class 9: Tips, Data I/O, and Resources">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Class 9: Exploring data with PCA">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -60,6 +60,15 @@
       <a href="../articles/class-5.html">Class 5: Basic Data Types and Structures</a>
     </li>
     <li>
+      <a href="../articles/class-5.html">Class 5: Gene List Handling</a>
+    </li>
+    <li>
+      <a href="../articles/class-8.html">Class 8: Heatmaps and Clustering</a>
+    </li>
+    <li>
+      <a href="../articles/class-9.html">Class 9: Exploring data with PCA</a>
+    </li>
+    <li>
       <a href="../articles/class-12.html">Class 12: Jumping into more complex R, tips, resources</a>
     </li>
     <li class="divider">
@@ -89,7 +98,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Class 9: Tips, Data I/O, and Resources</h1>
+      <h1>Class 9: Exploring data with PCA</h1>
                         <h4 class="author">Kent Riemondy</h4>
             
             <h4 class="date">2019-12-10</h4>
@@ -101,240 +110,370 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a></code></pre></div>
-<div id="rmarkdown" class="section level1">
-<h1 class="hasAnchor">
-<a href="#rmarkdown" class="anchor"></a>Rmarkdown</h1>
-<p>Read the <a href="https://bookdown.org/yihui/rmarkdown/">Guide to RMarkdown</a> for an exhaustive description of the various formats and options for using RMarkdown documents.</p>
-<div id="caching" class="section level2">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ComplexHeatmap)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggrepel)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pbda)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(cowplot)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">theme_set</span>(<span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/theme_cowplot.html">theme_cowplot</a></span>())</a></code></pre></div>
+<p>Goals: Use PCA to identify sources of variation and summarize relationship between variables/samples in a large dataset.</p>
+<div id="pca" class="section level2">
 <h2 class="hasAnchor">
-<a href="#caching" class="anchor"></a>caching</h2>
-<p>You can speed up knitting of your RMarkdowns by using caching to store the results from each chunk.</p>
-<p><code>{r, cache = TRUE}</code></p>
-<p>Or set globally at top of document</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">cache =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-</div>
-<div id="mixing-r-code-with-other-languages" class="section level2">
-<h2 class="hasAnchor">
-<a href="#mixing-r-code-with-other-languages" class="anchor"></a>Mixing R code with other languages</h2>
-<p>In RMarkdown you can run other languages (<code>python</code>, <code>C++</code>, <code>C</code>, <code>shell</code>, <code>julia</code>, etc.) in each code chunk.</p>
-<div id="shell" class="section level3">
+<a href="#pca" class="anchor"></a>PCA</h2>
+<p>As we’ve learned throughout the class, you need to visualize your data to identify key patterns. However, high dimensional datasets are difficult to visualize in a meaningful way. For example how do you find a pattern in a large sequencing dataset with 100 samples, and 20,000 genes?</p>
+<p>Heatmaps provide one way to visualize selectively gene sets for a relatively small number of samples, but discerning overall patterns between samples can still be difficult, even with clustering.</p>
+<p>Principle Component Analysis is a commonly used technique to examine the structure of large datasets.</p>
+<p>Resources:</p>
+<ul>
+<li><a href="http://setosa.io/ev/principal-component-analysis/">PCA Explained Visually</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Principal_component_analysis">PCA formal explanation</a></li>
+<li><a href="https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues">PCA informal explanation</a></li>
+</ul>
+<div id="background-on-pca" class="section level3">
 <h3 class="hasAnchor">
-<a href="#shell" class="anchor"></a>Shell</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="bu">echo</span> hello world</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; hello world</span></a></code></pre></div>
+<a href="#background-on-pca" class="anchor"></a>Background on PCA</h3>
+<p>PCA takes a set of variables and generates a new set of variables. The new variables are selected to capture the maximal variance in the data.</p>
+<p>Each new variable is known as a principal component. The first principal component represents a linear combination of the original variables that captures the maximum variance in the dataset. Basically find a vector through the dataset that captures the maximum variance.</p>
+<p>The second component is also a linear combination of the original variables but is uncorrelated to the first component.</p>
+<p>In this manner PCA generates a new set of variables that are ordered based on the variance captured in the data. It’s for this reason that is so useful for exploratory analysis and dimensionality reduction.</p>
+<p>Consider the following experiment where we measure gene expression for 2 genes in 100 samples. Because there are only 2 genes, we can visualize all of the data in a 2D scatterplot.</p>
+<p>First, let’s generate some example data.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># generate some correlated variables, scale, and make tidy </span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">sim &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">mvrnorm</a></span>(<span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                     <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">                     <span class="kw"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="fl">0.95</span>, <span class="fl">0.95</span>, <span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">                     <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">                     <span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="st">"id"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="st">  </span><span class="kw">arrange</span>(V1, V2) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">gene_1 =</span> V1, <span class="dt">gene_2 =</span> V2) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="kw">row_number</span>())</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">sim</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; # A tibble: 100 x 3</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt;       id gene_1 gene_2</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt;    &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt;  1     1  -3.00  -2.12</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt;  2     2  -2.82  -2.93</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt;  3     3  -2.28  -2.38</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt;  4     4  -2.17  -2.54</span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt;  5     5  -1.53  -1.31</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#&gt;  6     6  -1.52  -1.93</span></a>
+<a class="sourceLine" id="cb2-26" data-line-number="26"><span class="co">#&gt;  7     7  -1.52  -1.81</span></a>
+<a class="sourceLine" id="cb2-27" data-line-number="27"><span class="co">#&gt;  8     8  -1.42  -1.99</span></a>
+<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="co">#&gt;  9     9  -1.30  -1.41</span></a>
+<a class="sourceLine" id="cb2-29" data-line-number="29"><span class="co">#&gt; 10    10  -1.29  -1.38</span></a>
+<a class="sourceLine" id="cb2-30" data-line-number="30"><span class="co">#&gt; # … with 90 more rows</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># select points to label for visualization</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">max_min_points &lt;-<span class="st"> </span><span class="kw">slice</span>(sim, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">95</span><span class="op">:</span><span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># make a plot</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">og_plt &lt;-<span class="st"> </span><span class="kw">ggplot</span>(sim, <span class="kw">aes</span>(gene_<span class="dv">1</span>, gene_<span class="dv">2</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_text_repel</a></span>(<span class="dt">data =</span> max_min_points, </a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">                  <span class="kw">aes</span>(<span class="dt">label =</span> id)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="st">  </span><span class="co"># scale y axis to same as x</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/graphics/plot.window.html">ylim</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(sim<span class="op">$</span>gene_<span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">       <span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(sim<span class="op">$</span>gene_<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">og_plt</a></code></pre></div>
+<p><img src="class-9_files/figure-html/unnamed-chunk-1-1.png" width="480" style="display: block; margin: auto;"></p>
+<p>Next we’ll run PCA on this simulated data using the <code>prcomp</code> function.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># run pca</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">pc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/prcomp.html">prcomp</a></span>(sim[, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>)], </a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">             <span class="dt">center =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">             <span class="dt">scale. =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><code>prcomp</code> returns an object of class <code>prcomp</code> with a few slots. The <code>x</code> slot contains the principal components in a matrix.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(pc)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "sdev"     "rotation" "center"   "scale"    "x"</span></a></code></pre></div>
+<p>For ease of plotting I will define a function to make a plot.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># function to make a pretty labeled plot</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">plot_labeled_pca &lt;-<span class="st"> </span><span class="cf">function</span>(input_data, </a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">                             pca_obj){</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">  </a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">  <span class="co">#tidy the pc matrix</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">  pc_x &lt;-<span class="st"> </span>pca_obj<span class="op">$</span>x <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">id =</span> input_data<span class="op">$</span>id) </a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"> </a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">  <span class="co"># select points to label</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">  max_min_points &lt;-<span class="st"> </span><span class="kw">slice</span>(pc_x, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">95</span><span class="op">:</span><span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14">  <span class="co"># compute variance explained</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15">  percent_var &lt;-<span class="st"> </span>(<span class="dv">100</span> <span class="op">*</span><span class="st"> </span>pca_obj<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="st">                    </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(pca_obj<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span>))  <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/Round.html">signif</a></span>(<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19">  <span class="co">#plot the data</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20">  pca_plt &lt;-<span class="st"> </span><span class="kw">ggplot</span>(pc_x, <span class="kw">aes</span>(PC1, PC2)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-22" data-line-number="22"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_text_repel</a></span>(<span class="dt">data =</span> max_min_points, </a>
+<a class="sourceLine" id="cb6-23" data-line-number="23">                  <span class="kw">aes</span>(<span class="dt">label =</span> id)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-24" data-line-number="24"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">str_c</span>(<span class="st">"PC1 "</span>, percent_var[<span class="dv">1</span>], <span class="st">"%"</span>),</a>
+<a class="sourceLine" id="cb6-25" data-line-number="25">         <span class="dt">y =</span> <span class="kw">str_c</span>(<span class="st">"PC2 "</span>, percent_var[<span class="dv">2</span>], <span class="st">"%"</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-26" data-line-number="26"><span class="st">    </span><span class="co"># make axes symmetric</span></a>
+<a class="sourceLine" id="cb6-27" data-line-number="27"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/graphics/plot.window.html">ylim</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(pc_x<span class="op">$</span>PC1), </a>
+<a class="sourceLine" id="cb6-28" data-line-number="28">           <span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(pc_x<span class="op">$</span>PC1)))</a>
+<a class="sourceLine" id="cb6-29" data-line-number="29">  </a>
+<a class="sourceLine" id="cb6-30" data-line-number="30">  pca_plt </a>
+<a class="sourceLine" id="cb6-31" data-line-number="31">}</a></code></pre></div>
+<p>If we plot out the new variables PC1 and PC2 you can see that now the data has been flattened and spread out along the PC1 axis.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">pca_plt &lt;-<span class="st"> </span><span class="kw">plot_labeled_pca</span>(sim, pc)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">pca_plt</a></code></pre></div>
+<p><img src="class-9_files/figure-html/unnamed-chunk-5-1.png" width="480" style="display: block; margin: auto;"></p>
+<p>As we can see, PCA has refactored the data such that PC1 now represents a vector through the data that captures the most variance. The second PC, now represents a distinct type of variance represented as variance perpendicular to the y = x line.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/plot_grid.html">plot_grid</a></span>(og_plt, pca_plt)</a></code></pre></div>
+<p><img src="class-9_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;"></p>
+<p>Another way to demonstrate what PCA is doing is to show the information captured by each PC. (see post <a href="https://stats.stackexchange.com/questions/229092/how-to-reverse-pca-and-reconstruct-original-variables-from-several-principal-com?noredirect=1&amp;lq=1">here</a>)</p>
+<p><img src="img/pca.png" width="700px" style="display: block; margin: auto;"></p>
 </div>
-<div id="python" class="section level3">
+<div id="example-with-more-dimensions" class="section level3">
 <h3 class="hasAnchor">
-<a href="#python" class="anchor"></a>Python</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="im">import</span> datetime </a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">now <span class="op">=</span> datetime.datetime.now()</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="bu">print</span>(<span class="st">"hello the date and time is currently </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(now))</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; hello the date and time is currently 2019-12-10 22:08:37.092476</span></a></code></pre></div>
+<a href="#example-with-more-dimensions" class="anchor"></a>Example with more dimensions</h3>
+<p>What if we had more dimensions that are just noise? How does this impact PCA?</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># generate a matrix of random numbers </span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co"># drawn from a normal dist. to simulate noise</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">20181214</span>)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">more_genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1000</span>, </a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">                           <span class="dt">mean =</span> <span class="dv">0</span>, </a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">                           <span class="dt">sd =</span> <span class="fl">0.25</span>), </a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">                     <span class="dt">nrow =</span> <span class="dv">100</span>, </a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">                     <span class="dt">ncol =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co"># add column names</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(more_genes) &lt;-<span class="st"> </span><span class="kw">str_c</span>(<span class="st">"gene_noise_"</span>,</a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">                              <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(more_genes))</a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co"># add the matrix to the simulation data_frame by column</span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">sim_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(sim, more_genes) </a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17">sim_<span class="dv">2</span>[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>]</a>
+<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt;   id    gene_1    gene_2 gene_noise_1 gene_noise_2 gene_noise_3</span></a>
+<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">#&gt; 1  1 -2.995217 -2.123704  0.089215287  -0.40819808  -0.48037882</span></a>
+<a class="sourceLine" id="cb9-20" data-line-number="20"><span class="co">#&gt; 2  2 -2.821900 -2.933205 -0.339377410  -0.03582506   0.41886793</span></a>
+<a class="sourceLine" id="cb9-21" data-line-number="21"><span class="co">#&gt; 3  3 -2.278693 -2.375272  0.131539067  -0.42624492   0.28643147</span></a>
+<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="co">#&gt; 4  4 -2.167279 -2.535480  0.098178061  -0.20509451  -0.06692551</span></a>
+<a class="sourceLine" id="cb9-23" data-line-number="23"><span class="co">#&gt; 5  5 -1.528019 -1.310610  0.007170167   0.04159706   0.03533156</span></a></code></pre></div>
+<p>The <code><a href="https://rdrr.io/r/graphics/plot.html">plot()</a></code> function can be used to quickly generate many exploratory plots. If you pass two vectors of the same length, you will get a scatterplot.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(sim_<span class="dv">2</span><span class="op">$</span>gene_<span class="dv">1</span>, sim_<span class="dv">2</span><span class="op">$</span>gene_<span class="dv">2</span>)</a></code></pre></div>
+<p><img src="class-9_files/figure-html/unnamed-chunk-9-1.png" width="480" style="display: block; margin: auto;"></p>
+<p>However, if you supply <code>plot</code> with a data.frame with only numeric values, it will plot all of the cross comparisons of the columns, which is useful in this example to quickly highlight that <code>gene_1</code> and <code>gene_2</code> are the only correlated or interesting variables.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(sim_<span class="dv">2</span>[, <span class="dv">2</span><span class="op">:</span><span class="dv">7</span>])</a></code></pre></div>
+<p><img src="class-9_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;"></p>
+<p>Now if we had 2000 dimensions (i.e. genes) we couldn’t resonably investigate all of the scatterplots for each gene compared to each other gene. Even with a small real dataset with 10 genes, it’s hard to identify important relationships.</p>
+<p>Next we’ll run PCA on this new data</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">pc2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/prcomp.html">prcomp</a></span>(sim_<span class="dv">2</span>[, <span class="dv">2</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(sim_<span class="dv">2</span>)], </a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">              <span class="dt">center =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">              <span class="dt">scale. =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">pc2_plt &lt;-<span class="st"> </span><span class="kw">plot_labeled_pca</span>(sim_<span class="dv">2</span>, pc2) </a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/pkg/cowplot/man/plot_grid.html">plot_grid</a></span>(og_plt, pc2_plt)</a></code></pre></div>
+<p><img src="class-9_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;"></p>
+</div>
+<div id="how-much-variation-is-captured-by-each-pc" class="section level3">
+<h3 class="hasAnchor">
+<a href="#how-much-variation-is-captured-by-each-pc" class="anchor"></a>How much variation is captured by each PC?</h3>
+<p>The <code>sdev</code> slot contains the standard deviation of the principal components. The square of this value is the variance explained by the PC.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">sds &lt;-<span class="st"> </span>pc2<span class="op">$</span>sdev</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co"># get variance per pc</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">var_per_pc &lt;-<span class="st"> </span>sds<span class="op">^</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#calculate percent variance per pc</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">percent_var_per_pc &lt;-<span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span>(var_per_pc <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(var_per_pc))</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#plot a vector</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(percent_var_per_pc)</a></code></pre></div>
+<p><img src="class-9_files/figure-html/unnamed-chunk-13-1.png" width="480" style="display: block; margin: auto;"></p>
+<p>As we can see most of the variation in the data is captured in the first PC. This means that if we dropped the remaining PCs from the data we would lose very little information. It is for this reason that PCA is so useful for dimensionality reduction for big datasets like single cell RNA-seq.</p>
+</div>
+<div id="how-to-find-features-genes-associated-with-each-pc" class="section level3">
+<h3 class="hasAnchor">
+<a href="#how-to-find-features-genes-associated-with-each-pc" class="anchor"></a>How to find features (genes) associated with each PC</h3>
+<p>As we have learned each PC is linear combination of the features (i.e genes) in the data. How do we determine which features are most important for each PC?</p>
+<p>The <code>rotation</code> slot of the <code>prcomp</code> object contains the rotations (also known as loadings) for each PC. These loadings can be interpreted as the amount each feature contributes to a principle component. Strongly positive loadings mean that the feature is strongly positivlye correlated with the PC. Strongly negative loadings indicate that it is strongly negatively correlated. Loadings at zero indicate no contribution.</p>
+<p>By ranking the loadings we can identify which genes impact each PC.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">pc2<span class="op">$</span>rotation[, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt;                         PC1         PC2         PC3</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt; gene_1         0.7053063021 -0.04871949  0.01920815</span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt; gene_2         0.7053462316  0.03364238 -0.02973091</span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt; gene_noise_1   0.0230621826  0.02051417 -0.08251792</span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt; gene_noise_2   0.0319279005  0.21472325  0.07504765</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt; gene_noise_3  -0.0143038106 -0.11483800 -0.03152142</span></a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt; gene_noise_4  -0.0236241033  0.22100695  0.02117113</span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt; gene_noise_5  -0.0246378278 -0.18849671  0.63608275</span></a>
+<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">#&gt; gene_noise_6  -0.0037009439 -0.05526442  0.16294670</span></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt; gene_noise_7  -0.0268014930  0.05081115 -0.69522057</span></a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; gene_noise_8   0.0368993691  0.05205190  0.13542228</span></a>
+<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; gene_noise_9   0.0002263975 -0.81355912 -0.21193486</span></a>
+<a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt; gene_noise_10 -0.0038867809 -0.42682676  0.08440284</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># for PC1</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">pc2<span class="op">$</span>rotation[, <span class="dv">1</span>] <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="co">#&gt;       gene_2       gene_1 gene_noise_8 </span></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co">#&gt;   0.70534623   0.70530630   0.03689937</span></a></code></pre></div>
+<p>Sidebar: sorting vectors using <code><a href="https://rdrr.io/r/base/order.html">order()</a></code></p>
+<p>order return the sort order of a vector.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co">#&gt; [1] 1 2 3 5</span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="co">#&gt; [1] 3 1 4 2</span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">decreasing =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">#&gt; [1] 2 4 1 3</span></a></code></pre></div>
+<p>Useful shortcut to get vector sorted on the absolute values:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">vec &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">-9</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">-3</span>, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">vec[<span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(vec), </a>
+<a class="sourceLine" id="cb18-4" data-line-number="4">          <span class="dt">decreasing =</span> <span class="ot">TRUE</span>)]</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="co">#&gt; [1] -10  10  -9   5   5  -3   2   0</span></a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">pc1 &lt;-<span class="st"> </span>pc2<span class="op">$</span>rotation[, <span class="dv">1</span>] </a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">pc1[<span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(pc1), <span class="dt">decreasing =</span> <span class="ot">TRUE</span>)] <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="co">#&gt;       gene_2       gene_1 gene_noise_8 gene_noise_2 gene_noise_7 gene_noise_5 </span></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="co">#&gt;   0.70534623   0.70530630   0.03689937   0.03192790  -0.02680149  -0.02463783</span></a></code></pre></div>
+<p>Using this approach we can quickly identify that <code>gene_1</code> and <code>gene_2</code> are driving the variance in the data.</p>
 </div>
 </div>
-</div>
-<div id="rdata-files" class="section level1">
-<h1 class="hasAnchor">
-<a href="#rdata-files" class="anchor"></a>.Rdata files</h1>
-<p>When you close R you are prompted to save your workspace. This will store a <code>.RData</code> file that will contain all of the R objects that you generated in your current session. Upon startup of a “new” session this <code>.Rdata</code> file will populate your environment with old R objects.</p>
-<p>This can cause many problems, including slow startup time, conflicts between your current objects and old objects, and irreproducible analyses.</p>
-<p>I recommend never storing your <code>.RData</code>. In RStudio you can turn off this option under preferences.</p>
-</div>
-<div id="reading-and-writing-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#reading-and-writing-data" class="anchor"></a>Reading and writing data</h1>
-<div id="readr" class="section level2">
+<div id="run-pca-on-a-single-cell-dataset" class="section level2">
 <h2 class="hasAnchor">
-<a href="#readr" class="anchor"></a>readr</h2>
-<p>The <code>readr</code> package (part of the tidyverse) provides a suite of functions to read data into R. These functions generally are faster and have better default behavior than the base R equivalents.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">read_tsv</span>()</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">read_csv</span>()</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">read_delim</span>()</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw">read_lines</span>()</a></code></pre></div>
-<p>The <code>readr</code> functions take a path to the file as an argument or a URL directly.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># read directly from a URL</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">read_tsv</span>(<span class="st">"https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/david.txt"</span>)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># alternatively download the file, then read it into R.</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span>(<span class="st">"https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/david.txt"</span>, <span class="st">"david.txt"</span>)</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw">read_tsv</span>(<span class="st">"david.txt"</span>)</a></code></pre></div>
-<p>Here is example to read data stored internally from the <code>pbda</code> package.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">path_to_file &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"david.txt"</span>, <span class="dt">package =</span> <span class="st">"pbda"</span>)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">path_to_file</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt; [1] "/home/travis/R/Library/pbda/extdata/david.txt"</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="kw">read_tsv</span>(path_to_file) </a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt; Parsed with column specification:</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt; cols(</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt;   Category = col_character(),</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt;   Term = col_character(),</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt;   Count = col_double(),</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt;   `%` = col_double(),</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt;   PValue = col_double(),</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt;   Genes = col_character(),</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt;   `List Total` = col_double(),</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt;   `Pop Hits` = col_double(),</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt;   `Pop Total` = col_double(),</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt;   `Fold Enrichment` = col_double(),</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt;   Bonferroni = col_double(),</span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt;   Benjamini = col_double(),</span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt;   FDR = col_double()</span></a>
-<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt; )</span></a>
-<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt; # A tibble: 70 x 13</span></a>
-<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">#&gt;    Category Term  Count     `%`  PValue Genes `List Total` `Pop Hits`</span></a>
-<a class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;      &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb7-25" data-line-number="25"><span class="co">#&gt;  1 KEGG_PA… hsa0…    21 0.00744 4.37e-5 GSTA…          717         74</span></a>
-<a class="sourceLine" id="cb7-26" data-line-number="26"><span class="co">#&gt;  2 KEGG_PA… hsa0…    33 0.0117  5.29e-5 HLA-…          717        150</span></a>
-<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co">#&gt;  3 KEGG_PA… hsa0…    18 0.00638 2.04e-4 CYP2…          717         64</span></a>
-<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">#&gt;  4 KEGG_PA… hsa0…    11 0.00390 2.27e-4 UGT1…          717         27</span></a>
-<a class="sourceLine" id="cb7-29" data-line-number="29"><span class="co">#&gt;  5 KEGG_PA… hsa0…    38 0.0135  3.28e-4 TNF,…          717        200</span></a>
-<a class="sourceLine" id="cb7-30" data-line-number="30"><span class="co">#&gt;  6 KEGG_PA… hsa0…    18 0.00638 4.45e-4 GSTA…          717         68</span></a>
-<a class="sourceLine" id="cb7-31" data-line-number="31"><span class="co">#&gt;  7 KEGG_PA… hsa0…    63 0.0223  4.50e-4 ADCY…          717        393</span></a>
-<a class="sourceLine" id="cb7-32" data-line-number="32"><span class="co">#&gt;  8 KEGG_PA… hsa0…    14 0.00496 5.90e-4 UGT1…          717         46</span></a>
-<a class="sourceLine" id="cb7-33" data-line-number="33"><span class="co">#&gt;  9 KEGG_PA… hsa0…    22 0.00779 6.09e-4 PRKC…          717         95</span></a>
-<a class="sourceLine" id="cb7-34" data-line-number="34"><span class="co">#&gt; 10 KEGG_PA… hsa0…    11 0.00390 1.40e-3 UGT1…          717         33</span></a>
-<a class="sourceLine" id="cb7-35" data-line-number="35"><span class="co">#&gt; # … with 60 more rows, and 5 more variables: `Pop Total` &lt;dbl&gt;, `Fold</span></a>
-<a class="sourceLine" id="cb7-36" data-line-number="36"><span class="co">#&gt; #   Enrichment` &lt;dbl&gt;, Bonferroni &lt;dbl&gt;, Benjamini &lt;dbl&gt;, FDR &lt;dbl&gt;</span></a></code></pre></div>
-<p>Often files are not formatted perfectly for reading into R. Below are some common problems, and the solutions</p>
-<ol style="list-style-type: decimal">
-<li>File has a header line that should not be read. (use the <code>skip</code> argument to skip <code>n</code> lines)</li>
-<li>File has column names that are poorly formatted (use the <code>col_names = FALSE</code> to skip them, then name them yourself)</li>
-<li>A column in the data is interpreted as a number but then a character is found. (use the <code>col_types</code> argument to specify the data type for each column)</li>
-<li>The file is a mess. (Use <code>read_lines()</code> to read in each line into a character vector and convert to a tibble yourself)</li>
-</ol>
-<p>Similar to the read functions there are also utilities to write to a file.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">write_tsv</span>(mtcars, <span class="st">"mtcars.txt"</span>)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">write_csv</span>(mtcars, <span class="st">"mtcars.csv"</span>)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co"># supplying a .gz will compress the data</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">write_tsv</span>(mtcars, <span class="st">"mtcars.txt.gz"</span>)</a></code></pre></div>
+<a href="#run-pca-on-a-single-cell-dataset" class="anchor"></a>Run PCA on a single cell dataset</h2>
+<div id="step-1-first-lets-filter-and-normalize-the-esc_mat-matrix-" class="section level3">
+<h3 class="hasAnchor">
+<a href="#step-1-first-lets-filter-and-normalize-the-esc_mat-matrix-" class="anchor"></a>Step 1: First let’s filter and normalize the <code>esc_mat</code> matrix.</h3>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># remove lowly expressed features (genes with non-zero values in at least 10 samples)</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">filtered_mat &lt;-<span class="st"> </span>esc_mat[<span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(esc_mat <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>, ]</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="co"># log normalize </span></a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">norm_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(filtered_mat, <span class="dv">2</span>, <span class="cf">function</span>(x) x <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(x))</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6">norm_mat &lt;-<span class="st"> </span><span class="dv">10000</span> <span class="op">*</span><span class="st"> </span>norm_mat</a>
+<a class="sourceLine" id="cb20-7" data-line-number="7">norm_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(norm_mat <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
 </div>
-<div id="base-r-functions-are-sometimes-helpful" class="section level2">
+<div id="step-2-scale-the-data-" class="section level3">
+<h3 class="hasAnchor">
+<a href="#step-2-scale-the-data-" class="anchor"></a>Step 2: Scale the data.</h3>
+<p>This makes every variable equal in weight. For example if one variable ranges from -100 to 100, this variable will have more weight than one that ranges from -1 to 1. Often in most datasets scaling the variables is necessary to avoid projecting the PCA solely based on the abundance of a variable.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co"># scale and center each gene</span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">zmat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(norm_mat)))</a></code></pre></div>
+</div>
+<div id="step-3-run-pca" class="section level3">
+<h3 class="hasAnchor">
+<a href="#step-3-run-pca" class="anchor"></a>Step 3: run PCA</h3>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co"># run PCA with genes as columns and cells as rows</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">pc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/prcomp.html">prcomp</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(zmat), </a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">             <span class="dt">center =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb22-4" data-line-number="4">             <span class="dt">scale. =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+</div>
+<div id="step-4-examine-variance-explained-by-each-pc" class="section level3">
+<h3 class="hasAnchor">
+<a href="#step-4-examine-variance-explained-by-each-pc" class="anchor"></a>Step 4: Examine variance explained by each PC</h3>
+<p>Exercise: make a ggplot plot that plots PC versus percent variance explained</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">pc_var &lt;-<span class="st"> </span>pc<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">pc_var &lt;-<span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span>(pc_var <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(pc_var))</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">plt_dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb23-5" data-line-number="5">  <span class="dt">var_explained =</span> pc_var,</a>
+<a class="sourceLine" id="cb23-6" data-line-number="6">  <span class="dt">PC =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(pc_var)</a>
+<a class="sourceLine" id="cb23-7" data-line-number="7">)</a>
+<a class="sourceLine" id="cb23-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="kw">ggplot</span>(plt_dat, <span class="kw">aes</span>(<span class="dt">x =</span> PC, </a>
+<a class="sourceLine" id="cb23-10" data-line-number="10">                    <span class="dt">y =</span> var_explained)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<p><img src="class-9_files/figure-html/unnamed-chunk-22-1.png" width="700" style="display: block; margin: auto;"></p>
+</div>
+<div id="step-5-plot-pcs" class="section level3">
+<h3 class="hasAnchor">
+<a href="#step-5-plot-pcs" class="anchor"></a>Step 5: Plot PCs</h3>
+<p>Exercise: Generate a ggplot plot that plots PC1 versus PC2 and color by developmental stage. (i.e. zy, 4cell, 8cell, etc.)</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">pc_mat &lt;-<span class="st"> </span>pc<span class="op">$</span>x</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggrepel)</a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb24-5" data-line-number="5">pc_mat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-7" data-line-number="7"><span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">"sample"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(PC1, PC2)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb24-9" data-line-number="9"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb24-10" data-line-number="10"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_text_repel</a></span>(<span class="kw">aes</span>(<span class="dt">label =</span> sample))</a></code></pre></div>
+<p><img src="class-9_files/figure-html/unnamed-chunk-23-1.png" width="480" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3">pc_mat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">"sample"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="st">  </span><span class="kw">separate</span>(sample, </a>
+<a class="sourceLine" id="cb25-7" data-line-number="7">           <span class="dt">into =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"time"</span>, <span class="st">"rep"</span>),</a>
+<a class="sourceLine" id="cb25-8" data-line-number="8">           <span class="dt">sep =</span> <span class="st">"_"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-9" data-line-number="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(PC1, PC2)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb25-10" data-line-number="10"><span class="st">    </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> time)) </a></code></pre></div>
+<p><img src="class-9_files/figure-html/unnamed-chunk-23-2.png" width="480" style="display: block; margin: auto;"></p>
+</div>
+<div id="kmeans-cluster-the-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#kmeans-cluster-the-data" class="anchor"></a>kmeans cluster the data</h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb26-2" data-line-number="2">km &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/kmeans.html">kmeans</a></span>(pc_mat, <span class="dt">centers =</span> <span class="dv">7</span>)</a>
+<a class="sourceLine" id="cb26-3" data-line-number="3">km_clusters &lt;-<span class="st"> </span>km<span class="op">$</span>cluster</a>
+<a class="sourceLine" id="cb26-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb26-5" data-line-number="5">tidy_clusters &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb26-6" data-line-number="6">  <span class="dt">sample =</span> <span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(km_clusters),</a>
+<a class="sourceLine" id="cb26-7" data-line-number="7">  <span class="dt">cluster =</span> km_clusters</a>
+<a class="sourceLine" id="cb26-8" data-line-number="8">)</a>
+<a class="sourceLine" id="cb26-9" data-line-number="9">tidy_clusters</a>
+<a class="sourceLine" id="cb26-10" data-line-number="10"><span class="co">#&gt; # A tibble: 72 x 2</span></a>
+<a class="sourceLine" id="cb26-11" data-line-number="11"><span class="co">#&gt;    sample       cluster</span></a>
+<a class="sourceLine" id="cb26-12" data-line-number="12"><span class="co">#&gt;    &lt;chr&gt;          &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb26-13" data-line-number="13"><span class="co">#&gt;  1 zy_1               4</span></a>
+<a class="sourceLine" id="cb26-14" data-line-number="14"><span class="co">#&gt;  2 zy_2               4</span></a>
+<a class="sourceLine" id="cb26-15" data-line-number="15"><span class="co">#&gt;  3 zy_3               4</span></a>
+<a class="sourceLine" id="cb26-16" data-line-number="16"><span class="co">#&gt;  4 zy_4               4</span></a>
+<a class="sourceLine" id="cb26-17" data-line-number="17"><span class="co">#&gt;  5 early2cell_1       4</span></a>
+<a class="sourceLine" id="cb26-18" data-line-number="18"><span class="co">#&gt;  6 early2cell_2       4</span></a>
+<a class="sourceLine" id="cb26-19" data-line-number="19"><span class="co">#&gt;  7 early2cell_3       4</span></a>
+<a class="sourceLine" id="cb26-20" data-line-number="20"><span class="co">#&gt;  8 early2cell_4       4</span></a>
+<a class="sourceLine" id="cb26-21" data-line-number="21"><span class="co">#&gt;  9 early2cell_5       4</span></a>
+<a class="sourceLine" id="cb26-22" data-line-number="22"><span class="co">#&gt; 10 early2cell_6       4</span></a>
+<a class="sourceLine" id="cb26-23" data-line-number="23"><span class="co">#&gt; # … with 62 more rows</span></a>
+<a class="sourceLine" id="cb26-24" data-line-number="24"></a>
+<a class="sourceLine" id="cb26-25" data-line-number="25">plt_dat &lt;-<span class="st"> </span>pc_mat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-26" data-line-number="26"><span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">"sample"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-27" data-line-number="27"><span class="st">  </span><span class="kw">left_join</span>(tidy_clusters, <span class="dt">by =</span> <span class="st">"sample"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-28" data-line-number="28"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cluster =</span> <span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(cluster))</a>
+<a class="sourceLine" id="cb26-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb26-30" data-line-number="30"></a>
+<a class="sourceLine" id="cb26-31" data-line-number="31"><span class="kw">ggplot</span>(plt_dat, <span class="kw">aes</span>(PC1, PC2)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb26-32" data-line-number="32"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> cluster))</a></code></pre></div>
+<p><img src="class-9_files/figure-html/unnamed-chunk-24-1.png" width="700" style="display: block; margin: auto;"></p>
+</div>
+<div id="step-6-find-genes-that-are-associated-with-each-pc" class="section level3">
+<h3 class="hasAnchor">
+<a href="#step-6-find-genes-that-are-associated-with-each-pc" class="anchor"></a>Step 6: Find genes that are associated with each PC</h3>
+<p>For example we can see that PC1 separates that data along the developmental time. If we find genes with strongly positive loadings these should be genes that increase over time.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="co"># find the top 25 genes that have the most positive and the most negative loadings for PC1</span></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">pc1 &lt;-<span class="st"> </span>pc<span class="op">$</span>rotation[, <span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb27-5" data-line-number="5">top25 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(pc1,</a>
+<a class="sourceLine" id="cb27-6" data-line-number="6">              <span class="dt">decreasing =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="dv">25</span>)</a>
+<a class="sourceLine" id="cb27-7" data-line-number="7">bottom25 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(pc1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="dv">25</span>)</a>
+<a class="sourceLine" id="cb27-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb27-9" data-line-number="9">top_genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(top25, bottom25)</a></code></pre></div>
+<p>Exercise: Make a heatmap that plots the pc1_genes</p>
+<p><img src="class-9_files/figure-html/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;"></p>
+</div>
+</div>
+<div id="additional-exercise" class="section level2">
 <h2 class="hasAnchor">
-<a href="#base-r-functions-are-sometimes-helpful" class="anchor"></a>base R functions are sometimes helpful</h2>
-<p>They can be slow, and by default will convert any character vector into a factor, which is often not desired. Set <code>stringsAsFactors = FALSE</code> to avoid this behavior.</p>
-<p>Reading:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(<span class="st">"your_file.csv"</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span>(<span class="st">"your_file.txt"</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p>Writing:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span>(mtcars, <span class="st">"mtcars.txt"</span>)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span>((mtcars, <span class="st">"mtcars.csv"</span>)</a></code></pre></div>
-</div>
-<div id="writing-and-reading-binary--rds-or--rda-files" class="section level2">
-<h2 class="hasAnchor">
-<a href="#writing-and-reading-binary--rds-or--rda-files" class="anchor"></a>Writing and reading binary <code>.rds</code> or <code>.rda</code> files</h2>
-<p>Often it is useful to save a R object as a file directly. For example the seurat objects can be saved to disk as an <code>.rds</code> file which can be directly loaded into R at a later date. These files can also be shared with others.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># save mtcars as a binary file</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(mtcars, <span class="st">"mtcars.rds"</span>)</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co"># read mtcars into R as an R object called new_data</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">new_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"mtcars.rds"</span>)</a></code></pre></div>
-<p><code>.rda</code> files are binary files that can be read into R as prenamed objects. They can store many objects in a single file.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">simple_data &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">a =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">simple_data2 &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">simple_data3 &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(simple_data, simple_data2)</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co"># pass R objects to the save function</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/save.html">save</a></span>(simple_data, </a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">  simple_data2, </a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">  simple_data3, </a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">  <span class="dt">file =</span> <span class="st">"collection_of_r_objects.rda"</span>)</a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co"># in a new R session use load() to reload these objects into your environment</span></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="kw"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="st">"collection_of_r_objects.rda"</span>)</a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb12-14" data-line-number="14">simple_data</a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; # A tibble: 10 x 1</span></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt;        a</span></a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt;    &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt;  1     1</span></a>
-<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt;  2     2</span></a>
-<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">#&gt;  3     3</span></a>
-<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="co">#&gt;  4     4</span></a>
-<a class="sourceLine" id="cb12-22" data-line-number="22"><span class="co">#&gt;  5     5</span></a>
-<a class="sourceLine" id="cb12-23" data-line-number="23"><span class="co">#&gt;  6     6</span></a>
-<a class="sourceLine" id="cb12-24" data-line-number="24"><span class="co">#&gt;  7     7</span></a>
-<a class="sourceLine" id="cb12-25" data-line-number="25"><span class="co">#&gt;  8     8</span></a>
-<a class="sourceLine" id="cb12-26" data-line-number="26"><span class="co">#&gt;  9     9</span></a>
-<a class="sourceLine" id="cb12-27" data-line-number="27"><span class="co">#&gt; 10    10</span></a></code></pre></div>
-</div>
-<div id="writing-and-reading-xlsx-files-in-r" class="section level2">
-<h2 class="hasAnchor">
-<a href="#writing-and-reading-xlsx-files-in-r" class="anchor"></a>Writing and reading xlsx files in R</h2>
-<p>There are two packages useful for working with excel files.</p>
-<p><code>readxl</code> is really good for reading xlsx files into R. <code>openxlsx</code> is pretty good at writing xlsx files.</p>
-</div>
-</div>
-<div id="organizing-analyses" class="section level1">
-<h1 class="hasAnchor">
-<a href="#organizing-analyses" class="anchor"></a>Organizing Analyses</h1>
-<p>Read this paper: <a href="https://doi.org/10.1371/journal.pcbi.1000424">A Quick Guide to Organizing Computational Biology Projects</a></p>
-<p>Here’s how I generally organize my projects.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="ex">NEWS.md</span>   # markdown document for tracking progress</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="ex">data</span>      # data directory for storing raw and processed data</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="ex">dbases</span>    # database files downloaded from other places</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="ex">docs</span>      # publication documents and random project files</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="ex">your-project.Rproj</span> <span class="co"># Make an Rproject in Rstudio for every project</span></a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="ex">results</span>   # store all RMarkdown here</a>
-<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="ex">src</span>       # store useful scripts here</a></code></pre></div>
-<p>In your results directory make a new directory with a proper date naming scheme for each analyses. In each directory have an RMarkdown.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="ex">2018-12-06_dataqc</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="ex">2018-12-08_exploratory_analysis</span></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="ex">2018-12-10_summary_plots</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="ex">2018-12-14_publication_figures</span></a></code></pre></div>
-</div>
-<div id="gitgithub" class="section level1">
-<h1 class="hasAnchor">
-<a href="#gitgithub" class="anchor"></a>Git/Github</h1>
-<p><strong>Use it.</strong> It’s a great way to organize your projects, provide visibility, and foster reproducibility.</p>
-<p>As a student github will give you 5 private repositories for free. However using github with public repositories is preferred if the code or results aren’t sensitive.</p>
-<p><a href="https://education.github.com/students" class="uri">https://education.github.com/students</a></p>
-</div>
-<div id="finding-help" class="section level1">
-<h1 class="hasAnchor">
-<a href="#finding-help" class="anchor"></a>Finding help</h1>
-<div id="hopefully-not-your-experience" class="section level2">
-<h2 class="hasAnchor">
-<a href="#hopefully-not-your-experience" class="anchor"></a>Hopefully not your experience</h2>
-<p><img src="https://imgs.xkcd.com/comics/wisdom_of_the_ancients.png"></p>
-</div>
-<div id="online-resources" class="section level2">
-<h2 class="hasAnchor">
-<a href="#online-resources" class="anchor"></a>Online resources</h2>
-<p>The <a href="https://community.rstudio.com/">R studio community forums</a> are a great resource for asking quesitons about tidyverse related packages.</p>
-<p><a href="https://stackoverflow.com/">StackOverflow</a> provides user contributes questions and answers on a variety of topics.</p>
-<p>For help with bioconductor packages visit the <a href="https://support.bioconductor.org/">support page</a></p>
-<p>Find out if others are having similar issues by searching the issue on the <a href="https://github.com/">Github</a> page for the package that you are using.</p>
-</div>
-<div id="general-r-coding-resources" class="section level2">
-<h2 class="hasAnchor">
-<a href="#general-r-coding-resources" class="anchor"></a>General R coding resources</h2>
-<p>Hadley Wickman has written two very good (free) ebooks on using R.</p>
-<p><a href="https://r4ds.had.co.nz/">R for Data Science</a></p>
-<p><a href="http://adv-r.had.co.nz/">Advanced R</a></p>
-</div>
-<div id="bioinformatic-resources" class="section level2">
-<h2 class="hasAnchor">
-<a href="#bioinformatic-resources" class="anchor"></a>Bioinformatic resources</h2>
-<p>For general bioinformatics advice I found the following text very useful.</p>
-<p><a href="http://vincebuffalo.org/book/">Bioinformatics Data Skills</a> by Vince Buffalo</p>
-<p>For statistics related to bioinformatics this free course is excellent:</p>
-<p><a href="http://genomicsclass.github.io/book/">PH525x series - Biomedical Data Science</a></p>
-<p>For more detailed descriptions of single cell RNA-Seq analysis:</p>
-<p><a href="http://hemberg-lab.github.io/scRNA.seq.course/" class="uri">http://hemberg-lab.github.io/scRNA.seq.course/</a></p>
-</div>
-<div id="offline-help" class="section level2">
-<h2 class="hasAnchor">
-<a href="#offline-help" class="anchor"></a>Offline help</h2>
-<p>We (the RBI fellows) hold standing office hours from 1-2:30p on Thursdays in RC1S rm. 9101. Bring us your broken code and we’ll try to sort it out. Send us an email to let us know you will be stopping by (<code>rbi.fellows@ucdenver.edu</code>).</p>
-</div>
-<div id="lastly-sometimes-code-is-broken" class="section level2">
-<h2 class="hasAnchor">
-<a href="#lastly-sometimes-code-is-broken" class="anchor"></a>Lastly sometimes code is broken</h2>
-<p>Go to github and search the issues to see if the problem has been reported or fixed. If not submit an issue that describes the problem. The <a href="https://reprex.tidyverse.org/">reprex package</a> makes it easy to produce well-formatted R reproducible examples that demonstrate the problem. Often developers will be thankful for your help with making their software better.</p>
-</div>
+<a href="#additional-exercise" class="anchor"></a>Additional exercise</h2>
+<p>There is another dataset called <code>tx_rates</code> in the <code>pbda</code> package. This dataset contains transcription rates of mouse dendritic cells after exposure to LPS. Run PCA on this dataset to investigate the relationships between the different sampled time points. First remove genes (rows) with all zero values and remove rows that have zero variance (<code><a href="https://rdrr.io/pkg/matrixStats/man/rowVars.html">matrixStats::rowVars</a></code>) then log transform the data prior to scaling.</p>
 </div>
   </div>
 
@@ -344,33 +483,9 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li>
-<a href="#rmarkdown">Rmarkdown</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#caching">caching</a></li>
-      <li><a href="#mixing-r-code-with-other-languages">Mixing R code with other languages</a></li>
-      </ul>
-</li>
-      <li><a href="#rdata-files">.Rdata files</a></li>
-      <li>
-<a href="#reading-and-writing-data">Reading and writing data</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#readr">readr</a></li>
-      <li><a href="#base-r-functions-are-sometimes-helpful">base R functions are sometimes helpful</a></li>
-      <li><a href="#writing-and-reading-binary--rds-or--rda-files">Writing and reading binary <code>.rds</code> or <code>.rda</code> files</a></li>
-      <li><a href="#writing-and-reading-xlsx-files-in-r">Writing and reading xlsx files in R</a></li>
-      </ul>
-</li>
-      <li><a href="#organizing-analyses">Organizing Analyses</a></li>
-      <li><a href="#gitgithub">Git/Github</a></li>
-      <li>
-<a href="#finding-help">Finding help</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#hopefully-not-your-experience">Hopefully not your experience</a></li>
-      <li><a href="#online-resources">Online resources</a></li>
-      <li><a href="#general-r-coding-resources">General R coding resources</a></li>
-      <li><a href="#bioinformatic-resources">Bioinformatic resources</a></li>
-      <li><a href="#offline-help">Offline help</a></li>
-      <li><a href="#lastly-sometimes-code-is-broken">Lastly sometimes code is broken</a></li>
-      </ul>
-</li>
+<li><a href="#pca">PCA</a></li>
+      <li><a href="#run-pca-on-a-single-cell-dataset">Run PCA on a single cell dataset</a></li>
+      <li><a href="#additional-exercise">Additional exercise</a></li>
       </ul>
 </div>
       </div>
