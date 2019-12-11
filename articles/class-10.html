@@ -119,30 +119,30 @@
 
     
     
-<div id="please-fill-out-survey-to-improve-future-classes" class="section level2">
+<div id="please-fill-out-end-of-class-survey-to-improve-future-classes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#please-fill-out-survey-to-improve-future-classes" class="anchor"></a>Please fill out survey to improve future classes</h2>
+<a href="#please-fill-out-end-of-class-survey-to-improve-future-classes" class="anchor"></a>Please fill out end-of-class survey to improve future classes</h2>
 </div>
 <div id="class-material-can-be-accessed-at" class="section level2">
 <h2 class="hasAnchor">
 <a href="#class-material-can-be-accessed-at" class="anchor"></a>Class material can be accessed at:</h2>
 <p><a href="https://rnabioco.github.io/practical-data-analysis/" class="uri">https://rnabioco.github.io/practical-data-analysis/</a></p>
 </div>
-<div id="speeding-up-rmd-knitting" class="section level2">
+<div id="speeding-up-repeated-rmd-knitting" class="section level2">
 <h2 class="hasAnchor">
-<a href="#speeding-up-rmd-knitting" class="anchor"></a>1. Speeding up Rmd knitting</h2>
-<p>Read the <a href="https://bookdown.org/yihui/rmarkdown/">Guide to RMarkdown</a> for an exhaustive description of the various formats and options for using RMarkdown documents.</p>
+<a href="#speeding-up-repeated-rmd-knitting" class="anchor"></a>1. Speeding up repeated Rmd knitting</h2>
+<p>Read the <a href="https://bookdown.org/yihui/rmarkdown/">Guide to RMarkdown</a> for an exhaustive description of the various formats and options for using RMarkdown documents. Note that HTMLs and slides for this class were all made from Rmd.</p>
 <div id="caching" class="section level3">
 <h3 class="hasAnchor">
 <a href="#caching" class="anchor"></a>Caching</h3>
-<p>You can speed up knitting of your Rmds by using caching to store the results from each chunk. Note that if you modify the code chunk, previous caching is ignored.</p>
+<p>You can speed up knitting of your Rmds by using caching to store the results from each chunk, instead of rerunning them each time. Note that if you modify the code chunk, previous caching is ignored.</p>
 <p>For each chunk, set <code>{r, cache = TRUE}</code></p>
-<p>Or the option can be set globally at top of the document.</p>
+<p>Or the option can be set globally at top of the document. Like this:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">cache =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
-<div id="or-save-and-load-rdsrda-files" class="section level3">
+<div id="alternatively-save-and-load--rds-rda-files" class="section level3">
 <h3 class="hasAnchor">
-<a href="#or-save-and-load-rdsrda-files" class="anchor"></a>Or, save and load Rds/Rda files</h3>
+<a href="#alternatively-save-and-load--rds-rda-files" class="anchor"></a>Alternatively, save and load .Rds/.Rda files</h3>
 <p>Run once, save, and load instead of rerunning resource intensive parts.</p>
 <p>If you have non-deterministic functions, such as <code>kmeans</code>, remember to <code>set.seed</code>, or save and load result objects.</p>
 </div>
@@ -175,32 +175,33 @@
 <p>Advantages of using version control include:</p>
 <ol style="list-style-type: decimal">
 <li><p>rolling back code if needed</p></li>
-<li><p>branched development</p></li>
+<li><p>branched development, tackling individual issues/tasks</p></li>
 <li><p>collaboration, etc</p></li>
 </ol>
-<p><a href="https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control">Getting started</a></p>
-<p><a href="https://learngitbranching.js.org/">Interactive practice</a></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># for bioinformatics, probably want to learn some bash</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># and avoid using windows</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="fu">ls</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="fu">git</span> blame assignments.Rmd</a></code></pre></div>
+<p>Git was first created by Linus Torvalds for coordinating development of Linux. Read this guide for <a href="https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control">Getting started</a> and try out the <a href="https://learngitbranching.js.org/">Interactive practice</a>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># for bioinformatics, get comfortable with command line too</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># and avoid using windows for compatibility issues</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="fu">ls</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="fu">git</span> status <span class="co"># list changes</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="fu">git</span> blame assignments.Rmd <span class="co"># see who contributed</span></a></code></pre></div>
 <p>This can be handled by Rstudio as well (new tab next to <code>Connections</code> and <code>Build</code>)</p>
 <div id="put-your-code-on-github" class="section level3">
 <h3 class="hasAnchor">
 <a href="#put-your-code-on-github" class="anchor"></a>Put your code on GitHub</h3>
-<p>As you write more code chunks and functions, hosting and documenting them on GitHub is great way to make them portable and searchable. Even the free tier of GitHub accounts now has private repos.</p>
+<p>As you write more code, especially as functions and script pipelines, hosting and documenting them on GitHub is great way to make them portable and searchable. Even the free tier of GitHub accounts now has private repositories (repo).</p>
 <p>If you have any interest in a career in data science/informatics, GitHub is also a common showcase of what (and how well/often) you can code. After some accumulation of code, definitely put your GitHub link on your CV/resume.</p>
 </div>
-<div id="example-repo---valr" class="section level3">
+<div id="example-repo-rbi---valr" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-repo---valr" class="anchor"></a>Example repo - <a href="https://github.com/rnabioco/valr">valr</a>
+<a href="#example-repo-rbi---valr" class="anchor"></a>Example repo (RBI) - <a href="https://github.com/rnabioco/valr">valr</a>
 </h3>
 <p>Refer to package examples and <a href="https://r-pkgs.org/index.html">guide to building packages</a> to build your own package and website documentation.</p>
 </div>
 <div id="asking-for-help-with-other-packages-on-github" class="section level3">
 <h3 class="hasAnchor">
 <a href="#asking-for-help-with-other-packages-on-github" class="anchor"></a>Asking for help with other packages on GitHub</h3>
-<p>Every package should include README, installation instructions, and <code>issues</code> page where questions and bugs can be reported. Example: <a href="https://github.com/tidyverse/readr/issues">readr GitHub page</a> Don’t be afraid to file new issues, but very often your problems are already answered in the <code>closed</code> section.</p>
+<p>Every package should include README, installation instructions, and a maintained <code>issues</code> page where questions and bugs can be reported and addressed. Example: <a href="https://github.com/tidyverse/readr/issues">readr GitHub page</a> Don’t be afraid to file new issues, but very often your problems are already answered in the <code>closed</code> section.</p>
 </div>
 </div>
 <div id="other-tipsbest-practices" class="section level2">
@@ -252,24 +253,26 @@
 <h3 class="hasAnchor">
 <a href="#c--benchmarking-with-microbenchmark-and-profvis" class="anchor"></a>c. Benchmarking, with <code>microbenchmark</code> and <code>profvis</code>
 </h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">path_to_file &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"gene_tibble.csv"</span>, <span class="dt">package =</span> <span class="st">"pbda"</span>)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">res &lt;-<span class="st"> </span>microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">  <span class="dt">base =</span> <span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(path_to_file),</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">  <span class="dt">readr =</span> readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span>(path_to_file),</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">  <span class="dt">times =</span> <span class="dv">5</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(res, <span class="dt">signif =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">microbenchmark<span class="op">:::</span><span class="kw">autoplot.microbenchmark</span>(res)</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">p &lt;-<span class="st"> </span>profvis<span class="op">::</span><span class="kw">profvis</span>({</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">  path_to_file &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"gene_tibble.csv"</span>, <span class="dt">package =</span> <span class="st">"pbda"</span>)</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">  c1 &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span>(path_to_file)</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">  c1 &lt;-<span class="st"> </span>c1 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.00001</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">gene =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/case.html">str_to_lower</a></span>(gene))</a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">})</a>
-<a class="sourceLine" id="cb7-18" data-line-number="18">p</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># example, compare base and readr csv reading functions</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">path_to_file &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"gene_tibble.csv"</span>, <span class="dt">package =</span> <span class="st">"pbda"</span>)</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">res &lt;-<span class="st"> </span>microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">  <span class="dt">base =</span> <span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(path_to_file),</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">  <span class="dt">readr =</span> readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span>(path_to_file),</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">  <span class="dt">times =</span> <span class="dv">5</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">)</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(res, <span class="dt">signif =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">microbenchmark<span class="op">:::</span><span class="kw">autoplot.microbenchmark</span>(res)</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co"># example, looking at each step of a script</span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">p &lt;-<span class="st"> </span>profvis<span class="op">::</span><span class="kw">profvis</span>({</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">  path_to_file &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"gene_tibble.csv"</span>, <span class="dt">package =</span> <span class="st">"pbda"</span>)</a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">  c1 &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span>(path_to_file)</a>
+<a class="sourceLine" id="cb7-16" data-line-number="16">  c1 &lt;-<span class="st"> </span>c1 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.00001</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">gene =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/case.html">str_to_lower</a></span>(gene))</a>
+<a class="sourceLine" id="cb7-19" data-line-number="19">})</a>
+<a class="sourceLine" id="cb7-20" data-line-number="20">p</a></code></pre></div>
 </div>
 <div id="d--shiny-interactive-web-app-for-data-exploration" class="section level3">
 <h3 class="hasAnchor">
@@ -280,21 +283,22 @@
 <h3 class="hasAnchor">
 <a href="#e--running-r-script-from-terminal" class="anchor"></a>e. Running R script from terminal</h3>
 <p>Save functions in .R files to easily <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> them later. If you have code that does not need input from beginning to end, .R files can be executed from the command line/terminal as well.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="ex">Rscript</span> /Users/rf/teach/practical-data-analysis/R/mat.R</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># example, mat.R that makes matrix and does calculations</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="ex">Rscript</span> /Users/rf/teach/practical-data-analysis/R/mat.R</a></code></pre></div>
 </div>
 </div>
 <div id="finding-help-online" class="section level2">
 <h2 class="hasAnchor">
 <a href="#finding-help-online" class="anchor"></a>5. Finding help online</h2>
 <p><img src="https://imgs.xkcd.com/comics/wisdom_of_the_ancients.png"></p>
-<p>The <a href="https://community.rstudio.com/">R studio community forums</a> are a great resource for asking quesitons about tidyverse related packages.</p>
+<p>The <a href="https://community.rstudio.com/">R studio community forums</a> are a great resource for asking questions about tidyverse related packages.</p>
 <p><a href="https://stackoverflow.com/">StackOverflow</a> provides user-contributed questions and answers on a variety of topics.</p>
 <p>For help with bioconductor packages, visit the <a href="https://support.bioconductor.org/">Bioc support page</a></p>
 <p>Find out if others are having similar issues by searching the issue on the package <a href="https://github.com/">GitHub</a> page.</p>
 <div id="general-r-coding-resources" class="section level3">
 <h3 class="hasAnchor">
 <a href="#general-r-coding-resources" class="anchor"></a>General R coding resources</h3>
-<p>Hadley Wickman has written very good (free) ebooks on using R.</p>
+<p>Hadley Wickham has written very good (free) ebooks on using R.</p>
 <p><a href="https://r4ds.had.co.nz/">R for Data Science</a></p>
 <p><a href="http://adv-r.had.co.nz/">Advanced R</a></p>
 </div>
@@ -309,10 +313,10 @@
 <p><a href="https://scrnaseq-course.cog.sanger.ac.uk/website/index.html" class="uri">https://scrnaseq-course.cog.sanger.ac.uk/website/index.html</a></p>
 <p><a href="https://satijalab.org/seurat/vignettes.html" class="uri">https://satijalab.org/seurat/vignettes.html</a></p>
 </div>
-<div id="cheatsheets" class="section level3">
+<div id="cheat-sheets" class="section level3">
 <h3 class="hasAnchor">
-<a href="#cheatsheets" class="anchor"></a>Cheatsheets</h3>
-<p>Common ones can be found in Rstudio <code>Help</code> -&gt; <code>Cheatsheets</code>. More are hosted online, such as for <a href="https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf">regular expressions</a>.</p>
+<a href="#cheat-sheets" class="anchor"></a>Cheat sheets</h3>
+<p>Rstudio links to common ones here: <code>Help</code> -&gt; <code>Cheatsheets</code>. More are hosted online, such as for <a href="https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf">regular expressions</a>.</p>
 <p>Useful to keep your own stash too.</p>
 </div>
 </div>
@@ -330,6 +334,15 @@
 <div id="use-r-often--dont-use-excel" class="section level2">
 <h2 class="hasAnchor">
 <a href="#use-r-often--dont-use-excel" class="anchor"></a>8. Use R often. Don’t use Excel!</h2>
+<p>Excel:</p>
+<ol style="list-style-type: decimal">
+<li><p>Gets unwieldy with large files</p></li>
+<li><p>Poor plotting options</p></li>
+<li><p>Hard to do dplyr-like manipulations</p></li>
+<li><p>Hard to integrate with other informatics tools</p></li>
+<li><p>Annoying to apply same analysis over multiple files</p></li>
+<li><p>And random things like this:</p></li>
+</ol>
 <div class="figure">
 <img src="https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/noexcel.png" alt="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-1044-7" style="width:70.0%"><p class="caption"><a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-1044-7" class="uri">https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-1044-7</a></p>
 </div>
@@ -342,9 +355,9 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#please-fill-out-survey-to-improve-future-classes">Please fill out survey to improve future classes</a></li>
+<li><a href="#please-fill-out-end-of-class-survey-to-improve-future-classes">Please fill out end-of-class survey to improve future classes</a></li>
       <li><a href="#class-material-can-be-accessed-at">Class material can be accessed at:</a></li>
-      <li><a href="#speeding-up-rmd-knitting">1. Speeding up Rmd knitting</a></li>
+      <li><a href="#speeding-up-repeated-rmd-knitting">1. Speeding up repeated Rmd knitting</a></li>
       <li><a href="#finding-useful-packages">2. Finding useful packages</a></li>
       <li><a href="#git---version-control">3. Git - version control</a></li>
       <li><a href="#other-tipsbest-practices">4. Other tips/best practices</a></li>
