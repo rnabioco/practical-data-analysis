@@ -154,7 +154,7 @@ nrow(mtcars)
 colnames(mtcars)
 rownames(mtcars)
 
-mtcars_tbl_hp <- mtcars_tbl %>% select(name, hp)
+mtcars_tbl_hp <- mtcars_tbl %>% dplyr::select(name, hp)
 colnames(mtcars_tbl_hp)
 colnames(mtcars_tbl_hp) <- c("car", "horsepower") # assign new column names
 mtcars_tbl_hp
