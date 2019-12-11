@@ -1,6 +1,6 @@
 ---
-title: "Class 11: Working with gene lists"
-author: "Rui Fu & Austin Gillen"
+title: "Class 11: RNA-seq Analysis"
+author: "Austin Gillen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -8,320 +8,334 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
-```{r setup, include = FALSE, message = FALSE, warning = FALSE, echo = TRUE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.align = "center"
 )
+
+library(DESeq2)
+library(ComplexHeatmap)
+library(RColorBrewer)
+library(tidyverse)
+library(cowplot)
+library(pbda)
 ```
 
-```{r load, message = FALSE, warning = FALSE}
-# run before class:
-# devtools::install_github('idpt7810/practical-data-analysis')
-# BiocManager::install("biomaRt", version = "3.8")
+# RNA-seq analysis in R
 
+- Introduce matrices and matrix manipulation in R
+- Build a DESeqDataSet and calculate differential gene expression
+- Plot results and QC metrics
+
+## Before we get started: Install Bioconductor packages and update pbda
+
+``` r
+install.packages("BiocManager")
+BiocManager::install("DESeq2")
+BiocManager::install("ComplexHeatmap")
+
+devtools::install_github('idpt7810/practical-data-analysis')
 library(pbda)
+
+library(DESeq2)
+library(ComplexHeatmap)
+library(RColorBrewer)
 library(tidyverse)
 library(cowplot)
 ```
 
-## Did experiment, ran through analysis pipeline, what now?
-Handle gene lists
+## Matrices in R are two dimensional objects that contain elements of one atomic type
+ 
+Matrices can contain characters or logical values, but we're really only interested in numeric matrices:
 
-Try to connect prior knowledge to the results (genes you study, GO terms, or something like `yeast_prot_prop`)
+```{r, matrix_intro, eval = T}
+# Build 4x3 matrix with row-wise series of integers
+M <- matrix(1:12,
+            nrow = 4,
+            byrow = TRUE)
 
-Using some basic R and tibble manipulation commands
+M
+```
 
-## Retrieve gene lists from RNA-seq or scRNA-seq
-Recall how data is saved in objects
+## Elements of a matrix can be accessed using column and row indices or names
 
-Or whatever file you already saved containing lists of gene names
+To return the value in the first row, second column:
 
-```{r getlist, message = FALSE, warning = FALSE}
-# from DESeq2 output, get a tibble back
-# res <- results(dds)
-# saveRDS(res, "res_class4.rds") # save any object from environment for next time
-loc <- system.file("extdata", "res_class4.rds", package = 'pbda')
-res <- readRDS(loc) # loading a DESeq2 object automatically loads DESeq2
+```{r, matrix_index, eval = T}
+M[1,2]
+```
 
-head(res) # basically a dataframe
+With named rows and columns:
 
-res_tibble <- res %>%
-  as.data.frame() %>% 
+```{r, matrix_names, eval = T}
+# Assign column names
+colnames(M) <- c("col1",
+            "col2",
+            "col3")
+
+# Assign row names
+row.names(M) <- c("row1",
+            "row2",
+            "row3",
+            "row4")
+
+M["row1","col2"]
+```
+Index ranges and character vectors of row/column names also work:
+
+```{r, eval = T}
+M[1:2,2:3]
+
+M[c("row1","row2"),c("col2","col3")]
+```
+
+As does negative selection:
+
+```{r, eval = T}
+# Exclude rows 1 and 4
+M[-c(1,4),]
+```
+
+Full rows and columns can be extracted as well:
+
+```{r, matrix_vector, eval = T}
+# print 1st row
+M[1,]
+
+# print 2nd column
+M[,2]
+
+# print 2nd and 3rd rows
+M[2:3,]
+```
+
+## Mathematical operations can be performed on numeric matrices
+
+For example, taking the base 2 logarithm of each value:
+
+```{r, matrix_log, eval = T}
+M_log <- log2(M)
+
+M_log
+```
+
+Or normalizing all columns relative to an arbitrary reference column:
+
+```{r, matrix_norm, eval = T}
+M_norm <- M/M[,1]
+
+M_norm
+```
+
+### Matrix Exercises
+
+ - Build a 100x100 row-wise matrix of sequential integers named `mat`.
+ - Create a new matrix, `mat_sub`, with columns 2-10 and rows 40-60 from the `mat`.
+ - Calculate the maximum and minimum values present in `mat_sub`.
+ - Using the `rowMeans()` function, subtract the row-wise mean from each value in `mat_sub`.
+ 
+# Analyzing RNA-Seq Data
+
+## Simplified RNA sequencing analysis workflow (genome alignment)
+
+Step | Tools | Description
+--------------------------- | -------------------- | --------------------------------------------
+Align reads to genome | STAR, HISAT2 | Align reads to genomic sequence, retaining strand information if present
+Assign reads to features | Subread, StringTie | Assign aligned reads to genes and/or transcripts
+Calculate differential expression | DESeq2, edgeR, Ballgown | Fit count matrices to model to determine differential expression
+
+## Simplified RNA sequencing analysis workflow (quasi-mapping)
+
+Step | Tools | Description
+--------------------------- | -------------------- | --------------------------------------------
+Estimate transcript abundance | Salmon / Kallisto | Estimate transcript abundance directly on transcriptome sequences
+Calculate differential expression | DESeq2, edgeR, Ballgown | Fit count matrices to model to determine differential expression
+
+## Inspect RNA-seq count and phenotype data from file that is included in pbda package
+
+```{r, pkg_data, message = F}
+# View first few rows of count matrix
+head(drug_resistant_counts)
+
+# View phenotype data
+drug_resistant_coldata
+```
+
+## DESeq2 uses DESeqDataSets, a subset of the Bioconductor SummarizedExperiment object, to store data
+
+SummarizedExperiment objects provide a structured, self-contained way to store phenotype, gene and assay data, along with analysis intermediates and parameters.
+
+![](img/class-4-se.png)
+
+## Build a DESeqDataSet from the drug_resistant data and inspect the object
+
+```{r colnames1, message=FALSE}
+# Create DESeqDataSet from drug_resistant data
+dds <- DESeqDataSetFromMatrix(countData = drug_resistant_counts,
+                                         colData = drug_resistant_coldata,
+                                         design = ~drug)
+# View DESeqDataSet
+dds
+
+# View design
+dds@design
+
+# View colData
+colData(dds)
+
+# View counts
+assay(dds) %>% head()
+```
+
+## Filter genes with little or no expression
+
+DESeq2 performs internal filtering to remove genes with low expression, but explicitly filtering extreme cases beforehand can speed up processing.
+
+```{r colnames2}
+# number of genes before filtering
+nrow(dds)
+
+# remove genes with 0-1 total reads
+dds <- dds[rowSums(counts(dds)) > 1,]
+
+# number of genes after filtering
+nrow(dds)
+```
+
+### Count matrix manipulation exercises
+
+ - Print the counts for the genes ESR1, TFF1 and PGR from the count matrix in dds.
+ - Filter genes with fewer than 5 counts in at least 3 samples.
+
+## Stabilize the variance across the mean for visualizing count data
+
+Many analysis methods for multidimensional data rely on variance being consistent across mean values. Raw count data has the greatest variance at high mean values (largest raw values), while log2-transformed data has the greatest variance at low mean values (largest fold-changes). To get around this, DESeq2 provides two different functions - `vst()` and `rlog()` - that stabilize variance across the mean.
+
+```{r}
+# rlog transform
+rld <- rlog(dds,
+            blind = FALSE)
+```
+
+## Sample distances are useful to assess the overall similarity between samples
+
+Sample distance plots are used to assess overall similarity between samples: which samples are similar to each other, which are different? We calculate the euclidean distance between samples using `dist()` on the rlog-transformed data to ensure roughly equal contributions from all genes.
+
+```{r fig.height=5, fig.width=6}
+# Transpose count matrix and calculate distances using dist()
+sampleDists <- assay(rld) %>% t() %>% dist()
+
+# Convert distance dataframe to matrix
+sampleDistMatrix <- as.matrix(sampleDists)
+
+# Choose continuous palette from RColorBrewer
+colors <- colorRampPalette(rev(brewer.pal(9, "Blues")))(255)
+
+# Plot sample distance heatmap with ComplexHeatmap
+Heatmap(sampleDistMatrix, cluster_rows = F, cluster_columns = F,
+         col = colors)
+```
+
+## Principle Component Analysis (PCA) plots
+
+Another method for visualizing relationships in multidimensional data is principle component analysis. PCA identifies clusters of variables (in this case, genes) that explain the majority of the variance present. PCA plots are x-y plots of the first two principle components; they spread the samples out in the two directions that explain most of the differences.
+
+``` {r pca, fig.height=5, fig.width=6}
+# Generate PCA plot with DESeq2 plotPCA() wrapper
+plotPCA(rld, intgroup = "drug") +
+  scale_color_brewer(palette = "Set1")
+```
+
+## Calculating differential expression
+
+DESeq2 provides a wrapper function `DESeq()` that takes a DESeqDataSet and calculates differential expression. Progress through analysis steps are printed as the function runs.
+
+``` {r fig.height=5, fig.width=6}
+# Run DESeq2
+dds <- DESeq(dds)
+```
+
+## Extracting results after differential expression is calculated
+
+DESeq2 results are extracted with the `results()` function.
+
+``` {r fig.height=5, fig.width=6}
+# Extract default results (No Drug vs. Drug A)
+res <- results(dds)
+
+# View results summary
+summary(res)
+
+# Convert dataframe to tibble for use with tidyverse tools
+res_tibble <- as.data.frame(res) %>%
   tibble::rownames_to_column(var = "gene") %>%
   as.tibble()
-
-res_tibble
-
-# res_tibble contains calculations for all genes, pick out "interesting" genes
-gene_tibble <- res_tibble %>% 
-  filter(!is.na(padj)) %>% # NA values from padj are from tossing low expressing genes
-  filter(padj <= 0.01) %>% # padj <= 0.05 is common, or 0.01, sometimes even 0.1 is acceptable
-  filter(log2FoldChange >= 1 | log2FoldChange <= -1) %>%
-  arrange(desc(log2FoldChange))
-
-gene_tibble
-
-# get top 10 down-regulated genes
-gene_tibble_down10 <- gene_tibble %>%
-  filter(log2FoldChange < 0) %>% 
-  arrange(log2FoldChange) %>% 
-  dplyr::slice(1:10) 
-
-# get a vector of gene names
-gene_vector <- gene_tibble$gene
-gene_vector <- gene_tibble %>% pull(gene) # at least 5 more ways to do this
 ```
 
-```{r getlist2, message = FALSE, warning = FALSE}
-write_csv(gene_tibble, "gene_tibble.csv")
+## MA-plots
 
-# or load already saved file on disk
-loc <- system.file("extdata", "gene_tibble.csv", package = 'pbda')
-gene_tibble2 <- read_csv(loc) # reads out as tibble
+MA plots - plots of mean expression (x-axis) vs. log2-fold change (y-axis) - are useful for visualizing the distribution of gene expression in your comparisons.
 
-# or write as txt file, without col name
-write_csv(gene_tibble %>% select(gene), "gene_tibble.txt", col_names = FALSE) # write from tibble
-write_lines(gene_vector, "gene_tibble_v.txt") # write for vector
+``` {r fig.height=5, fig.width=6}
+
+# Plot MA without moderating log2 fold-changes
+plotMA(res, ylim = c(-6,6))
+
+# Return results with moderated log2 fold-changes.
+res_ma <- lfcShrink(dds, contrast=c("drug","none","A"), res=res)
+
+# Plot MA
+plotMA(res_ma, ylim = c(-6,6))
+
 ```
 
-## Feed gene lists to other software outside of R, get enrichment score back
-DAVID https://david.ncifcrf.gov/
+## Plotting differential expression results
 
-1. upload or paste list
+DESeq2 can plot normalized counts using the `plotCounts()` function.
 
-2. select "official gene symbol" as the identifier
+``` {r fig.height=5, fig.width=6}
+# Plot differential expression
+plotCounts(dds,
+           gene = "ESR1",
+           intgroup=c("drug"))
 
-3. choose "gene list" as list type
+# Clean up plot with ggplot2
+dds_plot <- plotCounts(dds,
+           gene = "ESR1",
+           intgroup=c("drug"),
+           returnData = TRUE)
 
-4. submit
-
-5. choose the appropriate organism
-
-6. click "chart" on the desired annotation
-
-7. download as file
-
-```{r david, message = FALSE, warning = FALSE, fig.height=5, fig.width=8}
-# save output and load in R
-loc <- system.file("extdata", "david.txt", package = 'pbda')
-david <- read_tsv(loc) # output was tab-delimited instead of comma
-
-david
-
-# do whatever you want, for instance plot -log10 of top 20 entries
-david_log <- david %>% 
-  mutate(minus_log10 = -log10(Benjamini)) %>% # Benjamini is one false discovery rate method
-  arrange(desc(minus_log10)) %>% 
-  dplyr::slice(1:20)
-
-david_log %>% select(Term, minus_log10)
-
-ggplot(david_log, aes(x = reorder(Term, minus_log10), y = minus_log10)) + #reorder Term by minus_log10
-  geom_bar(stat = "identity") + # otherwise ggplot tries to count
-  xlab("KEGG pathway") +
-  coord_flip() +
-  theme(axis.text.y = element_text(size = 7))
-
-#reorder(david_log$Term,david_log$minus_log10)
+ggplot(dds_plot, aes(x = drug, y = count, color = drug)) +
+  scale_y_log10() +
+  geom_point(cex = 3)
 ```
 
-other options:
+## Plotting heatmaps of differentially expressed genes
 
-Panther http://www.geneontology.org/page/go-enrichment-analysis
+The ComplexHeatmap package can be used to plot differential gene expression across samples/replicates.
 
-GSEA (requires ranked list, for instance by fold-change, and requires full list of genes instead of just "significant") http://software.broadinstitute.org/gsea/index.jsp
+``` {r fig.height=5, fig.width=6}
+# extract the 20 most significantly differentially expressed genes
+top_genes <- res_tibble %>% arrange(padj) %>% head(20)
 
-or, GO and GSEA right in R (will require additional packages):
+# subset rlog matrix based on gene list
+mat  <- assay(rld)[ top_genes$gene, ]
 
-topGO: https://bioconductor.org/packages/release/bioc/html/topGO.html
+# normalize expression to per-gene average
+mat  <- mat - rowMeans(mat)
 
-fgsea: http://bioconductor.org/packages/release/bioc/html/fgsea.html
-
-## Sometimes transformation of names is needed - `stringr` package, part of tidyverse
-Depending on the transcriptome and analysis options used in RNA-seq/scRNA-seq, the list of names can be messy.
-
-```{r stringr, message = FALSE, warning = FALSE}
-loc <- system.file("extdata", "ensg_tibble.csv", package = 'pbda')
-ensg_tibble <- read_csv(loc)
-
-ensg_tibble # those version numbers are often not recognized by software
+# plot heatmap
+Heatmap(mat)
 ```
 
-`str_replace`: find and replace
-(run `?str_replace` for documentation)
+## Exercises
 
-```{r str_replace, message = FALSE, warning = FALSE}
-ensg_tibble_rm <- ensg_tibble %>% mutate(gene = str_replace(gene, 
-                                                            pattern = "ENSG",
-                                                            replacement = "#"))
+The exercises for today's class are presented [here](https://rnabioco.github.io/pbda/articles/problem-set-3.html), Here is a [link](https://github.com/IDPT7810/practical-data-analysis/blob/master/vignettes/problem-set-3.Rmd) to the raw text of these exercises
 
-ensg_tibble_rm
+## Quiz
 
-# trimming of gene/transcript version
-ensg_tibble2 <- ensg_tibble %>% mutate(gene_new = str_replace(gene, 
-                                                          pattern = "\\..*", # . and everything after
-                                                          replacement = "")) # empty string
-# regular expressions are useful and worth the time to learn, see ?base::regex
+Create an RMarkdown document and answer the questions from the Exercises section. Write your answers in the text, and print the final tibbles/plots that your code produced that gave you the answer. Submit your final document as "Problem Set 3" by **Friday at 10 PM**.
 
-ensg_tibble2
-
-# `separate` works too, if you want to keep the info
-ensg_tibble3 <- ensg_tibble %>% separate(gene, into = c("gene", "version"), sep = "\\.")
-```
-
-```{r str_replace2, message = FALSE, warning = FALSE, fig.height=5, fig.width=8}
-# revisit the DAVID output plot, clean up "Term" column
-david_log2 <- david_log %>% mutate(Term = str_replace(Term, 
-                                                      pattern = ".*:", # every before and including :
-                                                      replacement = ""))
-
-ggplot(david_log2, aes(x = reorder(Term, minus_log10), y = minus_log10)) +
-  geom_bar(stat = "identity") +
-  xlab("KEGG pathway") +
-  coord_flip() +
-  theme(axis.text.y = element_text(size = 7))
-# to save plot
-ggsave("david.png", plot = last_plot(), dpi = 300)
-```
-
-`str_detect`: spits out `TRUE` or `FALSE`
-
-```{r str_detect, message = FALSE, warning = FALSE}
-# "-AS" denotes antisense genes, we can find all those
-str_detect(gene_tibble$gene, "-AS")[1:50]
-
-# use in `filter`
-gene_tibble_as <- gene_tibble %>% filter(str_detect(gene, "-AS"))
-
-gene_tibble_as
-```
-
-`str_c`: concatenate strings
-
-```{r str_c, message = FALSE, warning = FALSE}
-# also add annotations of our own
-gene_tibble_as2 <- gene_tibble_as %>% mutate(gene = str_c("HUMAN-", gene))
-
-gene_tibble_as2
-```
-
-`str_sub`: extract substrings
-
-```{r str_sub, message = FALSE, warning = FALSE}
-str_sub("HUMAN-ELOVL2-AS1", 2, 4)
-
-gene_tibble_as3 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 2, 4))
-
-gene_tibble_as3
-
-# to remove annotations of fixed length
-gene_tibble_as4 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 7, -5)) # extract just the gene name from "HUMAN-ELOVL2-AS1"
-
-gene_tibble_as4
-```
-
-## Various conversions in R - BioMart
-BioMart can be used outside of R too: http://www.ensembl.org/biomart/martview
-
-We will be using `biomaRt`
-
-```{r biomart, message = FALSE, warning = FALSE}
-library(biomaRt)
-# biomaRt contains many useful datasets
-listDatasets(useMart("ENSEMBL_MART_ENSEMBL", host = "www.ensembl.org")) %>% as_tibble() # hundreds of organisms
-
-listAttributes(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% as_tibble() # thousands of rows/attributes
-
-listFilters(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% as_tibble() # ways to filter the data
-```
-
-common usage 1: id to gene symbol conversion
-
-```{r biomartid, message = FALSE, warning = FALSE}
-human_mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl") # assign the dataset to use
-
-ensg_sym2 <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"), # columns you want back
-                 filters = "ensembl_gene_id",                       # type of info you are providing
-                 mart = human_mart,                                 # dataset of certain species
-                 values = ensg_tibble2$gene) %>% as_tibble()        # values of the filter
-
-ensg_sym2
-
-# try running this with ensg_tibble (version # intact), can't find matches
-```
-
-common usage 2: functional GO term annotation
-
-```{r lookgo, message = FALSE, warning = FALSE}
-listAttributes(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% 
-  as_tibble() %>% 
-  filter(str_detect(description, "GO")) # look at attributes related to GO 
-```
-
-```{r getgo, message = FALSE, warning = FALSE}
-drerio_mart <- useMart("ensembl", dataset = "drerio_gene_ensembl")
-
-loc <- system.file("extdata", "genes_drerio.csv", package = 'pbda')
-genes_drerio <- read_csv(loc)
-
-genes_drerio
-
-genesGO <- getBM(attributes = c("zfin_id_symbol", "go_id", "name_1006", "namespace_1003"), 
-                 filters = "zfin_id_symbol", 
-                 mart = drerio_mart, 
-                 values = genes_drerio$gene, TRUE) %>% as_tibble()
-
-genesGO
-
-genesGO <- genesGO %>% filter(go_id != "") # note that there are lines with empty go terms, remember to remove those
-
-# join GO dataframe with original RNA-seq/scRNA-seq data if needed
-genes_drerio_joinedGO <- left_join(genes_drerio, genesGO, 
-                                   by = c("gene" = "zfin_id_symbol"))
-
-genes_drerio_joinedGO
-```
-
-```{r getgo2}
-# or, get all genes with GO term of interest, by providing multiple filters
-genesGO_filtered <- getBM(attributes = c("zfin_id_symbol"), 
-                  filters = c("zfin_id_symbol", "go"), 
-                  mart = drerio_mart, 
-                  values = list(genes_drerio$gene, c("GO:0003677")))
-
-genesGO_filtered
-```
-
-common usage 3: ortholog conversion between species
-
-```{r biomartpara, message = FALSE, warning = FALSE}
-# example of zebrafish to human gene symbol conversion
-human_mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
-drerio_mart <- useMart("ensembl", dataset = "drerio_gene_ensembl")
-
-genes_human <- getLDS(attributes = c("hgnc_symbol"), # "linked datasets"
-                      filters = "hgnc_symbol", 
-                      mart = human_mart, 
-                      attributesL = c("zfin_id_symbol"), 
-                      martL = drerio_mart, 
-                      values = genes_drerio$gene) %>% as_tibble()
-
-genes_human
-```
-
-## Exercise
-1. Delete one argument from code above used to generate `genesGO_filtered` to obtain a list of all genes with GO id of "GO:0003677".
-
-2. Take a look at `genesGO`. Describe in pseudo-code, how you could add GO-CC back into the brauer_gene_exp.
-
-## Additional resources/reading
-More sophisticated analysis than simply gene lists:
-Find enriched sequence elements in promoters, UTRs, etc. See https://bedtools.readthedocs.io/en/latest/, http://meme-suite.org/, etc
-
-WGCNA: weighted correlation network analysis
-
-SCENIC: infer gene regulatory networks and cell types from single-cell RNA-seq data
-
-Come to RBI office hours (Thursday 1-2:30)!
+**Your submitted document must knit to HTML without errors**. I.e., when you click the "Knit" button, the document should build and display and HTML page. 

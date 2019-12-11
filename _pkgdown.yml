@@ -43,11 +43,11 @@ navbar:
         href: articles/class-8.html
       - text: "Class 9: Exploring data with PCA"
         href: articles/class-9.html
-      - text: "Class 10: RNA-seq Analysis"
+      - text: "Class 10: Jumping into more complex R, tips, resources"
         href: articles/class-10.html
-      - text: "Class 11: Working with gene lists"
+      - text: "Class 11: RNA-seq Analysis"
         href: articles/class-11.html
-      - text: "Class 12: Jumping into more complex R, tips, resources"
+      - text: "Class 12: Working with gene lists"
         href: articles/class-12.html
       - text: "--------"
       - text: "Assignment Submission and Grading Rubric"

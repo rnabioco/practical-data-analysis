@@ -1,6 +1,6 @@
 ---
-title: "Class 12: Jumping into more complex R, tips, resources"
-author: "Rui Fu"
+title: "Class 12: Working with gene lists"
+author: "Rui Fu & Austin Gillen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -8,237 +8,320 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
-```{r setup, include = FALSE}
+```{r setup, include = FALSE, message = FALSE, warning = FALSE, echo = TRUE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  message = FALSE,
-  warning = FALSE,
   comment = "#>",
   fig.align = "center"
 )
 ```
 
-## Please fill out survey to improve future classes
+```{r load, message = FALSE, warning = FALSE}
+# run before class:
+# devtools::install_github('idpt7810/practical-data-analysis')
+# BiocManager::install("biomaRt", version = "3.8")
 
-## Class material can be accessed at: 
-https://rnabioco.github.io/practical-data-analysis/
-
-## 1. Speeding up Rmd knitting
-
-Read the [Guide to RMarkdown](https://bookdown.org/yihui/rmarkdown/) for an exhaustive description of the various formats and options for using RMarkdown documents.
-
-### Caching
-
-You can speed up knitting of your Rmds by using caching to store the results from each chunk. Note that if you modify the code chunk, previous caching is ignored.
-  
-For each chunk, set `{r, cache = TRUE}`
-
-Or the option can be set globally at top of the document.
-
-```r
-knitr::opts_chunk$set(cache = TRUE)
+library(pbda)
+library(tidyverse)
+library(cowplot)
 ```
 
-### Or, save and load Rds/Rda files
+## Did experiment, ran through analysis pipeline, what now?
+Handle gene lists
 
-Run once, save, and load instead of rerunning resource intensive parts
+Try to connect prior knowledge to the results (genes you study, GO terms, or something like `yeast_prot_prop`)
 
-If you have non-deterministic functions, such as `kmeans`, remember to `set.seed`, or save and load result objects
+Using some basic R and tibble manipulation commands
 
-## 2. Finding useful packages
+## Retrieve gene lists from RNA-seq or scRNA-seq
+Recall how data is saved in objects
 
-In most cases, what you need is already made into well-documented packages, and you don't have to reinvent the wheel (but sometimes you should?). Depending on where the package is curated, installation is different. Some examples below:
+Or whatever file you already saved containing lists of gene names
 
-1. `Gviz` - visualize gene model
-2. `VennDiagram` - making custom venn diagrams
-3. `emo` - inserting emojis into Rmd
+```{r getlist, message = FALSE, warning = FALSE}
+# from DESeq2 output, get a tibble back
+# res <- results(dds)
+# saveRDS(res, "res_class4.rds") # save any object from environment for next time
+loc <- system.file("extdata", "res_class4.rds", package = 'pbda')
+res <- readRDS(loc) # loading a DESeq2 object automatically loads DESeq2
 
-```{r packages, eval = FALSE}
-# BiocManager::install("Gviz") # from bioconductor
-vignette("Gviz")
+head(res) # basically a dataframe
 
-# install.packages("eulerr") # from CRAN
-plot(eulerr::euler(list(set1 = c("geneA", "geneB", "geneC"), 
-                       set2 = c("geneC", "geneD"))))
+res_tibble <- res %>%
+  as.data.frame() %>% 
+  tibble::rownames_to_column(var = "gene") %>%
+  as.tibble()
 
-# devtools::install_github("hadley/emo") # from github
-emo::ji("smile")
+res_tibble
+
+# res_tibble contains calculations for all genes, pick out "interesting" genes
+gene_tibble <- res_tibble %>% 
+  filter(!is.na(padj)) %>% # NA values from padj are from tossing low expressing genes
+  filter(padj <= 0.01) %>% # padj <= 0.05 is common, or 0.01, sometimes even 0.1 is acceptable
+  filter(log2FoldChange >= 1 | log2FoldChange <= -1) %>%
+  arrange(desc(log2FoldChange))
+
+gene_tibble
+
+# get top 10 down-regulated genes
+gene_tibble_down10 <- gene_tibble %>%
+  filter(log2FoldChange < 0) %>% 
+  arrange(log2FoldChange) %>% 
+  dplyr::slice(1:10) 
+
+# get a vector of gene names
+gene_vector <- gene_tibble$gene
+gene_vector <- gene_tibble %>% pull(gene) # at least 5 more ways to do this
 ```
 
-## 3. Git - version control
+```{r getlist2, message = FALSE, warning = FALSE}
+write_csv(gene_tibble, "gene_tibble.csv")
 
-Advantages of using version control include: 
+# or load already saved file on disk
+loc <- system.file("extdata", "gene_tibble.csv", package = 'pbda')
+gene_tibble2 <- read_csv(loc) # reads out as tibble
 
-1. rolling back code if needed
-
-2. branched development
-
-3. collaboration, etc
-
-[Getting started](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
-
-[Interactive practice](https://learngitbranching.js.org/)
-
-```{bash git, eval = FALSE}
-ls
-git blame assignments.Rmd
+# or write as txt file, without col name
+write_csv(gene_tibble %>% select(gene), "gene_tibble.txt", col_names = FALSE) # write from tibble
+write_lines(gene_vector, "gene_tibble_v.txt") # write for vector
 ```
 
-This can be handled by rstudio as well (new tab next to `Build`)
+## Feed gene lists to other software outside of R, get enrichment score back
+DAVID https://david.ncifcrf.gov/
 
-### Put your code on GitHub
+1. upload or paste list
 
-As you write more code chunks and functions, hosting and documenting them on GitHub is great way to make them portable and searchable. Even the free tier of GitHub accounts now has private repos.
+2. select "official gene symbol" as the identifier
 
-If you have any interest in a career in data science/informatics, GitHub is also a common showcase of what (and how well/often) you can code. After some accumulation of code, definitely put your GitHub link on your CV.
+3. choose "gene list" as list type
 
-### Example repo - [valr](https://github.com/rnabioco/valr)
+4. submit
 
-Refer to package examples and [guide to building packages](https://r-pkgs.org/index.html) to build your own package and website documentation.
+5. choose the appropriate organism
 
-### Asking for help with other packages on GitHub
+6. click "chart" on the desired annotation
 
-Every package should include README, installation instructions, and `issues` page where questions and bugs can be reported. Example: [readr GitHub page](https://github.com/tidyverse/readr/issues) Don't be afraid to file new issues, but very often your problems are already answered in the `closed` section.
+7. download as file
 
-## 4. Other tips/best practices
+```{r david, message = FALSE, warning = FALSE, fig.height=5, fig.width=8}
+# save output and load in R
+loc <- system.file("extdata", "david.txt", package = 'pbda')
+david <- read_tsv(loc) # output was tab-delimited instead of comma
 
-### a. Code and data organization
+david
 
-Read this paper: [A Quick Guide to Organizing Computational Biology Projects](https://doi.org/10.1371/journal.pcbi.1000424)
+# do whatever you want, for instance plot -log10 of top 20 entries
+david_log <- david %>% 
+  mutate(minus_log10 = -log10(Benjamini)) %>% # Benjamini is one false discovery rate method
+  arrange(desc(minus_log10)) %>% 
+  dplyr::slice(1:20)
 
-```{bash folders, eval = FALSE}
-NEWS.md   # markdown document for tracking progress
-data      # data directory for storing raw and processed data
-dbases    # database files downloaded from other places
-docs      # publication documents and random project files
-your-project.Rproj # Make an Rproject in Rstudio for every project
-results   # store all RMarkdown here
-src       # store useful scripts here
+david_log %>% select(Term, minus_log10)
+
+ggplot(david_log, aes(x = reorder(Term, minus_log10), y = minus_log10)) + #reorder Term by minus_log10
+  geom_bar(stat = "identity") + # otherwise ggplot tries to count
+  xlab("KEGG pathway") +
+  coord_flip() +
+  theme(axis.text.y = element_text(size = 7))
+
+#reorder(david_log$Term,david_log$minus_log10)
 ```
 
-### a2. `here`, folder structure management
+other options:
 
-https://github.com/jennybc/here_here
+Panther http://www.geneontology.org/page/go-enrichment-analysis
 
-```{r here, eval = FALSE}
-here::here() # always points to top-level of current project
+GSEA (requires ranked list, for instance by fold-change, and requires full list of genes instead of just "significant") http://software.broadinstitute.org/gsea/index.jsp
 
-here::here("vignettes", "class-12.Rmd") # never confused about structure
+or, GO and GSEA right in R (will require additional packages):
+
+topGO: https://bioconductor.org/packages/release/bioc/html/topGO.html
+
+fgsea: http://bioconductor.org/packages/release/bioc/html/fgsea.html
+
+## Sometimes transformation of names is needed - `stringr` package, part of tidyverse
+Depending on the transcriptome and analysis options used in RNA-seq/scRNA-seq, the list of names can be messy.
+
+```{r stringr, message = FALSE, warning = FALSE}
+loc <- system.file("extdata", "ensg_tibble.csv", package = 'pbda')
+ensg_tibble <- read_csv(loc)
+
+ensg_tibble # those version numbers are often not recognized by software
 ```
 
-### b. `styler`, clean up code readability
+`str_replace`: find and replace
+(run `?str_replace` for documentation)
 
-Refer to this [style guide](http://adv-r.had.co.nz/Style.html) often, so you don't have to go back to make the code readable/publishable later.
+```{r str_replace, message = FALSE, warning = FALSE}
+ensg_tibble_rm <- ensg_tibble %>% mutate(gene = str_replace(gene, 
+                                                            pattern = "ENSG",
+                                                            replacement = "#"))
 
-```{r styler, eval = FALSE}
-styler::style_text("
-my_fun <- function(x, 
-y, 
-z) {
-  x+
-    z
-}
-                   ")
+ensg_tibble_rm
 
-#> my_fun <- function(x,
-#>                    y,
-#>                    z) {
-#>   x +
-#>     z
-#> }
+# trimming of gene/transcript version
+ensg_tibble2 <- ensg_tibble %>% mutate(gene_new = str_replace(gene, 
+                                                          pattern = "\\..*", # . and everything after
+                                                          replacement = "")) # empty string
+# regular expressions are useful and worth the time to learn, see ?base::regex
 
-# styler::style_file
-# styler::style_dir
+ensg_tibble2
+
+# `separate` works too, if you want to keep the info
+ensg_tibble3 <- ensg_tibble %>% separate(gene, into = c("gene", "version"), sep = "\\.")
 ```
 
-### c. Benchmarking, with `microbenchmark` and `profvis`
+```{r str_replace2, message = FALSE, warning = FALSE, fig.height=5, fig.width=8}
+# revisit the DAVID output plot, clean up "Term" column
+david_log2 <- david_log %>% mutate(Term = str_replace(Term, 
+                                                      pattern = ".*:", # every before and including :
+                                                      replacement = ""))
 
-```{r bench, eval = FALSE}
-path_to_file <- system.file("extdata", "gene_tibble.csv", package = "pbda")
-res <- microbenchmark::microbenchmark(
-  base = read.csv(path_to_file),
-  readr = readr::read_csv(path_to_file),
-  times = 5
-)
-print(res, signif = 2)
-microbenchmark:::autoplot.microbenchmark(res)
-
-library(dplyr)
-p <- profvis::profvis({
-  path_to_file <- system.file("extdata", "gene_tibble.csv", package = "pbda")
-  c1 <- readr::read_csv(path_to_file)
-  c1 <- c1 %>%
-    filter(padj < 0.00001) %>%
-    mutate(gene = stringr::str_to_lower(gene))
-})
-p
+ggplot(david_log2, aes(x = reorder(Term, minus_log10), y = minus_log10)) +
+  geom_bar(stat = "identity") +
+  xlab("KEGG pathway") +
+  coord_flip() +
+  theme(axis.text.y = element_text(size = 7))
+# to save plot
+ggsave("david.png", plot = last_plot(), dpi = 300)
 ```
 
+`str_detect`: spits out `TRUE` or `FALSE`
 
-### d. `shiny`, interactive web app for data exploration
+```{r str_detect, message = FALSE, warning = FALSE}
+# "-AS" denotes antisense genes, we can find all those
+str_detect(gene_tibble$gene, "-AS")[1:50]
 
-Making an interactive interface to data and plotting is easy in R. Examples and corresponding code can be found at https://shiny.rstudio.com/gallery/.
+# use in `filter`
+gene_tibble_as <- gene_tibble %>% filter(str_detect(gene, "-AS"))
 
-### e. Running R script from terminal
-
-Save functions in .R files to easily `source()` them later. If you have code that does not need input from beginning to end, .R files can be executed from the command line/terminal as well.
-
-```{bash script, eval = FALSE}
-Rscript /Users/rf/teach/practical-data-analysis/R/mat.R
+gene_tibble_as
 ```
 
-## 5. Finding help online
+`str_c`: concatenate strings
 
-![](https://imgs.xkcd.com/comics/wisdom_of_the_ancients.png)
+```{r str_c, message = FALSE, warning = FALSE}
+# also add annotations of our own
+gene_tibble_as2 <- gene_tibble_as %>% mutate(gene = str_c("HUMAN-", gene))
 
- The [R studio community forums](https://community.rstudio.com/) are a great resource for asking quesitons about tidyverse related packages.  
- 
- [StackOverflow](https://stackoverflow.com/) provides user contributes questions and answers on a variety of topics. 
- 
- For help with bioconductor packages visit the [support page](https://support.bioconductor.org/) 
- 
- Find out if others are having similar issues by searching the issue on the [Github](https://github.com/) page for the package that you are using. 
- 
-### General R coding resources
+gene_tibble_as2
+```
 
-  Hadley Wickman has written very good (free) ebooks on using R. 
-  
-  [R for Data Science](https://r4ds.had.co.nz/)
-  
-  [Advanced R](http://adv-r.had.co.nz/)
-  
-### Bioinformatic resources
+`str_sub`: extract substrings
 
-  For general bioinformatics advice I found the following text very useful.  
-  
-  [Bioinformatics Data Skills](http://vincebuffalo.org/book/) by Vince Buffalo
+```{r str_sub, message = FALSE, warning = FALSE}
+str_sub("HUMAN-ELOVL2-AS1", 2, 4)
 
-  For statistics related to bioinformatics this free course is excellent:  
-  
-  [PH525x series - Biomedical Data Science](http://genomicsclass.github.io/book/)
-  
-  For more detailed descriptions of single cell RNA-Seq analysis:  
-  
-  https://scrnaseq-course.cog.sanger.ac.uk/website/index.html
-  
-  https://satijalab.org/seurat/vignettes.html
-  
-### Cheatsheets
+gene_tibble_as3 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 2, 4))
 
-Common ones can be found in Rstudio `Help` -> `Cheatsheets`. More are hosted online, such as for [regular expressions](https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf).
+gene_tibble_as3
 
-Useful to keep your own stash too.
-  
-## 6. Offline help
+# to remove annotations of fixed length
+gene_tibble_as4 <- gene_tibble_as2 %>% mutate(gene = str_sub(gene, 7, -5)) # extract just the gene name from "HUMAN-ELOVL2-AS1"
 
-We (the RBI fellows) hold standing office hours on Thursdays, walk-ins 1-2pm, by appointment 2-4pm, in RC1-South Room 9101. We are happy to help out with coding and RNA/DNA-related informatics questions. Send us an email to let us know you will be stopping by (`rbi.fellows@cuanschutz.edu`).
+gene_tibble_as4
+```
 
-## 7. Lastly, sometimes code is just broken
+## Various conversions in R - BioMart
+BioMart can be used outside of R too: http://www.ensembl.org/biomart/martview
 
-No one writes perfect code. A certain highly-regarded and cited scRNA-seq package drew cell type progression arrows in the wrong direction, for months before the issue was fixed!
+We will be using `biomaRt`
 
-Go to GitHub and search the issues to see if the problem has been reported or fixed. If not submit an issue that describes the problem. The [reprex package](https://reprex.tidyverse.org/) makes it easy to
-produce well-formatted R reproducible examples that demonstrate the problem. Often developers will be thankful for your help with making their software better.
+```{r biomart, message = FALSE, warning = FALSE}
+library(biomaRt)
+# biomaRt contains many useful datasets
+listDatasets(useMart("ENSEMBL_MART_ENSEMBL", host = "www.ensembl.org")) %>% as_tibble() # hundreds of organisms
 
-## 8. Use R often. Don't (try not to) use Excel
-![](https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/noexcel.png){ width=50% }
+listAttributes(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% as_tibble() # thousands of rows/attributes
+
+listFilters(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% as_tibble() # ways to filter the data
+```
+
+common usage 1: id to gene symbol conversion
+
+```{r biomartid, message = FALSE, warning = FALSE}
+human_mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl") # assign the dataset to use
+
+ensg_sym2 <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"), # columns you want back
+                 filters = "ensembl_gene_id",                       # type of info you are providing
+                 mart = human_mart,                                 # dataset of certain species
+                 values = ensg_tibble2$gene) %>% as_tibble()        # values of the filter
+
+ensg_sym2
+
+# try running this with ensg_tibble (version # intact), can't find matches
+```
+
+common usage 2: functional GO term annotation
+
+```{r lookgo, message = FALSE, warning = FALSE}
+listAttributes(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% 
+  as_tibble() %>% 
+  filter(str_detect(description, "GO")) # look at attributes related to GO 
+```
+
+```{r getgo, message = FALSE, warning = FALSE}
+drerio_mart <- useMart("ensembl", dataset = "drerio_gene_ensembl")
+
+loc <- system.file("extdata", "genes_drerio.csv", package = 'pbda')
+genes_drerio <- read_csv(loc)
+
+genes_drerio
+
+genesGO <- getBM(attributes = c("zfin_id_symbol", "go_id", "name_1006", "namespace_1003"), 
+                 filters = "zfin_id_symbol", 
+                 mart = drerio_mart, 
+                 values = genes_drerio$gene, TRUE) %>% as_tibble()
+
+genesGO
+
+genesGO <- genesGO %>% filter(go_id != "") # note that there are lines with empty go terms, remember to remove those
+
+# join GO dataframe with original RNA-seq/scRNA-seq data if needed
+genes_drerio_joinedGO <- left_join(genes_drerio, genesGO, 
+                                   by = c("gene" = "zfin_id_symbol"))
+
+genes_drerio_joinedGO
+```
+
+```{r getgo2}
+# or, get all genes with GO term of interest, by providing multiple filters
+genesGO_filtered <- getBM(attributes = c("zfin_id_symbol"), 
+                  filters = c("zfin_id_symbol", "go"), 
+                  mart = drerio_mart, 
+                  values = list(genes_drerio$gene, c("GO:0003677")))
+
+genesGO_filtered
+```
+
+common usage 3: ortholog conversion between species
+
+```{r biomartpara, message = FALSE, warning = FALSE}
+# example of zebrafish to human gene symbol conversion
+human_mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+drerio_mart <- useMart("ensembl", dataset = "drerio_gene_ensembl")
+
+genes_human <- getLDS(attributes = c("hgnc_symbol"), # "linked datasets"
+                      filters = "hgnc_symbol", 
+                      mart = human_mart, 
+                      attributesL = c("zfin_id_symbol"), 
+                      martL = drerio_mart, 
+                      values = genes_drerio$gene) %>% as_tibble()
+
+genes_human
+```
+
+## Exercise
+1. Delete one argument from code above used to generate `genesGO_filtered` to obtain a list of all genes with GO id of "GO:0003677".
+
+2. Take a look at `genesGO`. Describe in pseudo-code, how you could add GO-CC back into the brauer_gene_exp.
+
+## Additional resources/reading
+More sophisticated analysis than simply gene lists:
+Find enriched sequence elements in promoters, UTRs, etc. See https://bedtools.readthedocs.io/en/latest/, http://meme-suite.org/, etc
+
+WGCNA: weighted correlation network analysis
+
+SCENIC: infer gene regulatory networks and cell types from single-cell RNA-seq data
+
+Come to RBI office hours (Thursday 1-2:30)!
