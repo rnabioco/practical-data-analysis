@@ -18,28 +18,28 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Please fill out survey to improve future classes
+## Please fill out end-of-class survey to improve future classes
 
 ## Class material can be accessed at: 
 https://rnabioco.github.io/practical-data-analysis/
 
-## 1. Speeding up Rmd knitting
+## 1. Speeding up repeated Rmd knitting
 
-Read the [Guide to RMarkdown](https://bookdown.org/yihui/rmarkdown/) for an exhaustive description of the various formats and options for using RMarkdown documents.
+Read the [Guide to RMarkdown](https://bookdown.org/yihui/rmarkdown/) for an exhaustive description of the various formats and options for using RMarkdown documents. Note that HTMLs and slides for this class were all made from Rmd.
 
 ### Caching
 
-You can speed up knitting of your Rmds by using caching to store the results from each chunk. Note that if you modify the code chunk, previous caching is ignored.
+You can speed up knitting of your Rmds by using caching to store the results from each chunk, instead of rerunning them each time. Note that if you modify the code chunk, previous caching is ignored.
   
 For each chunk, set `{r, cache = TRUE}`
 
-Or the option can be set globally at top of the document.
+Or the option can be set globally at top of the document. Like this:
 
 ```r
 knitr::opts_chunk$set(cache = TRUE)
 ```
 
-### Or, save and load Rds/Rda files
+### Alternatively, save and load .Rds/.Rda files
 
 Run once, save, and load instead of rerunning resource intensive parts.
 
@@ -71,36 +71,37 @@ Advantages of using version control include:
 
 1. rolling back code if needed
 
-2. branched development
+2. branched development, tackling individual issues/tasks
 
 3. collaboration, etc
 
-[Getting started](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
-
-[Interactive practice](https://learngitbranching.js.org/)
+Git was first created by Linus Torvalds for coordinating development of Linux. Read this guide for [Getting started](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
+and try out the [Interactive practice](https://learngitbranching.js.org/).
 
 ```{bash git, eval = FALSE}
-# for bioinformatics, probably want to learn some bash
-# and avoid using windows
+# for bioinformatics, get comfortable with command line too
+# and avoid using windows for compatibility issues
+
 ls
-git blame assignments.Rmd
+git status # list changes
+git blame assignments.Rmd # see who contributed
 ```
 
 This can be handled by Rstudio as well (new tab next to `Connections` and `Build`)
 
 ### Put your code on GitHub
 
-As you write more code chunks and functions, hosting and documenting them on GitHub is great way to make them portable and searchable. Even the free tier of GitHub accounts now has private repos.
+As you write more code, especially as functions and script pipelines, hosting and documenting them on GitHub is great way to make them portable and searchable. Even the free tier of GitHub accounts now has private repositories (repo).
 
 If you have any interest in a career in data science/informatics, GitHub is also a common showcase of what (and how well/often) you can code. After some accumulation of code, definitely put your GitHub link on your CV/resume.
 
-### Example repo - [valr](https://github.com/rnabioco/valr)
+### Example repo (RBI) - [valr](https://github.com/rnabioco/valr)
 
 Refer to package examples and [guide to building packages](https://r-pkgs.org/index.html) to build your own package and website documentation.
 
 ### Asking for help with other packages on GitHub
 
-Every package should include README, installation instructions, and `issues` page where questions and bugs can be reported. Example: [readr GitHub page](https://github.com/tidyverse/readr/issues) Don't be afraid to file new issues, but very often your problems are already answered in the `closed` section.
+Every package should include README, installation instructions, and a maintained `issues` page where questions and bugs can be reported and addressed. Example: [readr GitHub page](https://github.com/tidyverse/readr/issues) Don't be afraid to file new issues, but very often your problems are already answered in the `closed` section.
 
 ## 4. Other tips/best practices
 
@@ -155,6 +156,7 @@ z) {
 ### c. Benchmarking, with `microbenchmark` and `profvis`
 
 ```{r bench, eval = FALSE}
+# example, compare base and readr csv reading functions
 path_to_file <- system.file("extdata", "gene_tibble.csv", package = "pbda")
 res <- microbenchmark::microbenchmark(
   base = read.csv(path_to_file),
@@ -164,6 +166,7 @@ res <- microbenchmark::microbenchmark(
 print(res, signif = 2)
 microbenchmark:::autoplot.microbenchmark(res)
 
+# example, looking at each step of a script
 library(dplyr)
 p <- profvis::profvis({
   path_to_file <- system.file("extdata", "gene_tibble.csv", package = "pbda")
@@ -184,6 +187,7 @@ Making an interactive interface to data and plotting is easy in R. Examples and 
 Save functions in .R files to easily `source()` them later. If you have code that does not need input from beginning to end, .R files can be executed from the command line/terminal as well.
 
 ```{bash script, eval = FALSE}
+# example, mat.R that makes matrix and does calculations
 Rscript /Users/rf/teach/practical-data-analysis/R/mat.R
 ```
 
@@ -191,7 +195,7 @@ Rscript /Users/rf/teach/practical-data-analysis/R/mat.R
 
 ![](https://imgs.xkcd.com/comics/wisdom_of_the_ancients.png)
 
- The [R studio community forums](https://community.rstudio.com/) are a great resource for asking quesitons about tidyverse related packages.  
+ The [R studio community forums](https://community.rstudio.com/) are a great resource for asking questions about tidyverse related packages.  
  
  [StackOverflow](https://stackoverflow.com/) provides user-contributed questions and answers on a variety of topics. 
  
@@ -201,7 +205,7 @@ Rscript /Users/rf/teach/practical-data-analysis/R/mat.R
  
 ### General R coding resources
 
-  Hadley Wickman has written very good (free) ebooks on using R. 
+  Hadley Wickham has written very good (free) ebooks on using R. 
   
   [R for Data Science](https://r4ds.had.co.nz/)
   
@@ -223,9 +227,9 @@ Rscript /Users/rf/teach/practical-data-analysis/R/mat.R
   
   https://satijalab.org/seurat/vignettes.html
   
-### Cheatsheets
+### Cheat sheets
 
-Common ones can be found in Rstudio `Help` -> `Cheatsheets`. More are hosted online, such as for [regular expressions](https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf).
+Rstudio links to common ones here: `Help` -> `Cheatsheets`. More are hosted online, such as for [regular expressions](https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf).
 
 Useful to keep your own stash too.
   
@@ -241,4 +245,19 @@ If you suspect bugs or mishandled edge cases, go to the package GitHub and searc
 produce well-formatted reproducible examples that demonstrate the problem. Often developers will be thankful for your help with making their software better.
 
 ## 8. Use R often. Don't use Excel!
+
+Excel:
+
+1. Gets unwieldy with large files
+
+2. Poor plotting options
+
+3. Hard to do dplyr-like manipulations
+
+4. Hard to integrate with other informatics tools
+
+5. Annoying to apply same analysis over multiple files
+
+6. And random things like this:
+
 ![https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-1044-7](https://raw.githubusercontent.com/IDPT7810/practical-data-analysis/master/inst/extdata/noexcel.png){ width=70% }
