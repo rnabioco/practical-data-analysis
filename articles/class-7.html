@@ -186,14 +186,14 @@
 <p><br></p>
 <p><em>Write a <code>for</code> loop to create 3 vectors of different lengths</em></p>
 <pre><code>#&gt; [[1]]
-#&gt; [1]  0.9385751 -0.3713747 -1.5854178  1.1251454  1.4502944
+#&gt; [1] -1.8158100 -0.2207276 -0.8621191  1.9254192  0.2757581
 #&gt; 
 #&gt; [[2]]
-#&gt;  [1] -0.6023135 -0.5573913 -0.8969133  1.2007093 -0.3079036  1.6879932
-#&gt;  [7] -0.3788844 -2.1272252 -0.6126823  1.2276900
+#&gt;  [1] -0.0841029  1.2751668  0.8385018 -1.4785492 -0.8289552  0.4065788
+#&gt;  [7]  1.5067676 -1.8260829 -0.5896922 -0.2216554
 #&gt; 
 #&gt; [[3]]
-#&gt; [1] 0.27113578 0.05842002</code></pre>
+#&gt; [1]  1.7401679 -0.6438331</code></pre>
 <p><br></p>
 <p>Using <code><a href="https://rdrr.io/r/base/seq.html">seq_along(x)</a></code> instead of <code>1:length(x)</code></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># seq_along() mimics 1:length() for non-empty vectors</span></a>
@@ -322,14 +322,14 @@
 <p><br></p>
 <p><em>Use <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code> and <code>map()</code> to create 3 vectors of different lengths</em></p>
 <pre><code>#&gt; [[1]]
-#&gt; [1] -1.6364317 -0.8148283 -0.7013508 -0.5155593  1.5661698
+#&gt; [1]  0.05266115 -1.53813191 -0.72828346  0.59223235 -0.01666084
 #&gt; 
 #&gt; [[2]]
-#&gt;  [1] -0.2411531  0.3168446  0.1595175  0.1919490 -0.5280815  1.5246158
-#&gt;  [7] -1.0656756  0.3291915 -1.0309584  0.3563562
+#&gt;  [1]  0.9117919  0.1283299  0.5767244  0.1140285  0.4326139 -0.9057209
+#&gt;  [7] -0.9383523  2.2410065  0.4141233  1.3842653
 #&gt; 
 #&gt; [[3]]
-#&gt; [1]  1.6882320 -0.6882584</code></pre>
+#&gt; [1] -1.2614068  0.4342107</code></pre>
 <p><br></p>
 <p><em>Re-write the code from above using <code>map()</code> to generate our growth rate figure</em></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>)</a>
