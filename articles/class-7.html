@@ -72,13 +72,13 @@
       <a href="../articles/class-9.html">Class 9: Exploring data with PCA</a>
     </li>
     <li>
-      <a href="../articles/class-10.html">Class 10: RNA-seq Analysis</a>
+      <a href="../articles/class-10.html">Class 10: Jumping into more complex R, tips, resources</a>
     </li>
     <li>
-      <a href="../articles/class-11.html">Class 11: Working with gene lists</a>
+      <a href="../articles/class-11.html">Class 11: RNA-seq Analysis</a>
     </li>
     <li>
-      <a href="../articles/class-12.html">Class 12: Jumping into more complex R, tips, resources</a>
+      <a href="../articles/class-12.html">Class 12: Working with gene lists</a>
     </li>
     <li class="divider">
     <li>
@@ -186,14 +186,14 @@
 <p><br></p>
 <p><em>Write a <code>for</code> loop to create 3 vectors of different lengths</em></p>
 <pre><code>#&gt; [[1]]
-#&gt; [1] -0.6255887 -0.2622428 -0.7408284 -0.3373436 -0.4124222
+#&gt; [1]  0.9385751 -0.3713747 -1.5854178  1.1251454  1.4502944
 #&gt; 
 #&gt; [[2]]
-#&gt;  [1]  0.17056767 -0.09078366  1.29847867  0.52883154 -2.08126725 -1.01060071
-#&gt;  [7]  1.30855407 -0.47677032 -1.99988601 -1.85969152
+#&gt;  [1] -0.6023135 -0.5573913 -0.8969133  1.2007093 -0.3079036  1.6879932
+#&gt;  [7] -0.3788844 -2.1272252 -0.6126823  1.2276900
 #&gt; 
 #&gt; [[3]]
-#&gt; [1]  1.3631800 -0.1483051</code></pre>
+#&gt; [1] 0.27113578 0.05842002</code></pre>
 <p><br></p>
 <p>Using <code><a href="https://rdrr.io/r/base/seq.html">seq_along(x)</a></code> instead of <code>1:length(x)</code></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># seq_along() mimics 1:length() for non-empty vectors</span></a>
@@ -322,14 +322,14 @@
 <p><br></p>
 <p><em>Use <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code> and <code>map()</code> to create 3 vectors of different lengths</em></p>
 <pre><code>#&gt; [[1]]
-#&gt; [1] -0.46665467  0.99707922 -0.91341839  0.20510177  0.01679894
+#&gt; [1] -1.6364317 -0.8148283 -0.7013508 -0.5155593  1.5661698
 #&gt; 
 #&gt; [[2]]
-#&gt;  [1]  1.8958885 -1.0002916 -1.5630432 -0.5501088  0.8949363  0.1712056
-#&gt;  [7]  2.0471209 -0.1293003 -0.2433605 -0.7811435
+#&gt;  [1] -0.2411531  0.3168446  0.1595175  0.1919490 -0.5280815  1.5246158
+#&gt;  [7] -1.0656756  0.3291915 -1.0309584  0.3563562
 #&gt; 
 #&gt; [[3]]
-#&gt; [1]  0.6653606 -0.3349098</code></pre>
+#&gt; [1]  1.6882320 -0.6882584</code></pre>
 <p><br></p>
 <p><em>Re-write the code from above using <code>map()</code> to generate our growth rate figure</em></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>)</a>
