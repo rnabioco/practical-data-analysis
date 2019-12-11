@@ -1,10 +1,10 @@
 ---
-title: "Class 5: Working with gene lists"
-author: "Rui Fu"
-date: "2018-12-07"
+title: "Class 11: Working with gene lists"
+author: "Rui Fu & Austin Gillen"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Class-5old}
+  %\VignetteIndexEntry{Class-11}
   %\VignetteEngine{knitr::rmarkdown}
 ---
 

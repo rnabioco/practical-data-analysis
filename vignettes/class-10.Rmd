@@ -1,10 +1,10 @@
 ---
-title: "Class 4: RNA-seq Analysis part 1"
+title: "Class 10: RNA-seq Analysis"
 author: "Austin Gillen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Class-4}
+  %\VignetteIndexEntry{Class-10}
   %\VignetteEngine{knitr::rmarkdown}
 ---
 

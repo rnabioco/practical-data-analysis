@@ -35,12 +35,6 @@ navbar:
         href: articles/class-2.html
       - text: "Class 5: Basic Data Types and Structures"
         href: articles/class-5.html
-     # - text: "Class 3: Exploring a biological data set"
-     #   href: articles/class-3.html
-     # - text: "Class 4: RNA-seq Analysis"
-     #   href: articles/class-4.html
-      - text: "Class 5: Gene List Handling"
-        href: articles/class-5.html
       - text: "Class 6: Writing Functions"
         href: articles/class-6.html
       - text: "Class 7: Iteration"
@@ -49,8 +43,10 @@ navbar:
         href: articles/class-8.html
       - text: "Class 9: Exploring data with PCA"
         href: articles/class-9.html
-     # - text: "Class 9: Tips, Data I/O, and Resources"
-     #   href: articles/class-9.html
+      - text: "Class 10: RNA-seq Analysis"
+        href: articles/class-10.html
+      - text: "Class 11: Working with gene lists"
+        href: articles/class-11.html
       - text: "Class 12: Jumping into more complex R, tips, resources"
         href: articles/class-12.html
       - text: "--------"
