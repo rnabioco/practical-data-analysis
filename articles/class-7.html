@@ -60,9 +60,6 @@
       <a href="../articles/class-5.html">Class 5: Basic Data Types and Structures</a>
     </li>
     <li>
-      <a href="../articles/class-5.html">Class 5: Gene List Handling</a>
-    </li>
-    <li>
       <a href="../articles/class-6.html">Class 6: Writing Functions</a>
     </li>
     <li>
@@ -73,6 +70,12 @@
     </li>
     <li>
       <a href="../articles/class-9.html">Class 9: Exploring data with PCA</a>
+    </li>
+    <li>
+      <a href="../articles/class-10.html">Class 10: RNA-seq Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/class-11.html">Class 11: Working with gene lists</a>
     </li>
     <li>
       <a href="../articles/class-12.html">Class 12: Jumping into more complex R, tips, resources</a>
@@ -107,7 +110,7 @@
       <h1>Class 7: Iteration</h1>
                         <h4 class="author">Ryan Sheridan</h4>
             
-            <h4 class="date">2019-12-10</h4>
+            <h4 class="date">2019-12-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/practical-data-analysis/blob/master/vignettes/class-7.Rmd"><code>vignettes/class-7.Rmd</code></a></small>
       <div class="hidden name"><code>class-7.Rmd</code></div>
@@ -183,14 +186,14 @@
 <p><br></p>
 <p><em>Write a <code>for</code> loop to create 3 vectors of different lengths</em></p>
 <pre><code>#&gt; [[1]]
-#&gt; [1] -0.4057548 -0.6745024 -0.1480940 -0.4092698 -2.5724227
+#&gt; [1] -0.6255887 -0.2622428 -0.7408284 -0.3373436 -0.4124222
 #&gt; 
 #&gt; [[2]]
-#&gt;  [1] -0.4454368 -0.1984907  0.9551669  0.7756078  0.5509789  0.9482095
-#&gt;  [7] -1.0917559 -0.6593295 -0.4984677 -1.0529355
+#&gt;  [1]  0.17056767 -0.09078366  1.29847867  0.52883154 -2.08126725 -1.01060071
+#&gt;  [7]  1.30855407 -0.47677032 -1.99988601 -1.85969152
 #&gt; 
 #&gt; [[3]]
-#&gt; [1] 0.02931056 0.75606290</code></pre>
+#&gt; [1]  1.3631800 -0.1483051</code></pre>
 <p><br></p>
 <p>Using <code><a href="https://rdrr.io/r/base/seq.html">seq_along(x)</a></code> instead of <code>1:length(x)</code></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># seq_along() mimics 1:length() for non-empty vectors</span></a>
@@ -319,14 +322,14 @@
 <p><br></p>
 <p><em>Use <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code> and <code>map()</code> to create 3 vectors of different lengths</em></p>
 <pre><code>#&gt; [[1]]
-#&gt; [1]  0.2068064  0.6638498 -0.1988099 -0.3257463  1.4674639
+#&gt; [1] -0.46665467  0.99707922 -0.91341839  0.20510177  0.01679894
 #&gt; 
 #&gt; [[2]]
-#&gt;  [1] -0.2046594 -0.3108961 -0.2164058  0.7519694 -0.5663685  2.0023858
-#&gt;  [7]  1.2957174  0.9505907 -2.3565995  0.5417138
+#&gt;  [1]  1.8958885 -1.0002916 -1.5630432 -0.5501088  0.8949363  0.1712056
+#&gt;  [7]  2.0471209 -0.1293003 -0.2433605 -0.7811435
 #&gt; 
 #&gt; [[3]]
-#&gt; [1] -0.2069461  0.4191227</code></pre>
+#&gt; [1]  0.6653606 -0.3349098</code></pre>
 <p><br></p>
 <p><em>Re-write the code from above using <code>map()</code> to generate our growth rate figure</em></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>)</a>

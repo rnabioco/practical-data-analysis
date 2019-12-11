@@ -60,9 +60,6 @@
       <a href="../articles/class-5.html">Class 5: Basic Data Types and Structures</a>
     </li>
     <li>
-      <a href="../articles/class-5.html">Class 5: Gene List Handling</a>
-    </li>
-    <li>
       <a href="../articles/class-6.html">Class 6: Writing Functions</a>
     </li>
     <li>
@@ -73,6 +70,12 @@
     </li>
     <li>
       <a href="../articles/class-9.html">Class 9: Exploring data with PCA</a>
+    </li>
+    <li>
+      <a href="../articles/class-10.html">Class 10: RNA-seq Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/class-11.html">Class 11: Working with gene lists</a>
     </li>
     <li>
       <a href="../articles/class-12.html">Class 12: Jumping into more complex R, tips, resources</a>
@@ -107,7 +110,7 @@
       <h1>Class 6: Writing Functions</h1>
                         <h4 class="author">Ryan Sheridan</h4>
             
-            <h4 class="date">2019-12-10</h4>
+            <h4 class="date">2019-12-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/practical-data-analysis/blob/master/vignettes/class-6.Rmd"><code>vignettes/class-6.Rmd</code></a></small>
       <div class="hidden name"><code>class-6.Rmd</code></div>
@@ -144,13 +147,13 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># An example: you want to rescale a numeric vector so all values are between 0 and 1</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">a</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt;  [1] -2.3792671 -0.6720874  2.1417945  0.9168475 -1.3225652  0.5524409</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;  [7] -1.4837276 -2.3659806 -1.2886071 -0.7952967</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt;  [1] -0.13389854  1.11862728  0.40952326 -0.05527846  0.10360337  0.13945719</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;  [7] -1.44449540  0.30226123  0.39963083  1.36217688</span></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">rng &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/range.html">range</a></span>(a)</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8">(a <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span>(rng[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>rng[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;  [1] 0.000000000 0.377605930 1.000000000 0.729057672 0.233728707 0.648455665</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt;  [7] 0.198081682 0.002938804 0.241239801 0.350353648</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;  [1] 0.4669576 0.9132248 0.6605754 0.4949694 0.5515780 0.5643525 0.0000000</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt;  [8] 0.6223586 0.6570508 1.0000000</span></a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co"># What if we want to repeat this on other vectors?</span></a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co"># One way is to copy and paste</span></a>
@@ -212,8 +215,8 @@
 <p><em>Can objects present in the global environment be referenced from within a function?</em></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Earlier we saved a numeric vector "a"</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">a</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt;  [1] -2.3792671 -0.6720874  2.1417945  0.9168475 -1.3225652  0.5524409</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt;  [7] -1.4837276 -2.3659806 -1.2886071 -0.7952967</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt;  [1] -0.13389854  1.11862728  0.40952326 -0.05527846  0.10360337  0.13945719</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt;  [7] -1.44449540  0.30226123  0.39963083  1.36217688</span></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb5-6" data-line-number="6">sum_nums &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
 <a class="sourceLine" id="cb5-7" data-line-number="7">  x <span class="op">+</span><span class="st"> </span>a</a>
@@ -221,8 +224,8 @@
 <a class="sourceLine" id="cb5-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co"># Yes!</span></a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="kw">sum_nums</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt;  [1]  7.620733  9.327913 12.141794 10.916848  8.677435 10.552441  8.516272</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;  [8]  7.634019  8.711393  9.204703</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt;  [1]  9.866101 11.118627 10.409523  9.944722 10.103603 10.139457  8.555505</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;  [8] 10.302261 10.399631 11.362177</span></a></code></pre></div>
 <p><br></p>
 <p><em>Can code executed within a function modify an object present in the global environment?</em></p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">sum_nums &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
@@ -234,8 +237,8 @@
 <a class="sourceLine" id="cb6-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co"># No! (not when using the '&lt;-' assignment operator)</span></a>
 <a class="sourceLine" id="cb6-9" data-line-number="9">a</a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  [1] -2.3792671 -0.6720874  2.1417945  0.9168475 -1.3225652  0.5524409</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  [7] -1.4837276 -2.3659806 -1.2886071 -0.7952967</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  [1] -0.13389854  1.11862728  0.40952326 -0.05527846  0.10360337  0.13945719</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  [7] -1.44449540  0.30226123  0.39963083  1.36217688</span></a></code></pre></div>
 <p><br></p>
 <p><br></p>
 </div>
@@ -464,14 +467,14 @@
 <a class="sourceLine" id="cb16-4" data-line-number="4">}</a>
 <a class="sourceLine" id="cb16-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb16-6" data-line-number="6"><span class="kw">rescale_vec</span>(a)</a>
-<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co">#&gt;  [1] 0.000000000 0.377605930 1.000000000 0.729057672 0.233728707 0.648455665</span></a>
-<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">#&gt;  [7] 0.198081682 0.002938804 0.241239801 0.350353648</span></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co">#&gt;  [1] 0.4669576 0.9132248 0.6605754 0.4949694 0.5515780 0.5643525 0.0000000</span></a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">#&gt;  [8] 0.6223586 0.6570508 1.0000000</span></a>
 <a class="sourceLine" id="cb16-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb16-10" data-line-number="10">a[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
 <a class="sourceLine" id="cb16-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb16-12" data-line-number="12"><span class="kw">rescale_vec</span>(a, <span class="dt">na.rm =</span> T)</a>
-<a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co">#&gt;  [1]        NA 0.3757714 1.0000000 0.7282591 0.2314701 0.6474195 0.1957181</span></a>
-<a class="sourceLine" id="cb16-14" data-line-number="14"><span class="co">#&gt;  [8] 0.0000000 0.2390034 0.3484388</span></a></code></pre></div>
+<a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co">#&gt;  [1]        NA 0.9132248 0.6605754 0.4949694 0.5515780 0.5643525 0.0000000</span></a>
+<a class="sourceLine" id="cb16-14" data-line-number="14"><span class="co">#&gt;  [8] 0.6223586 0.6570508 1.0000000</span></a></code></pre></div>
 <p><br></p>
 <p><em>Modify our plotting function so the user can change the point size, shape, and alpha</em></p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># A cumbersome way</span></a>
