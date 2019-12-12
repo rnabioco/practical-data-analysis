@@ -110,7 +110,7 @@
       <h1>Class 7: Iteration</h1>
                         <h4 class="author">Ryan Sheridan</h4>
             
-            <h4 class="date">2019-12-11</h4>
+            <h4 class="date">2019-12-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/practical-data-analysis/blob/master/vignettes/class-7.Rmd"><code>vignettes/class-7.Rmd</code></a></small>
       <div class="hidden name"><code>class-7.Rmd</code></div>
@@ -186,14 +186,14 @@
 <p><br></p>
 <p><em>Write a <code>for</code> loop to create 3 vectors of different lengths</em></p>
 <pre><code>#&gt; [[1]]
-#&gt; [1]  0.1543031  0.5396596  0.7244707 -1.1166020  0.7794447
+#&gt; [1] -1.9410779  0.2783351  0.4104123 -0.9703248  0.1538358
 #&gt; 
 #&gt; [[2]]
-#&gt;  [1]  1.444440365  0.009497785  0.785736334 -0.451319221  0.830772379
-#&gt;  [6] -0.083252332 -0.303314026  2.218300662  0.994220630 -0.257455611
+#&gt;  [1]  2.2245327 -1.7631630  0.4341466  0.4524696 -0.3629023  0.9716536
+#&gt;  [7]  0.8357051 -1.3446893  0.9045983 -0.3178165
 #&gt; 
 #&gt; [[3]]
-#&gt; [1] -0.1399179  0.8758496</code></pre>
+#&gt; [1] -0.8055187  0.8263869</code></pre>
 <p><br></p>
 <p>Using <code><a href="https://rdrr.io/r/base/seq.html">seq_along(x)</a></code> instead of <code>1:length(x)</code></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># seq_along() mimics 1:length() for non-empty vectors</span></a>
@@ -322,14 +322,14 @@
 <p><br></p>
 <p><em>Use <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code> and <code>map()</code> to create 3 vectors of different lengths</em></p>
 <pre><code>#&gt; [[1]]
-#&gt; [1]  1.4005022 -0.9160405 -1.0141459  0.4824753  0.3097066
+#&gt; [1] -0.9731776 -0.4418888 -2.0659539  0.3275486 -1.2486739
 #&gt; 
 #&gt; [[2]]
-#&gt;  [1]  1.6762740 -0.3839464 -1.0100454  0.7224413 -0.7911104 -0.7194671
-#&gt;  [7]  0.7267029 -1.5332641 -1.1038301  1.6809520
+#&gt;  [1] -1.5457802  0.2682872 -0.6285902 -0.5281380 -1.4164325  0.8068746
+#&gt;  [7]  1.5739890  0.9257741 -0.7293435 -2.3075362
 #&gt; 
 #&gt; [[3]]
-#&gt; [1]  0.5768646 -1.3282844</code></pre>
+#&gt; [1]  0.09593678 -0.87892824</code></pre>
 <p><br></p>
 <p><em>Re-write the code from above using <code>map()</code> to generate our growth rate figure</em></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>)</a>
