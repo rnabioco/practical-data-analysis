@@ -252,9 +252,7 @@ res <- results(dds)
 summary(res)
 
 # Convert dataframe to tibble for use with tidyverse tools
-res_tibble <- as.data.frame(res) %>%
-  tibble::rownames_to_column(var = "gene") %>%
-  as.tibble()
+res_tibble <- as_tibble(res, rownames = "gene")
 ```
 
 ## MA-plots
