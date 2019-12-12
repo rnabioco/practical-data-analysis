@@ -29,23 +29,6 @@ library(pbda)
 - Build a DESeqDataSet and calculate differential gene expression
 - Plot results and QC metrics
 
-## Before we get started: Install Bioconductor packages and update pbda
-
-``` r
-install.packages("BiocManager")
-BiocManager::install("DESeq2")
-BiocManager::install("ComplexHeatmap")
-
-devtools::install_github('idpt7810/practical-data-analysis')
-library(pbda)
-
-library(DESeq2)
-library(ComplexHeatmap)
-library(RColorBrewer)
-library(tidyverse)
-library(cowplot)
-```
-
 ## Matrices in R are two dimensional objects that contain elements of one atomic type
  
 Matrices can contain characters or logical values, but we're really only interested in numeric matrices:
@@ -329,13 +312,3 @@ mat  <- mat - rowMeans(mat)
 # plot heatmap
 Heatmap(mat)
 ```
-
-## Exercises
-
-The exercises for today's class are presented [here](https://rnabioco.github.io/pbda/articles/problem-set-3.html), Here is a [link](https://github.com/IDPT7810/practical-data-analysis/blob/master/vignettes/problem-set-3.Rmd) to the raw text of these exercises
-
-## Quiz
-
-Create an RMarkdown document and answer the questions from the Exercises section. Write your answers in the text, and print the final tibbles/plots that your code produced that gave you the answer. Submit your final document as "Problem Set 3" by **Friday at 10 PM**.
-
-**Your submitted document must knit to HTML without errors**. I.e., when you click the "Knit" button, the document should build and display and HTML page. 
