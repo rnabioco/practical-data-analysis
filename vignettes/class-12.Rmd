@@ -202,8 +202,7 @@ ensg_tibble3 <- ensg_tibble %>% separate(gene, into = c("gene", "version"), sep 
 gost_log2 <- gost_log %>% mutate(term_name = str_replace(term_name,
                                                          pattern = ";.*", # everything after and including ;
                                                          replacement = "")) %>%
-  ungroup() %>%
-  group_by(term_name) %>% # we now have duplicated term_names
+  group_by(list, term_name) %>% # we now have duplicated term_names
   arrange(desc(minus_log10)) %>% # we arranges them by minus_log10
   slice(1) # and take the most significant for each term
 
