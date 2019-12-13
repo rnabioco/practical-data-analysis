@@ -43,7 +43,8 @@ Imports:
     DESeq2,
     ComplexHeatmap,
     biomaRt,
-    reticulate
+    reticulate,
+    gprofiler2
 biocViews:
     DESeq2,
     ComplexHeatmap,

@@ -24,6 +24,7 @@ knitr::opts_chunk$set(
 library(pbda)
 library(tidyverse)
 library(cowplot)
+library(gprofiler2)
 ```
 
 ## Did experiment, ran through analysis pipeline, what now?
@@ -89,11 +90,6 @@ g:Profiler https://biit.cs.ut.ee/gprofiler/
 Here we consider the simple case of single, unordered lists of significantly differentially expressed human genes. g:Profiler can also handle ordered lists, other species, multiple lists in the same query, arbitry thresholds, several different multiple testing correction methods, arbitrary source selection, and much more.
 
 ```{r gprofiler, message = FALSE, warning = FALSE, fig.height=5, fig.width=8}
-
-# install and load gprofiler2
-install.packages("gprofiler2")
-library(gprofiler2)
-
 # generate lists of singificantly up/downregulated genes from the RNA-seq example
 upregulated_genes <- gene_tibble %>%
   filter(log2FoldChange >= 1, padj <= 0.01) %>%
@@ -115,9 +111,10 @@ gost_down <- gost(downregulated_genes,
 
 # inspect the resulting gost output:
 # meta slot contains information about the query, results and gene mapping
-gost_up$meta$query_metadata
-gost_up$meta$result_metadata
-gost_up$meta$genes_metadata # this prints a pretty unweildy list of mappings, but can be very useful
+# All three print pretty unweildy lists, but can be very useful for troubleshooting
+# gost_up$meta$query_metadata
+# gost_up$meta$result_metadata
+# gost_up$meta$genes_metadata 
 
 # result slot contains the enrichment information
 as_tibble(gost_up$result)
@@ -201,18 +198,23 @@ ensg_tibble3 <- ensg_tibble %>% separate(gene, into = c("gene", "version"), sep 
 ```
 
 ```{r str_replace2, message = FALSE, warning = FALSE, fig.height=5, fig.width=8}
-# revisit the DAVID output plot, clean up "Term" column
-david_log2 <- david_log %>% mutate(Term = str_replace(Term, 
-                                                      pattern = ".*:", # every before and including :
-                                                      replacement = ""))
+# revisit the gprofiler output plot, clean up "term_name" column, stripping motif match info
+gost_log2 <- gost_log %>% mutate(term_name = str_replace(term_name,
+                                                         pattern = ";.*", # everything after and including ;
+                                                         replacement = "")) %>%
+  ungroup() %>%
+  group_by(term_name) %>% # we now have duplicated term_names
+  arrange(desc(minus_log10)) %>% # we arranges them by minus_log10
+  slice(1) # and take the most significant for each term
 
-ggplot(david_log2, aes(x = reorder(Term, minus_log10), y = minus_log10)) +
-  geom_bar(stat = "identity") +
-  xlab("KEGG pathway") +
+ggplot(gost_log2, aes(x = reorder(term_name, minus_log10), y = minus_log10)) + #reorder term_name by minus_log10
+  geom_bar(stat = "identity") + # otherwise ggplot tries to count
+  xlab("Term Name") +
+  facet_wrap(~list, scales = "free") +
   coord_flip() +
   theme(axis.text.y = element_text(size = 7))
 # to save plot
-ggsave("david.png", plot = last_plot(), dpi = 300)
+ggsave("gprofiler.png", plot = last_plot(), dpi = 300)
 ```
 
 `str_detect`: spits out `TRUE` or `FALSE`
