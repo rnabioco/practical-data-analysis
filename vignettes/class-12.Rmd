@@ -47,10 +47,7 @@ res <- readRDS(loc) # loading a DESeq2 object automatically loads DESeq2
 
 head(res) # basically a dataframe
 
-res_tibble <- res %>%
-  as.data.frame() %>% 
-  tibble::rownames_to_column(var = "gene") %>%
-  as.tibble()
+res_tibble <- as_tibble(res, rownames = "gene")
 
 res_tibble
 
@@ -86,45 +83,77 @@ write_csv(gene_tibble %>% select(gene), "gene_tibble.txt", col_names = FALSE) # 
 write_lines(gene_vector, "gene_tibble_v.txt") # write for vector
 ```
 
-## Feed gene lists to other software outside of R, get enrichment score back
-DAVID https://david.ncifcrf.gov/
+## Gene set enrichment: feed gene lists to g:Profiler, get enrichment score back
+g:Profiler https://biit.cs.ut.ee/gprofiler/
 
-1. upload or paste list
+Here we consider the simple case of single, unordered lists of significantly differentially expressed human genes. g:Profiler can also handle ordered lists, other species, multiple lists in the same query, arbitry thresholds, several different multiple testing correction methods, arbitrary source selection, and much more.
 
-2. select "official gene symbol" as the identifier
+```{r gprofiler, message = FALSE, warning = FALSE, fig.height=5, fig.width=8}
 
-3. choose "gene list" as list type
+# install and load gprofiler2
+install.packages("gprofiler2")
+library(gprofiler2)
 
-4. submit
+# generate lists of singificantly up/downregulated genes from the RNA-seq example
+upregulated_genes <- gene_tibble %>%
+  filter(log2FoldChange >= 1, padj <= 0.01) %>%
+  pull(gene)
 
-5. choose the appropriate organism
+downregulated_genes <- gene_tibble %>%
+  filter(log2FoldChange <= -1, padj <= 0.01) %>%
+  pull(gene)
 
-6. click "chart" on the desired annotation
+# gost: gene list functional enrichment (for unordered human lists, only the list is required)
+gost_up <- gost(upregulated_genes,
+                organism = "hsapiens", 
+                ordered_query = FALSE
+                )
 
-7. download as file
+gost_down <- gost(downregulated_genes,
+                organism = "hsapiens",
+                ordered_query = FALSE)
 
-```{r david, message = FALSE, warning = FALSE, fig.height=5, fig.width=8}
-# save output and load in R
-loc <- system.file("extdata", "david.txt", package = 'pbda')
-david <- read_tsv(loc) # output was tab-delimited instead of comma
+# inspect the resulting gost output:
+# meta slot contains information about the query, results and gene mapping
+gost_up$meta$query_metadata
+gost_up$meta$result_metadata
+gost_up$meta$genes_metadata # this prints a pretty unweildy list of mappings, but can be very useful
 
-david
+# result slot contains the enrichment information
+as_tibble(gost_up$result)
 
-# do whatever you want, for instance plot -log10 of top 20 entries
-david_log <- david %>% 
-  mutate(minus_log10 = -log10(Benjamini)) %>% # Benjamini is one false discovery rate method
-  arrange(desc(minus_log10)) %>% 
+# for a quick look a the results, we can plot the -log10 of top 20 entries in both lists
+gost_log <- bind_rows(
+  as_tibble(gost_up$result) %>%
+    mutate(list = "up"),
+  as_tibble(gost_down$result) %>%
+    mutate(list = "down")
+) %>%
+  mutate(minus_log10 = -log10(p_value),
+         list = factor(list, levels = c("up", "down"))) %>%
+  group_by(list) %>%
+  arrange(desc(minus_log10)) %>%
   dplyr::slice(1:20)
 
-david_log %>% select(Term, minus_log10)
+gost_log %>% select(list, term_name, minus_log10)
 
-ggplot(david_log, aes(x = reorder(Term, minus_log10), y = minus_log10)) + #reorder Term by minus_log10
+ggplot(gost_log, aes(x = reorder(term_name, minus_log10), y = minus_log10)) + #reorder Term by minus_log10
   geom_bar(stat = "identity") + # otherwise ggplot tries to count
-  xlab("KEGG pathway") +
+  xlab("Term Name") +
+  facet_wrap(~list, scales = "free") +
   coord_flip() +
   theme(axis.text.y = element_text(size = 7))
 
-#reorder(david_log$Term,david_log$minus_log10)
+# adding source information for the enriched terms can also help with interpretation:
+gost_log <- gost_log %>% mutate(term_name = paste(source,term_name, sep = ": ")) %>% select(list, term_name, minus_log10)
+
+ggplot(gost_log, aes(x = reorder(term_name, minus_log10), y = minus_log10)) + #reorder Term by minus_log10
+  geom_bar(stat = "identity") + # otherwise ggplot tries to count
+  xlab("Term Name") +
+  facet_wrap(~list, scales = "free") +
+  coord_flip() +
+  theme(axis.text.y = element_text(size = 7))
+
 ```
 
 other options:
