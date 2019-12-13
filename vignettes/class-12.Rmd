@@ -204,7 +204,7 @@ gost_log2 <- gost_log %>% mutate(term_name = str_replace(term_name,
                                                          replacement = "")) %>%
   group_by(list, term_name) %>% # we now have duplicated term_names
   arrange(desc(minus_log10)) %>% # we arranges them by minus_log10
-  slice(1) # and take the most significant for each term
+  dplyr::slice(1) # and take the most significant for each term
 
 ggplot(gost_log2, aes(x = reorder(term_name, minus_log10), y = minus_log10)) + #reorder term_name by minus_log10
   geom_bar(stat = "identity") + # otherwise ggplot tries to count
