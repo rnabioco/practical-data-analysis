@@ -60,3 +60,6 @@ Remotes:
     rstudio/rmarkdown
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
+Config/Needs/website:
+  pkgdown,
+  rnabioco/rbitemplate

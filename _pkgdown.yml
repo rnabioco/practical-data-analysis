@@ -1,11 +1,7 @@
 template:
-  params:
-    bootswatch: cosmo
-
-authors:
-  Jay Hesselberth:
-    href: https://hesselberthlab.org
-
+  package: rbitemplate
+  bootstrap: 5
+  
 reference:
   - title: Example datasets
     contents:
