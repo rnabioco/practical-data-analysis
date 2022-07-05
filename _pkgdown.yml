@@ -13,9 +13,11 @@ reference:
     - nci60
     - esc_mat
     - clust_mat
+    - tx_rates
   - title: Utilities
     contents:
     - update_pbda
+    - pbda
 
 navbar:
   left:
