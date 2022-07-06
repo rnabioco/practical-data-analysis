@@ -4,7 +4,9 @@
 \name{clust_mat}
 \alias{clust_mat}
 \title{Example matrix to highlight clustering methods}
-\format{matrix with 4 rows and 8 columns}
+\format{
+matrix with 4 rows and 8 columns
+}
 \usage{
 clust_mat
 }

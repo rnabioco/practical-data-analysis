@@ -4,8 +4,10 @@
 \name{esc_mat}
 \alias{esc_mat}
 \title{single cell RNA-seq dataset of mouse embryonic development}
-\format{matrix with 22431 genes as rows and 268 cells as columns containing
-raw read counts.}
+\format{
+matrix with 22431 genes as rows and 268 cells as columns containing
+raw read counts.
+}
 \usage{
 esc_mat
 }

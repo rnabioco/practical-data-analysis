@@ -4,7 +4,9 @@
 \name{missing_ex}
 \alias{missing_ex}
 \title{Sample missing data}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 30 rows and 5 columns.}
+\format{
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 30 rows and 5 columns.
+}
 \usage{
 missing_ex
 }

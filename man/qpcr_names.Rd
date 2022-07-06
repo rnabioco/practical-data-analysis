@@ -4,7 +4,9 @@
 \name{qpcr_names}
 \alias{qpcr_names}
 \title{Example qPCR data}
-\format{qPCR sample names in 96 well format.}
+\format{
+qPCR sample names in 96 well format.
+}
 \usage{
 qpcr_names
 }

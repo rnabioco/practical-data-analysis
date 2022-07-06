@@ -4,7 +4,9 @@
 \name{mtcars_tbl}
 \alias{mtcars_tbl}
 \title{mtcars in tibble format}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 32 rows and 12 columns.}
+\format{
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 32 rows and 12 columns.
+}
 \usage{
 mtcars_tbl
 }

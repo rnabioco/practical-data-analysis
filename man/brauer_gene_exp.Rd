@@ -4,7 +4,9 @@
 \name{brauer_gene_exp}
 \alias{brauer_gene_exp}
 \title{Gene expression in yeast measured by microarray}
-\format{A data frame with 198,430 observations of 7 variables.}
+\format{
+A data frame with 198,430 observations of 7 variables.
+}
 \source{
 \url{http://www.molbiolcell.org/content/19/1/352.long}
 

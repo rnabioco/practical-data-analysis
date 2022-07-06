@@ -4,8 +4,10 @@
 \name{nci60}
 \alias{nci60}
 \title{Microarray data from the NCI-60 cancer cell line panel}
-\format{matrix with 6830 rows and 64 columns containing
-normalized gene expression values.}
+\format{
+matrix with 6830 rows and 64 columns containing
+normalized gene expression values.
+}
 \source{
 ISLR::NCI60
 }

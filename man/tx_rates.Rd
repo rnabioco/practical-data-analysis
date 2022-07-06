@@ -4,8 +4,10 @@
 \name{tx_rates}
 \alias{tx_rates}
 \title{Transcription rates for ~7000 genes measured across a timecourse}
-\format{matrix with 7872 genes as rows and 13 columns containing
-transcription rates.}
+\format{
+matrix with 7872 genes as rows and 13 columns containing
+transcription rates.
+}
 \source{
 \url{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE56977}
 

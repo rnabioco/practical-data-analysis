@@ -11,8 +11,8 @@ Provides course materials for IDPT 7810, Practical Biological Data Analysis in R
 \seealso{
 Useful links:
 \itemize{
+  \item \url{h https://rnabioco.github.io/practical-data-analysis}
   \item \url{https://github.com/rnabioco/practical-data-analysis}
-  \item \url{https://rnabioco.github.io/practical-data-analysis/}
 }
 
 }
