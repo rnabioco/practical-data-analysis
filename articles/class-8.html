@@ -4,124 +4,101 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="pbda">
 <title>Class 8: Heatmaps and Clustering • pbda</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Class 8: Heatmaps and Clustering">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Source%20Sans%20Pro-0.4.1/font.css" rel="stylesheet">
+<link href="../deps/_Source%20Code%20Pro-0.4.1/font.css" rel="stylesheet">
+<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Class 8: Heatmaps and Clustering">
+<meta property="og:description" content="pbda">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<![endif]--><script defer data-domain="rnabioco.github.io" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body>
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">pbda</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
-      </span>
-    </div>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">Home</a>
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-dark"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">pbda</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9000</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../index.html">Home</a>
 </li>
-<li>
-  <a href="../reference/index.html">Reference</a>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Class Material
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/class-1.html">Class 1: Overview, Data Import and Tidying</a>
-    </li>
-    <li>
-      <a href="../articles/class-2.html">Class 2: Analyzing qPCR data</a>
-    </li>
-    <li>
-      <a href="../articles/class-5.html">Class 5: Basic Data Types and Structures</a>
-    </li>
-    <li>
-      <a href="../articles/class-6.html">Class 6: Writing Functions</a>
-    </li>
-    <li>
-      <a href="../articles/class-7.html">Class 7: Iteration</a>
-    </li>
-    <li>
-      <a href="../articles/class-8.html">Class 8: Heatmaps and Clustering</a>
-    </li>
-    <li>
-      <a href="../articles/class-9.html">Class 9: Exploring data with PCA</a>
-    </li>
-    <li>
-      <a href="../articles/class-10.html">Class 10: Jumping into more complex R, tips, resources</a>
-    </li>
-    <li>
-      <a href="../articles/class-11.html">Class 11: RNA-seq Analysis</a>
-    </li>
-    <li>
-      <a href="../articles/class-12.html">Class 12: Working with gene lists</a>
-    </li>
-    <li class="divider">
-    <li>
-      <a href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
-    </li>
-  </ul>
+<li class="active nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-class-material">Class Material</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-class-material">
+    <a class="dropdown-item" href="../articles/class-1.html">Class 1: Overview, Data Import and Tidying</a>
+    <a class="dropdown-item" href="../articles/class-2.html">Class 2: Analyzing qPCR data</a>
+    <a class="dropdown-item" href="../articles/class-5.html">Class 5: Basic Data Types and Structures</a>
+    <a class="dropdown-item" href="../articles/class-6.html">Class 6: Writing Functions</a>
+    <a class="dropdown-item" href="../articles/class-7.html">Class 7: Iteration</a>
+    <a class="dropdown-item" href="../articles/class-8.html">Class 8: Heatmaps and Clustering</a>
+    <a class="dropdown-item" href="../articles/class-9.html">Class 9: Exploring data with PCA</a>
+    <a class="dropdown-item" href="../articles/class-10.html">Class 10: Jumping into more complex R, tips, resources</a>
+    <a class="dropdown-item" href="../articles/class-11.html">Class 11: RNA-seq Analysis</a>
+    <a class="dropdown-item" href="../articles/class-12.html">Class 12: Working with gene lists</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/assignments.html">Assignment Submission and Grading Rubric</a>
+  </div>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/rnabioco/practical-data-analysis">
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/rnabioco/practical-data-analysis/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+    
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
-      
 
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1>Class 8: Heatmaps and Clustering</h1>
-                        <h4 class="author">Kent Riemondy</h4>
+
+
+<div class="row">
+  <main id="main" class="col-md-9"><div class="page-header">
+      <img src="" class="logo" alt=""><h1>Class 8: Heatmaps and Clustering</h1>
+                        <h4 data-toc-skip class="author">Kent Riemondy</h4>
             
-            <h4 class="date">2019-12-12</h4>
+            <h4 data-toc-skip class="date">2022-07-06</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/rnabioco/practical-data-analysis/blob/master/vignettes/class-8.Rmd"><code>vignettes/class-8.Rmd</code></a></small>
-      <div class="hidden name"><code>class-8.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/rnabioco/practical-data-analysis/blob/HEAD/vignettes/class-8.Rmd" class="external-link"><code>vignettes/class-8.Rmd</code></a></small>
+      <div class="d-none name"><code>class-8.Rmd</code></div>
     </div>
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ComplexHeatmap)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pbda)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jokergoo/ComplexHeatmap" class="external-link">ComplexHeatmap</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rnabioco/practical-data-analysis" class="external-link">pbda</a></span><span class="op">)</span></span></code></pre></div>
 <p>Goals:</p>
 <ol style="list-style-type: decimal">
 <li><p>Learn additional operations on matrices.</p></li>
@@ -129,233 +106,250 @@
 <li><p>Use clustering algorithms to identify patterns in the data.</p></li>
 <li><p>Exploring datasets with PCA</p></li>
 </ol>
-<div id="dataset-description" class="section level3">
-<h3 class="hasAnchor">
-<a href="#dataset-description" class="anchor"></a>Dataset description</h3>
+<div class="section level3">
+<h3 id="dataset-description">Dataset description<a class="anchor" aria-label="anchor" href="#dataset-description"></a>
+</h3>
 <p>For some of the exercises today we will be using a single cell RNA-seq dataset that is part of the <code>pbda</code> package. The <code>esc_mat</code> matrix contains read counts for each gene in each cell. The read counts are an abundance measurement for mRNAs in each cell.</p>
-<p>This dataset contains 72 cells from mouse embryos at various stages of development (<a href="http://science.sciencemag.org/content/343/6167/193">Single-Cell RNA-Seq Reveals Dynamic, Random Monoallelic Gene Expression in Mammalian Cells</a>). This dataset, as well as many others are available in a preprocessed form from the Hemberg lab ( <a href="https://hemberg-lab.github.io/scRNA.seq.datasets/" class="uri">https://hemberg-lab.github.io/scRNA.seq.datasets/</a>). Note that the number of cells has been reduced for complexity reasons.</p>
+<p>This dataset contains 72 cells from mouse embryos at various stages of development (<a href="http://science.sciencemag.org/content/343/6167/193" class="external-link">Single-Cell RNA-Seq Reveals Dynamic, Random Monoallelic Gene Expression in Mammalian Cells</a>). This dataset, as well as many others are available in a preprocessed form from the Hemberg lab ( <a href="https://hemberg-lab.github.io/scRNA.seq.datasets/" class="external-link uri">https://hemberg-lab.github.io/scRNA.seq.datasets/</a>). Note that the number of cells has been reduced for complexity reasons.</p>
 </div>
-<div id="apply-functions-per-row-or-per-column-of-a-matrix" class="section level3">
-<h3 class="hasAnchor">
-<a href="#apply-functions-per-row-or-per-column-of-a-matrix" class="anchor"></a>Apply functions per row or per column of a matrix</h3>
+<div class="section level3">
+<h3 id="apply-functions-per-row-or-per-column-of-a-matrix">Apply functions per row or per column of a matrix<a class="anchor" aria-label="anchor" href="#apply-functions-per-row-or-per-column-of-a-matrix"></a>
+</h3>
 <p>A common task with matrices is to compute a row-wise or column-wise summary. Tidyverse verbs don’t naively support operations on matrices. base R provides some useful summary functions, as well as the <code>matrixStats</code> package.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span>(esc_mat) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt;         zy_1         zy_2         zy_3         zy_4 early2cell_1 early2cell_2 </span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt;     30093033     25116127     31954663     17473603     22633227     23554335</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(esc_mat) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;  Hvcn1   Gbp7 Arrdc1  Ercc5 Mrpl15  Dclk1 </span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt;  41740  15218  98903  19919 156510     42</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(esc_mat[, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;       zy_1             zy_2             zy_3       </span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt;  Min.   :     0   Min.   :     0   Min.   :     0  </span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt;  1st Qu.:     0   1st Qu.:     0   1st Qu.:     0  </span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt;  Median :     4   Median :    17   Median :    12  </span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt;  Mean   :  1342   Mean   :  1120   Mean   :  1425  </span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt;  3rd Qu.:   614   3rd Qu.:   527   3rd Qu.:   650  </span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt;  Max.   :290222   Max.   :188065   Max.   :269403</span></a></code></pre></div>
-<p>There are a few base R plotting functions that are very useful for exploratory analysis with matrices. For example the <code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code> function can be used to quickly generate a histogram from a matrix. Various clustering functions also provide a <code><a href="https://rdrr.io/r/graphics/plot.html">plot()</a></code> method that can produce useful summaries. Often I use base R plots for interactive work, then use ggplot (or heatmaps) to make focused publication quality figures.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span>(esc_mat)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">esc_mat</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         zy_1         zy_2         zy_3         zy_4 early2cell_1 </span></span>
+<span><span class="co">#&gt;     30093033     25116127     31954663     17473603     22633227 </span></span>
+<span><span class="co">#&gt; early2cell_2 </span></span>
+<span><span class="co">#&gt;     23554335</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">esc_mat</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  Hvcn1   Gbp7 Arrdc1  Ercc5 Mrpl15  Dclk1 </span></span>
+<span><span class="co">#&gt;  41740  15218  98903  19919 156510     42</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">esc_mat</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       zy_1             zy_2             zy_3       </span></span>
+<span><span class="co">#&gt;  Min.   :     0   Min.   :     0   Min.   :     0  </span></span>
+<span><span class="co">#&gt;  1st Qu.:     0   1st Qu.:     0   1st Qu.:     0  </span></span>
+<span><span class="co">#&gt;  Median :     4   Median :    17   Median :    12  </span></span>
+<span><span class="co">#&gt;  Mean   :  1342   Mean   :  1120   Mean   :  1425  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:   614   3rd Qu.:   527   3rd Qu.:   650  </span></span>
+<span><span class="co">#&gt;  Max.   :290222   Max.   :188065   Max.   :269403</span></span></code></pre></div>
+<p>There are a few base R plotting functions that are very useful for exploratory analysis with matrices. For example the <code><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist()</a></code> function can be used to quickly generate a histogram from a matrix. Various clustering functions also provide a <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method that can produce useful summaries. Often I use base R plots for interactive work, then use ggplot (or heatmaps) to make focused publication quality figures.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">esc_mat</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="apply-family-of-functions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#apply-family-of-functions" class="anchor"></a>Apply family of functions</h3>
+<div class="section level3">
+<h3 id="apply-family-of-functions">Apply family of functions<a class="anchor" aria-label="anchor" href="#apply-family-of-functions"></a>
+</h3>
 <p>How would we apply an arbitrary function to operate row-wise or column-wise?</p>
 <p>In base R there is a function called <code>apply</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">?apply</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">?</span><span class="va">apply</span></span></code></pre></div>
 <p>We can use apply to calculate rowSums and colSums.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(esc_mat, <span class="dv">1</span>, sum) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  Hvcn1   Gbp7 Arrdc1  Ercc5 Mrpl15  Dclk1 </span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt;  41740  15218  98903  19919 156510     42</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(esc_mat, <span class="dv">2</span>, sum) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt;         zy_1         zy_2         zy_3         zy_4 early2cell_1 early2cell_2 </span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt;     30093033     25116127     31954663     17473603     22633227     23554335</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">esc_mat</span>, <span class="fl">1</span>, <span class="va">sum</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  Hvcn1   Gbp7 Arrdc1  Ercc5 Mrpl15  Dclk1 </span></span>
+<span><span class="co">#&gt;  41740  15218  98903  19919 156510     42</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">esc_mat</span>, <span class="fl">2</span>, <span class="va">sum</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         zy_1         zy_2         zy_3         zy_4 early2cell_1 </span></span>
+<span><span class="co">#&gt;     30093033     25116127     31954663     17473603     22633227 </span></span>
+<span><span class="co">#&gt; early2cell_2 </span></span>
+<span><span class="co">#&gt;     23554335</span></span></code></pre></div>
 <p>We can also define custom functions and use them in apply. (See also <code>lapply</code>, <code>vapply</code>, <code>sapply</code>, etc. for variants for operating on different data structures)</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">#predefine function</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">my_sum &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">  <span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(x) <span class="op">+</span><span class="st"> </span><span class="dv">42</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">ex &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(esc_mat, <span class="dv">1</span>, my_sum)</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">ex[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;  Hvcn1   Gbp7 Arrdc1  Ercc5 Mrpl15 </span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  41782  15260  98945  19961 156552</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co"># or use an anonymous function </span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13">ex2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(esc_mat, <span class="dv">1</span>, <span class="cf">function</span>(a){</a>
-<a class="sourceLine" id="cb6-14" data-line-number="14">  <span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(a) <span class="op">+</span><span class="st"> </span><span class="dv">42</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15">})</a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17">ex2[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
-<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">#&gt;  Hvcn1   Gbp7 Arrdc1  Ercc5 Mrpl15 </span></a>
-<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">#&gt;  41782  15260  98945  19961 156552</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#predefine function</span></span>
+<span><span class="va">my_sum</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="fl">42</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">esc_mat</span>, <span class="fl">1</span>, <span class="va">my_sum</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ex</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt;  Hvcn1   Gbp7 Arrdc1  Ercc5 Mrpl15 </span></span>
+<span><span class="co">#&gt;  41782  15260  98945  19961 156552</span></span>
+<span></span>
+<span><span class="co"># or use an anonymous function </span></span>
+<span><span class="va">ex2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">esc_mat</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span> <span class="op">+</span> <span class="fl">42</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ex2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt;  Hvcn1   Gbp7 Arrdc1  Ercc5 Mrpl15 </span></span>
+<span><span class="co">#&gt;  41782  15260  98945  19961 156552</span></span></code></pre></div>
 </div>
-<div id="filtering-a-matrix-to-exclude-noisy-low-abundance-genes" class="section level3">
-<h3 class="hasAnchor">
-<a href="#filtering-a-matrix-to-exclude-noisy-low-abundance-genes" class="anchor"></a>Filtering a matrix to exclude noisy low-abundance genes</h3>
+<div class="section level3">
+<h3 id="filtering-a-matrix-to-exclude-noisy-low-abundance-genes">Filtering a matrix to exclude noisy low-abundance genes<a class="anchor" aria-label="anchor" href="#filtering-a-matrix-to-exclude-noisy-low-abundance-genes"></a>
+</h3>
 <p>Next we are going to remove genes (rows) with low values from the <code>esc_mat</code> matrix and save this smaller matrix as <code>filtered_mat</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">to_keep &lt;-<span class="st"> </span>(<span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(esc_mat <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>) </a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">filtered_mat &lt;-<span class="st"> </span>esc_mat[to_keep, ]</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(filtered_mat)</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; [1] 14635</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co"># or alternatively</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">to_keep</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">esc_mat</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">10</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">filtered_mat</span> <span class="op">&lt;-</span> <span class="va">esc_mat</span><span class="op">[</span><span class="va">to_keep</span>, <span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">filtered_mat</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 14635</span></span>
+<span><span class="co"># or alternatively</span></span></code></pre></div>
 <p>or using <code>apply</code></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">to_keep &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(esc_mat, <span class="dv">1</span>, <span class="cf">function</span>(x){</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">  <span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">})</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">filtered_mat &lt;-<span class="st"> </span>esc_mat[to_keep, ]</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(filtered_mat)</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; [1] 14635</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">to_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">esc_mat</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">10</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">filtered_mat</span> <span class="op">&lt;-</span> <span class="va">esc_mat</span><span class="op">[</span><span class="va">to_keep</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">filtered_mat</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 14635</span></span></code></pre></div>
 </div>
-<div id="normalizing-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#normalizing-data" class="anchor"></a>Normalizing data</h3>
+<div class="section level3">
+<h3 id="normalizing-data">Normalizing data<a class="anchor" aria-label="anchor" href="#normalizing-data"></a>
+</h3>
 </div>
-<div id="exercise" class="section level3">
-<h3 class="hasAnchor">
-<a href="#exercise" class="anchor"></a>Exercise</h3>
+<div class="section level3">
+<h3 id="exercise">Exercise<a class="anchor" aria-label="anchor" href="#exercise"></a>
+</h3>
 <p>Normalize each the expression values for each cell. Divide each column by the total number of counts in each column, multiply by 10000, and log transform (use the <code>log1p</code> function). Save the new matrix as <code>norm_mat</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># normalize a matrix</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">norm_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(esc_mat, <span class="dv">2</span>, <span class="cf">function</span>(x) x <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(x)) </a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">norm_mat &lt;-<span class="st"> </span><span class="dv">10000</span> <span class="op">*</span><span class="st"> </span>norm_mat</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">norm_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(norm_mat <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="co"># or log1p(norm_mat)</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co"># another approach </span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">lognorm &lt;-<span class="st"> </span><span class="cf">function</span>(vec){</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">  norm_values &lt;-<span class="st"> </span><span class="dv">10000</span> <span class="op">*</span><span class="st"> </span>(vec <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(vec))</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">  <span class="kw"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(norm_values <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">}</a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13">norm_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(esc_mat, <span class="dv">2</span>, lognorm)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># normalize a matrix</span></span>
+<span><span class="va">norm_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">esc_mat</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">norm_mat</span> <span class="op">&lt;-</span> <span class="fl">10000</span> <span class="op">*</span> <span class="va">norm_mat</span></span>
+<span><span class="va">norm_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">norm_mat</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># or log1p(norm_mat)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># another approach </span></span>
+<span><span class="va">lognorm</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">vec</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">norm_values</span> <span class="op">&lt;-</span> <span class="fl">10000</span> <span class="op">*</span> <span class="op">(</span><span class="va">vec</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">vec</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">norm_values</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">norm_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">esc_mat</span>, <span class="fl">2</span>, <span class="va">lognorm</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="converting-matrices-to-data-frames-and-tibbles" class="section level3">
-<h3 class="hasAnchor">
-<a href="#converting-matrices-to-data-frames-and-tibbles" class="anchor"></a>Converting matrices to data.frames and tibbles</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># to data.frame</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(esc_mat)</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">df &lt;-<span class="st"> </span>df[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co"># to tibble</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="kw">as_tibble</span>(df, <span class="dt">rownames =</span> <span class="st">"gene"</span>)</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; # A tibble: 3 x 6</span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt;   gene    zy_1  zy_2  zy_3  zy_4 early2cell_1</span></a>
-<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt;   &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;        &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co">#&gt; 1 Hvcn1   3204  2290  2995  1600         2352</span></a>
-<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co">#&gt; 2 Gbp7    1101   719   473   533          594</span></a>
-<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co">#&gt; 3 Arrdc1  3574  2269  2481  1478          920</span></a>
-<a class="sourceLine" id="cb10-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co"># or equivalently</span></a>
-<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="kw">rownames_to_column</span>(df, <span class="st">"gene"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="st">  </span><span class="kw">as_tibble</span>()</a>
-<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="co">#&gt; # A tibble: 3 x 6</span></a>
-<a class="sourceLine" id="cb10-19" data-line-number="19"><span class="co">#&gt;   gene    zy_1  zy_2  zy_3  zy_4 early2cell_1</span></a>
-<a class="sourceLine" id="cb10-20" data-line-number="20"><span class="co">#&gt;   &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;        &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb10-21" data-line-number="21"><span class="co">#&gt; 1 Hvcn1   3204  2290  2995  1600         2352</span></a>
-<a class="sourceLine" id="cb10-22" data-line-number="22"><span class="co">#&gt; 2 Gbp7    1101   719   473   533          594</span></a>
-<a class="sourceLine" id="cb10-23" data-line-number="23"><span class="co">#&gt; 3 Arrdc1  3574  2269  2481  1478          920</span></a>
-<a class="sourceLine" id="cb10-24" data-line-number="24"></a>
-<a class="sourceLine" id="cb10-25" data-line-number="25"><span class="co"># as one step </span></a>
-<a class="sourceLine" id="cb10-26" data-line-number="26">tbl_data &lt;-<span class="st"> </span>esc_mat <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-27" data-line-number="27"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-28" data-line-number="28"><span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">"gene"</span>)</a>
-<a class="sourceLine" id="cb10-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb10-30" data-line-number="30">tbl_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
-<a class="sourceLine" id="cb10-31" data-line-number="31"><span class="co">#&gt; # A tibble: 5 x 5</span></a>
-<a class="sourceLine" id="cb10-32" data-line-number="32"><span class="co">#&gt;   gene    zy_1  zy_2  zy_3  zy_4</span></a>
-<a class="sourceLine" id="cb10-33" data-line-number="33"><span class="co">#&gt;   &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb10-34" data-line-number="34"><span class="co">#&gt; 1 Hvcn1   3204  2290  2995  1600</span></a>
-<a class="sourceLine" id="cb10-35" data-line-number="35"><span class="co">#&gt; 2 Gbp7    1101   719   473   533</span></a>
-<a class="sourceLine" id="cb10-36" data-line-number="36"><span class="co">#&gt; 3 Arrdc1  3574  2269  2481  1478</span></a>
-<a class="sourceLine" id="cb10-37" data-line-number="37"><span class="co">#&gt; 4 Ercc5   1391  1601  1549   779</span></a>
-<a class="sourceLine" id="cb10-38" data-line-number="38"><span class="co">#&gt; 5 Mrpl15     0    42     0    49</span></a></code></pre></div>
-<p>Converting data.frames to matrices is also easily accomplished using <code><a href="https://rdrr.io/r/base/matrix.html">as.matrix()</a></code></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">tbl_mat &lt;-<span class="st"> </span>tbl_data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>()</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(tbl_mat) &lt;-<span class="st"> </span>tbl_mat<span class="op">$</span>gene</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">tbl_mat &lt;-<span class="st"> </span>tbl_mat[, <span class="dv">-1</span>]</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">tbl_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(tbl_mat)</a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">tbl_mat[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt;        zy_1 zy_2 zy_3</span></a>
-<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt; Hvcn1  3204 2290 2995</span></a>
-<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt; Gbp7   1101  719  473</span></a>
-<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt; Arrdc1 3574 2269 2481</span></a>
-<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="kw"><a href="https://rdrr.io/r/base/class.html">class</a></span>(tbl_mat)</a>
-<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt; [1] "matrix"</span></a>
-<a class="sourceLine" id="cb11-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co"># in one step</span></a>
-<a class="sourceLine" id="cb11-18" data-line-number="18">tbl_mat &lt;-<span class="st"> </span>tbl_data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-19" data-line-number="19"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-20" data-line-number="20"><span class="st">  </span><span class="kw">column_to_rownames</span>(<span class="st">"gene"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-21" data-line-number="21"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>()</a></code></pre></div>
+<div class="section level3">
+<h3 id="converting-matrices-to-data-frames-and-tibbles">Converting matrices to data.frames and tibbles<a class="anchor" aria-label="anchor" href="#converting-matrices-to-data-frames-and-tibbles"></a>
+</h3>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># to data.frame</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">esc_mat</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># to tibble</span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">df</span>, rownames <span class="op">=</span> <span class="st">"gene"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span></span>
+<span><span class="co">#&gt;   gene    zy_1  zy_2  zy_3  zy_4 early2cell_1</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Hvcn1   <span style="text-decoration: underline;">3</span>204  <span style="text-decoration: underline;">2</span>290  <span style="text-decoration: underline;">2</span>995  <span style="text-decoration: underline;">1</span>600         <span style="text-decoration: underline;">2</span>352</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Gbp7    <span style="text-decoration: underline;">1</span>101   719   473   533          594</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Arrdc1  <span style="text-decoration: underline;">3</span>574  <span style="text-decoration: underline;">2</span>269  <span style="text-decoration: underline;">2</span>481  <span style="text-decoration: underline;">1</span>478          920</span></span>
+<span></span>
+<span><span class="co"># or equivalently</span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="va">df</span>, <span class="st">"gene"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span></span>
+<span><span class="co">#&gt;   gene    zy_1  zy_2  zy_3  zy_4 early2cell_1</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Hvcn1   <span style="text-decoration: underline;">3</span>204  <span style="text-decoration: underline;">2</span>290  <span style="text-decoration: underline;">2</span>995  <span style="text-decoration: underline;">1</span>600         <span style="text-decoration: underline;">2</span>352</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Gbp7    <span style="text-decoration: underline;">1</span>101   719   473   533          594</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Arrdc1  <span style="text-decoration: underline;">3</span>574  <span style="text-decoration: underline;">2</span>269  <span style="text-decoration: underline;">2</span>481  <span style="text-decoration: underline;">1</span>478          920</span></span>
+<span></span>
+<span><span class="co"># as one step </span></span>
+<span><span class="va">tbl_data</span> <span class="op">&lt;-</span> <span class="va">esc_mat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span>rownames <span class="op">=</span> <span class="st">"gene"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tbl_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 5</span></span></span>
+<span><span class="co">#&gt;   gene    zy_1  zy_2  zy_3  zy_4</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Hvcn1   <span style="text-decoration: underline;">3</span>204  <span style="text-decoration: underline;">2</span>290  <span style="text-decoration: underline;">2</span>995  <span style="text-decoration: underline;">1</span>600</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Gbp7    <span style="text-decoration: underline;">1</span>101   719   473   533</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Arrdc1  <span style="text-decoration: underline;">3</span>574  <span style="text-decoration: underline;">2</span>269  <span style="text-decoration: underline;">2</span>481  <span style="text-decoration: underline;">1</span>478</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Ercc5   <span style="text-decoration: underline;">1</span>391  <span style="text-decoration: underline;">1</span>601  <span style="text-decoration: underline;">1</span>549   779</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Mrpl15     0    42     0    49</span></span></code></pre></div>
+<p>Converting data.frames to matrices is also easily accomplished using <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tbl_mat</span> <span class="op">&lt;-</span> <span class="va">tbl_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tbl_mat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">tbl_mat</span><span class="op">$</span><span class="va">gene</span></span>
+<span><span class="va">tbl_mat</span> <span class="op">&lt;-</span> <span class="va">tbl_mat</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">tbl_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">tbl_mat</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tbl_mat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="co">#&gt;        zy_1 zy_2 zy_3</span></span>
+<span><span class="co">#&gt; Hvcn1  3204 2290 2995</span></span>
+<span><span class="co">#&gt; Gbp7   1101  719  473</span></span>
+<span><span class="co">#&gt; Arrdc1 3574 2269 2481</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">tbl_mat</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "matrix" "array"</span></span>
+<span></span>
+<span><span class="co"># in one step</span></span>
+<span><span class="va">tbl_mat</span> <span class="op">&lt;-</span> <span class="va">tbl_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">column_to_rownames</a></span><span class="op">(</span><span class="st">"gene"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Converting vectors to tibbles is also very useful.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># make a vector from colnames</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">col_ids &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(tbl_mat)</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#build tibble directly</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="kw">tibble</span>(<span class="dt">sample_names =</span> col_ids)</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; # A tibble: 72 x 1</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt;    sample_names</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt;    &lt;chr&gt;       </span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt;  1 zy_1        </span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt;  2 zy_2        </span></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt;  3 zy_3        </span></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt;  4 zy_4        </span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt;  5 early2cell_1</span></a>
-<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt;  6 early2cell_2</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt;  7 early2cell_3</span></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt;  8 early2cell_4</span></a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt;  9 early2cell_5</span></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt; 10 early2cell_6</span></a>
-<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt; # … with 62 more rows</span></a>
-<a class="sourceLine" id="cb12-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="co">#additional columns can be added as long as all of the vectors are the same length</span></a>
-<a class="sourceLine" id="cb12-22" data-line-number="22"><span class="kw">tibble</span>(<span class="dt">sample_names =</span> col_ids,</a>
-<a class="sourceLine" id="cb12-23" data-line-number="23">       <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">72</span>)</a>
-<a class="sourceLine" id="cb12-24" data-line-number="24"><span class="co">#&gt; # A tibble: 72 x 2</span></a>
-<a class="sourceLine" id="cb12-25" data-line-number="25"><span class="co">#&gt;    sample_names    id</span></a>
-<a class="sourceLine" id="cb12-26" data-line-number="26"><span class="co">#&gt;    &lt;chr&gt;        &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb12-27" data-line-number="27"><span class="co">#&gt;  1 zy_1             1</span></a>
-<a class="sourceLine" id="cb12-28" data-line-number="28"><span class="co">#&gt;  2 zy_2             2</span></a>
-<a class="sourceLine" id="cb12-29" data-line-number="29"><span class="co">#&gt;  3 zy_3             3</span></a>
-<a class="sourceLine" id="cb12-30" data-line-number="30"><span class="co">#&gt;  4 zy_4             4</span></a>
-<a class="sourceLine" id="cb12-31" data-line-number="31"><span class="co">#&gt;  5 early2cell_1     5</span></a>
-<a class="sourceLine" id="cb12-32" data-line-number="32"><span class="co">#&gt;  6 early2cell_2     6</span></a>
-<a class="sourceLine" id="cb12-33" data-line-number="33"><span class="co">#&gt;  7 early2cell_3     7</span></a>
-<a class="sourceLine" id="cb12-34" data-line-number="34"><span class="co">#&gt;  8 early2cell_4     8</span></a>
-<a class="sourceLine" id="cb12-35" data-line-number="35"><span class="co">#&gt;  9 early2cell_5     9</span></a>
-<a class="sourceLine" id="cb12-36" data-line-number="36"><span class="co">#&gt; 10 early2cell_6    10</span></a>
-<a class="sourceLine" id="cb12-37" data-line-number="37"><span class="co">#&gt; # … with 62 more rows</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># make a vector from colnames</span></span>
+<span><span class="va">col_ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">tbl_mat</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#build tibble directly</span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>sample_names <span class="op">=</span> <span class="va">col_ids</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 72 × 1</span></span></span>
+<span><span class="co">#&gt;    sample_names</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> zy_1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> zy_2        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> zy_3        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> zy_4        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> early2cell_1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> early2cell_2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> early2cell_3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> early2cell_4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> early2cell_5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> early2cell_6</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 62 more rows</span></span></span>
+<span></span>
+<span><span class="co">#additional columns can be added as long as all of the vectors are the same length</span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>sample_names <span class="op">=</span> <span class="va">col_ids</span>,</span>
+<span>       id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">72</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 72 × 2</span></span></span>
+<span><span class="co">#&gt;    sample_names    id</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> zy_1             1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> zy_2             2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> zy_3             3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> zy_4             4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> early2cell_1     5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> early2cell_2     6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> early2cell_3     7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> early2cell_4     8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> early2cell_5     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> early2cell_6    10</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 62 more rows</span></span></span></code></pre></div>
 <p>generating data.frames</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">sample_names =</span> col_ids,</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">           <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">72</span>,</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">           <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>) <span class="co"># very important</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>sample_names <span class="op">=</span> <span class="va">col_ids</span>,</span>
+<span>           id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">72</span>,</span>
+<span>           stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># very important</span></span></code></pre></div>
 </div>
-<div id="exercise-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#exercise-1" class="anchor"></a>Exercise</h3>
-<p>Tidy the <code>norm_mat</code> matrix into long format and extract out the timepoint information from the column name (e.g. <code>zy</code>, <code>early2cell</code>, etc.). Plot the expression values for each time point (<code>geom_violin</code> or <code>geom_boxplot</code>).</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">tidy_mat &lt;-<span class="st"> </span>norm_mat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">"gene"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="op">-</span>gene, <span class="dt">names_to =</span> <span class="st">"sample"</span>)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">  </span><span class="kw">separate</span>(sample, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"timepoint"</span>, <span class="st">"rep"</span>), <span class="dt">sep =</span> <span class="st">"_"</span>)</a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="kw">ggplot</span>(tidy_mat, <span class="kw">aes</span>(timepoint, value)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="st">   </span><span class="kw">geom_violin</span>() </a></code></pre></div>
+<div class="section level3">
+<h3 id="exercise-1">Exercise<a class="anchor" aria-label="anchor" href="#exercise-1"></a>
+</h3>
+<p>Tidy the <code>norm_mat</code> matrix into long format and extract out the timepoint information from the column name (e.g. <code>zy</code>, <code>early2cell</code>, etc.). Plot the expression values for each time point (<code>geom_violin</code> or <code>geom_boxplot</code>).</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tidy_mat</span> <span class="op">&lt;-</span> <span class="va">norm_mat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span>rownames <span class="op">=</span> <span class="st">"gene"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="op">-</span><span class="va">gene</span>, names_to <span class="op">=</span> <span class="st">"sample"</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">sample</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"timepoint"</span>, <span class="st">"rep"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">tidy_mat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">timepoint</span>, <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
-<div id="generating-heatmaps-using-complexheatmap" class="section level2">
-<h2 class="hasAnchor">
-<a href="#generating-heatmaps-using-complexheatmap" class="anchor"></a>Generating Heatmaps using ComplexHeatmap</h2>
+<div class="section level2">
+<h2 id="generating-heatmaps-using-complexheatmap">Generating Heatmaps using ComplexHeatmap<a class="anchor" aria-label="anchor" href="#generating-heatmaps-using-complexheatmap"></a>
+</h2>
 <p>How do we visualize this dataset to examine relationships between samples? Visualizing the entire matrix will be computationally expensive and likely completely unintepretable as it will obscure interesting patterns. Ideally we’d like to reduce the dataset to less than a few thousand genes for visualization.</p>
 <p>How do we select which features to plot in a heatmap?</p>
 <ol style="list-style-type: decimal">
@@ -364,100 +358,109 @@
 <li><p>Select features with high variance. Low variance features are probably not very interesting</p></li>
 <li><p>Down sample the matrix to a smaller size</p></li>
 </ol>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">gene_variance &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(norm_mat, <span class="dv">1</span>, var) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co"># top 30 most variable genes</span></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5">vargenes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(gene_variance)[<span class="dv">1</span><span class="op">:</span><span class="dv">30</span>]</a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(vargenes)</a>
-<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt; [1] "Zbed3"        "LOC100502936" "C86187"       "Btg4"         "Alppl2"      </span></a>
-<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt; [6] "Tcl1"</span></a></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">var_mat &lt;-<span class="st"> </span>norm_mat[vargenes, ]</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html">Heatmap</a></span>(var_mat, </a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">        <span class="dt">name =</span> <span class="st">"log scale"</span>,</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">        <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb16-6" data-line-number="6">        <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gene_variance</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">norm_mat</span>, <span class="fl">1</span>, <span class="va">var</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span>decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># top 30 most variable genes</span></span>
+<span><span class="va">vargenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">gene_variance</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">vargenes</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Zbed3"        "LOC100502936" "C86187"       "Btg4"        </span></span>
+<span><span class="co">#&gt; [5] "Alppl2"       "Tcl1"</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">var_mat</span> <span class="op">&lt;-</span> <span class="va">norm_mat</span><span class="op">[</span><span class="va">vargenes</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">var_mat</span>, </span>
+<span>        name <span class="op">=</span> <span class="st">"log scale"</span>,</span>
+<span>        cluster_rows <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>        cluster_columns <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>Use clustering techniques to naturally order the data.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">var_mat &lt;-<span class="st"> </span>norm_mat[vargenes, ]</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html">Heatmap</a></span>(var_mat, </a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">        <span class="dt">name =</span> <span class="st">"log scale"</span>,</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">        <span class="dt">cluster_rows =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb17-6" data-line-number="6">        <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">var_mat</span> <span class="op">&lt;-</span> <span class="va">norm_mat</span><span class="op">[</span><span class="va">vargenes</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">var_mat</span>, </span>
+<span>        name <span class="op">=</span> <span class="st">"log scale"</span>,</span>
+<span>        cluster_rows <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>        cluster_columns <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>Often visualizing gene expression abundance can obscure some patterns, as lower expression values are not as strongly represented. A common data transformation is mean-centering and scaling each gene. This is also known as a z-score.</p>
 <p><code>(x - mean(x)) / sd(x)</code></p>
 <p>By generating z-scores, the gene expression data now represents standard deviations away from the mean. A built in function in R called <code>scale</code> can generate z-scores. This is also easy to do using an apply function.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">?scale</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">?</span><span class="va">scale</span></span></code></pre></div>
 <p>The scale function performs scaling per <strong>column</strong> in a matrix. However, it is common in genomics for matrices to be represented with samples (i.e. cells) as columns and genes as rows. This is done as commonly the number of genes (i.e. features) is much greater than the number of samples, and so it is conviently (and computationally easier) to represent data in this format.</p>
 <p>However, is this a tidy format?</p>
 <p>Are the variables stored as rows or columns?</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">var_mat[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="co">#&gt;                  zy_1     zy_2     zy_3</span></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="co">#&gt; Zbed3        4.579253 4.329129 4.446267</span></a>
-<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="co">#&gt; LOC100502936 3.995553 4.024628 4.060731</span></a>
-<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="co">#&gt; C86187       3.900258 3.914178 4.026102</span></a>
-<a class="sourceLine" id="cb19-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(var_mat) <span class="op">%&gt;%</span><span class="st"> </span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="co">#&gt;         Zbed3 LOC100502936   C86187</span></a>
-<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="co">#&gt; zy_1 4.579253     3.995553 3.900258</span></a>
-<a class="sourceLine" id="cb19-10" data-line-number="10"><span class="co">#&gt; zy_2 4.329129     4.024628 3.914178</span></a>
-<a class="sourceLine" id="cb19-11" data-line-number="11"><span class="co">#&gt; zy_3 4.446267     4.060731 4.026102</span></a>
-<a class="sourceLine" id="cb19-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb19-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb19-14" data-line-number="14">zmat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(var_mat), </a>
-<a class="sourceLine" id="cb19-15" data-line-number="15">                <span class="dt">center =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb19-16" data-line-number="16">                <span class="dt">scale =</span> <span class="ot">TRUE</span>)) </a>
-<a class="sourceLine" id="cb19-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb19-18" data-line-number="18"><span class="co"># confirm that columns are the same after scaling</span></a>
-<a class="sourceLine" id="cb19-19" data-line-number="19"><span class="kw"><a href="https://rdrr.io/r/base/all.html">all</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(zmat) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(var_mat))</a>
-<a class="sourceLine" id="cb19-20" data-line-number="20"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html">Heatmap</a></span>(zmat, </a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">        <span class="dt">name =</span> <span class="st">"z-score"</span>,</a>
-<a class="sourceLine" id="cb20-3" data-line-number="3">        <span class="dt">cluster_rows =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb20-4" data-line-number="4">        <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">var_mat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="co">#&gt;                  zy_1     zy_2     zy_3</span></span>
+<span><span class="co">#&gt; Zbed3        4.579253 4.329129 4.446267</span></span>
+<span><span class="co">#&gt; LOC100502936 3.995553 4.024628 4.060731</span></span>
+<span><span class="co">#&gt; C86187       3.900258 3.914178 4.026102</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">var_mat</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">.</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="co">#&gt;         Zbed3 LOC100502936   C86187</span></span>
+<span><span class="co">#&gt; zy_1 4.579253     3.995553 3.900258</span></span>
+<span><span class="co">#&gt; zy_2 4.329129     4.024628 3.914178</span></span>
+<span><span class="co">#&gt; zy_3 4.446267     4.060731 4.026102</span></span>
+<span></span>
+<span></span>
+<span><span class="va">zmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">var_mat</span><span class="op">)</span>, </span>
+<span>                center <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>                scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># confirm that columns are the same after scaling</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">zmat</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">var_mat</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">zmat</span>, </span>
+<span>        name <span class="op">=</span> <span class="st">"z-score"</span>,</span>
+<span>        cluster_rows <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>        cluster_columns <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>Multiple heatmaps can be generated and plotted together if they share genes. For example, if we wanted to compare the zscore values to the log expression values.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co"># save each heatmap as an object</span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">h1 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html">Heatmap</a></span>(zmat, </a>
-<a class="sourceLine" id="cb21-3" data-line-number="3">        <span class="dt">name =</span> <span class="st">"z-score"</span>,</a>
-<a class="sourceLine" id="cb21-4" data-line-number="4">        <span class="dt">cluster_rows =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb21-5" data-line-number="5">        <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb21-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb21-7" data-line-number="7">h2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html">Heatmap</a></span>(var_mat,</a>
-<a class="sourceLine" id="cb21-8" data-line-number="8">        <span class="dt">name =</span> <span class="st">"log"</span>,</a>
-<a class="sourceLine" id="cb21-9" data-line-number="9">        <span class="dt">cluster_rows =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb21-10" data-line-number="10">        <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb21-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb21-12" data-line-number="12"><span class="co"># use the + operator to combine</span></a>
-<a class="sourceLine" id="cb21-13" data-line-number="13">h1 <span class="op">+</span><span class="st"> </span>h2</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># save each heatmap as an object</span></span>
+<span><span class="va">h1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">zmat</span>, </span>
+<span>        name <span class="op">=</span> <span class="st">"z-score"</span>,</span>
+<span>        cluster_rows <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>        cluster_columns <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">h2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">var_mat</span>,</span>
+<span>        name <span class="op">=</span> <span class="st">"log"</span>,</span>
+<span>        cluster_rows <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>        cluster_columns <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># use the + operator to combine</span></span>
+<span><span class="va">h1</span> <span class="op">+</span> <span class="va">h2</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-20-1.png" width="1344" style="display: block; margin: auto;"></p>
 <p>Heatmaps can be saved in a variety of formats using built in r functions, <code>pdf</code>, <code>png</code>, <code>svg</code>, and <code>jpeg</code>. <code>ggplots</code> plots can be saved with <code>ggsave</code> or the cowplot wrapper <code>save_plot</code>.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="st">"figure1.pdf"</span>) <span class="co"># name of plot</span></a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">  h1 <span class="op">+</span><span class="st"> </span>h2 <span class="co"># code that generates the plot</span></a>
-<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span>() <span class="co"># saves the plot</span></a>
-<a class="sourceLine" id="cb22-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/grDevices/png.html">png</a></span>(<span class="st">"figure1.png"</span>) </a>
-<a class="sourceLine" id="cb22-6" data-line-number="6">  h1 <span class="op">+</span><span class="st"> </span>h2 </a>
-<a class="sourceLine" id="cb22-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span>() </a>
-<a class="sourceLine" id="cb22-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/r/grDevices/cairo.html">svg</a></span>(<span class="st">"figure1.svg"</span>) </a>
-<a class="sourceLine" id="cb22-10" data-line-number="10">  h1 <span class="op">+</span><span class="st"> </span>h2 </a>
-<a class="sourceLine" id="cb22-11" data-line-number="11"><span class="kw"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span>() </a>
-<a class="sourceLine" id="cb22-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb22-13" data-line-number="13"><span class="kw"><a href="https://rdrr.io/r/grDevices/png.html">tiff</a></span>(<span class="st">"figure1.tiff"</span>) </a>
-<a class="sourceLine" id="cb22-14" data-line-number="14">  h1 <span class="op">+</span><span class="st"> </span>h2 </a>
-<a class="sourceLine" id="cb22-15" data-line-number="15"><span class="kw"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span>() </a></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(cyl, mpg)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()</a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="kw">save_plot</span>(<span class="st">"mtcars.pdf"</span>, p)</a></code></pre></div>
-<div id="exercises" class="section level3">
-<h3 class="hasAnchor">
-<a href="#exercises" class="anchor"></a>Exercises</h3>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf</a></span><span class="op">(</span><span class="st">"figure1.pdf"</span><span class="op">)</span> <span class="co"># name of plot</span></span>
+<span>  <span class="va">h1</span> <span class="op">+</span> <span class="va">h2</span> <span class="co"># code that generates the plot</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># saves the plot</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png</a></span><span class="op">(</span><span class="st">"figure1.png"</span><span class="op">)</span> </span>
+<span>  <span class="va">h1</span> <span class="op">+</span> <span class="va">h2</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/cairo.html" class="external-link">svg</a></span><span class="op">(</span><span class="st">"figure1.svg"</span><span class="op">)</span> </span>
+<span>  <span class="va">h1</span> <span class="op">+</span> <span class="va">h2</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">tiff</a></span><span class="op">(</span><span class="st">"figure1.tiff"</span><span class="op">)</span> </span>
+<span>  <span class="va">h1</span> <span class="op">+</span> <span class="va">h2</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/save_plot.html" class="external-link">save_plot</a></span><span class="op">(</span><span class="st">"mtcars.pdf"</span>, <span class="va">p</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="exercises">Exercises<a class="anchor" aria-label="anchor" href="#exercises"></a>
+</h3>
 <p>Create a heatmap containing the top 200 variables genes, using log normalized data. Consult the help menu (?Heatmap) to generate a heatmap and save it to a file.</p>
 <p>Your heatmap should be made in the following manner:</p>
 <ol style="list-style-type: decimal">
@@ -467,214 +470,226 @@
 <li>add a title to the columns</li>
 </ol>
 <p>What appears to be happening between the <code>early2cell</code> and <code>mid2cell</code> stages?</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">gene_variance &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(norm_mat, <span class="dv">1</span>, var) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(<span class="dt">decreasing =</span> T)</a>
-<a class="sourceLine" id="cb24-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb24-4" data-line-number="4">vargenes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(gene_variance)[<span class="dv">1</span><span class="op">:</span><span class="dv">200</span>]</a>
-<a class="sourceLine" id="cb24-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb24-6" data-line-number="6">var_mat &lt;-<span class="st"> </span>norm_mat[vargenes, ]</a>
-<a class="sourceLine" id="cb24-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb24-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html">Heatmap</a></span>(var_mat, </a>
-<a class="sourceLine" id="cb24-9" data-line-number="9">        <span class="dt">name =</span> <span class="st">"log scale"</span>,</a>
-<a class="sourceLine" id="cb24-10" data-line-number="10">        <span class="dt">cluster_rows =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb24-11" data-line-number="11">        <span class="dt">show_row_names =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb24-12" data-line-number="12">        <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb24-13" data-line-number="13">        <span class="dt">column_title =</span> <span class="st">"Samples"</span>, </a>
-<a class="sourceLine" id="cb24-14" data-line-number="14">        <span class="dt">row_title =</span> <span class="st">"Genes"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gene_variance</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">norm_mat</span>, <span class="fl">1</span>, <span class="va">var</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span>decreasing <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">vargenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">gene_variance</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">200</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">var_mat</span> <span class="op">&lt;-</span> <span class="va">norm_mat</span><span class="op">[</span><span class="va">vargenes</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">var_mat</span>, </span>
+<span>        name <span class="op">=</span> <span class="st">"log scale"</span>,</span>
+<span>        cluster_rows <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>        show_row_names <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>        cluster_columns <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>        column_title <span class="op">=</span> <span class="st">"Samples"</span>, </span>
+<span>        row_title <span class="op">=</span> <span class="st">"Genes"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div id="clustering" class="section level2">
-<h2 class="hasAnchor">
-<a href="#clustering" class="anchor"></a>Clustering</h2>
+<div class="section level2">
+<h2 id="clustering">Clustering<a class="anchor" aria-label="anchor" href="#clustering"></a>
+</h2>
 <p>Reviews:</p>
 <ul>
-<li><p><a href="http://stke.sciencemag.org/content/9/432/re6">Avoiding common pitfalls when clustering biological data</a></p></li>
-<li><p><a href="https://www.nature.com/articles/nbt1205-1499">How does gene expression clustering work?</a></p></li>
-<li>
-<a href="https://www.nature.com/articles/nmeth.1902">Heatmaps</a><br>
-</li>
-<li><p><a href="http://www.opiniomics.org/you-probably-dont-understand-heatmaps/">blog post: You probably don’t understand heatmaps</a> by Mick Watson.</p></li>
+<li><p><a href="http://stke.sciencemag.org/content/9/432/re6" class="external-link">Avoiding common pitfalls when clustering biological data</a></p></li>
+<li><p><a href="https://www.nature.com/articles/nbt1205-1499" class="external-link">How does gene expression clustering work?</a></p></li>
+<li><p><a href="https://www.nature.com/articles/nmeth.1902" class="external-link">Heatmaps</a><br></p></li>
+<li><p><a href="http://www.opiniomics.org/you-probably-dont-understand-heatmaps/" class="external-link">blog post: You probably don’t understand heatmaps</a> by Mick Watson.</p></li>
 </ul>
 <p>By default many Heatmap packages perform clustering to aid in identifying patterns in the data.</p>
 <p>We can see the euclidean distances between samples using <code>dist</code>.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(var_mat[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]))</a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co">#&gt;                   zy_1      zy_2      zy_3      zy_4</span></a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="co">#&gt; zy_2         0.2951908                              </span></a>
-<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="co">#&gt; zy_3         0.2006237 0.2611443                    </span></a>
-<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="co">#&gt; zy_4         0.3590522 0.1513323 0.3747836          </span></a>
-<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="co">#&gt; early2cell_1 1.2826717 1.0289290 1.1796294 0.9800686</span></a></code></pre></div>
-<p>The hierarchical clustering is performed by default in ComplexHeatmap using <code>hclust</code> with the output of <code>dist</code> as input. <code>hclust</code> provides a plotting method using <code><a href="https://rdrr.io/r/graphics/plot.html">plot()</a></code> to visualized the results as a dendogram.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">hc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/hclust.html">hclust</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(var_mat)))</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(hc)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">var_mat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                   zy_1      zy_2      zy_3      zy_4</span></span>
+<span><span class="co">#&gt; zy_2         0.2951908                              </span></span>
+<span><span class="co">#&gt; zy_3         0.2006237 0.2611443                    </span></span>
+<span><span class="co">#&gt; zy_4         0.3590522 0.1513323 0.3747836          </span></span>
+<span><span class="co">#&gt; early2cell_1 1.2826717 1.0289290 1.1796294 0.9800686</span></span></code></pre></div>
+<p>The hierarchical clustering is performed by default in ComplexHeatmap using <code>hclust</code> with the output of <code>dist</code> as input. <code>hclust</code> provides a plotting method using <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> to visualized the results as a dendogram.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">var_mat</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">hc</span><span class="op">)</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>We can change the distance metric used for the Heatmap by changing the <code>clustering_distance_rows</code> argument. A correlation measure, for example <code>Spearman</code>, is not sensitive to abundance, and can recover the shared patterns in the data.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span>(var_mat[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">method =</span> <span class="st">"spearman"</span>)</a>
-<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="co">#&gt;              zy_1 zy_2 zy_3 zy_4 early2cell_1</span></a>
-<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="co">#&gt; zy_1          1.0  1.0  1.0  0.9          0.3</span></a>
-<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co">#&gt; zy_2          1.0  1.0  1.0  0.9          0.3</span></a>
-<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="co">#&gt; zy_3          1.0  1.0  1.0  0.9          0.3</span></a>
-<a class="sourceLine" id="cb27-6" data-line-number="6"><span class="co">#&gt; zy_4          0.9  0.9  0.9  1.0          0.4</span></a>
-<a class="sourceLine" id="cb27-7" data-line-number="7"><span class="co">#&gt; early2cell_1  0.3  0.3  0.3  0.4          1.0</span></a></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="co"># use pretty colors</span></a>
-<a class="sourceLine" id="cb28-2" data-line-number="2">vcols &lt;-<span class="st"> </span>viridis<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/viridis/man/reexports.html">viridis</a></span>(<span class="dv">256</span>)</a>
-<a class="sourceLine" id="cb28-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html">Heatmap</a></span>(var_mat, </a>
-<a class="sourceLine" id="cb28-5" data-line-number="5">        <span class="dt">col =</span> vcols,</a>
-<a class="sourceLine" id="cb28-6" data-line-number="6">        <span class="dt">clustering_distance_rows =</span> <span class="st">"spearman"</span>,</a>
-<a class="sourceLine" id="cb28-7" data-line-number="7">        <span class="dt">cluster_rows =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb28-8" data-line-number="8">        <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb28-9" data-line-number="9">        <span class="dt">show_row_names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">var_mat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, method <span class="op">=</span> <span class="st">"spearman"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;              zy_1 zy_2 zy_3 zy_4 early2cell_1</span></span>
+<span><span class="co">#&gt; zy_1          1.0  1.0  1.0  0.9          0.3</span></span>
+<span><span class="co">#&gt; zy_2          1.0  1.0  1.0  0.9          0.3</span></span>
+<span><span class="co">#&gt; zy_3          1.0  1.0  1.0  0.9          0.3</span></span>
+<span><span class="co">#&gt; zy_4          0.9  0.9  0.9  1.0          0.4</span></span>
+<span><span class="co">#&gt; early2cell_1  0.3  0.3  0.3  0.4          1.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># use pretty colors</span></span>
+<span><span class="va">vcols</span> <span class="op">&lt;-</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html" class="external-link">viridis</a></span><span class="op">(</span><span class="fl">256</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">var_mat</span>, </span>
+<span>        col <span class="op">=</span> <span class="va">vcols</span>,</span>
+<span>        clustering_distance_rows <span class="op">=</span> <span class="st">"spearman"</span>,</span>
+<span>        cluster_rows <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>        cluster_columns <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>        show_row_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>Heatmaps are also very useful for quickly examining the similarities between samples</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span>(var_mat, <span class="dt">method =</span> <span class="st">"pearson"</span>)</a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html">Heatmap</a></span>(cor_mat,</a>
-<a class="sourceLine" id="cb29-4" data-line-number="4">        <span class="dt">col =</span> vcols)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cor_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">var_mat</span>, method <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">cor_mat</span>,</span>
+<span>        col <span class="op">=</span> <span class="va">vcols</span><span class="op">)</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;"></p>
-<div id="extracting-out-clusters" class="section level3">
-<h3 class="hasAnchor">
-<a href="#extracting-out-clusters" class="anchor"></a>Extracting out clusters</h3>
+<div class="section level3">
+<h3 id="extracting-out-clusters">Extracting out clusters<a class="anchor" aria-label="anchor" href="#extracting-out-clusters"></a>
+</h3>
 <p>How do we select out individual clusters from hierachical clustering? How do we define clusters?</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">h1 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html">Heatmap</a></span>(var_mat, </a>
-<a class="sourceLine" id="cb30-2" data-line-number="2">              <span class="dt">col =</span> vcols,</a>
-<a class="sourceLine" id="cb30-3" data-line-number="3">              <span class="dt">name =</span> <span class="st">"log scale"</span>,</a>
-<a class="sourceLine" id="cb30-4" data-line-number="4">        <span class="dt">cluster_rows =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb30-5" data-line-number="5">        <span class="dt">show_row_names =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb30-6" data-line-number="6">        <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb30-7" data-line-number="7">        <span class="dt">row_title =</span> <span class="st">"Genes"</span>)</a>
-<a class="sourceLine" id="cb30-8" data-line-number="8">h1</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">h1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">var_mat</span>, </span>
+<span>              col <span class="op">=</span> <span class="va">vcols</span>,</span>
+<span>              name <span class="op">=</span> <span class="st">"log scale"</span>,</span>
+<span>        cluster_rows <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>        show_row_names <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>        cluster_columns <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>        row_title <span class="op">=</span> <span class="st">"Genes"</span><span class="op">)</span></span>
+<span><span class="va">h1</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-29-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>First let’s generate the dendogram:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">hc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/hclust.html">hclust</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span>(var_mat))</a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(hc)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">var_mat</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">hc</span><span class="op">)</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-30-1.png" width="672" style="display: block; margin: auto;"></p>
-<p>Next we can use <code><a href="https://rdrr.io/r/stats/cutree.html">cutree()</a></code> to cut the tree into groups</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">?cutree</a></code></pre></div>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co"># split into 5 groups</span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2">kclusters &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cutree.html">cutree</a></span>(hc, <span class="dt">k =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(hc, <span class="dt">labels =</span> kclusters)</a></code></pre></div>
+<p>Next we can use <code><a href="https://rdrr.io/r/stats/cutree.html" class="external-link">cutree()</a></code> to cut the tree into groups</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">?</span><span class="va">cutree</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># split into 5 groups</span></span>
+<span><span class="va">kclusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cutree.html" class="external-link">cutree</a></span><span class="op">(</span><span class="va">hc</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">hc</span>, labels <span class="op">=</span> <span class="va">kclusters</span><span class="op">)</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-32-1.png" width="672" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="co"># split based on height of tree</span></a>
-<a class="sourceLine" id="cb34-3" data-line-number="3">hclusters &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cutree.html">cutree</a></span>(hc, <span class="dt">h =</span> <span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb34-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb34-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(hc, <span class="dt">labels =</span> hclusters)</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># split based on height of tree</span></span>
+<span><span class="va">hclusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cutree.html" class="external-link">cutree</a></span><span class="op">(</span><span class="va">hc</span>, h <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">hc</span>, labels <span class="op">=</span> <span class="va">hclusters</span><span class="op">)</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-32-2.png" width="672" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb35-2" data-line-number="2">hclusters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="co">#&gt;        Zbed3 LOC100502936       C86187         Btg4       Alppl2 </span></a>
-<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="co">#&gt;            1            1            1            1            2</span></a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">hclusters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt;        Zbed3 LOC100502936       C86187         Btg4       Alppl2 </span></span>
+<span><span class="co">#&gt;            1            1            1            1            2</span></span></code></pre></div>
 <p>Now that we have assigned clusters we can replot our heatmaps split out by each cluster, using the <code>split</code> argument.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">h1 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html">Heatmap</a></span>(var_mat,</a>
-<a class="sourceLine" id="cb36-2" data-line-number="2">              <span class="dt">col =</span> vcols, </a>
-<a class="sourceLine" id="cb36-3" data-line-number="3">              <span class="dt">name =</span> <span class="st">"log scale"</span>,</a>
-<a class="sourceLine" id="cb36-4" data-line-number="4">              <span class="dt">cluster_rows =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb36-5" data-line-number="5">              <span class="dt">show_row_names =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb36-6" data-line-number="6">              <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb36-7" data-line-number="7">              <span class="dt">split =</span> kclusters, </a>
-<a class="sourceLine" id="cb36-8" data-line-number="8">              <span class="dt">row_title =</span> <span class="st">"Genes"</span>)</a>
-<a class="sourceLine" id="cb36-9" data-line-number="9">h1</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">h1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">var_mat</span>,</span>
+<span>              col <span class="op">=</span> <span class="va">vcols</span>, </span>
+<span>              name <span class="op">=</span> <span class="st">"log scale"</span>,</span>
+<span>              cluster_rows <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>              show_row_names <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>              cluster_columns <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>              split <span class="op">=</span> <span class="va">kclusters</span>, </span>
+<span>              row_title <span class="op">=</span> <span class="st">"Genes"</span><span class="op">)</span></span>
+<span><span class="va">h1</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
-<div id="k-means" class="section level3">
-<h3 class="hasAnchor">
-<a href="#k-means" class="anchor"></a>K-means</h3>
+<div class="section level3">
+<h3 id="k-means">K-means<a class="anchor" aria-label="anchor" href="#k-means"></a>
+</h3>
 <p>K-means clustering is another simple, yet powerful clustering techinuqe. It also scales to much larger datasets than hierarchical clustering.</p>
 <ul>
-<li><p><a href="http://onmyphd.com/?p=k-means.clustering">interactive description</a></p></li>
-<li><p><a href="https://en.wikipedia.org/wiki/K-means_clustering">detailed description</a></p></li>
-<li><p><a href="https://stackoverflow.com/questions/15376075/cluster-analysis-in-r-determine-the-optimal-number-of-clusters">determining number of clusters</a></p></li>
+<li><p><a href="http://onmyphd.com/?p=k-means.clustering" class="external-link">interactive description</a></p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/K-means_clustering" class="external-link">detailed description</a></p></li>
+<li><p><a href="https://stackoverflow.com/questions/15376075/cluster-analysis-in-r-determine-the-optimal-number-of-clusters" class="external-link">determining number of clusters</a></p></li>
 </ul>
-<p>Kmeans is easily implemented using <code><a href="https://rdrr.io/r/stats/kmeans.html">kmeans()</a></code></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">clusters &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/kmeans.html">kmeans</a></span>(var_mat, <span class="dt">centers =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(clusters)</a>
-<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="co">#&gt; [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"</span></a>
-<a class="sourceLine" id="cb37-4" data-line-number="4"><span class="co">#&gt; [6] "betweenss"    "size"         "iter"         "ifault"</span></a></code></pre></div>
+<p>Kmeans is easily implemented using <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans()</a></code></p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">var_mat</span>, centers <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "cluster"      "centers"      "totss"        "withinss"    </span></span>
+<span><span class="co">#&gt; [5] "tot.withinss" "betweenss"    "size"         "iter"        </span></span>
+<span><span class="co">#&gt; [9] "ifault"</span></span></code></pre></div>
 <p>Cluster assignments can be extracted using <code>$cluster</code></p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">clusters<span class="op">$</span>cluster <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a>
-<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="co">#&gt;        Zbed3 LOC100502936       C86187         Btg4       Alppl2         Tcl1 </span></a>
-<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="co">#&gt;            4            3            4            4            5            4</span></a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">clusters</span><span class="op">$</span><span class="va">cluster</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        Zbed3 LOC100502936       C86187         Btg4       Alppl2 </span></span>
+<span><span class="co">#&gt;            3            3            3            3            5 </span></span>
+<span><span class="co">#&gt;         Tcl1 </span></span>
+<span><span class="co">#&gt;            3</span></span></code></pre></div>
 <p>To recover a reproducible kmeans classification set a seed for the random number generator</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb39-2" data-line-number="2">clusters &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/kmeans.html">kmeans</a></span>(var_mat, <span class="dt">centers =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb39-3" data-line-number="3">clusters<span class="op">$</span>cluster <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a>
-<a class="sourceLine" id="cb39-4" data-line-number="4"><span class="co">#&gt;        Zbed3 LOC100502936       C86187         Btg4       Alppl2         Tcl1 </span></a>
-<a class="sourceLine" id="cb39-5" data-line-number="5"><span class="co">#&gt;            5            5            5            5            2            5</span></a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">var_mat</span>, centers <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">clusters</span><span class="op">$</span><span class="va">cluster</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        Zbed3 LOC100502936       C86187         Btg4       Alppl2 </span></span>
+<span><span class="co">#&gt;            5            5            5            5            2 </span></span>
+<span><span class="co">#&gt;         Tcl1 </span></span>
+<span><span class="co">#&gt;            5</span></span></code></pre></div>
 </div>
-<div id="exercise-2" class="section level3">
-<h3 class="hasAnchor">
-<a href="#exercise-2" class="anchor"></a>Exercise:</h3>
+<div class="section level3">
+<h3 id="exercise-2">Exercise:<a class="anchor" aria-label="anchor" href="#exercise-2"></a>
+</h3>
 <ol style="list-style-type: decimal">
 <li><p>Make a Heatmap split by each kmeans cluster</p></li>
 <li><p>Use your tidying and ggplot skills to plot the gene expression values per cluster, by timepoint.</p></li>
 </ol>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">km &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/kmeans.html">kmeans</a></span>(var_mat, <span class="dt">centers =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb40-2" data-line-number="2">km_clusters &lt;-<span class="st"> </span>km<span class="op">$</span>cluster</a>
-<a class="sourceLine" id="cb40-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html">Heatmap</a></span>(</a>
-<a class="sourceLine" id="cb40-5" data-line-number="5">  var_mat, </a>
-<a class="sourceLine" id="cb40-6" data-line-number="6">  <span class="dt">split =</span> km_clusters,</a>
-<a class="sourceLine" id="cb40-7" data-line-number="7">  <span class="dt">show_row_names =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb40-8" data-line-number="8">  <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb40-9" data-line-number="9">)</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">km</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">var_mat</span>, centers <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">km_clusters</span> <span class="op">&lt;-</span> <span class="va">km</span><span class="op">$</span><span class="va">cluster</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span></span>
+<span>  <span class="va">var_mat</span>, </span>
+<span>  split <span class="op">=</span> <span class="va">km_clusters</span>,</span>
+<span>  show_row_names <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  cluster_columns <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-37-1.png" width="1152" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">cluster_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb41-2" data-line-number="2">  <span class="dt">gene =</span> <span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(km_clusters),</a>
-<a class="sourceLine" id="cb41-3" data-line-number="3">  <span class="dt">cluster =</span> km_clusters</a>
-<a class="sourceLine" id="cb41-4" data-line-number="4">)</a>
-<a class="sourceLine" id="cb41-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb41-6" data-line-number="6">tidy_mat &lt;-<span class="st"> </span>var_mat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb41-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb41-8" data-line-number="8"><span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">"gene"</span>)</a>
-<a class="sourceLine" id="cb41-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb41-10" data-line-number="10">plt_dat &lt;-<span class="st"> </span><span class="kw">left_join</span>(tidy_mat, </a>
-<a class="sourceLine" id="cb41-11" data-line-number="11">          cluster_df,</a>
-<a class="sourceLine" id="cb41-12" data-line-number="12">          <span class="dt">by =</span> <span class="st">"gene"</span>)</a>
-<a class="sourceLine" id="cb41-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb41-14" data-line-number="14">plt_dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb41-15" data-line-number="15"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> zy_<span class="dv">1</span><span class="op">:</span>lateblast_<span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb41-16" data-line-number="16"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">name =</span> <span class="kw">str_remove</span>(name, <span class="st">"_[0-9]"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb41-17" data-line-number="17"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(name, value)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb41-18" data-line-number="18"><span class="st">    </span><span class="kw">geom_violin</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> name)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb41-19" data-line-number="19"><span class="st">    </span><span class="kw">facet_grid</span>(<span class="op">~</span>cluster) <span class="op">+</span></a>
-<a class="sourceLine" id="cb41-20" data-line-number="20"><span class="st">  </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb41-21" data-line-number="21"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cluster_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  gene <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">km_clusters</span><span class="op">)</span>,</span>
+<span>  cluster <span class="op">=</span> <span class="va">km_clusters</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tidy_mat</span> <span class="op">&lt;-</span> <span class="va">var_mat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span>rownames <span class="op">=</span> <span class="st">"gene"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plt_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">tidy_mat</span>, </span>
+<span>          <span class="va">cluster_df</span>,</span>
+<span>          by <span class="op">=</span> <span class="st">"gene"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plt_dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">zy_1</span><span class="op">:</span><span class="va">lateblast_4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html" class="external-link">str_remove</a></span><span class="op">(</span><span class="va">name</span>, <span class="st">"_[0-9]"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">cluster</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_cowplot.html" class="external-link">theme_cowplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="class-8_files/figure-html/unnamed-chunk-38-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#generating-heatmaps-using-complexheatmap">Generating Heatmaps using ComplexHeatmap</a></li>
-      <li><a href="#clustering">Clustering</a></li>
-      </ul>
-</div>
-      </div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p>Developed by <a href="https://hesselberthlab.org">Jay Hesselberth</a>, Austin Gillen, Kent Riemondy, Rui Fu, Ryan Sheridan.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>An R package developed by the <a href="https://medschool.cuanschutz.edu/rbi" class="external-link">RNA Bioscience Initiative</a></p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
 
+  
 
   </body>
 </html>

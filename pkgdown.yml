@@ -1,6 +1,6 @@
-pandoc: '2.2'
-pkgdown: 1.4.1.9000
-pkgdown_sha: 24ef1bbdec0de44fe11eb1d58b40dba961525d43
+pandoc: 2.14.2
+pkgdown: 2.0.5
+pkgdown_sha: ~
 articles:
   assignments: assignments.html
   class-1: class-1.html
@@ -20,4 +20,5 @@ articles:
   problem-set-3: problem-set-3.html
   problem-set-4: problem-set-4.html
   problem-set-final: problem-set-final.html
+last_built: 2022-07-06T19:10Z
 
