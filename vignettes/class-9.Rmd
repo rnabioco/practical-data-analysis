@@ -2,10 +2,7 @@
 title: "Class 9: Exploring data with PCA"
 author: "Kent Riemondy"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Class-9}
-  %\VignetteEngine{knitr::rmarkdown}
+output: html_document
 ---
 
 ```{r setup, include = FALSE}

@@ -2,10 +2,7 @@
 title: "Class 5: Basic R data types and structures"
 author: "Rui Fu"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Class-5}
-  %\VignetteEngine{knitr::rmarkdown}
+output: html_document
 ---
 
 ```{r setup, include = FALSE}

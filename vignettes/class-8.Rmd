@@ -2,10 +2,7 @@
 title: "Class 8: Heatmaps and Clustering"
 author: "Kent Riemondy"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Class-8}
-  %\VignetteEngine{knitr::rmarkdown}
+output: html_document
 ---
 
 ```{r setup, include = FALSE}

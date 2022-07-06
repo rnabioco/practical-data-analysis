@@ -33,7 +33,7 @@ knitr::opts_chunk$set(
 **The class has its own R package, so you should begin by loading it into your session.** You will need to reinstall the package when we make updates.
 
 ```{r load_pbda}
-# devtools::install_github('idpt7810/practical-data-analysis')
+# devtools::install_github('rnabioco/practical-data-analysis')
 library(pbda)
 ```
 

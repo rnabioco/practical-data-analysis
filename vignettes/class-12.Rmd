@@ -2,10 +2,7 @@
 title: "Class 12: Working with gene lists"
 author: "Rui Fu & Austin Gillen"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Class-12}
-  %\VignetteEngine{knitr::rmarkdown}
+output: html_document
 ---
 
 ```{r setup, include = FALSE, message = FALSE, warning = FALSE, echo = TRUE}
@@ -18,8 +15,8 @@ knitr::opts_chunk$set(
 
 ```{r load, message = FALSE, warning = FALSE}
 # run before class:
-# devtools::install_github('idpt7810/practical-data-analysis')
-# BiocManager::install("biomaRt", version = "3.8")
+# devtools::install_github('rnabioco/practical-data-analysis')
+# BiocManager::install("biomaRt")
 
 library(pbda)
 library(tidyverse)
@@ -28,6 +25,7 @@ library(gprofiler2)
 ```
 
 ## Did experiment, ran through analysis pipeline, what now?
+
 Handle gene lists
 
 Try to connect prior knowledge to the results (genes you study, GO terms, or something like `yeast_prot_prop`)
@@ -35,6 +33,7 @@ Try to connect prior knowledge to the results (genes you study, GO terms, or som
 Using some basic R and tibble manipulation commands
 
 ## Retrieve gene lists from RNA-seq or scRNA-seq
+
 Recall how data is saved in objects
 
 Or whatever file you already saved containing lists of gene names
@@ -166,6 +165,7 @@ topGO: https://bioconductor.org/packages/release/bioc/html/topGO.html
 fgsea: http://bioconductor.org/packages/release/bioc/html/fgsea.html
 
 ## Sometimes transformation of names is needed - `stringr` package, part of tidyverse
+
 Depending on the transcriptome and analysis options used in RNA-seq/scRNA-seq, the list of names can be messy.
 
 ```{r stringr, message = FALSE, warning = FALSE}
@@ -253,14 +253,15 @@ gene_tibble_as4
 ```
 
 ## Various conversions in R - BioMart
-BioMart can be used outside of R too: http://www.ensembl.org/biomart/martview
+
+BioMart can be used outside of R too: https://www.ensembl.org/biomart/martview
 
 We will be using `biomaRt`
 
 ```{r biomart, message = FALSE, warning = FALSE}
 library(biomaRt)
 # biomaRt contains many useful datasets
-listDatasets(useMart("ENSEMBL_MART_ENSEMBL", host = "www.ensembl.org")) %>% as_tibble() # hundreds of organisms
+listDatasets(useMart("ENSEMBL_MART_ENSEMBL", host = "https://www.ensembl.org", )) %>% as_tibble() # hundreds of organisms
 
 listAttributes(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% as_tibble() # thousands of rows/attributes
 
@@ -342,16 +343,19 @@ genes_human
 ```
 
 ## Exercise
+
 1. Delete one argument from code above used to generate `genesGO_filtered` to obtain a list of all genes with GO id of "GO:0003677".
 
 2. Take a look at `genesGO`. Describe in pseudo-code, how you could add GO-CC back into the brauer_gene_exp.
 
 ## Additional resources/reading
+
 More sophisticated analysis than simply gene lists:
-Find enriched sequence elements in promoters, UTRs, etc. See https://bedtools.readthedocs.io/en/latest/, http://meme-suite.org/, etc
 
-WGCNA: weighted correlation network analysis
+- Find enriched sequence elements in promoters, UTRs, etc. See https://bedtools.readthedocs.io/en/latest/, http://meme-suite.org/, etc
 
-SCENIC: infer gene regulatory networks and cell types from single-cell RNA-seq data
+- WGCNA: weighted correlation network analysis
 
-Come to RBI office hours (Thursday 1-2:30)!
+- SCENIC: infer gene regulatory networks and cell types from single-cell RNA-seq data
+
+- Come to RBI office hours (Thursday 1-2:30)!

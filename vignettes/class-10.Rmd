@@ -2,10 +2,7 @@
 title: "Class 10: Jumping into more complex R, tips, resources"
 author: "Rui Fu"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Class-10}
-  %\VignetteEngine{knitr::rmarkdown}
+output: html_document
 ---
 
 ```{r setup, include = FALSE}

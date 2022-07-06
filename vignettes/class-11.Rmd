@@ -2,10 +2,7 @@
 title: "Class 11: RNA-seq Analysis"
 author: "Austin Gillen"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Class-11}
-  %\VignetteEngine{knitr::rmarkdown}
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
