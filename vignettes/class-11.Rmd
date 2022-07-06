@@ -150,7 +150,9 @@ drug_resistant_coldata
 
 SummarizedExperiment objects provide a structured, self-contained way to store phenotype, gene and assay data, along with analysis intermediates and parameters.
 
-![](img/class-4-se.png)
+```{r}
+knitr::include_graphics("img/class-4-se.png")
+```
 
 ## Build a DESeqDataSet from the drug_resistant data and inspect the object
 
@@ -265,7 +267,7 @@ MA plots - plots of mean expression (x-axis) vs. log2-fold change (y-axis) - are
 plotMA(res, ylim = c(-6,6))
 
 # Return results with moderated log2 fold-changes.
-res_ma <- lfcShrink(dds, contrast=c("drug","none","A"), res=res)
+res_ma <- lfcShrink(dds, contrast=c("drug","none","A"), res=res, type='normal')
 
 # Plot MA
 plotMA(res_ma, ylim = c(-6,6))
