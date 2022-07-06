@@ -1,11 +1,6 @@
 
 # Practical Biological Data Analysis with R/RStudio
 
-[![Build
-Status](https://travis-ci.org/rnabioco/practical-data-analysis.svg?branch=master)](https://travis-ci.org/rnabioco/practical-data-analysis)
-[![Build
-status](https://ci.appveyor.com/api/projects/status/nmsmgqp6nr1898wq?svg=true)](https://ci.appveyor.com/project/kriemo/practical-data-analysis)
-
 ## Syllabus
 
 This short course teaches you to analyze and visualize large, complex
@@ -27,20 +22,14 @@ pm.
 
 We have dedicated office hours on Thurs from 2:30-4pm in RC1 South 9th
 floor in the main office (behind the glass walls). Come with questions,
-problems, etc. Please send an email to `rbi.fellows@ucdenver.edu` to let
-us know you’re coming.
+problems, etc. Please send an email to `rbi.fellows@cuanschutz.edu` to
+let us know you’re coming.
 
 ### Instructor
 
-Jay Hesselberth (<jay.hesselberth@gmail.com>)
-
-### Co-instructors
-
-Austin Gillen (<austin.gillen@cuanschutz.edu>)
-
 Kent Riemondy (<kent.riemondy@cuanschutz.edu>)
 
-Rui Fu (<rui.fu@cuanschutz.edu>)
+### Co-instructors
 
 Ryan Sheridan (<ryan.sheridan@cuanschutz.edu>)
 
