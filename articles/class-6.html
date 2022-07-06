@@ -125,13 +125,13 @@
 <code class="sourceCode R"><span><span class="co"># An example: you want to rescale a numeric vector so all values are between 0 and 1</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">a</span></span>
-<span><span class="co">#&gt;  [1] -0.9430468  0.1284176 -0.5283891 -1.3083270 -0.7900780  0.9033757</span></span>
-<span><span class="co">#&gt;  [7]  0.3471914 -1.4470772  0.4320595 -1.4869431</span></span>
+<span><span class="co">#&gt;  [1]  1.3381602 -1.0359953  0.1735756  1.1783708  0.9165317  0.3626057</span></span>
+<span><span class="co">#&gt;  [7] -1.3470050  1.0878826  1.8164995  1.0081197</span></span>
 <span></span>
 <span><span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
 <span><span class="op">(</span><span class="va">a</span> <span class="op">-</span> <span class="va">rng</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">rng</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">rng</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] 0.22754133 0.67579300 0.40101511 0.07472481 0.29153645 1.00000000</span></span>
-<span><span class="co">#&gt;  [7] 0.76731794 0.01667805 0.80282285 0.00000000</span></span>
+<span><span class="co">#&gt;  [1] 0.84879449 0.09831178 0.48066332 0.79828425 0.71551556 0.54041673</span></span>
+<span><span class="co">#&gt;  [7] 0.00000000 0.76968047 1.00000000 0.74446701</span></span>
 <span></span>
 <span><span class="co"># What if we want to repeat this on other vectors?</span></span>
 <span><span class="co"># One way is to copy and paste</span></span>
@@ -196,8 +196,8 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Earlier we saved a numeric vector "a"</span></span>
 <span><span class="va">a</span></span>
-<span><span class="co">#&gt;  [1] -0.9430468  0.1284176 -0.5283891 -1.3083270 -0.7900780  0.9033757</span></span>
-<span><span class="co">#&gt;  [7]  0.3471914 -1.4470772  0.4320595 -1.4869431</span></span>
+<span><span class="co">#&gt;  [1]  1.3381602 -1.0359953  0.1735756  1.1783708  0.9165317  0.3626057</span></span>
+<span><span class="co">#&gt;  [7] -1.3470050  1.0878826  1.8164995  1.0081197</span></span>
 <span></span>
 <span><span class="va">sum_nums</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">x</span> <span class="op">+</span> <span class="va">a</span></span>
@@ -205,8 +205,8 @@
 <span></span>
 <span><span class="co"># Yes!</span></span>
 <span><span class="fu">sum_nums</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1]  9.056953 10.128418  9.471611  8.691673  9.209922 10.903376 10.347191</span></span>
-<span><span class="co">#&gt;  [8]  8.552923 10.432059  8.513057</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] 11.338160  8.964005 10.173576 11.178371 10.916532 10.362606  8.652995</span></span>
+<span><span class="co">#&gt;  [8] 11.087883 11.816500 11.008120</span></span></code></pre></div>
 <p><br></p>
 <p><em>Can code executed within a function modify an object present in the global environment?</em></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -219,8 +219,8 @@
 <span></span>
 <span><span class="co"># No! (not when using the '&lt;-' assignment operator)</span></span>
 <span><span class="va">a</span></span>
-<span><span class="co">#&gt;  [1] -0.9430468  0.1284176 -0.5283891 -1.3083270 -0.7900780  0.9033757</span></span>
-<span><span class="co">#&gt;  [7]  0.3471914 -1.4470772  0.4320595 -1.4869431</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1]  1.3381602 -1.0359953  0.1735756  1.1783708  0.9165317  0.3626057</span></span>
+<span><span class="co">#&gt;  [7] -1.3470050  1.0878826  1.8164995  1.0081197</span></span></code></pre></div>
 <p><br></p>
 <p><br></p>
 </div>
@@ -455,14 +455,14 @@
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu">rescale_vec</span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] 0.22754133 0.67579300 0.40101511 0.07472481 0.29153645 1.00000000</span></span>
-<span><span class="co">#&gt;  [7] 0.76731794 0.01667805 0.80282285 0.00000000</span></span>
+<span><span class="co">#&gt;  [1] 0.84879449 0.09831178 0.48066332 0.79828425 0.71551556 0.54041673</span></span>
+<span><span class="co">#&gt;  [7] 0.00000000 0.76968047 1.00000000 0.74446701</span></span>
 <span></span>
 <span><span class="va">a</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
 <span></span>
 <span><span class="fu">rescale_vec</span><span class="op">(</span><span class="va">a</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1]         NA 0.67579300 0.40101511 0.07472481 0.29153645 1.00000000</span></span>
-<span><span class="co">#&gt;  [7] 0.76731794 0.01667805 0.80282285 0.00000000</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1]         NA 0.09831178 0.48066332 0.79828425 0.71551556 0.54041673</span></span>
+<span><span class="co">#&gt;  [7] 0.00000000 0.76968047 1.00000000 0.74446701</span></span></code></pre></div>
 <p><br></p>
 <p><em>Modify our plotting function so the user can change the point size, shape, and alpha</em></p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">

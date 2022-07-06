@@ -166,14 +166,14 @@
 <p><br></p>
 <p><em>Write a <code>for</code> loop to create 3 vectors of different lengths</em></p>
 <pre><code><span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; [1]  0.26999309 -0.83236129 -0.33148065 -0.86032777 -0.09389039</span></span>
+<span><span class="co">#&gt; [1]  0.3908994  1.3375171 -0.7228482 -0.4488487 -0.9991461</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt;  [1]  0.596881952  1.911749002  0.122143678  0.152835308 -0.001331149</span></span>
-<span><span class="co">#&gt;  [6]  0.233777683  0.348691448  0.517289103 -1.795446674  0.653745450</span></span>
+<span><span class="co">#&gt;  [1] -0.7869762  1.3338675  0.7855225 -1.0164797  0.4323977 -1.6265049</span></span>
+<span><span class="co">#&gt;  [7]  0.6682370 -2.1571823 -1.2962583 -0.9892206</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]</span></span>
-<span><span class="co">#&gt; [1] 0.9299022 0.7534659</span></span></code></pre>
+<span><span class="co">#&gt; [1] 0.5844798 2.2303743</span></span></code></pre>
 <p><br></p>
 <p>Using <code>seq_along(x)</code> instead of <code>1:length(x)</code></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -304,14 +304,14 @@
 <p><br></p>
 <p><em>Use <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm()</a></code> and <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map()</a></code> to create 3 vectors of different lengths</em></p>
 <pre><code><span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; [1] -2.1320701 -0.5872292 -1.2799416  1.3573071 -0.5168990</span></span>
+<span><span class="co">#&gt; [1] -0.3583602  0.6511077  0.2759604 -2.4650403  0.6358353</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt;  [1]  2.2316808  0.1068324  1.0545537  0.2315674  0.6567902  0.1972810</span></span>
-<span><span class="co">#&gt;  [7] -0.5389884  0.6962508 -0.1716657 -1.0531337</span></span>
+<span><span class="co">#&gt;  [1] -1.67461334 -0.65836791 -0.55961247  0.06943959  0.71694853</span></span>
+<span><span class="co">#&gt;  [6]  0.12123360 -0.78505896 -0.64482462 -0.26101592 -0.74612143</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]</span></span>
-<span><span class="co">#&gt; [1] 0.01760469 0.80343028</span></span></code></pre>
+<span><span class="co">#&gt; [1] 0.7770449 1.4679309</span></span></code></pre>
 <p><br></p>
 <p><em>Re-write the code from above using <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map()</a></code> to generate our growth rate figure</em></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"YDL104C"</span>, <span class="st">"YOR069W"</span>, <span class="st">"YLR115W"</span>, <span class="st">"YPR036W"</span>)</span>
