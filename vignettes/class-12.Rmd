@@ -259,7 +259,7 @@ BioMart can be used outside of R too: https://www.ensembl.org/biomart/martview
 
 We will be using `biomaRt`
 
-```{r biomart, message = FALSE, warning = FALSE}
+```{r biomart, message = FALSE, warning = FALSE, eval = FALSE}
 library(biomaRt)
 # biomaRt contains many useful datasets
 listDatasets(useMart("ENSEMBL_MART_ENSEMBL", host = "https://www.ensembl.org", )) %>% as_tibble() # hundreds of organisms
@@ -271,7 +271,7 @@ listFilters(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% as_tibble
 
 common usage 1: id to gene symbol conversion
 
-```{r biomartid, message = FALSE, warning = FALSE}
+```{r biomartid, message = FALSE, warning = FALSE, eval = FALSE}
 human_mart <- useEnsembl("ensembl", dataset = "hsapiens_gene_ensembl", mirror = 'uswest') # assign the dataset to use
 
 ensg_sym2 <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"), # columns you want back
@@ -286,13 +286,13 @@ ensg_sym2
 
 common usage 2: functional GO term annotation
 
-```{r lookgo, message = FALSE, warning = FALSE}
+```{r lookgo, message = FALSE, warning = FALSE, eval = FALSE}
 listAttributes(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% 
   as_tibble() %>% 
   filter(str_detect(description, "GO")) # look at attributes related to GO 
 ```
 
-```{r getgo, message = FALSE, warning = FALSE}
+```{r getgo, message = FALSE, warning = FALSE, eval = FALSE}
 drerio_mart <- useEnsembl("ensembl", dataset = "drerio_gene_ensembl", mirror = 'uswest')
 
 loc <- system.file("extdata", "genes_drerio.csv", package = 'pbda')
@@ -316,7 +316,7 @@ genes_drerio_joinedGO <- left_join(genes_drerio, genesGO,
 genes_drerio_joinedGO
 ```
 
-```{r getgo2}
+```{r getgo2, eval = FALSE}
 # or, get all genes with GO term of interest, by providing multiple filters
 genesGO_filtered <- getBM(attributes = c("zfin_id_symbol"), 
                   filters = c("zfin_id_symbol", "go"), 
@@ -328,7 +328,7 @@ genesGO_filtered
 
 common usage 3: ortholog conversion between species
 
-```{r biomartpara, message = FALSE, warning = FALSE}
+```{r biomartpara, message = FALSE, warning = FALSE, eval = FALSE}
 # example of zebrafish to human gene symbol conversion
 human_mart <- useEnsembl("ensembl", dataset = "hsapiens_gene_ensembl", mirror = 'uswest')
 drerio_mart <- useEnsembl("ensembl", dataset = "drerio_gene_ensembl", mirror = 'uswest')
