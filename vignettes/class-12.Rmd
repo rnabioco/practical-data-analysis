@@ -84,6 +84,7 @@ write_lines(gene_vector, "gene_tibble_v.txt") # write for vector
 ```
 
 ## Gene set enrichment: feed gene lists to g:Profiler, get enrichment score back
+
 g:Profiler https://biit.cs.ut.ee/gprofiler/
 
 Here we consider the simple case of single, unordered lists of significantly differentially expressed human genes. g:Profiler can also handle ordered lists, other species, multiple lists in the same query, arbitry thresholds, several different multiple testing correction methods, arbitrary source selection, and much more.
@@ -271,7 +272,7 @@ listFilters(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>% as_tibble
 common usage 1: id to gene symbol conversion
 
 ```{r biomartid, message = FALSE, warning = FALSE}
-human_mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl") # assign the dataset to use
+human_mart <- useEnsembl("ensembl", dataset = "hsapiens_gene_ensembl", mirror = 'uswest') # assign the dataset to use
 
 ensg_sym2 <- getBM(attributes = c("hgnc_symbol", "ensembl_gene_id"), # columns you want back
                  filters = "ensembl_gene_id",                       # type of info you are providing
@@ -292,7 +293,7 @@ listAttributes(useMart("ensembl", dataset = "hsapiens_gene_ensembl")) %>%
 ```
 
 ```{r getgo, message = FALSE, warning = FALSE}
-drerio_mart <- useMart("ensembl", dataset = "drerio_gene_ensembl")
+drerio_mart <- useEnsembl("ensembl", dataset = "drerio_gene_ensembl", mirror = 'uswest')
 
 loc <- system.file("extdata", "genes_drerio.csv", package = 'pbda')
 genes_drerio <- read_csv(loc)
@@ -329,8 +330,8 @@ common usage 3: ortholog conversion between species
 
 ```{r biomartpara, message = FALSE, warning = FALSE}
 # example of zebrafish to human gene symbol conversion
-human_mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
-drerio_mart <- useMart("ensembl", dataset = "drerio_gene_ensembl")
+human_mart <- useEnsembl("ensembl", dataset = "hsapiens_gene_ensembl", mirror = 'uswest')
+drerio_mart <- useEnsembl("ensembl", dataset = "drerio_gene_ensembl", mirror = 'uswest')
 
 genes_human <- getLDS(attributes = c("hgnc_symbol"), # "linked datasets"
                       filters = "hgnc_symbol", 
