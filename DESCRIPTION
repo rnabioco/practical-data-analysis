@@ -2,25 +2,18 @@ Package: pbda
 Title: Practical Biological Data Analysis in R/RStudio
 Version: 0.2.0.9000
 Authors@R: c(
-  person("Jay", "Hesselberth", ,
-    email = "jay.hesselberth@gmail.com",
-    role = c("aut", "cre"),
-    comment = c(ORCID = "0000-0002-6299-179X")),
-  person("Austin", "Gillen", ,
-    email = "austin.gillen@cuanschutz.edu",
-    role = c("aut")),
-  person("Kent", "Riemondy", ,
-    email = "kent.riemondy@cuanschutz.edu",
-    role = c("aut")),
-  person("Rui", "Fu", ,
-    email = "rui.fu@cuanschutz.edu",
-    role = c("aut")),
-  person("Ryan", "Sheridan", ,
-    email = "ryan.sheridan@cuanschutz.edu",
-    role = c("aut"))
-    )
-Description: Provides course materials for IDPT 7810, Practical Biological Data Analysis in R.
+    person("Jay", "Hesselberth", , "jay.hesselberth@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-6299-179X")),
+    person("Austin", "Gillen", , "austin.gillen@cuanschutz.edu", role = "aut"),
+    person("Kent", "Riemondy", , "kent.riemondy@cuanschutz.edu", role = "aut"),
+    person("Rui", "Fu", , "rui.fu@cuanschutz.edu", role = "aut"),
+    person("Ryan", "Sheridan", , "ryan.sheridan@cuanschutz.edu", role = "aut")
+  )
+Description: Provides course materials for IDPT 7810, Practical Biological
+    Data Analysis in R.
 License: CC0
+URL: h https://rnabioco.github.io/practical-data-analysis,
+    https://github.com/rnabioco/practical-data-analysis
 Depends: 
     R (>= 4.0.0)
 Imports: 
@@ -28,33 +21,33 @@ Imports:
     ggrepel,
     tidyverse
 Suggests: 
-    cowplot,
-    dplyr,
-    stringr,
-    tidyr,
-    tibble,
-    scales,
-    MASS,
-    DT,
-    ggplot2,
-    gprofiler2
     biomaRt,
-    knitr,
-    R.utils,
-    viridis,
-    devtools,
-    RColorBrewer,
+    ComplexHeatmap,
+    cowplot,
     datasauRus,
     DESeq2,
-    ComplexHeatmap,
-    reticulate
-VignetteBuilder: knitr
+    devtools,
+    dplyr,
+    DT,
+    ggplot2,
+    gprofiler2,
+    knitr,
+    MASS,
+    R.utils,
+    RColorBrewer,
+    reticulate,
+    scales,
+    stringr,
+    tibble,
+    tidyr,
+    viridis
+VignetteBuilder: 
+    knitr
+Config/Needs/website:
+    pkgdown,
+    rnabioco/rbitemplate
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz
-URL: h https://rnabioco.github.io/practical-data-analysis, https://github.com/rnabioco/practical-data-analysis
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
-Config/Needs/website:
-  pkgdown,
-  rnabioco/rbitemplate
